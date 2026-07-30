@@ -49,6 +49,12 @@ min-h-screen flex flex-col
             <strong id="platformTotalAdmins" class="platform-stat-value">0</strong>
             <span class="platform-stat-helper">Responsaveis cadastrados</span>
         </article>
+
+        <article class="glass platform-stat-card">
+            <span class="platform-stat-label">Bloqueios</span>
+            <strong id="platformTotalBloqueados" class="platform-stat-value">0</strong>
+            <span class="platform-stat-helper">Assinaturas com acesso suspenso</span>
+        </article>
     </section>
 
     <section class="glass platform-panel">
@@ -229,6 +235,72 @@ min-h-screen flex flex-col
             <div class="platform-form-actions span-2">
                 <button type="button" class="platform-ghost-btn" data-close-modal>Cancelar</button>
                 <button type="submit" class="platform-primary-btn">Cadastrar admin</button>
+            </div>
+        </form>
+    </div>
+</section>
+
+<section id="subscriptionModal" class="platform-modal hidden" aria-hidden="true">
+    <div class="platform-modal-card glass">
+        <div class="platform-modal-header">
+            <div>
+                <p class="platform-panel-kicker">Assinatura</p>
+                <h3 class="platform-panel-title">Controle de acesso do tenant <span id="subscriptionTenantName"></span></h3>
+            </div>
+            <button type="button" class="platform-close-btn" data-close-modal>
+                <i data-lucide="x"></i>
+            </button>
+        </div>
+
+        <form id="subscriptionForm" class="platform-form-grid">
+            <input id="subscriptionTenantId" type="hidden">
+
+            <label class="platform-field">
+                <span>Plano</span>
+                <select id="subscriptionPlano" class="input-field" required></select>
+            </label>
+
+            <label class="platform-field">
+                <span>Status</span>
+                <select id="subscriptionStatus" class="input-field" required>
+                    <option value="trial">Trial</option>
+                    <option value="active">Ativa</option>
+                    <option value="past_due">Inadimplente</option>
+                    <option value="suspended">Suspensa</option>
+                    <option value="canceled">Cancelada</option>
+                </select>
+            </label>
+
+            <label class="platform-field">
+                <span>Trial ate</span>
+                <input id="subscriptionTrialAte" type="date" class="input-field">
+            </label>
+
+            <label class="platform-field">
+                <span>Limite de empresas</span>
+                <input id="subscriptionLimiteEmpresas" type="number" min="0" class="input-field">
+            </label>
+
+            <label class="platform-field">
+                <span>Limite de funcionarios</span>
+                <input id="subscriptionLimiteFuncionarios" type="number" min="0" class="input-field">
+            </label>
+
+            <label class="platform-field">
+                <span>Limite de produtos</span>
+                <input id="subscriptionLimiteProdutos" type="number" min="0" class="input-field">
+            </label>
+
+            <label class="platform-field">
+                <span>Limite de vendas mes</span>
+                <input id="subscriptionLimiteVendasMes" type="number" min="0" class="input-field">
+            </label>
+
+            <div id="subscriptionCurrentState" class="platform-subscription-state span-2"></div>
+
+            <div class="platform-form-actions span-2">
+                <button type="button" class="platform-ghost-btn" data-close-modal>Cancelar</button>
+                <button type="submit" class="platform-primary-btn">Salvar assinatura</button>
             </div>
         </form>
     </div>

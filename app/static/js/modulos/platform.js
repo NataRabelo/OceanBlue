@@ -1,5 +1,6 @@
 const platformState = {
   tenants: [],
+  plans: [],
   pagination: {
     currentPage: 1,
     pageSize: 10,
@@ -12,20 +13,33 @@ const platformElements = {
   totalTenants: document.getElementById("platformTotalTenants"),
   totalEmpresas: document.getElementById("platformTotalEmpresas"),
   totalAdmins: document.getElementById("platformTotalAdmins"),
+  totalBloqueados: document.getElementById("platformTotalBloqueados"),
   refreshButton: document.getElementById("refreshPlatformBtn"),
   pagination: document.getElementById("platformTenantPagination"),
   overlay: document.getElementById("platformModalOverlay"),
   tenantModal: document.getElementById("tenantModal"),
   companyModal: document.getElementById("companyModal"),
   adminModal: document.getElementById("adminModal"),
+  subscriptionModal: document.getElementById("subscriptionModal"),
   companyTenantName: document.getElementById("companyTenantName"),
   companyTenantId: document.getElementById("companyTenantId"),
   adminTenantName: document.getElementById("adminTenantName"),
   adminTenantId: document.getElementById("adminTenantId"),
+  subscriptionTenantName: document.getElementById("subscriptionTenantName"),
+  subscriptionTenantId: document.getElementById("subscriptionTenantId"),
+  subscriptionPlano: document.getElementById("subscriptionPlano"),
+  subscriptionStatus: document.getElementById("subscriptionStatus"),
+  subscriptionTrialAte: document.getElementById("subscriptionTrialAte"),
+  subscriptionLimiteEmpresas: document.getElementById("subscriptionLimiteEmpresas"),
+  subscriptionLimiteFuncionarios: document.getElementById("subscriptionLimiteFuncionarios"),
+  subscriptionLimiteProdutos: document.getElementById("subscriptionLimiteProdutos"),
+  subscriptionLimiteVendasMes: document.getElementById("subscriptionLimiteVendasMes"),
+  subscriptionCurrentState: document.getElementById("subscriptionCurrentState"),
   adminEmpresaId: document.getElementById("adminEmpresaId"),
   tenantForm: document.getElementById("tenantForm"),
   companyForm: document.getElementById("companyForm"),
   adminForm: document.getElementById("adminForm"),
+  subscriptionForm: document.getElementById("subscriptionForm"),
   openTenantModalBtn: document.getElementById("openTenantModalBtn"),
 };
 
@@ -106,8 +120,9 @@ function countTotals() {
   const totals = platformState.tenants.reduce((accumulator, tenant) => {
     accumulator.empresas += tenant.empresas.length;
     accumulator.admins += tenant.admins.length;
+    accumulator.bloqueados += tenant.assinatura?.bloqueado ? 1 : 0;
     return accumulator;
-  }, { empresas: 0, admins: 0 });
+  }, { empresas: 0, admins: 0, bloqueados: 0 });
 
   if (platformElements.totalTenants) {
     platformElements.totalTenants.textContent = String(platformState.tenants.length);
@@ -117,6 +132,9 @@ function countTotals() {
   }
   if (platformElements.totalAdmins) {
     platformElements.totalAdmins.textContent = String(totals.admins);
+  }
+  if (platformElements.totalBloqueados) {
+    platformElements.totalBloqueados.textContent = String(totals.bloqueados);
   }
 }
 
@@ -217,6 +235,16 @@ function renderTenantGrid() {
         <div class="platform-tenant-badges">
           <span class="platform-badge"><i data-lucide="briefcase-business"></i>${tenant.quantidade_empresas} empresas</span>
           <span class="platform-badge"><i data-lucide="shield-check"></i>${tenant.quantidade_admins} admins</span>
+          <span class="platform-badge ${tenant.assinatura?.bloqueado ? "is-blocked" : "is-active"}">
+            <i data-lucide="${tenant.assinatura?.bloqueado ? "lock" : "badge-check"}"></i>
+            ${escapeHtml(formatSubscriptionStatus(tenant.assinatura_status))}
+          </span>
+          <span class="platform-badge"><i data-lucide="credit-card"></i>${escapeHtml(tenant.plano?.nome || tenant.assinatura?.plano_nome || "-")}</span>
+        </div>
+
+        <div class="platform-subscription-summary ${tenant.assinatura?.bloqueado ? "is-blocked" : ""}">
+          <strong>${tenant.assinatura?.bloqueado ? "Acesso bloqueado" : "Acesso liberado"}</strong>
+          <span>${escapeHtml(getSubscriptionSummary(tenant))}</span>
         </div>
 
         <div class="platform-list-block">
@@ -236,6 +264,10 @@ function renderTenantGrid() {
         <div class="platform-tenant-card-footer">
           <span class="platform-inline-meta">Tenant pronto para estoque, PDV e financeiro.</span>
           <div class="platform-inline-actions">
+            <button type="button" class="platform-inline-btn" data-action="open-subscription-modal" data-tenant-id="${tenant.id}">
+              <i data-lucide="credit-card"></i>
+              Assinatura
+            </button>
             <button type="button" class="platform-inline-btn" data-action="open-admin-modal" data-tenant-id="${tenant.id}">
               <i data-lucide="user-plus"></i>
               Novo admin
@@ -359,7 +391,7 @@ function openModal(modalElement) {
 }
 
 function closeModals() {
-  [platformElements.tenantModal, platformElements.companyModal, platformElements.adminModal].forEach((modal) => {
+  [platformElements.tenantModal, platformElements.companyModal, platformElements.adminModal, platformElements.subscriptionModal].forEach((modal) => {
     if (!modal) {
       return;
     }
@@ -380,6 +412,9 @@ function closeModals() {
   }
   if (platformElements.adminForm) {
     platformElements.adminForm.reset();
+  }
+  if (platformElements.subscriptionForm) {
+    platformElements.subscriptionForm.reset();
   }
 }
 
@@ -427,6 +462,63 @@ function prepareAdminModal(tenantId) {
   openModal(platformElements.adminModal);
 }
 
+function prepareSubscriptionModal(tenantId) {
+  const tenant = getTenantById(tenantId);
+  if (!tenant) {
+    showFeedback("Tenant nao encontrado para controlar assinatura.", "error");
+    return;
+  }
+
+  fillPlanOptions();
+  platformElements.subscriptionTenantName.textContent = tenant.nome;
+  platformElements.subscriptionTenantId.value = String(tenant.id);
+  platformElements.subscriptionPlano.value = tenant.plano?.codigo || tenant.assinatura?.plano_codigo || "starter";
+  platformElements.subscriptionStatus.value = tenant.assinatura_status || "trial";
+  platformElements.subscriptionTrialAte.value = tenant.trial_ate || "";
+  platformElements.subscriptionLimiteEmpresas.value = tenant.limites?.empresas ?? "";
+  platformElements.subscriptionLimiteFuncionarios.value = tenant.limites?.funcionarios ?? "";
+  platformElements.subscriptionLimiteProdutos.value = tenant.limites?.produtos ?? "";
+  platformElements.subscriptionLimiteVendasMes.value = tenant.limites?.vendas_mes ?? "";
+  platformElements.subscriptionCurrentState.innerHTML = `
+    <strong>${tenant.assinatura?.bloqueado ? "Bloqueado" : "Liberado"}</strong>
+    <span>${escapeHtml(getSubscriptionSummary(tenant))}</span>
+  `;
+  openModal(platformElements.subscriptionModal);
+}
+
+function fillPlanOptions() {
+  if (!platformElements.subscriptionPlano) return;
+  platformElements.subscriptionPlano.innerHTML = (platformState.plans || []).map((plan) => `
+    <option value="${escapeHtml(plan.codigo)}">${escapeHtml(plan.nome)} - R$ ${escapeHtml(plan.preco_mensal)}</option>
+  `).join("");
+}
+
+function formatSubscriptionStatus(status) {
+  return {
+    trial: "Trial",
+    active: "Ativa",
+    past_due: "Inadimplente",
+    suspended: "Suspensa",
+    canceled: "Cancelada",
+  }[status] || status || "-";
+}
+
+function getSubscriptionSummary(tenant) {
+  const assinatura = tenant.assinatura || {};
+  if (assinatura.bloqueado) {
+    return assinatura.motivo_bloqueio || "Assinatura bloqueada.";
+  }
+  if (tenant.assinatura_status === "trial") {
+    if (assinatura.dias_trial === null || assinatura.dias_trial === undefined) {
+      return "Trial sem data final definida.";
+    }
+    return assinatura.dias_trial >= 0
+      ? `Trial com ${assinatura.dias_trial} dia(s) restante(s).`
+      : "Trial expirado.";
+  }
+  return "Assinatura ativa para uso operacional.";
+}
+
 async function loadTenants({ silent = false } = {}) {
   try {
     if (!silent) {
@@ -443,6 +535,15 @@ async function loadTenants({ silent = false } = {}) {
       showFeedback("Painel atualizado com sucesso.", "success");
       window.setTimeout(() => clearFeedback(), 1800);
     }
+  } catch (error) {
+    showFeedback(error.message, "error");
+  }
+}
+
+async function loadPlans() {
+  try {
+    const response = await requestJson("/api/platform/planos");
+    platformState.plans = response.data || [];
   } catch (error) {
     showFeedback(error.message, "error");
   }
@@ -534,12 +635,37 @@ async function handleAdminSubmit(event) {
   }
 }
 
+async function handleSubscriptionSubmit(event) {
+  event.preventDefault();
+
+  const tenantId = platformElements.subscriptionTenantId?.value;
+  const payload = {
+    plano_codigo: platformElements.subscriptionPlano?.value,
+    assinatura_status: platformElements.subscriptionStatus?.value,
+    trial_ate: platformElements.subscriptionTrialAte?.value || "",
+    limite_empresas: platformElements.subscriptionLimiteEmpresas?.value,
+    limite_funcionarios: platformElements.subscriptionLimiteFuncionarios?.value,
+    limite_produtos: platformElements.subscriptionLimiteProdutos?.value,
+    limite_vendas_mes: platformElements.subscriptionLimiteVendasMes?.value,
+  };
+
+  try {
+    await requestJson(`/api/platform/tenants/${tenantId}/assinatura`, { method: "PUT", body: payload });
+    closeModals();
+    await loadTenants({ silent: true });
+    showFeedback("Assinatura atualizada. O bloqueio dos modulos ja passa a obedecer este controle.", "success");
+  } catch (error) {
+    showFeedback(error.message, "error");
+  }
+}
+
 function bindEvents() {
   platformElements.openTenantModalBtn?.addEventListener("click", () => openModal(platformElements.tenantModal));
   platformElements.refreshButton?.addEventListener("click", () => loadTenants());
   platformElements.tenantForm?.addEventListener("submit", handleTenantSubmit);
   platformElements.companyForm?.addEventListener("submit", handleCompanySubmit);
   platformElements.adminForm?.addEventListener("submit", handleAdminSubmit);
+  platformElements.subscriptionForm?.addEventListener("submit", handleSubscriptionSubmit);
   platformElements.overlay?.addEventListener("click", closeModals);
 
   document.querySelectorAll("[data-close-modal]").forEach((button) => {
@@ -563,6 +689,10 @@ function bindEvents() {
       prepareAdminModal(tenantId);
     }
 
+    if (action === "open-subscription-modal") {
+      prepareSubscriptionModal(tenantId);
+    }
+
     if (action === "toggle-visual-mode") {
       const empresaId = Number(actionElement.dataset.empresaId);
       const nextMode = actionElement.dataset.nextMode || "MODERNO";
@@ -572,4 +702,4 @@ function bindEvents() {
 }
 
 bindEvents();
-loadTenants();
+loadPlans().then(() => loadTenants());

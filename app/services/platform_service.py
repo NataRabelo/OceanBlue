@@ -9,6 +9,7 @@ from app.services.time_service import TimeService
 
 
 class PlatformService:
+    ASSINATURA_STATUSES = {"trial", "active", "past_due", "suspended", "canceled"}
 
     @staticmethod
     def listar_tenants():
@@ -193,13 +194,31 @@ class PlatformService:
             raise ValueError("Tenant nao encontrado.")
 
         try:
+            status = (data.get("assinatura_status") or tenant.assinatura_status or "trial").strip().lower()
+            if status not in PlatformService.ASSINATURA_STATUSES:
+                raise ValueError("Status de assinatura invalido.")
+
             SaasPlanService.apply_plan(
                 tenant,
                 codigo=data.get("plano_codigo") or tenant.plano_codigo,
-                status=data.get("assinatura_status") or tenant.assinatura_status,
+                status=status,
             )
-            if data.get("trial_ate"):
-                tenant.trial_ate = PlatformService._to_date(data.get("trial_ate"), "trial ate")
+            if "trial_ate" in data:
+                if data.get("trial_ate"):
+                    tenant.trial_ate = PlatformService._to_date(data.get("trial_ate"), "trial ate")
+                elif status != "trial":
+                    tenant.trial_ate = None
+            elif status != "trial":
+                tenant.trial_ate = None
+
+            for field_name, attr_name in (
+                ("limite_empresas", "limite_empresas"),
+                ("limite_funcionarios", "limite_funcionarios"),
+                ("limite_produtos", "limite_produtos"),
+                ("limite_vendas_mes", "limite_vendas_mes"),
+            ):
+                if data.get(field_name) not in (None, ""):
+                    setattr(tenant, attr_name, PlatformService._to_positive_int(data.get(field_name), field_name))
 
             PlatformRepository.adicionar(tenant)
             AuditService.registrar(
@@ -298,6 +317,7 @@ class PlatformService:
             "plano": SaasPlanService.serializar_plano(getattr(tenant, "plano_codigo", "starter")),
             "assinatura_status": tenant.assinatura_status,
             "trial_ate": tenant.trial_ate.isoformat() if tenant.trial_ate else None,
+            "assinatura": PlatformService._serializar_assinatura(tenant),
             "limites": {
                 "empresas": tenant.limite_empresas,
                 "funcionarios": tenant.limite_funcionarios,
@@ -315,6 +335,37 @@ class PlatformService:
                 }
                 for admin in admins
             ],
+        }
+
+    @staticmethod
+    def _serializar_assinatura(tenant):
+        status = (tenant.assinatura_status or "").strip().lower()
+        trial_ate = tenant.trial_ate
+        hoje = TimeService.today_br()
+        bloqueado = False
+        motivo = None
+        if status not in {"active", "trial"}:
+            bloqueado = True
+            motivo = "Assinatura inativa ou suspensa."
+        elif status == "trial" and trial_ate and trial_ate < hoje:
+            bloqueado = True
+            motivo = "Periodo de teste expirado."
+
+        dias_trial = (trial_ate - hoje).days if trial_ate else None
+        return {
+            "status": status or "trial",
+            "bloqueado": bloqueado,
+            "motivo_bloqueio": motivo,
+            "trial_ate": trial_ate.isoformat() if trial_ate else None,
+            "dias_trial": dias_trial,
+            "plano_codigo": tenant.plano_codigo,
+            "plano_nome": SaasPlanService.serializar_plano(getattr(tenant, "plano_codigo", "starter"))["nome"],
+            "limites": {
+                "empresas": tenant.limite_empresas,
+                "funcionarios": tenant.limite_funcionarios,
+                "produtos": tenant.limite_produtos,
+                "vendas_mes": tenant.limite_vendas_mes,
+            },
         }
 
     @staticmethod
@@ -424,6 +475,16 @@ class PlatformService:
             return datetime.strptime(str(value), "%Y-%m-%d").date()
         except (TypeError, ValueError):
             raise ValueError(f"Data invalida para {field_name}. Use YYYY-MM-DD.")
+
+    @staticmethod
+    def _to_positive_int(value, field_name):
+        try:
+            parsed = int(value)
+        except (TypeError, ValueError):
+            raise ValueError(f"Valor invalido para {field_name}.")
+        if parsed < 0:
+            raise ValueError(f"{field_name} nao pode ser negativo.")
+        return parsed
 
     @staticmethod
     def _normalizar_cpf(value):
