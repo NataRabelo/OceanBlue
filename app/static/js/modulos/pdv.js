@@ -1454,14 +1454,14 @@ async function emitirNotaFiscalPdv(vendaId) {
             headers: getAuthHeaders(true),
             body: JSON.stringify({ venda_id: vendaId })
         });
-        showMessage(result.message || "Nota fiscal emitida com sucesso.", "success");
+        showMessage(result.message || "XML fiscal interno gerado com sucesso.", "success");
         await carregarVendas();
         if (result.data?.id) {
             const url = new URL(`/api/fiscal/notas/${result.data.id}/xml`, window.location.origin);
             window.open(url.toString(), "_blank", "noopener");
         }
     } catch (error) {
-        showMessage(error.message || "Erro ao emitir a nota fiscal.", "error");
+        showMessage(error.message || "Erro ao gerar XML fiscal interno.", "error");
     }
 }
 

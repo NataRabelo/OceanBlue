@@ -31,6 +31,9 @@
         document.addEventListener("click", async (event) => {
             const emitirButton = event.target.closest("[data-fiscal-emitir-venda]");
             const xmlButton = event.target.closest("[data-fiscal-baixar-xml]");
+            const danfeButton = event.target.closest("[data-fiscal-baixar-danfe]");
+            const consultarButton = event.target.closest("[data-fiscal-consultar-nota]");
+            const cancelarButton = event.target.closest("[data-fiscal-cancelar-nota]");
 
             if (emitirButton) {
                 event.preventDefault();
@@ -40,6 +43,24 @@
             if (xmlButton) {
                 event.preventDefault();
                 baixarXmlNota(xmlButton.dataset.fiscalBaixarXml);
+            }
+
+            if (danfeButton) {
+                event.preventDefault();
+                baixarDanfeNota(danfeButton.dataset.fiscalBaixarDanfe);
+            }
+
+            if (consultarButton) {
+                event.preventDefault();
+                await consultarNotaFiscal(consultarButton.dataset.fiscalConsultarNota);
+            }
+
+            if (cancelarButton) {
+                event.preventDefault();
+                const justificativa = prompt("Justificativa do cancelamento da NFC-e");
+                if (justificativa) {
+                    await cancelarNotaFiscal(cancelarButton.dataset.fiscalCancelarNota, justificativa);
+                }
             }
         });
 
@@ -141,7 +162,7 @@
             });
             await carregarNotasFiscais();
             renderizarResultadoEmissao(result.data || null);
-            mostrarMensagemFiscal(result.message || "Nota fiscal emitida com sucesso.");
+            mostrarMensagemFiscal(result.message || "NFC-e processada em homologacao.");
         } catch (error) {
             mostrarMensagemFiscal(error.message || "Erro ao emitir a nota fiscal.", "error");
         }
@@ -151,6 +172,42 @@
         if (!notaId) return;
         const url = new URL(`/api/fiscal/notas/${notaId}/xml`, window.location.origin);
         window.open(url.toString(), "_blank", "noopener");
+    }
+
+    function baixarDanfeNota(notaId) {
+        if (!notaId) return;
+        const url = new URL(`/api/fiscal/notas/${notaId}/danfe`, window.location.origin);
+        window.open(url.toString(), "_blank", "noopener");
+    }
+
+    async function consultarNotaFiscal(notaId) {
+        if (!notaId) return;
+        try {
+            await requestFiscal(`/api/fiscal/notas/${notaId}/consultar`, {
+                method: "POST",
+                headers: getFiscalHeaders(true),
+                body: JSON.stringify({})
+            });
+            await carregarNotasFiscais();
+            mostrarMensagemFiscal("Status da NFC-e consultado.");
+        } catch (error) {
+            mostrarMensagemFiscal(error.message || "Erro ao consultar NFC-e.", "error");
+        }
+    }
+
+    async function cancelarNotaFiscal(notaId, justificativa) {
+        if (!notaId) return;
+        try {
+            await requestFiscal(`/api/fiscal/notas/${notaId}/cancelar`, {
+                method: "POST",
+                headers: getFiscalHeaders(true),
+                body: JSON.stringify({ justificativa })
+            });
+            await carregarNotasFiscais();
+            mostrarMensagemFiscal("Cancelamento da NFC-e processado.");
+        } catch (error) {
+            mostrarMensagemFiscal(error.message || "Erro ao cancelar NFC-e.", "error");
+        }
     }
 
     function popularSelectsFiscal() {
@@ -181,6 +238,10 @@
 
         setValue("fiscal-ambiente", configuracao.ambiente || "HOMOLOGACAO");
         setValue("fiscal-regime", configuracao.regime_tributario || "SIMPLES_NACIONAL");
+        setValue("fiscal-integrador-provider", configuracao.integrador_provider || "mock_nfce");
+        setValue("fiscal-focus-cnpj", configuracao.focus_cnpj_emitente || "");
+        setValue("fiscal-focus-token-homologacao", "");
+        setValue("fiscal-focus-token-producao", "");
         setValue("fiscal-serie", configuracao.serie_nfce || 1);
         setValue("fiscal-proximo-numero", configuracao.proximo_numero_nfce || 1);
         setValue("fiscal-ie", configuracao.inscricao_estadual || "");
@@ -209,6 +270,10 @@
         [
             "fiscal-ambiente",
             "fiscal-regime",
+            "fiscal-integrador-provider",
+            "fiscal-focus-cnpj",
+            "fiscal-focus-token-homologacao",
+            "fiscal-focus-token-producao",
             "fiscal-serie",
             "fiscal-proximo-numero",
             "fiscal-ie",
@@ -238,6 +303,10 @@
         return {
             ambiente: getValue("fiscal-ambiente"),
             regime_tributario: getValue("fiscal-regime"),
+            integrador_provider: getValue("fiscal-integrador-provider"),
+            focus_cnpj_emitente: onlyDigits(getValue("fiscal-focus-cnpj")),
+            focus_token_homologacao: getValue("fiscal-focus-token-homologacao"),
+            focus_token_producao: getValue("fiscal-focus-token-producao"),
             serie_nfce: getValue("fiscal-serie"),
             proximo_numero_nfce: getValue("fiscal-proximo-numero"),
             inscricao_estadual: getValue("fiscal-ie"),
@@ -285,7 +354,17 @@
                     <strong>${certificadoStatus}</strong>
                 </div>
                 <div class="flex items-center justify-between gap-3">
-                    <span>Pronto para emissao</span>
+                    <span>Integrador</span>
+                    <strong class="text-white">${escapeHtml(configuracao.integrador_provider || "mock_nfce")}</strong>
+                </div>
+                <div class="flex items-center justify-between gap-3">
+                    <span>Tokens Focus</span>
+                    <strong class="${configuracao.focus_token_homologacao_configurado || configuracao.focus_token_producao_configurado ? "text-emerald-300" : "text-amber-300"}">
+                        ${configuracao.focus_token_homologacao_configurado || configuracao.focus_token_producao_configurado ? "Configurado" : "Pendente"}
+                    </strong>
+                </div>
+                <div class="flex items-center justify-between gap-3">
+                    <span>Pronto para XML interno</span>
                     <strong class="${configuracao.pronto_para_emissao ? "text-emerald-300" : "text-amber-300"}">
                         ${configuracao.pronto_para_emissao ? "Sim" : "Nao"}
                     </strong>
@@ -302,7 +381,7 @@
                     </div>
                 ` : `
                     <div class="rounded-xl border border-emerald-500/20 bg-emerald-500/10 px-3 py-3 text-sm text-emerald-100">
-                        Base fiscal preenchida e pronta para a proxima etapa de emissao.
+                        Base fiscal preenchida e pronta para gerar XML interno antes da SEFAZ.
                     </div>
                 `}
             </div>
@@ -340,12 +419,12 @@
                     </div>
                 ` : `
                     <div class="rounded-xl border border-emerald-500/20 bg-emerald-500/10 px-3 py-3 text-sm text-emerald-100">
-                        Venda pronta para a etapa de emissao fiscal.
+                        Venda pronta para gerar XML interno e enviar em homologacao ao integrador fiscal.
                     </div>
                     <button type="button" data-fiscal-emitir-venda="${escapeHtml(resultado.venda_id)}"
                         class="inline-flex items-center justify-center gap-2 rounded-xl bg-sky-500 hover:bg-sky-400 text-slate-950 font-semibold px-4 py-3 transition w-full">
                         <i data-lucide="send" class="w-4 h-4"></i>
-                        Emitir NFC-e
+                        Enviar NFC-e homologacao
                     </button>
                 `}
             </div>
@@ -363,7 +442,7 @@
         container.innerHTML = `
             <div class="space-y-3">
                 <div class="rounded-xl border border-emerald-500/20 bg-emerald-500/10 px-3 py-3 text-sm text-emerald-100">
-                    NFC-e emitida internamente e XML gerado.
+                    NFC-e processada em homologacao. Confira status oficial antes de operar em producao.
                 </div>
                 <div>
                     <p class="text-xs uppercase tracking-[0.14em] text-slate-500">Nota</p>
@@ -378,6 +457,13 @@
                     <i data-lucide="download" class="w-4 h-4"></i>
                     Baixar XML
                 </button>
+                ${nota.danfe_disponivel ? `
+                    <button type="button" data-fiscal-baixar-danfe="${escapeHtml(nota.id)}"
+                        class="inline-flex items-center justify-center gap-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-100 font-semibold px-4 py-3 transition w-full">
+                        <i data-lucide="printer" class="w-4 h-4"></i>
+                        DANFE
+                    </button>
+                ` : ""}
             </div>
         `;
 
@@ -403,18 +489,25 @@
                         <p class="text-sm text-slate-400">${escapeHtml(nota.empresa_nome || "-")}</p>
                         ${nota.numero ? `<p class="text-xs text-slate-500 mt-1">Serie ${escapeHtml(nota.serie || "-")} / Numero ${escapeHtml(nota.numero)}</p>` : ""}
                     </div>
-                    <span class="text-xs uppercase tracking-[0.14em] ${nota.status === "PRONTA_PARA_EMISSAO" ? "text-emerald-300" : "text-amber-300"}">
-                        ${escapeHtml(nota.status || "-")}
-                    </span>
+                    <div class="text-right">
+                        <span class="block text-xs uppercase tracking-[0.14em] ${nota.status === "EMITIDA" ? "text-emerald-300" : "text-amber-300"}">
+                            ${escapeHtml(nota.status || "-")}
+                        </span>
+                        <span class="block text-[11px] uppercase tracking-[0.12em] mt-1 ${nota.status_oficial === "AUTORIZADA" ? "text-sky-300" : "text-slate-400"}">
+                            ${escapeHtml(nota.status_oficial || "NAO_ENVIADA")}
+                        </span>
+                    </div>
                 </div>
                 ${nota.chave_acesso ? `<p class="text-xs text-slate-500 mt-3 break-all">${escapeHtml(nota.chave_acesso)}</p>` : ""}
+                ${nota.protocolo_oficial ? `<p class="text-xs text-sky-300 mt-2">Protocolo oficial/homologacao: ${escapeHtml(nota.protocolo_oficial)}</p>` : ""}
+                ${nota.provider_codigo ? `<p class="text-xs text-slate-500 mt-2">Provider: ${escapeHtml(nota.provider_codigo)} / Ref: ${escapeHtml(nota.referencia_externa || "-")}</p>` : ""}
                 <p class="text-xs text-slate-500 mt-3">${escapeHtml(nota.mensagem_retorno || "Sem retorno de validacao.")}</p>
                 <div class="flex flex-col sm:flex-row gap-2 mt-4">
                     ${nota.status !== "EMITIDA" ? `
                         <button type="button" data-fiscal-emitir-venda="${escapeHtml(nota.venda_id)}"
                             class="inline-flex items-center justify-center gap-2 rounded-xl bg-sky-500/10 border border-sky-500/20 text-sky-200 hover:bg-sky-500/20 font-semibold px-3 py-2 transition">
                             <i data-lucide="send" class="w-4 h-4"></i>
-                            Emitir
+                            Enviar homologacao
                         </button>
                     ` : ""}
                     ${nota.xml_disponivel ? `
@@ -422,6 +515,25 @@
                             class="inline-flex items-center justify-center gap-2 rounded-xl bg-slate-800 border border-slate-700 text-slate-100 hover:border-sky-500/30 px-3 py-2 transition">
                             <i data-lucide="download" class="w-4 h-4"></i>
                             XML
+                        </button>
+                    ` : ""}
+                    <button type="button" data-fiscal-consultar-nota="${escapeHtml(nota.id)}"
+                        class="inline-flex items-center justify-center gap-2 rounded-xl bg-sky-500/10 border border-sky-500/20 text-sky-200 hover:bg-sky-500/20 px-3 py-2 transition">
+                        <i data-lucide="search" class="w-4 h-4"></i>
+                        Consultar
+                    </button>
+                    ${nota.status_oficial === "AUTORIZADA" ? `
+                        <button type="button" data-fiscal-cancelar-nota="${escapeHtml(nota.id)}"
+                            class="inline-flex items-center justify-center gap-2 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-200 hover:bg-rose-500/20 px-3 py-2 transition">
+                            <i data-lucide="ban" class="w-4 h-4"></i>
+                            Cancelar
+                        </button>
+                    ` : ""}
+                    ${nota.danfe_disponivel ? `
+                        <button type="button" data-fiscal-baixar-danfe="${escapeHtml(nota.id)}"
+                            class="inline-flex items-center justify-center gap-2 rounded-xl bg-slate-800 border border-slate-700 text-slate-100 hover:border-sky-500/30 px-3 py-2 transition">
+                            <i data-lucide="printer" class="w-4 h-4"></i>
+                            DANFE
                         </button>
                     ` : ""}
                 </div>

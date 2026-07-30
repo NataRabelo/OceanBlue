@@ -49,6 +49,12 @@ min-h-screen flex flex-col bg-slate-950 text-white
             Lancamentos
         </a>
 
+        <a href="{{ url_for('boleto.pagina') }}"
+            class="inline-flex items-center gap-2 rounded-xl border border-slate-700 bg-slate-900/80 hover:border-sky-500/40 text-slate-100 font-medium px-5 py-3 transition">
+            <i data-lucide="file-text" class="w-4 h-4"></i>
+            Boletos
+        </a>
+
         {% if ui_flags.can_view_finance_reports %}
         <a href="{{ url_for('financeiro.pagina_relatorios') }}"
             class="inline-flex items-center gap-2 rounded-xl border border-slate-700 bg-slate-900/80 hover:border-sky-500/40 text-slate-100 font-medium px-5 py-3 transition">

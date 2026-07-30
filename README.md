@@ -1,26 +1,38 @@
 # OceanBlue PDV
 
-Sistema de PDV com:
+OceanBlue PDV e um sistema web Flask para operacao de varejo em modelo SaaS multi-tenant. O projeto combina PDV, estoque, financeiro, clientes, cashback, mensageria, permissoes, administracao de tenants, fiscal e base inicial para boletos.
 
-- Controle de Estoque
-- Controle Financeiro
-- Multi-tenant
-- Autenticação via JWT
+## Stack principal
 
-## Rodar com Docker
+- Python 3.12
+- Flask 3
+- Flask-SQLAlchemy
+- Flask-Migrate/Alembic
+- PostgreSQL via `DATABASE_URL`
+- JWT em cookies com CSRF
+- Templates Jinja2, CSS e JavaScript modular
+- Docker, Docker Compose e Gunicorn
 
-```bash
-cp .env.example .env
-./scripts/init-infra.sh
-docker compose up -d --build
-```
+## Como rodar
 
-## Deploy em Producao
+1. Crie o arquivo `.env` a partir de `.env.example`.
+2. Configure `DATABASE_URL`, `SECRET_KEY`, `JWT_SECRET_KEY` e `FIELD_ENCRYPTION_KEY`.
+3. Instale dependencias com `pip install -r requirements.txt` ou use Docker.
+4. Execute as migrations com `flask db upgrade`.
+5. Execute seed inicial com `flask seed`, se necessario.
+6. Inicie a aplicacao com `flask run` em desenvolvimento ou `docker compose up -d --build` em ambiente Docker.
 
-Este projeto esta preparado para rodar em producao via Docker Compose com a API em Gunicorn, PostgreSQL em stack separada, porta da API publicada apenas em `127.0.0.1:5000` e logs enviados para stdout/stderr.
+## Documentacao
 
-Na VPS, mantenha o banco em `/opt/blueocean/infra`, o codigo da API em `/opt/blueocean/app` e os dumps em `/opt/blueocean/backups`. O volume `blueocean_postgres_data` e a rede `blueocean_network` sao externos ao Compose.
+A nova base documental da Sprint 1 esta em `docs/`. O relatorio executivo esta em `relatorio-sprint-1/resumo-executivo.md`.
 
-Antes do deploy, copie `.env.example` para `.env`, preencha os segredos com valores fortes e mantenha `FLASK_ENV=production`. O acesso externo deve ser feito por um proxy reverso Nginx fora deste compose.
+Documentos legados foram preservados em `docs/99-legado-ou-backup/` antes da reorganizacao.
 
-Use `scripts/init-infra.sh` somente na preparacao inicial da VPS ou em manutencoes planejadas. Na primeira execucao ele cria `/opt/blueocean/infra/.env` e para para voce preencher a senha do banco. Para atualizacoes diarias da API, use `scripts/deploy-api.sh`; ele nao executa comandos destrutivos no banco.
+## Situacao atual de boleto e nota fiscal
+
+- Boleto: existe base de modelos, migration, repository, service e endpoints para cadastro, parcelas, regras de juros/multa e baixa. Nao ha evidencia de integracao bancaria real, remessa CNAB efetiva, registro em API bancaria ou geracao real de PDF.
+- Nota fiscal: existe modulo fiscal com configuracao por empresa, prevalidacao, criacao de nota e geracao de XML interno de NFC-e. Nao ha autorizacao real na SEFAZ, assinatura digital, transmissao, consulta de protocolo real ou cancelamento fiscal.
+
+## Proximos passos recomendados
+
+Use `docs/10-planejamento-sprints/plano-sprint-2.md` como guia para priorizar correcao de bugs visiveis, validacao de ambiente, decisao de integradores externos e desenho funcional de boleto/fiscal antes de implementar emissao real.

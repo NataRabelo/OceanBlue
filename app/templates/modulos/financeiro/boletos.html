@@ -1,0 +1,105 @@
+{% extends "bases/base.html" %}
+
+{% block title %}OceanBlue - Boletos{% endblock %}
+
+{% block body_class %}
+min-h-screen flex flex-col bg-slate-950 text-white
+{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/core/core.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/modulos/financeiro.css') }}">
+{% endblock %}
+
+{% block content %}
+{% set modulo_name = "Boletos" %}
+{% include "componentes/header_subpages.html" %}
+
+<main class="flex-1 page-shell">
+    <section class="mb-8">
+        <div class="flex flex-col xl:flex-row xl:items-end xl:justify-between gap-4">
+            <div>
+                <h1 class="text-3xl font-bold tracking-tight text-white">Gestao de boletos</h1>
+                <p class="text-slate-400 mt-2">Acompanhe boletos internos, registro bancario homologado, baixas e recalculos.</p>
+            </div>
+            <a href="{{ url_for('financeiro.pagina') }}"
+                class="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-700 bg-slate-900/80 hover:border-sky-500/40 text-slate-100 font-medium px-5 py-3 transition w-full sm:w-auto">
+                <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                Voltar ao financeiro
+            </a>
+        </div>
+    </section>
+
+    <section class="rounded-xl border border-amber-500/20 bg-amber-500/10 px-5 py-4 mb-6 text-sm text-amber-100">
+        Os registros abaixo separam status financeiro interno de status bancario externo. Homologacao usa provider mock ate as credenciais do banco/integrador real serem configuradas.
+    </section>
+
+    <section class="financeiro-panel mb-6">
+        <div class="financeiro-panel-header">
+            <div>
+                <h2 class="text-lg font-semibold text-white">Filtros</h2>
+                <p class="text-sm text-slate-400">Filtre por status, cliente, vencimento ou venda.</p>
+            </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-4 p-5">
+            <select id="boleto-status"
+                class="w-full bg-slate-950 border border-slate-800 focus:border-sky-500 focus:ring-2 focus:ring-sky-500/20 rounded-xl px-4 py-3 text-white outline-none transition">
+                <option value="">Todos os status</option>
+                <option value="PENDENTE">Pendente</option>
+                <option value="EMITIDO">Emitido interno</option>
+                <option value="VENCIDO">Vencido</option>
+                <option value="PARCIALMENTE_PAGO">Parcialmente pago</option>
+                <option value="PAGO">Pago</option>
+                <option value="CANCELADO">Cancelado</option>
+                <option value="ESTORNADO">Estornado</option>
+                <option value="BAIXA_MANUAL">Baixa manual</option>
+            </select>
+
+            <input id="boleto-cliente" type="search" placeholder="Cliente"
+                class="w-full bg-slate-950 border border-slate-800 focus:border-sky-500 focus:ring-2 focus:ring-sky-500/20 rounded-xl px-4 py-3 text-white outline-none transition">
+
+            <input id="boleto-vencimento" type="date"
+                class="w-full bg-slate-950 border border-slate-800 focus:border-sky-500 focus:ring-2 focus:ring-sky-500/20 rounded-xl px-4 py-3 text-white outline-none transition">
+
+            <input id="boleto-venda" type="search" placeholder="Venda"
+                class="w-full bg-slate-950 border border-slate-800 focus:border-sky-500 focus:ring-2 focus:ring-sky-500/20 rounded-xl px-4 py-3 text-white outline-none transition">
+
+            <button id="boleto-limpar-filtros" type="button"
+                class="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-700 bg-slate-900/80 hover:border-sky-500/40 text-slate-100 font-medium px-5 py-3 transition">
+                <i data-lucide="x" class="w-4 h-4"></i>
+                Limpar
+            </button>
+        </div>
+    </section>
+
+    <section class="financeiro-panel">
+        <div class="financeiro-panel-header">
+            <div>
+                <h2 class="text-lg font-semibold text-white">Boletos internos</h2>
+                <p id="boleto-resumo" class="text-sm text-slate-400">Carregando registros...</p>
+            </div>
+        </div>
+        <div class="overflow-x-auto">
+            <table class="w-full min-w-[68rem] text-sm">
+                <thead class="bg-slate-950/80 border-b border-slate-800">
+                    <tr>
+                        <th class="financeiro-th">Numero</th>
+                        <th class="financeiro-th">Cliente</th>
+                        <th class="financeiro-th">Vencimento</th>
+                        <th class="financeiro-th text-right">Valor</th>
+                        <th class="financeiro-th">Status interno</th>
+                        <th class="financeiro-th">Status bancario</th>
+                        <th class="financeiro-th">Banco</th>
+                        <th class="financeiro-th text-right">Acoes</th>
+                    </tr>
+                </thead>
+                <tbody id="boleto-lista" class="divide-y divide-slate-800"></tbody>
+            </table>
+        </div>
+    </section>
+</main>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/modulos/boletos.js') }}"></script>
+{% endblock %}

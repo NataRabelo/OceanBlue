@@ -118,6 +118,7 @@ class BoletoRepository:
             joinedload(Boleto.parcelas),
             joinedload(Boleto.eventos),
             joinedload(Boleto.cliente),
+            joinedload(Boleto.empresa),
             joinedload(Boleto.banco_emissor),
         ).filter(Boleto.id == boleto_id, Boleto.tenant_id == tenant_id)
         if empresa_id is not None:

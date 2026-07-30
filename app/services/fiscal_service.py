@@ -11,12 +11,15 @@ from app.models.db import (
     ConfiguracaoFiscalEmpresa,
     NotaFiscalVenda,
     RegimeTributarioFiscal,
+    EventoFiscalNota,
+    StatusOficialNotaFiscal,
     StatusNotaFiscal,
     StatusVenda,
 )
 from app.security.field_crypto import FieldCrypto
 from app.repositorys.fiscal_repository import FiscalRepository
 from app.services.acesso_empresa_service import AcessoEmpresaService
+from app.services.fiscal_provider import get_fiscal_provider
 from app.services.time_service import TimeService
 
 
@@ -114,6 +117,27 @@ class FiscalService:
                 uppercase=True,
             )
             configuracao.csc_id = FiscalService._optional_text(data.get("csc_id"), max_length=20)
+            configuracao.integrador_provider = FiscalService._optional_text(data.get("integrador_provider"), max_length=80) or "mock_nfce"
+            configuracao.integrador_credencial_env = FiscalService._optional_text(
+                data.get("integrador_credencial_env"),
+                max_length=120,
+                uppercase=True,
+            )
+            if "focus_token_homologacao" in data and data.get("focus_token_homologacao"):
+                configuracao.focus_token_homologacao = FieldCrypto.encrypt(data.get("focus_token_homologacao"))
+            if "focus_token_producao" in data and data.get("focus_token_producao"):
+                configuracao.focus_token_producao = FieldCrypto.encrypt(data.get("focus_token_producao"))
+            configuracao.focus_cnpj_emitente = FiscalService._only_digits(data.get("focus_cnpj_emitente"), max_length=14)
+            configuracao.focus_status_configuracao = (
+                "CONFIGURADO"
+                if configuracao.integrador_provider == "focus_nfe"
+                and (
+                    configuracao.focus_token_homologacao
+                    if configuracao.ambiente == AmbienteFiscal.HOMOLOGACAO
+                    else configuracao.focus_token_producao
+                )
+                else "PENDENTE"
+            )
             if "csc_token" in data:
                 configuracao.csc_token = FieldCrypto.encrypt(
                     FiscalService._optional_text(data.get("csc_token"), max_length=255)
@@ -153,6 +177,8 @@ class FiscalService:
                     configuracao_fiscal_id=configuracao.id if configuracao else None,
                     ambiente=configuracao.ambiente if configuracao else AmbienteFiscal.HOMOLOGACAO,
                     status=StatusNotaFiscal.PENDENTE,
+                    status_oficial=StatusOficialNotaFiscal.NAO_ENVIADA,
+                    modelo="NFC-e",
                 )
                 FiscalRepository.adicionar(nota)
 
@@ -162,7 +188,7 @@ class FiscalService:
             nota.status = (
                 StatusNotaFiscal.PRONTA_PARA_EMISSAO if not pendencias else StatusNotaFiscal.VALIDACAO_ERRO
             )
-            nota.mensagem_retorno = "\n".join(pendencias) if pendencias else "Venda pronta para emissao fiscal."
+            nota.mensagem_retorno = "\n".join(pendencias) if pendencias else "Venda pronta para preparar XML fiscal interno."
             nota.enviado_em = TimeService.now_utc_naive()
 
             FiscalRepository.salvar()
@@ -195,6 +221,8 @@ class FiscalService:
                     empresa_id=venda.empresa_id,
                     venda_id=venda.id,
                     status=StatusNotaFiscal.PENDENTE,
+                    status_oficial=StatusOficialNotaFiscal.NAO_ENVIADA,
+                    modelo="NFC-e",
                 )
                 FiscalRepository.adicionar(nota)
                 FiscalRepository.flush()
@@ -202,7 +230,7 @@ class FiscalService:
             nota.configuracao_fiscal_id = configuracao.id if configuracao else None
             nota.ambiente = configuracao.ambiente if configuracao else AmbienteFiscal.HOMOLOGACAO
 
-            if nota.status == StatusNotaFiscal.EMITIDA:
+            if nota.status_oficial == StatusOficialNotaFiscal.AUTORIZADA:
                 return FiscalService._serializar_nota(nota)
 
             if pendencias:
@@ -218,17 +246,85 @@ class FiscalService:
             nota.recibo = FiscalService._gerar_recibo(nota.chave_acesso)
             nota.protocolo = FiscalService._gerar_protocolo(nota.chave_acesso)
             nota.xml_path = FiscalService._salvar_xml_nota(venda, configuracao, nota)
-            nota.status = StatusNotaFiscal.EMITIDA
+            nota.status = StatusNotaFiscal.XML_GERADO
+            nota.status_oficial = StatusOficialNotaFiscal.NAO_ENVIADA
             nota.mensagem_retorno = (
-                "NFC-e emitida internamente em modo operacional. "
-                "XML gerado e pronto para integracao/autorizacao SEFAZ."
+                "XML NFC-e gerado internamente. Envio homologado ao integrador fiscal ainda pendente."
             )
             nota.enviado_em = TimeService.now_utc_naive()
             nota.emitida_em = TimeService.now_utc_naive()
+
+            provider = get_fiscal_provider(configuracao)
+            idempotency_key = nota.idempotency_key_envio or f"nfce:{tenant_id}:{nota.venda_id}:{nota.serie}:{nota.numero}"
+            nota.idempotency_key_envio = idempotency_key
+            nota.referencia_externa = idempotency_key
+            nota.provider_codigo = provider.provider_codigo
+            nota.status = StatusNotaFiscal.ENVIADA_AUTORIZACAO
+            nota.status_oficial = StatusOficialNotaFiscal.EM_PROCESSAMENTO
+            resultado = provider.transmitir_nfce(nota, nota.xml_path, idempotency_key)
+            FiscalService._registrar_evento_fiscal(nota, resultado, f"envio:{idempotency_key}")
+
+            nota.codigo_retorno = resultado.codigo_retorno
+            nota.mensagem_retorno = resultado.mensagem
+            if resultado.success:
+                nota.status = StatusNotaFiscal.EMITIDA
+                nota.status_oficial = StatusOficialNotaFiscal.AUTORIZADA
+                nota.protocolo_oficial = resultado.protocolo
+                nota.protocolo = resultado.protocolo
+                nota.recibo = resultado.recibo
+                nota.chave_acesso = resultado.chave_acesso or nota.chave_acesso
+                nota.xml_assinado_path = resultado.xml_assinado_path
+                nota.xml_autorizado_path = resultado.xml_autorizado_path
+                nota.danfe_path = resultado.danfe_path
+                nota.xml_url = resultado.xml_url
+                nota.danfe_url = resultado.danfe_url
+                nota.autorizada_em = TimeService.now_utc_naive()
+            else:
+                nota.status = StatusNotaFiscal.REJEITADA
+                nota.status_oficial = StatusOficialNotaFiscal.REJEITADA
+
             configuracao.proximo_numero_nfce = nota.numero + 1
 
             FiscalRepository.salvar()
             nota = FiscalRepository.buscar_nota_por_venda(venda.id, tenant_id)
+            return FiscalService._serializar_nota(nota)
+        except Exception:
+            FiscalRepository.rollback()
+            raise
+
+    @staticmethod
+    def consultar_nota_venda(nota_id, tenant_id, escopo):
+        try:
+            empresa_ids = AcessoEmpresaService.filtrar_empresa_ids(escopo)
+            nota = FiscalRepository.buscar_nota_por_id(nota_id, tenant_id, empresa_ids=empresa_ids)
+            if not nota:
+                raise ValueError("Nota fiscal nao encontrada.")
+            provider = get_fiscal_provider(nota.configuracao_fiscal)
+            resultado = provider.consultar_nfce(nota)
+            FiscalService._aplicar_resultado_provider(nota, resultado)
+            FiscalService._registrar_evento_fiscal(nota, resultado, f"consulta:{nota.referencia_externa or nota.idempotency_key_envio}")
+            FiscalRepository.salvar()
+            return FiscalService._serializar_nota(nota)
+        except Exception:
+            FiscalRepository.rollback()
+            raise
+
+    @staticmethod
+    def cancelar_nota_venda(nota_id, justificativa, tenant_id, escopo):
+        try:
+            empresa_ids = AcessoEmpresaService.filtrar_empresa_ids(escopo)
+            nota = FiscalRepository.buscar_nota_por_id(nota_id, tenant_id, empresa_ids=empresa_ids)
+            if not nota:
+                raise ValueError("Nota fiscal nao encontrada.")
+            if nota.status_oficial != StatusOficialNotaFiscal.AUTORIZADA:
+                raise ValueError("Somente NFC-e autorizada pode ser cancelada.")
+            if nota.cancelada_em:
+                return FiscalService._serializar_nota(nota)
+            provider = get_fiscal_provider(nota.configuracao_fiscal)
+            resultado = provider.cancelar_nfce(nota, justificativa)
+            FiscalService._aplicar_resultado_provider(nota, resultado, cancelamento=True)
+            FiscalService._registrar_evento_fiscal(nota, resultado, f"cancelamento:{nota.referencia_externa or nota.idempotency_key_envio}")
+            FiscalRepository.salvar()
             return FiscalService._serializar_nota(nota)
         except Exception:
             FiscalRepository.rollback()
@@ -241,10 +337,23 @@ class FiscalService:
         if not nota:
             raise ValueError("Nota fiscal nao encontrada.")
         if nota.status != StatusNotaFiscal.EMITIDA or not nota.xml_path:
-            raise ValueError("A nota ainda nao possui XML emitido.")
+            raise ValueError("A nota ainda nao possui XML interno gerado.")
         path = Path(nota.xml_path)
         if not path.exists():
             raise ValueError("Arquivo XML da nota nao encontrado.")
+        return nota, path
+
+    @staticmethod
+    def obter_danfe_nota(nota_id, tenant_id, escopo):
+        empresa_ids = AcessoEmpresaService.filtrar_empresa_ids(escopo)
+        nota = FiscalRepository.buscar_nota_por_id(nota_id, tenant_id, empresa_ids=empresa_ids)
+        if not nota:
+            raise ValueError("Nota fiscal nao encontrada.")
+        if nota.status_oficial != StatusOficialNotaFiscal.AUTORIZADA or not nota.danfe_path:
+            raise ValueError("A nota ainda nao possui DANFE NFC-e autorizado/homologado.")
+        path = Path(nota.danfe_path)
+        if not path.exists():
+            raise ValueError("Arquivo DANFE da nota nao encontrado.")
         return nota, path
 
     @staticmethod
@@ -252,7 +361,7 @@ class FiscalService:
         pendencias = []
 
         if venda.status != StatusVenda.FINALIZADA:
-            pendencias.append("Somente vendas finalizadas podem seguir para emissao fiscal.")
+            pendencias.append("Somente vendas finalizadas podem seguir para preparacao fiscal.")
 
         if not configuracao:
             pendencias.append("A empresa nao possui configuracao fiscal cadastrada.")
@@ -267,7 +376,7 @@ class FiscalService:
             pendencias.append(certificado_detalhe)
 
         if not venda.itens:
-            pendencias.append("A venda nao possui itens para emissao.")
+            pendencias.append("A venda nao possui itens para preparacao fiscal.")
             return pendencias
 
         for item in venda.itens:
@@ -317,6 +426,15 @@ class FiscalService:
             "csc_token": "",
             "csc_token_configurado": bool(configuracao.csc_token),
             "contingencia_ativa": bool(configuracao.contingencia_ativa),
+            "integrador_provider": getattr(configuracao, "integrador_provider", None) or "mock_nfce",
+            "integrador_credencial_env": getattr(configuracao, "integrador_credencial_env", None) or "",
+            "focus_token_homologacao_configurado": bool(getattr(configuracao, "focus_token_homologacao", None)),
+            "focus_token_producao_configurado": bool(getattr(configuracao, "focus_token_producao", None)),
+            "focus_cnpj_emitente": getattr(configuracao, "focus_cnpj_emitente", None) or "",
+            "focus_status_configuracao": getattr(configuracao, "focus_status_configuracao", None) or "PENDENTE",
+            "focus_ultima_validacao_em": TimeService.serialize_utc_iso(getattr(configuracao, "focus_ultima_validacao_em", None)),
+            "focus_ultima_validacao_status": getattr(configuracao, "focus_ultima_validacao_status", None),
+            "focus_ultima_validacao_mensagem": getattr(configuracao, "focus_ultima_validacao_mensagem", None),
             "certificado_ok": certificado_ok,
             "certificado_detalhe": certificado_detalhe,
             "ultimo_teste_certificado_em": TimeService.serialize_utc_iso(configuracao.ultimo_teste_certificado_em),
@@ -336,17 +454,73 @@ class FiscalService:
             "venda_numero": nota.venda.numero_unico if nota.venda else None,
             "ambiente": getattr(nota.ambiente, "value", AmbienteFiscal.HOMOLOGACAO.value),
             "status": getattr(nota.status, "value", StatusNotaFiscal.PENDENTE.value),
+            "status_oficial": getattr(getattr(nota, "status_oficial", None), "value", StatusOficialNotaFiscal.NAO_ENVIADA.value),
+            "modelo": getattr(nota, "modelo", None) or "NFC-e",
+            "provider_codigo": getattr(nota, "provider_codigo", None),
+            "referencia_externa": getattr(nota, "referencia_externa", None),
             "serie": nota.serie,
             "numero": nota.numero,
             "chave_acesso": nota.chave_acesso,
             "protocolo": nota.protocolo,
+            "protocolo_oficial": getattr(nota, "protocolo_oficial", None),
             "recibo": nota.recibo,
             "xml_disponivel": bool(nota.xml_path),
+            "xml_autorizado_disponivel": bool(getattr(nota, "xml_autorizado_path", None)),
+            "danfe_disponivel": bool(getattr(nota, "danfe_path", None)),
+            "xml_url": getattr(nota, "xml_url", None),
+            "danfe_url": getattr(nota, "danfe_url", None),
+            "codigo_retorno": getattr(nota, "codigo_retorno", None),
             "mensagem_retorno": nota.mensagem_retorno,
             "enviado_em": TimeService.serialize_utc_iso(nota.enviado_em),
             "emitida_em": TimeService.serialize_utc_iso(nota.emitida_em),
+            "autorizada_em": TimeService.serialize_utc_iso(getattr(nota, "autorizada_em", None)),
             "cancelada_em": TimeService.serialize_utc_iso(nota.cancelada_em),
         }
+
+    @staticmethod
+    def _aplicar_resultado_provider(nota, resultado, cancelamento=False):
+        nota.provider_codigo = resultado.provider_codigo
+        nota.codigo_retorno = resultado.codigo_retorno
+        nota.mensagem_retorno = resultado.mensagem
+        nota.protocolo_oficial = resultado.protocolo or nota.protocolo_oficial
+        nota.protocolo = resultado.protocolo or nota.protocolo
+        nota.recibo = resultado.recibo or nota.recibo
+        nota.chave_acesso = resultado.chave_acesso or nota.chave_acesso
+        nota.xml_autorizado_path = resultado.xml_autorizado_path or nota.xml_autorizado_path
+        nota.danfe_path = resultado.danfe_path or nota.danfe_path
+        nota.xml_url = resultado.xml_url or getattr(nota, "xml_url", None)
+        nota.danfe_url = resultado.danfe_url or getattr(nota, "danfe_url", None)
+        if cancelamento and resultado.success:
+            nota.status = StatusNotaFiscal.CANCELADA
+            nota.status_oficial = StatusOficialNotaFiscal.CANCELADA
+            nota.cancelada_em = TimeService.now_utc_naive()
+        elif resultado.success:
+            nota.status = StatusNotaFiscal.EMITIDA
+            nota.status_oficial = StatusOficialNotaFiscal.AUTORIZADA
+            nota.autorizada_em = nota.autorizada_em or TimeService.now_utc_naive()
+        else:
+            nota.status = StatusNotaFiscal.REJEITADA
+            nota.status_oficial = StatusOficialNotaFiscal.REJEITADA
+
+    @staticmethod
+    def _registrar_evento_fiscal(nota, resultado, event_id):
+        existente = EventoFiscalNota.query.filter_by(
+            tenant_id=nota.tenant_id,
+            provider_codigo=resultado.provider_codigo,
+            event_id=event_id,
+        ).first()
+        if existente:
+            return
+        FiscalRepository.adicionar(EventoFiscalNota(
+            tenant_id=nota.tenant_id,
+            nota_id=nota.id,
+            provider_codigo=resultado.provider_codigo,
+            event_id=event_id,
+            tipo_evento="AUTORIZACAO_NFCE",
+            codigo_retorno=resultado.codigo_retorno,
+            mensagem=resultado.mensagem,
+            payload_resumido=resultado.raw_resumido,
+        ))
 
     @staticmethod
     def _build_default_config(empresa_id, tenant_id):
@@ -490,7 +664,7 @@ class FiscalService:
         FiscalService._xml_text(prot, "chNFe", nota.chave_acesso)
         FiscalService._xml_text(prot, "nProt", nota.protocolo)
         FiscalService._xml_text(prot, "digVal", hashlib.sha1(nota.chave_acesso.encode("utf-8")).hexdigest())
-        FiscalService._xml_text(prot, "xMotivo", "Autorizacao interna para fluxo operacional")
+        FiscalService._xml_text(prot, "xMotivo", "XML interno gerado sem autorizacao oficial SEFAZ")
 
         ET.indent(root, space="  ")
         return ET.tostring(root, encoding="unicode", xml_declaration=True)

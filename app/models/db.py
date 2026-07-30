@@ -103,9 +103,24 @@ class StatusNotaFiscal(enum.Enum):
     PENDENTE = "PENDENTE"
     VALIDACAO_ERRO = "VALIDACAO_ERRO"
     PRONTA_PARA_EMISSAO = "PRONTA_PARA_EMISSAO"
+    XML_GERADO = "XML_GERADO"
+    XML_ASSINADO = "XML_ASSINADO"
+    ENVIADA_AUTORIZACAO = "ENVIADA_AUTORIZACAO"
     EMITIDA = "EMITIDA"
     REJEITADA = "REJEITADA"
     CANCELADA = "CANCELADA"
+    INUTILIZADA = "INUTILIZADA"
+    CONTINGENCIA = "CONTINGENCIA"
+
+
+class StatusOficialNotaFiscal(enum.Enum):
+    NAO_ENVIADA = "NAO_ENVIADA"
+    EM_PROCESSAMENTO = "EM_PROCESSAMENTO"
+    AUTORIZADA = "AUTORIZADA"
+    REJEITADA = "REJEITADA"
+    CANCELADA = "CANCELADA"
+    INUTILIZADA = "INUTILIZADA"
+    CONTINGENCIA = "CONTINGENCIA"
 
 
 class LayoutArquivoBoleto(enum.Enum):
@@ -152,8 +167,22 @@ class StatusBoleto(enum.Enum):
     BAIXA_MANUAL = "BAIXA_MANUAL"
 
 
+class StatusBancarioBoleto(enum.Enum):
+    NAO_REGISTRADO = "NAO_REGISTRADO"
+    REGISTRO_SOLICITADO = "REGISTRO_SOLICITADO"
+    REGISTRADO = "REGISTRADO"
+    REJEITADO = "REJEITADO"
+    PAGO = "PAGO"
+    BAIXADO = "BAIXADO"
+    CANCELADO = "CANCELADO"
+
+
 class TipoEventoBoleto(enum.Enum):
     EMISSAO = "EMISSAO"
+    REGISTRO_SOLICITADO = "REGISTRO_SOLICITADO"
+    REGISTRO_BANCARIO = "REGISTRO_BANCARIO"
+    REGISTRO_REJEITADO = "REGISTRO_REJEITADO"
+    WEBHOOK_BANCARIO = "WEBHOOK_BANCARIO"
     VENCIMENTO = "VENCIMENTO"
     PAGAMENTO = "PAGAMENTO"
     PAGAMENTO_PARCIAL = "PAGAMENTO_PARCIAL"
@@ -866,6 +895,37 @@ class RegraJurosMulta(ModeloBase):
     )
 
 
+class ConfiguracaoAsaasEmpresa(ModeloBase):
+    __tablename__ = "configuracoes_asaas_empresa"
+
+    empresa_id = db.Column(db.Integer, db.ForeignKey("empresas.id"), nullable=False)
+    ambiente = db.Column(db.String(20), nullable=False, default="sandbox")
+    api_key = db.Column(db.String(500), nullable=True)
+    wallet_id = db.Column(db.String(120), nullable=True)
+    provider_codigo = db.Column(db.String(80), nullable=False, default="asaas")
+    status_configuracao = db.Column(db.String(30), nullable=False, default="PENDENTE")
+    ultima_validacao_em = db.Column(db.DateTime, nullable=True)
+    ultima_validacao_status = db.Column(db.String(30), nullable=True)
+    ultima_validacao_mensagem = db.Column(db.Text, nullable=True)
+    webhook_url = db.Column(db.String(255), nullable=True)
+    webhook_auth_token = db.Column(db.String(500), nullable=True)
+    webhook_ativo = db.Column(db.Boolean, nullable=False, default=False)
+    dias_apos_vencimento_cancelamento = db.Column(db.Integer, nullable=True)
+    notificacoes_desabilitadas = db.Column(db.Boolean, nullable=False, default=True)
+    ativo = db.Column(db.Boolean, nullable=False, default=True)
+
+    empresa = db.relationship(
+        "Empresa",
+        backref=db.backref("configuracao_asaas", uselist=False, lazy=True, cascade="all, delete-orphan"),
+    )
+
+    __table_args__ = (
+        UniqueConstraint("tenant_id", "empresa_id", name="uq_config_asaas_empresa_tenant"),
+        CheckConstraint("ambiente IN ('sandbox', 'producao')", name="ck_config_asaas_ambiente"),
+        Index("ix_config_asaas_tenant_empresa", "tenant_id", "empresa_id"),
+    )
+
+
 class Boleto(ModeloBase):
     __tablename__ = "boletos"
 
@@ -877,6 +937,17 @@ class Boleto(ModeloBase):
     numero_boleto = db.Column(db.String(60), nullable=False)
     nosso_numero = db.Column(db.String(80), nullable=True)
     status = db.Column(db.Enum(StatusBoleto), nullable=False, default=StatusBoleto.PENDENTE)
+    status_bancario = db.Column(db.Enum(StatusBancarioBoleto), nullable=False, default=StatusBancarioBoleto.NAO_REGISTRADO)
+    provider_codigo = db.Column(db.String(80), nullable=True)
+    ambiente_bancario = db.Column(db.String(30), nullable=False, default="HOMOLOGACAO")
+    idempotency_key_registro = db.Column(db.String(120), nullable=True)
+    registro_bancario_id = db.Column(db.String(120), nullable=True)
+    cliente_externo_id = db.Column(db.String(120), nullable=True)
+    protocolo_registro = db.Column(db.String(120), nullable=True)
+    mensagem_retorno_banco = db.Column(db.Text, nullable=True)
+    registrado_em = db.Column(db.DateTime, nullable=True)
+    ultimo_retorno_bancario_em = db.Column(db.DateTime, nullable=True)
+    origem_baixa = db.Column(db.String(40), nullable=True)
     valor_nominal = db.Column(db.Numeric(12, 2), nullable=False, default=0)
     valor_pago = db.Column(db.Numeric(12, 2), nullable=False, default=0)
     valor_restante = db.Column(db.Numeric(12, 2), nullable=False, default=0)
@@ -890,6 +961,7 @@ class Boleto(ModeloBase):
     linha_digitavel = db.Column(db.String(160), nullable=True)
     arquivo_pdf_path = db.Column(db.String(255), nullable=True)
     arquivo_html_path = db.Column(db.String(255), nullable=True)
+    boleto_url = db.Column(db.String(500), nullable=True)
     observacao = db.Column(db.Text, nullable=True)
 
     empresa = db.relationship("Empresa", backref=db.backref("boletos", lazy=True))
@@ -906,6 +978,7 @@ class Boleto(ModeloBase):
         CheckConstraint("valor_pago >= 0", name="ck_boleto_valor_pago_non_negative"),
         CheckConstraint("valor_restante >= 0", name="ck_boleto_valor_restante_non_negative"),
         Index("ix_boleto_tenant_empresa_status", "tenant_id", "empresa_id", "status"),
+        Index("ix_boleto_tenant_empresa_status_bancario", "tenant_id", "empresa_id", "status_bancario"),
         Index("ix_boleto_tenant_empresa_vencimento", "tenant_id", "empresa_id", "data_vencimento"),
     )
 
@@ -959,6 +1032,47 @@ class EventoBoleto(db.Model):
 
     __table_args__ = (
         Index("ix_evento_boleto_boleto_tipo_data", "boleto_id", "tipo_evento", "criado_em"),
+    )
+
+
+class ArquivoBoleto(db.Model):
+    __tablename__ = "arquivos_boleto"
+
+    id = db.Column(db.Integer, primary_key=True)
+    tenant_id = db.Column(db.Integer, db.ForeignKey("tenants.id"), nullable=False, index=True)
+    boleto_id = db.Column(db.Integer, db.ForeignKey("boletos.id"), nullable=False)
+    tipo = db.Column(db.String(30), nullable=False)
+    ambiente = db.Column(db.String(30), nullable=False, default="HOMOLOGACAO")
+    path = db.Column(db.String(255), nullable=False)
+    provider_codigo = db.Column(db.String(80), nullable=True)
+    identificador_externo = db.Column(db.String(120), nullable=True)
+    criado_em = db.Column(db.DateTime, nullable=False, default=TimeService.now_utc_naive)
+
+    boleto = db.relationship("Boleto", backref=db.backref("arquivos", lazy=True, cascade="all, delete-orphan"))
+
+    __table_args__ = (
+        Index("ix_arquivo_boleto_tenant_boleto_tipo", "tenant_id", "boleto_id", "tipo"),
+    )
+
+
+class RetornoBancarioBoleto(db.Model):
+    __tablename__ = "retornos_bancarios_boleto"
+
+    id = db.Column(db.Integer, primary_key=True)
+    tenant_id = db.Column(db.Integer, db.ForeignKey("tenants.id"), nullable=False, index=True)
+    boleto_id = db.Column(db.Integer, db.ForeignKey("boletos.id"), nullable=False)
+    provider_codigo = db.Column(db.String(80), nullable=False)
+    event_id = db.Column(db.String(120), nullable=False)
+    tipo_evento = db.Column(db.String(60), nullable=False)
+    status_processamento = db.Column(db.String(30), nullable=False, default="PROCESSADO")
+    payload_resumido = db.Column(db.Text, nullable=True)
+    criado_em = db.Column(db.DateTime, nullable=False, default=TimeService.now_utc_naive)
+
+    boleto = db.relationship("Boleto", backref=db.backref("retornos_bancarios", lazy=True, cascade="all, delete-orphan"))
+
+    __table_args__ = (
+        UniqueConstraint("tenant_id", "provider_codigo", "event_id", name="uq_retorno_bancario_evento"),
+        Index("ix_retorno_bancario_tenant_boleto", "tenant_id", "boleto_id"),
     )
 
 
@@ -1063,6 +1177,15 @@ class ConfiguracaoFiscalEmpresa(ModeloBase):
     certificado_senha_env = db.Column(db.String(120), nullable=True)
     csc_id = db.Column(db.String(20), nullable=True)
     csc_token = db.Column(db.String(255), nullable=True)
+    integrador_provider = db.Column(db.String(80), nullable=False, default="mock_nfce")
+    integrador_credencial_env = db.Column(db.String(120), nullable=True)
+    focus_token_homologacao = db.Column(db.String(500), nullable=True)
+    focus_token_producao = db.Column(db.String(500), nullable=True)
+    focus_cnpj_emitente = db.Column(db.String(14), nullable=True)
+    focus_status_configuracao = db.Column(db.String(30), nullable=False, default="PENDENTE")
+    focus_ultima_validacao_em = db.Column(db.DateTime, nullable=True)
+    focus_ultima_validacao_status = db.Column(db.String(30), nullable=True)
+    focus_ultima_validacao_mensagem = db.Column(db.Text, nullable=True)
     contingencia_ativa = db.Column(db.Boolean, nullable=False, default=False)
     ultimo_teste_certificado_em = db.Column(db.DateTime, nullable=True)
     ultimo_teste_certificado_status = db.Column(db.String(30), nullable=True)
@@ -1088,15 +1211,28 @@ class NotaFiscalVenda(ModeloBase):
     configuracao_fiscal_id = db.Column(db.Integer, db.ForeignKey("configuracoes_fiscais_empresa.id"), nullable=True)
     ambiente = db.Column(db.Enum(AmbienteFiscal), nullable=False, default=AmbienteFiscal.HOMOLOGACAO)
     status = db.Column(db.Enum(StatusNotaFiscal), nullable=False, default=StatusNotaFiscal.PENDENTE)
+    status_oficial = db.Column(db.Enum(StatusOficialNotaFiscal), nullable=False, default=StatusOficialNotaFiscal.NAO_ENVIADA)
+    modelo = db.Column(db.String(10), nullable=False, default="NFC-e")
+    provider_codigo = db.Column(db.String(80), nullable=True)
+    idempotency_key_envio = db.Column(db.String(120), nullable=True)
+    referencia_externa = db.Column(db.String(120), nullable=True)
     serie = db.Column(db.Integer, nullable=True)
     numero = db.Column(db.Integer, nullable=True)
     chave_acesso = db.Column(db.String(60), nullable=True)
     recibo = db.Column(db.String(60), nullable=True)
     protocolo = db.Column(db.String(60), nullable=True)
+    protocolo_oficial = db.Column(db.String(80), nullable=True)
     xml_path = db.Column(db.String(255), nullable=True)
+    xml_assinado_path = db.Column(db.String(255), nullable=True)
+    xml_autorizado_path = db.Column(db.String(255), nullable=True)
+    danfe_path = db.Column(db.String(255), nullable=True)
+    danfe_url = db.Column(db.String(500), nullable=True)
+    xml_url = db.Column(db.String(500), nullable=True)
+    codigo_retorno = db.Column(db.String(20), nullable=True)
     mensagem_retorno = db.Column(db.Text, nullable=True)
     enviado_em = db.Column(db.DateTime, nullable=True)
     emitida_em = db.Column(db.DateTime, nullable=True)
+    autorizada_em = db.Column(db.DateTime, nullable=True)
     cancelada_em = db.Column(db.DateTime, nullable=True)
 
     empresa = db.relationship("Empresa", backref=db.backref("notas_fiscais", lazy=True))
@@ -1110,6 +1246,30 @@ class NotaFiscalVenda(ModeloBase):
         UniqueConstraint("tenant_id", "venda_id", name="uq_nota_fiscal_venda_tenant"),
         UniqueConstraint("tenant_id", "empresa_id", "serie", "numero", name="uq_nota_fiscal_tenant_empresa_serie_numero"),
         Index("ix_nota_fiscal_tenant_empresa_status", "tenant_id", "empresa_id", "status"),
+        Index("ix_nota_fiscal_tenant_empresa_status_oficial", "tenant_id", "empresa_id", "status_oficial"),
+    )
+
+
+class EventoFiscalNota(db.Model):
+    __tablename__ = "eventos_fiscais_nota"
+
+    id = db.Column(db.Integer, primary_key=True)
+    tenant_id = db.Column(db.Integer, db.ForeignKey("tenants.id"), nullable=False, index=True)
+    nota_id = db.Column(db.Integer, db.ForeignKey("notas_fiscais_venda.id"), nullable=False)
+    provider_codigo = db.Column(db.String(80), nullable=False)
+    event_id = db.Column(db.String(120), nullable=False)
+    tipo_evento = db.Column(db.String(60), nullable=False)
+    status_processamento = db.Column(db.String(30), nullable=False, default="PROCESSADO")
+    codigo_retorno = db.Column(db.String(20), nullable=True)
+    mensagem = db.Column(db.Text, nullable=True)
+    payload_resumido = db.Column(db.Text, nullable=True)
+    criado_em = db.Column(db.DateTime, nullable=False, default=TimeService.now_utc_naive)
+
+    nota = db.relationship("NotaFiscalVenda", backref=db.backref("eventos_fiscais", lazy=True, cascade="all, delete-orphan"))
+
+    __table_args__ = (
+        UniqueConstraint("tenant_id", "provider_codigo", "event_id", name="uq_evento_fiscal_provider_evento"),
+        Index("ix_evento_fiscal_tenant_nota", "tenant_id", "nota_id"),
     )
 
 

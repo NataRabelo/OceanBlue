@@ -20,6 +20,7 @@ from app.models.db import (
     Produto,
     ProdutoEmpresa,
     StatusMensagemCliente,
+    StatusOficialNotaFiscal,
     StatusNotaFiscal,
     StatusVenda,
     Tenant,
@@ -335,10 +336,14 @@ class FluxoPdvFinanceiroTestCase(unittest.TestCase):
             registro = NotaFiscalVenda.query.filter_by(venda_id=venda["id"]).first()
 
             self.assertEqual(nota["status"], StatusNotaFiscal.EMITIDA.value)
+            self.assertEqual(nota["status_oficial"], StatusOficialNotaFiscal.AUTORIZADA.value)
             self.assertEqual(nota["serie"], 3)
             self.assertEqual(nota["numero"], 42)
             self.assertEqual(len(nota["chave_acesso"]), 44)
             self.assertTrue(os.path.exists(registro.xml_path))
+            self.assertTrue(os.path.exists(registro.xml_autorizado_path))
+            self.assertTrue(os.path.exists(registro.danfe_path))
+            self.assertIsNotNone(registro.protocolo_oficial)
             self.assertIn("<NFCe", open(registro.xml_path, encoding="utf-8").read())
             self.assertEqual(self.empresa.configuracao_fiscal.proximo_numero_nfce, 43)
         finally:

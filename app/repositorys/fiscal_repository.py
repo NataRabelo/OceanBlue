@@ -1,7 +1,7 @@
 from sqlalchemy.orm import joinedload
 
 from app.extensions import db
-from app.models.db import ConfiguracaoFiscalEmpresa, Empresa, ItemVenda, NotaFiscalVenda, Produto, ProdutoEmpresa, Venda
+from app.models.db import ConfiguracaoFiscalEmpresa, Empresa, ItemVenda, NotaFiscalVenda, PagamentoVenda, Produto, ProdutoEmpresa, Venda
 
 
 class FiscalRepository:
@@ -101,7 +101,11 @@ class FiscalRepository:
             NotaFiscalVenda.query
             .options(
                 joinedload(NotaFiscalVenda.empresa),
-                joinedload(NotaFiscalVenda.venda),
+                joinedload(NotaFiscalVenda.configuracao_fiscal),
+                joinedload(NotaFiscalVenda.venda).joinedload(Venda.empresa),
+                joinedload(NotaFiscalVenda.venda).joinedload(Venda.cliente),
+                joinedload(NotaFiscalVenda.venda).joinedload(Venda.itens).joinedload(ItemVenda.produto),
+                joinedload(NotaFiscalVenda.venda).joinedload(Venda.pagamentos).joinedload(PagamentoVenda.forma_pagamento),
             )
             .filter(
                 NotaFiscalVenda.id == nota_id,

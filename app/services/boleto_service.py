@@ -5,19 +5,25 @@ from app.extensions import db
 from app.models.db import (
     BaseCalculoJurosMulta,
     Boleto,
+    ArquivoBoleto,
     CategoriaFinanceira,
+    ConfiguracaoAsaasEmpresa,
     ConfiguracaoParcelamento,
     EventoBoleto,
     FormaPagamento,
     LancamentoFinanceiro,
     ParcelaBoleto,
     RegraJurosMulta,
+    RetornoBancarioBoleto,
+    StatusBancarioBoleto,
     StatusBoleto,
     TipoEventoBoleto,
     TipoFinanceiro,
     TipoJurosBoleto,
     TipoMultaBoleto,
 )
+from app.security.field_crypto import FieldCrypto
+from app.services.boleto_provider import get_boleto_provider
 from app.repositorys.boleto_repository import BoletoRepository
 from app.services.acesso_empresa_service import AcessoEmpresaService
 from app.services.time_service import TimeService
@@ -25,6 +31,79 @@ from app.services.tenant_bootstrap_service import TenantBootstrapService
 
 
 class BoletoService:
+    @staticmethod
+    def obter_configuracao_asaas(tenant_id, escopo, empresa_id):
+        AcessoEmpresaService.validar_empresa(empresa_id, escopo)
+        config = ConfiguracaoAsaasEmpresa.query.filter_by(tenant_id=tenant_id, empresa_id=empresa_id).first()
+        if not config:
+            return {
+                "empresa_id": empresa_id,
+                "ambiente": "sandbox",
+                "api_key_configurada": False,
+                "webhook_auth_token_configurado": False,
+                "status_configuracao": "PENDENTE",
+                "ativo": False,
+                "pendencias": ["Token Asaas nao configurado."],
+            }
+        return BoletoService._serializar_configuracao_asaas(config)
+
+    @staticmethod
+    def atualizar_configuracao_asaas(tenant_id, escopo, empresa_id, data):
+        try:
+            AcessoEmpresaService.validar_empresa(empresa_id, escopo)
+            config = ConfiguracaoAsaasEmpresa.query.filter_by(tenant_id=tenant_id, empresa_id=empresa_id).first()
+            if not config:
+                config = ConfiguracaoAsaasEmpresa(tenant_id=tenant_id, empresa_id=empresa_id)
+                BoletoRepository.adicionar(config)
+            ambiente = (data.get("ambiente") or "sandbox").strip().lower()
+            if ambiente not in {"sandbox", "producao"}:
+                raise ValueError("Ambiente Asaas invalido.")
+            config.ambiente = ambiente
+            if "api_key" in data and data.get("api_key"):
+                config.api_key = FieldCrypto.encrypt(data.get("api_key"))
+            config.wallet_id = (data.get("wallet_id") or "").strip() or None
+            config.webhook_url = (data.get("webhook_url") or "").strip() or None
+            if "webhook_auth_token" in data and data.get("webhook_auth_token"):
+                config.webhook_auth_token = FieldCrypto.encrypt(data.get("webhook_auth_token"))
+            config.webhook_ativo = BoletoService._to_bool(data.get("webhook_ativo"), default=False)
+            dias = data.get("dias_apos_vencimento_cancelamento")
+            config.dias_apos_vencimento_cancelamento = int(dias) if dias not in (None, "") else None
+            config.notificacoes_desabilitadas = BoletoService._to_bool(data.get("notificacoes_desabilitadas"), default=True)
+            config.ativo = BoletoService._to_bool(data.get("ativo"), default=True)
+            config.status_configuracao = "CONFIGURADO" if config.api_key else "PENDENTE"
+            BoletoRepository.salvar()
+            return BoletoService._serializar_configuracao_asaas(config)
+        except Exception:
+            BoletoRepository.rollback()
+            raise
+
+    @staticmethod
+    def _serializar_configuracao_asaas(config):
+        pendencias = []
+        if not config.api_key:
+            pendencias.append("Token Asaas nao configurado.")
+        if config.webhook_ativo and not config.webhook_auth_token:
+            pendencias.append("Token de autenticacao do webhook Asaas nao configurado.")
+        return {
+            "empresa_id": config.empresa_id,
+            "ambiente": config.ambiente,
+            "provider_codigo": config.provider_codigo,
+            "api_key_configurada": bool(config.api_key),
+            "wallet_id": config.wallet_id,
+            "status_configuracao": config.status_configuracao,
+            "ultima_validacao_em": TimeService.serialize_utc_iso(config.ultima_validacao_em),
+            "ultima_validacao_status": config.ultima_validacao_status,
+            "ultima_validacao_mensagem": config.ultima_validacao_mensagem,
+            "webhook_url": config.webhook_url,
+            "webhook_auth_token_configurado": bool(config.webhook_auth_token),
+            "webhook_ativo": bool(config.webhook_ativo),
+            "dias_apos_vencimento_cancelamento": config.dias_apos_vencimento_cancelamento,
+            "notificacoes_desabilitadas": bool(config.notificacoes_desabilitadas),
+            "ativo": bool(config.ativo),
+            "apto_producao": config.ambiente == "producao" and not pendencias,
+            "pendencias": pendencias,
+        }
+
     @staticmethod
     def listar_bancos_emissores(tenant_id, escopo, empresa_id=None, ativo=None):
         empresa_ids = AcessoEmpresaService.filtrar_empresa_ids(escopo)
@@ -152,6 +231,9 @@ class BoletoService:
                 numero_boleto=numero_boleto,
                 nosso_numero=data.get("nosso_numero"),
                 status=StatusBoleto.PENDENTE,
+                status_bancario=StatusBancarioBoleto.NAO_REGISTRADO,
+                provider_codigo=None,
+                ambiente_bancario="HOMOLOGACAO" if getattr(banco_emissor.ambiente, "value", "sandbox") == "sandbox" else "PRODUCAO",
                 valor_nominal=valor_nominal,
                 valor_pago=Decimal("0.00"),
                 valor_restante=valor_nominal,
@@ -174,7 +256,126 @@ class BoletoService:
             boleto.status = StatusBoleto.EMITIDO if parcelas else StatusBoleto.PENDENTE
             if parcelas:
                 boleto.valor_restante = sum((p.valor_restante or Decimal("0.00")) for p in parcelas)
-            BoletoService._registrar_evento(boleto, None, TipoEventoBoleto.EMISSAO, "Boleto emitido", None, funcionario_id)
+            BoletoService._registrar_evento(boleto, None, TipoEventoBoleto.EMISSAO, "Boleto criado internamente", None, funcionario_id)
+            BoletoRepository.salvar()
+            return BoletoService.serializar_boleto(boleto)
+        except Exception:
+            BoletoRepository.rollback()
+            raise
+
+    @staticmethod
+    def registrar_boleto(tenant_id, escopo, boleto_id, funcionario_id):
+        try:
+            boleto = BoletoRepository.buscar_boleto(boleto_id, tenant_id)
+            if not boleto:
+                raise LookupError("Boleto nao encontrado.")
+            AcessoEmpresaService.validar_empresa(boleto.empresa_id, escopo)
+            if boleto.status_bancario == StatusBancarioBoleto.REGISTRADO:
+                return BoletoService.serializar_boleto(boleto)
+            if boleto.status in [StatusBoleto.PAGO, StatusBoleto.CANCELADO, StatusBoleto.ESTORNADO]:
+                raise ValueError("Esse boleto nao pode ser registrado no banco.")
+
+            provider = get_boleto_provider(boleto.banco_emissor)
+            idempotency_key = boleto.idempotency_key_registro or f"boleto:{tenant_id}:{boleto.id}:{boleto.numero_boleto}"
+            boleto.idempotency_key_registro = idempotency_key
+            boleto.status_bancario = StatusBancarioBoleto.REGISTRO_SOLICITADO
+            boleto.provider_codigo = provider.provider_codigo
+            BoletoService._registrar_evento(boleto, None, TipoEventoBoleto.REGISTRO_SOLICITADO, "Registro bancario solicitado ao provider.", None, funcionario_id)
+            resultado = provider.registrar(boleto, idempotency_key)
+
+            boleto.provider_codigo = resultado.provider_codigo
+            boleto.mensagem_retorno_banco = resultado.mensagem
+            if resultado.success:
+                boleto.status_bancario = StatusBancarioBoleto.REGISTRADO
+                boleto.registro_bancario_id = resultado.external_id
+                boleto.cliente_externo_id = resultado.customer_id
+                boleto.protocolo_registro = resultado.protocolo
+                boleto.nosso_numero = resultado.nosso_numero
+                boleto.codigo_barras = resultado.codigo_barras
+                boleto.linha_digitavel = resultado.linha_digitavel
+                boleto.arquivo_pdf_path = resultado.pdf_path
+                boleto.arquivo_html_path = resultado.html_path
+                boleto.boleto_url = resultado.boleto_url
+                boleto.registrado_em = TimeService.now_utc_naive()
+                BoletoService._registrar_arquivo_boleto(boleto, "PDF", resultado.pdf_path, resultado)
+                BoletoService._registrar_arquivo_boleto(boleto, "HTML", resultado.html_path, resultado)
+                BoletoService._registrar_evento(boleto, None, TipoEventoBoleto.REGISTRO_BANCARIO, "Boleto registrado em ambiente de homologacao.", None, funcionario_id)
+            else:
+                boleto.status_bancario = StatusBancarioBoleto.REJEITADO
+                BoletoService._registrar_evento(boleto, None, TipoEventoBoleto.REGISTRO_REJEITADO, resultado.mensagem or "Registro bancario rejeitado.", None, funcionario_id)
+
+            BoletoRepository.salvar()
+            return BoletoService.serializar_boleto(boleto)
+        except Exception:
+            BoletoRepository.rollback()
+            raise
+
+    @staticmethod
+    def consultar_status_bancario(tenant_id, escopo, boleto_id, funcionario_id):
+        try:
+            boleto = BoletoRepository.buscar_boleto(boleto_id, tenant_id)
+            if not boleto:
+                raise LookupError("Boleto nao encontrado.")
+            AcessoEmpresaService.validar_empresa(boleto.empresa_id, escopo)
+            provider = get_boleto_provider(boleto.banco_emissor)
+            resultado = provider.consultar(boleto)
+            boleto.provider_codigo = resultado.provider_codigo
+            boleto.mensagem_retorno_banco = resultado.mensagem
+            boleto.codigo_barras = resultado.codigo_barras or boleto.codigo_barras
+            boleto.linha_digitavel = resultado.linha_digitavel or boleto.linha_digitavel
+            boleto.boleto_url = resultado.boleto_url or getattr(boleto, "boleto_url", None)
+            boleto.ultimo_retorno_bancario_em = TimeService.now_utc_naive()
+            if resultado.external_status in ["RECEIVED", "CONFIRMED", "RECEIVED_IN_CASH"]:
+                boleto.status_bancario = StatusBancarioBoleto.PAGO
+            elif resultado.external_status in ["OVERDUE", "PENDING"]:
+                boleto.status_bancario = StatusBancarioBoleto.REGISTRADO
+            BoletoService._registrar_evento(boleto, None, TipoEventoBoleto.WEBHOOK_BANCARIO, resultado.mensagem or "Consulta bancaria executada.", None, funcionario_id)
+            BoletoRepository.salvar()
+            return BoletoService.serializar_boleto(boleto)
+        except Exception:
+            BoletoRepository.rollback()
+            raise
+
+    @staticmethod
+    def processar_retorno_bancario(tenant_id, escopo, boleto_id, data, funcionario_id):
+        try:
+            boleto = BoletoRepository.buscar_boleto(boleto_id, tenant_id)
+            if not boleto:
+                raise LookupError("Boleto nao encontrado.")
+            AcessoEmpresaService.validar_empresa(boleto.empresa_id, escopo)
+            provider = get_boleto_provider(boleto.banco_emissor)
+            evento = provider.processar_retorno(boleto, data or {})
+            event_id = evento.get("event_id") or f"{provider.provider_codigo}:{boleto.id}:{evento.get('tipo_evento')}:{evento.get('valor_pago')}"
+            existente = RetornoBancarioBoleto.query.filter_by(
+                tenant_id=tenant_id,
+                provider_codigo=provider.provider_codigo,
+                event_id=event_id,
+            ).first()
+            if existente:
+                return BoletoService.serializar_boleto(boleto)
+
+            retorno = RetornoBancarioBoleto(
+                tenant_id=tenant_id,
+                boleto_id=boleto.id,
+                provider_codigo=provider.provider_codigo,
+                event_id=event_id,
+                tipo_evento=evento.get("tipo_evento") or "PAGAMENTO",
+                payload_resumido=str(data or {})[:2000],
+            )
+            BoletoRepository.adicionar(retorno)
+            boleto.ultimo_retorno_bancario_em = TimeService.now_utc_naive()
+            if evento.get("external_id") and not boleto.registro_bancario_id:
+                boleto.registro_bancario_id = evento.get("external_id")
+            if evento.get("external_status"):
+                boleto.mensagem_retorno_banco = f"Status externo: {evento.get('external_status')}"
+            BoletoService._registrar_evento(boleto, None, TipoEventoBoleto.WEBHOOK_BANCARIO, evento.get("mensagem") or "Retorno bancario recebido.", None, funcionario_id)
+
+            if (evento.get("tipo_evento") or "").upper() in {"PAGAMENTO", "PAGO", "LIQUIDADO"}:
+                resultado = BoletoService._aplicar_baixa(boleto, tenant_id, evento.get("valor_pago"), funcionario_id, origem="BANCARIA")
+                boleto.status_bancario = StatusBancarioBoleto.PAGO if boleto.status == StatusBoleto.PAGO else boleto.status_bancario
+                BoletoRepository.salvar()
+                return resultado
+
             BoletoRepository.salvar()
             return BoletoService.serializar_boleto(boleto)
         except Exception:
@@ -227,29 +428,7 @@ class BoletoService:
             if boleto.valor_restante < valor:
                 raise ValueError("valor_pago nao pode exceder o valor restante do boleto.")
 
-            boleto.valor_pago = (boleto.valor_pago + valor).quantize(Decimal("0.01"))
-            boleto.valor_restante = (boleto.valor_restante - valor).quantize(Decimal("0.01"))
-            boleto.data_pagamento = TimeService.now_utc_naive()
-            boleto.data_baixa = TimeService.now_utc_naive()
-            boleto.status = StatusBoleto.PAGO if boleto.valor_restante <= Decimal("0.00") else StatusBoleto.PARCIALMENTE_PAGO
-
-            lancamento = LancamentoFinanceiro(
-                tenant_id=tenant_id,
-                empresa_id=boleto.empresa_id,
-                funcionario_id=funcionario_id,
-                categoria_id=boleto.categoria_id,
-                forma_pagamento_id=boleto.forma_pagamento_id,
-                boleto_id=boleto.id,
-                parcela_boleto_id=None,
-                tipo=TipoFinanceiro.ENTRADA,
-                descricao=f"Baixa de boleto {boleto.numero_boleto}",
-                valor=valor,
-                data_lancamento=TimeService.now_utc_naive(),
-                data_competencia=date.today(),
-                observacao="Baixa de boleto via service",
-            )
-            BoletoRepository.adicionar(lancamento)
-            BoletoService._registrar_evento(boleto, None, TipoEventoBoleto.PAGAMENTO, "Baixa registrada", valor, funcionario_id)
+            BoletoService._aplicar_baixa(boleto, tenant_id, valor, funcionario_id, origem="MANUAL")
             BoletoRepository.salvar()
             return BoletoService.serializar_boleto(boleto)
         except Exception:
@@ -294,7 +473,10 @@ class BoletoService:
                 total_juros += resultado["juros"]
                 total_multa += resultado["multa"]
 
-            boleto.valor_restante = (boleto.valor_restante + total_juros + total_multa).quantize(Decimal("0.01"))
+            boleto.valor_restante = sum(
+                (parcela.valor_restante or Decimal("0.00"))
+                for parcela in boleto.parcelas
+            ).quantize(Decimal("0.01"))
             if boleto.data_vencimento < data_ref and boleto.status == StatusBoleto.EMITIDO:
                 boleto.status = StatusBoleto.VENCIDO
             BoletoService._registrar_evento(boleto, None, TipoEventoBoleto.RECALCULO_JUROS, "Recalculo de juros/multa aplicado", total_juros + total_multa, funcionario_id)
@@ -359,6 +541,54 @@ class BoletoService:
         BoletoRepository.adicionar(evento)
 
     @staticmethod
+    def _registrar_arquivo_boleto(boleto, tipo, path, resultado):
+        if not path:
+            return
+        BoletoRepository.adicionar(ArquivoBoleto(
+            tenant_id=boleto.tenant_id,
+            boleto_id=boleto.id,
+            tipo=tipo,
+            ambiente=boleto.ambiente_bancario,
+            path=path,
+            provider_codigo=resultado.provider_codigo,
+            identificador_externo=resultado.external_id,
+        ))
+
+    @staticmethod
+    def _aplicar_baixa(boleto, tenant_id, valor, funcionario_id, origem="MANUAL"):
+        valor = BoletoService._to_decimal(valor, "valor_pago")
+        if valor <= 0:
+            raise ValueError("valor_pago deve ser maior que zero.")
+        if boleto.valor_restante < valor:
+            raise ValueError("valor_pago nao pode exceder o valor restante do boleto.")
+
+        boleto.valor_pago = (boleto.valor_pago + valor).quantize(Decimal("0.01"))
+        boleto.valor_restante = (boleto.valor_restante - valor).quantize(Decimal("0.01"))
+        boleto.data_pagamento = TimeService.now_utc_naive()
+        boleto.data_baixa = TimeService.now_utc_naive()
+        boleto.origem_baixa = origem
+        boleto.status = StatusBoleto.PAGO if boleto.valor_restante <= Decimal("0.00") else StatusBoleto.PARCIALMENTE_PAGO
+
+        lancamento = LancamentoFinanceiro(
+            tenant_id=tenant_id,
+            empresa_id=boleto.empresa_id,
+            funcionario_id=funcionario_id,
+            categoria_id=boleto.categoria_id,
+            forma_pagamento_id=boleto.forma_pagamento_id,
+            boleto_id=boleto.id,
+            parcela_boleto_id=None,
+            tipo=TipoFinanceiro.ENTRADA,
+            descricao=f"Baixa de boleto {boleto.numero_boleto}",
+            valor=valor,
+            data_lancamento=TimeService.now_utc_naive(),
+            data_competencia=date.today(),
+            observacao=f"Baixa de boleto via {origem.lower()}",
+        )
+        BoletoRepository.adicionar(lancamento)
+        BoletoService._registrar_evento(boleto, None, TipoEventoBoleto.PAGAMENTO, f"Baixa registrada via {origem.lower()}", valor, funcionario_id)
+        return BoletoService.serializar_boleto(boleto)
+
+    @staticmethod
     def _gerar_numero_boleto(tenant_id):
         return f"{tenant_id}-{datetime.now().strftime('%Y%m%d%H%M%S')}"
 
@@ -369,11 +599,22 @@ class BoletoService:
             "tenant_id": boleto.tenant_id,
             "empresa_id": boleto.empresa_id,
             "cliente_id": boleto.cliente_id,
+            "cliente_nome": boleto.cliente.nome if getattr(boleto, "cliente", None) else None,
             "venda_id": boleto.venda_id,
             "banco_emissor_id": boleto.banco_emissor_id,
+            "banco_emissor_nome": boleto.banco_emissor.banco_nome if getattr(boleto, "banco_emissor", None) else None,
             "numero_boleto": boleto.numero_boleto,
             "nosso_numero": boleto.nosso_numero,
             "status": boleto.status.value if boleto.status else None,
+            "status_bancario": boleto.status_bancario.value if getattr(boleto, "status_bancario", None) else None,
+            "provider_codigo": getattr(boleto, "provider_codigo", None),
+            "ambiente_bancario": getattr(boleto, "ambiente_bancario", None),
+            "registro_bancario_id": getattr(boleto, "registro_bancario_id", None),
+            "cliente_externo_id": getattr(boleto, "cliente_externo_id", None),
+            "protocolo_registro": getattr(boleto, "protocolo_registro", None),
+            "mensagem_retorno_banco": getattr(boleto, "mensagem_retorno_banco", None),
+            "registrado_em": TimeService.serialize_utc_iso(getattr(boleto, "registrado_em", None)),
+            "origem_baixa": getattr(boleto, "origem_baixa", None),
             "valor_nominal": str(BoletoService._to_decimal_value(boleto.valor_nominal)),
             "valor_pago": str(BoletoService._to_decimal_value(boleto.valor_pago)),
             "valor_restante": str(BoletoService._to_decimal_value(boleto.valor_restante)),
@@ -387,6 +628,7 @@ class BoletoService:
             "linha_digitavel": boleto.linha_digitavel,
             "arquivo_pdf_path": boleto.arquivo_pdf_path,
             "arquivo_html_path": boleto.arquivo_html_path,
+            "boleto_url": getattr(boleto, "boleto_url", None),
             "observacao": boleto.observacao,
             "parcelas": [{
                 "id": item.id,
@@ -447,3 +689,11 @@ class BoletoService:
             return datetime.strptime(str(value), "%Y-%m-%d").date()
         except ValueError:
             raise ValueError("Data invalida. Use o formato YYYY-MM-DD.")
+
+    @staticmethod
+    def _to_bool(value, default=False):
+        if value is None:
+            return default
+        if isinstance(value, bool):
+            return value
+        return str(value).strip().lower() in {"1", "true", "t", "sim", "yes", "on"}

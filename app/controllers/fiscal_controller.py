@@ -88,7 +88,7 @@ def prevalidar_venda():
         data = request.get_json(silent=True) or {}
         venda_id = data.get("venda_id")
         if not venda_id:
-            return jsonify({"success": False, "message": "Informe a venda para prevalidar a emissao."}), 400
+            return jsonify({"success": False, "message": "Informe a venda para prevalidar a preparacao fiscal."}), 400
 
         resultado = FiscalService.prevalidar_venda(int(venda_id), tenant_id, escopo)
         return jsonify({
@@ -110,12 +110,12 @@ def emitir_nota_venda():
         data = request.get_json(silent=True) or {}
         venda_id = data.get("venda_id")
         if not venda_id:
-            return jsonify({"success": False, "message": "Informe a venda para emitir a nota fiscal."}), 400
+            return jsonify({"success": False, "message": "Informe a venda para enviar a NFC-e em homologacao."}), 400
 
         nota = FiscalService.emitir_nota_venda(int(venda_id), tenant_id, escopo)
         return jsonify({
             "success": True,
-            "message": "Nota fiscal emitida e XML gerado com sucesso.",
+            "message": "NFC-e processada pelo integrador fiscal de homologacao.",
             "data": nota,
         })
     except Exception as e:
@@ -136,6 +136,52 @@ def baixar_xml_nota(nota_id):
             as_attachment=True,
             download_name=download_name,
             mimetype="application/xml",
+        )
+    except Exception as e:
+        return jsonify({"success": False, "message": str(e)}), 400
+
+
+@fiscal_bp.route("/notas/<int:nota_id>/consultar", methods=["POST"])
+@permission_required("visualizar_fiscal")
+def consultar_nota(nota_id):
+    try:
+        tenant_id = get_jwt().get("tenant_id")
+        funcionario_id = int(get_jwt_identity())
+        escopo = AcessoEmpresaService.obter_escopo(funcionario_id, tenant_id)
+        nota = FiscalService.consultar_nota_venda(nota_id, tenant_id, escopo)
+        return jsonify({"success": True, "message": "Status da NFC-e consultado.", "data": nota})
+    except Exception as e:
+        return jsonify({"success": False, "message": str(e)}), 400
+
+
+@fiscal_bp.route("/notas/<int:nota_id>/cancelar", methods=["POST"])
+@permission_required("gerenciar_fiscal")
+def cancelar_nota(nota_id):
+    try:
+        tenant_id = get_jwt().get("tenant_id")
+        funcionario_id = int(get_jwt_identity())
+        escopo = AcessoEmpresaService.obter_escopo(funcionario_id, tenant_id)
+        data = request.get_json(silent=True) or {}
+        nota = FiscalService.cancelar_nota_venda(nota_id, data.get("justificativa"), tenant_id, escopo)
+        return jsonify({"success": True, "message": "Cancelamento de NFC-e processado.", "data": nota})
+    except Exception as e:
+        return jsonify({"success": False, "message": str(e)}), 400
+
+
+@fiscal_bp.route("/notas/<int:nota_id>/danfe", methods=["GET"])
+@permission_required("visualizar_fiscal")
+def baixar_danfe_nota(nota_id):
+    try:
+        tenant_id = get_jwt().get("tenant_id")
+        funcionario_id = int(get_jwt_identity())
+        escopo = AcessoEmpresaService.obter_escopo(funcionario_id, tenant_id)
+        nota, path = FiscalService.obter_danfe_nota(nota_id, tenant_id, escopo)
+        download_name = f"danfe_nfce_{nota.serie}_{nota.numero}_{nota.chave_acesso}.html"
+        return send_file(
+            path,
+            as_attachment=True,
+            download_name=download_name,
+            mimetype="text/html",
         )
     except Exception as e:
         return jsonify({"success": False, "message": str(e)}), 400
