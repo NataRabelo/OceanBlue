@@ -3,6 +3,7 @@ import unittest
 from datetime import timedelta
 
 from app import create_app
+from tests.database import reset_test_database
 from app.extensions import db
 from app.models.db import (
     AuditLog,
@@ -24,7 +25,6 @@ from app.services.time_service import TimeService
 class PermissionsSecurityTestCase(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        os.environ["DATABASE_URL"] = "sqlite:///test_permissions_security.db"
         cls.app = create_app()
         cls.app_context = cls.app.app_context()
         cls.app_context.push()
@@ -32,12 +32,10 @@ class PermissionsSecurityTestCase(unittest.TestCase):
     @classmethod
     def tearDownClass(cls):
         db.session.remove()
-        db.drop_all()
         cls.app_context.pop()
 
     def setUp(self):
-        db.drop_all()
-        db.create_all()
+        reset_test_database()
 
         tenant = Tenant(nome="Tenant Seguranca")
         db.session.add(tenant)
@@ -141,6 +139,17 @@ class PermissionsSecurityTestCase(unittest.TestCase):
         self.assertNotIn("criar_lancamento_financeiro", escopo["permission_codes"])
         self.assertNotIn("fechar_caixa", escopo["permission_codes"])
         self.assertNotIn("visualizar_relatorio_financeiro", escopo["permission_codes"])
+
+    def test_authenticated_write_requires_csrf_token(self):
+        self._login_operador()
+        response = self.client.post("/api/produtos/", json={})
+        self.assertEqual(response.status_code, 401)
+        csrf_token = self.client.get_cookie("csrf_access_token").value
+        authenticated = self.client.post(
+            "/api/produtos/", json={}, headers={"X-CSRF-TOKEN": csrf_token},
+        )
+        self.assertEqual(authenticated.status_code, 400)
+        self.assertFalse(authenticated.json["success"])
 
     def test_login_nao_renderiza_financeiro_e_bloqueia_url_direta(self):
         self._login_operador()

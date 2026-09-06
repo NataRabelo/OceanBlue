@@ -429,4 +429,9 @@ def downgrade():
 
     op.drop_table('categorias_financeiras')
     op.drop_table('tenants')
+    for enum_name in (
+        'tipocategoriafinanceira', 'tipodesconto', 'tipoempresa', 'tipooperacaoenum',
+        'statusvenda', 'tipofinanceiro', 'tipomovimentoestoque', 'motivomovimentoestoque',
+    ):
+        sa.Enum(name=enum_name).drop(op.get_bind(), checkfirst=True)
     # ### end Alembic commands ###

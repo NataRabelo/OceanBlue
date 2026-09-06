@@ -5,6 +5,7 @@ from types import SimpleNamespace
 from unittest.mock import patch
 
 from app import create_app
+from tests.database import reset_test_database
 from app.extensions import db
 from app.models.db import (
     AdiantamentoFuncionario,
@@ -44,7 +45,6 @@ from app.services.tenant_bootstrap_service import TenantBootstrapService
 class FluxoPdvFinanceiroTestCase(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        os.environ["DATABASE_URL"] = "sqlite:///test_fluxo_pdv_financeiro.db"
         cls.app = create_app()
         cls.app_context = cls.app.app_context()
         cls.app_context.push()
@@ -52,12 +52,10 @@ class FluxoPdvFinanceiroTestCase(unittest.TestCase):
     @classmethod
     def tearDownClass(cls):
         db.session.remove()
-        db.drop_all()
         cls.app_context.pop()
 
     def setUp(self):
-        db.drop_all()
-        db.create_all()
+        reset_test_database()
 
         tenant = Tenant(nome="Tenant Teste")
         db.session.add(tenant)

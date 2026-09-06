@@ -2,6 +2,7 @@ import os
 import unittest
 
 from app import create_app
+from tests.database import reset_test_database
 from app.extensions import db
 from app.models.db import CategoriaProduto, Empresa, Funcionario, FuncionarioEmpresa, Tenant, TipoEmpresa
 from app.security.password import hash_password
@@ -13,7 +14,6 @@ from app.services.tenant_bootstrap_service import TenantBootstrapService
 class ProdutoServiceTestCase(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        os.environ["DATABASE_URL"] = "sqlite:///test_produto_service.db"
         cls.app = create_app()
         cls.app_context = cls.app.app_context()
         cls.app_context.push()
@@ -21,12 +21,10 @@ class ProdutoServiceTestCase(unittest.TestCase):
     @classmethod
     def tearDownClass(cls):
         db.session.remove()
-        db.drop_all()
         cls.app_context.pop()
 
     def setUp(self):
-        db.drop_all()
-        db.create_all()
+        reset_test_database()
 
         tenant = Tenant(nome="Tenant Produto")
         db.session.add(tenant)

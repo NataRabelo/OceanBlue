@@ -133,7 +133,7 @@ def upgrade():
                 sa.text(
                     """
                     INSERT INTO permissions (nome, codigo, descricao, ativo, criado_em, atualizado_em, tenant_id)
-                    VALUES (:nome, :codigo, :descricao, 1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, :tenant_id)
+                    VALUES (:nome, :codigo, :descricao, TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, :tenant_id)
                     """
                 ),
                 {
@@ -162,7 +162,7 @@ def upgrade():
                 sa.text(
                     """
                     INSERT INTO role (nome, codigo, descricao, ativo, criado_em, atualizado_em, tenant_id)
-                    VALUES (:nome, :codigo, :descricao, 1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, :tenant_id)
+                    VALUES (:nome, :codigo, :descricao, TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, :tenant_id)
                     """
                 ),
                 {

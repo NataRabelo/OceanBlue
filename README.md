@@ -15,11 +15,19 @@ OceanBlue PDV e um sistema web Flask para operacao de varejo em modelo SaaS mult
 
 ## Como rodar
 
+Para validar um checkout limpo sem `.env`:
+
+```sh
+docker compose -f compose.test.yml up --build --abort-on-container-exit --exit-code-from test
+```
+
+Veja [instalacao, testes e homologacao](docs/02-instalacao-e-ambiente/como-rodar-o-projeto.md) e [evidencias da Sprint 1 de producao](docs/evidencias/producao/sprint-01-execucao.md).
+
 1. Crie o arquivo `.env` a partir de `.env.example`.
 2. Configure `DATABASE_URL`, `SECRET_KEY`, `JWT_SECRET_KEY` e `FIELD_ENCRYPTION_KEY`.
-3. Instale dependencias com `pip install -r requirements.txt` ou use Docker.
+3. Instale dependencias com `pip install --require-hashes -r requirements.txt` ou use Docker.
 4. Execute as migrations com `flask db upgrade`.
-5. Execute seed inicial com `flask seed`, se necessario.
+5. Use `flask seed` apenas em demonstracao isolada: ele cria senhas fixas e nao e apropriado para producao.
 6. Inicie a aplicacao com `flask run` em desenvolvimento ou `docker compose up -d --build` em ambiente Docker.
 
 ## Documentacao

@@ -40,6 +40,23 @@ class DevelopmentConfig(Config):
     JWT_COOKIE_CSRF_PROTECT = os.getenv("JWT_COOKIE_CSRF_PROTECT", "false").lower() in {"1", "true", "yes", "on"}
 
 
+class TestingConfig(Config):
+    TESTING = True
+    DEBUG = False
+    FORCE_HTTPS = False
+    JWT_COOKIE_CSRF_PROTECT = True
+    JWT_COOKIE_SECURE = False
+    SESSION_COOKIE_SECURE = False
+
+    @staticmethod
+    def validate_runtime():
+        from sqlalchemy.engine import make_url
+
+        database_url = make_url(os.environ.get("DATABASE_URL", ""))
+        if database_url.get_backend_name() != "postgresql" or database_url.database != "oceanblue_test":
+            raise RuntimeError("TestingConfig exige PostgreSQL exclusivo oceanblue_test.")
+
+
 class ProductionConfig(Config):
     DEBUG = False
     JWT_COOKIE_SECURE = True
@@ -73,6 +90,9 @@ class ProductionConfig(Config):
 
 def get_config():
     env = os.getenv("FLASK_ENV", "development").lower()
+
+    if env == "testing":
+        return TestingConfig
 
     if env == "production":
         return ProductionConfig

@@ -1,0 +1,226 @@
+No broken requirements found.
+Inventario OK: 143 rotas
+UPGRADE OK 1150177c20ca
+UPGRADE OK 7f3c1a2b9d4e
+UPGRADE OK 9d1dca4d2bc5
+UPGRADE OK c3a1f9d4e8b2
+UPGRADE OK 4b2d8b0f6c11
+UPGRADE OK 8f6e4c2a1b9d
+UPGRADE OK b7c9d1e2f3a4
+UPGRADE OK d4e5f6a7b8c9
+UPGRADE OK e6f7a8b9c0d1
+UPGRADE OK f2b4c6d8e9f1
+UPGRADE OK f9d0e1a2b3c4
+UPGRADE OK a1b2c3d4e5f6
+UPGRADE OK b3c4d5e6f7a8
+UPGRADE OK a4f1c8d2e7b9
+UPGRADE OK c9d8e7f6a5b4
+UPGRADE OK 0f6a8c2d4e9b
+UPGRADE OK ea3d60221646
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade  -> 1150177c20ca, initial
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade 1150177c20ca -> 7f3c1a2b9d4e, add roles and permissions
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade 7f3c1a2b9d4e -> 9d1dca4d2bc5, v2
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade 9d1dca4d2bc5 -> c3a1f9d4e8b2, convert quantities to integer
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+UPGRADE OK 1a2b3c4d5e6f
+UPGRADE OK 2b3c4d5e6f7a
+INFO  [alembic.runtime.migration] Running upgrade c3a1f9d4e8b2 -> 4b2d8b0f6c11, add platform owners
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade 4b2d8b0f6c11 -> 8f6e4c2a1b9d, add pdv financeiro permissions and defaults
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade 8f6e4c2a1b9d -> b7c9d1e2f3a4, add cupons adiantamentos validade salario
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade b7c9d1e2f3a4 -> d4e5f6a7b8c9, add empresa visual mode
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade d4e5f6a7b8c9 -> e6f7a8b9c0d1, add stock alert settings
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade e6f7a8b9c0d1 -> f2b4c6d8e9f1, add client wallet messaging and reversal controls
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade 8f6e4c2a1b9d -> f9d0e1a2b3c4, add boleto financeiro models
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade f2b4c6d8e9f1 -> a1b2c3d4e5f6, add stock alert dispatch tracking
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade a1b2c3d4e5f6 -> b3c4d5e6f7a8, add cashback sale controls
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade f2b4c6d8e9f1 -> a4f1c8d2e7b9, add wholesale pricing and fiscal foundation
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade a4f1c8d2e7b9, b3c4d5e6f7a8 -> c9d8e7f6a5b4, merge cashback and fiscal heads
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade c9d8e7f6a5b4 -> 0f6a8c2d4e9b, add audit and saas limits
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade 0f6a8c2d4e9b, f9d0e1a2b3c4 -> ea3d60221646, merge migration heads
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade ea3d60221646 -> 1a2b3c4d5e6f, add sprint3 boleto and fiscal external status
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade 1a2b3c4d5e6f -> 2b3c4d5e6f7a, add sprint4 asaas and focus real configs
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running downgrade 2b3c4d5e6f7a -> 1a2b3c4d5e6f, add sprint4 asaas and focus real configs
+INFO  [alembic.runtime.migration] Running downgrade 1a2b3c4d5e6f -> ea3d60221646, add sprint3 boleto and fiscal external status
+INFO  [alembic.runtime.migration] Running downgrade ea3d60221646 -> 0f6a8c2d4e9b, f9d0e1a2b3c4, merge migration heads
+DOWNGRADE BASE OK
+INFO  [alembic.runtime.migration] Running downgrade 0f6a8c2d4e9b -> c9d8e7f6a5b4, add audit and saas limits
+INFO  [alembic.runtime.migration] Running downgrade c9d8e7f6a5b4 -> a4f1c8d2e7b9, b3c4d5e6f7a8, merge cashback and fiscal heads
+INFO  [alembic.runtime.migration] Running downgrade a4f1c8d2e7b9 -> f2b4c6d8e9f1, add wholesale pricing and fiscal foundation
+INFO  [alembic.runtime.migration] Running downgrade b3c4d5e6f7a8 -> a1b2c3d4e5f6, add cashback sale controls
+INFO  [alembic.runtime.migration] Running downgrade a1b2c3d4e5f6 -> f2b4c6d8e9f1, add stock alert dispatch tracking
+INFO  [alembic.runtime.migration] Running downgrade f9d0e1a2b3c4 -> 8f6e4c2a1b9d, add boleto financeiro models
+INFO  [alembic.runtime.migration] Running downgrade f2b4c6d8e9f1 -> e6f7a8b9c0d1, add client wallet messaging and reversal controls
+INFO  [alembic.runtime.migration] Running downgrade e6f7a8b9c0d1 -> d4e5f6a7b8c9, add stock alert settings
+{"head": "2b3c4d5e6f7a", "revisions": ["1150177c20ca", "7f3c1a2b9d4e", "9d1dca4d2bc5", "c3a1f9d4e8b2", "4b2d8b0f6c11", "8f6e4c2a1b9d", "b7c9d1e2f3a4", "d4e5f6a7b8c9", "e6f7a8b9c0d1", "f2b4c6d8e9f1", "f9d0e1a2b3c4", "a1b2c3d4e5f6", "b3c4d5e6f7a8", "a4f1c8d2e7b9", "c9d8e7f6a5b4", "0f6a8c2d4e9b", "ea3d60221646", "1a2b3c4d5e6f", "2b3c4d5e6f7a"], "tables": 42, "upgrade_downgrade_upgrade": "OK"}
+INFO  [alembic.runtime.migration] Running downgrade d4e5f6a7b8c9 -> b7c9d1e2f3a4, add empresa visual mode
+INFO  [alembic.runtime.migration] Running downgrade b7c9d1e2f3a4 -> 8f6e4c2a1b9d, add cupons adiantamentos validade salario
+INFO  [alembic.runtime.migration] Running downgrade 8f6e4c2a1b9d -> 4b2d8b0f6c11, add pdv financeiro permissions and defaults
+INFO  [alembic.runtime.migration] Running downgrade 4b2d8b0f6c11 -> c3a1f9d4e8b2, add platform owners
+INFO  [alembic.runtime.migration] Running downgrade c3a1f9d4e8b2 -> 9d1dca4d2bc5, convert quantities to integer
+INFO  [alembic.runtime.migration] Running downgrade 9d1dca4d2bc5 -> 7f3c1a2b9d4e, v2
+INFO  [alembic.runtime.migration] Running downgrade 7f3c1a2b9d4e -> 1150177c20ca, add roles and permissions
+INFO  [alembic.runtime.migration] Running downgrade 1150177c20ca -> , initial
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade  -> 1150177c20ca, initial
+============================= test session starts ==============================
+platform linux -- Python 3.12.12, pytest-8.3.5, pluggy-1.6.0
+rootdir: /app
+configfile: pytest.ini
+testpaths: tests
+plugins: cov-6.1.1
+collected 63 items
+
+tests/test_boleto_service.py ...                                         [  4%]
+tests/test_fluxo_pdv_financeiro.py ............................          [ 49%]
+tests/test_import_export.py ...                                          [ 53%]
+tests/test_integracoes_sprint4.py ..                                     [ 57%]
+tests/test_permission_hierarchy.py ...                                   [ 61%]
+tests/test_permissions_security.py ........                              [ 74%]
+tests/test_produto_service.py ...                                        [ 79%]
+tests/test_runtime.py ..........                                         [ 95%]
+tests/test_security_headers.py ...                                       [100%]
+
+INFO  [alembic.runtime.migration] Running upgrade 1150177c20ca -> 7f3c1a2b9d4e, add roles and permissions
+INFO  [alembic.runtime.migration] Running upgrade 7f3c1a2b9d4e -> 9d1dca4d2bc5, v2
+INFO  [alembic.runtime.migration] Running upgrade 9d1dca4d2bc5 -> c3a1f9d4e8b2, convert quantities to integer
+INFO  [alembic.runtime.migration] Running upgrade c3a1f9d4e8b2 -> 4b2d8b0f6c11, add platform owners
+INFO  [alembic.runtime.migration] Running upgrade 4b2d8b0f6c11 -> 8f6e4c2a1b9d, add pdv financeiro permissions and defaults
+INFO  [alembic.runtime.migration] Running upgrade 8f6e4c2a1b9d -> b7c9d1e2f3a4, add cupons adiantamentos validade salario
+INFO  [alembic.runtime.migration] Running upgrade b7c9d1e2f3a4 -> d4e5f6a7b8c9, add empresa visual mode
+INFO  [alembic.runtime.migration] Running upgrade d4e5f6a7b8c9 -> e6f7a8b9c0d1, add stock alert settings
+INFO  [alembic.runtime.migration] Running upgrade e6f7a8b9c0d1 -> f2b4c6d8e9f1, add client wallet messaging and reversal controls
+INFO  [alembic.runtime.migration] Running upgrade 8f6e4c2a1b9d -> f9d0e1a2b3c4, add boleto financeiro models
+INFO  [alembic.runtime.migration] Running upgrade f2b4c6d8e9f1 -> a1b2c3d4e5f6, add stock alert dispatch tracking
+INFO  [alembic.runtime.migration] Running upgrade a1b2c3d4e5f6 -> b3c4d5e6f7a8, add cashback sale controls
+INFO  [alembic.runtime.migration] Running upgrade f2b4c6d8e9f1 -> a4f1c8d2e7b9, add wholesale pricing and fiscal foundation
+INFO  [alembic.runtime.migration] Running upgrade a4f1c8d2e7b9, b3c4d5e6f7a8 -> c9d8e7f6a5b4, merge cashback and fiscal heads
+INFO  [alembic.runtime.migration] Running upgrade c9d8e7f6a5b4 -> 0f6a8c2d4e9b, add audit and saas limits
+INFO  [alembic.runtime.migration] Running upgrade 0f6a8c2d4e9b, f9d0e1a2b3c4 -> ea3d60221646, merge migration heads
+INFO  [alembic.runtime.migration] Running upgrade ea3d60221646 -> 1a2b3c4d5e6f, add sprint3 boleto and fiscal external status
+INFO  [alembic.runtime.migration] Running upgrade 1a2b3c4d5e6f -> 2b3c4d5e6f7a, add sprint4 asaas and focus real configs
+---------------------- generated xml file: /tmp/junit.xml ----------------------
+================================ tests coverage ================================
+_______________ coverage: platform linux, python 3.12.12-final-0 _______________
+
+Name                                          Stmts   Miss Branch BrPart  Cover   Missing
+-----------------------------------------------------------------------------------------
+app/__init__.py                                 112      8     24      5    90%   166-167, 177, 277-278, 342, 351, 370
+app/config.py                                    67      6     12      2    85%   35, 87-88, 97-100
+app/controllers/adiantamento_controller.py       62     40      0      0    35%   15, 21-28, 34-52, 58-72, 78-91
+app/controllers/auth_controller.py               56     16      6      2    71%   16, 33-34, 40, 73-76, 81-89
+app/controllers/boleto_controller.py            248    171      8      0    30%   16, 23-32, 39-48, 55-63, 70-81, 88-96, 103-111, 118-126, 133-143, 150-158, 165-172, 179-186, 193-201, 206-228, 235-243, 252-260, 267-275, 282-290
+app/controllers/categoria_controller.py          51     29      0      0    43%   15, 21-35, 41-55, 61-68, 74-80
+app/controllers/cliente_controller.py           165    113      0      0    32%   15, 21-28, 34-42, 48-58, 64-74, 80-85, 91-98, 104-112, 118-123, 129-141, 147-162, 168-175, 181-188, 194-206, 212-224
+app/controllers/cupom_controller.py              48     27      0      0    44%   14, 20-24, 30-41, 47-57, 63-68
+app/controllers/estoque_controller.py           147     97      0      0    34%   13, 42, 49, 56, 62-94, 100-113, 119-130, 136-154, 160-171, 177-188, 194-207, 213-237, 243-256, 262-275
+app/controllers/financeiro_controller.py        141     95      0      0    33%   16, 23, 30, 36-43, 49-63, 69-89, 95-108, 114-128, 134-147, 153-169, 175-200, 206-223
+app/controllers/fiscal_controller.py            137     97      6      0    28%   15, 21-28, 34-46, 52-64, 70-78, 84-100, 106-122, 128-141, 147-154, 160-168, 174-187
+app/controllers/funcionario_controller.py        66     39      0      0    41%   14, 20-36, 42-59, 65-70, 76-100, 106-130, 136-145
+app/controllers/import_export_controller.py      90     65      4      0    27%   16-30, 36-44, 50-59, 65-81, 87-104, 110-132
+app/controllers/main_controller.py              108     56     20      4    44%   14, 18-28, 33-34, 46-50, 55, 60, 65, 73, 77-79, 88, 95-102, 109-118, 125-134, 141-150
+app/controllers/pdv_controller.py               117     82      4      0    29%   16, 22-29, 35-48, 54-72, 78-95, 101-125, 131-155, 161-185, 191-198
+app/controllers/permission_controller.py         48     27      0      0    44%   14, 20-38, 44-60, 66-83, 89-94
+app/controllers/platform_controller.py           76     47      0      0    38%   13, 19-23, 29, 35-42, 48-55, 61-68, 74-81, 87-94
+app/controllers/produto_controller.py            69     36      0      0    48%   15, 21-56, 62-77, 90, 122-156, 162-170
+app/controllers/role_controller.py               68     42      2      0    37%   16, 22-71, 77-86, 92-108, 114-131, 137-142
+app/models/db.py                                836      1      2      1    99%   505
+app/repositorys/adiantamento_repository.py       79     11     24     11    79%   30, 52, 77, 79->82, 102, 105, 151, 163, 194, 196->199, 200, 202->205, 226, 244
+app/repositorys/boleto_repository.py            114     72     38      0    28%   20-27, 31-34, 38, 47-54, 58-64, 68-73, 77-84, 88, 99-113, 117-126, 130, 134-141, 145-152, 156-165, 169-177, 181, 185, 189, 193
+app/repositorys/categoria_repository.py          21      8      0      0    62%   9, 18, 25-27, 31, 35-36
+app/repositorys/cliente_repository.py           117     40     24      4    59%   32-44, 60-95, 99, 123, 147, 156, 173-174, 228, 246-257, 276, 282-292, 308, 325-328, 340-349, 365
+app/repositorys/cupom_repository.py              28     10      2      0    60%   11, 21, 33-41, 45, 49, 53, 57
+app/repositorys/estoque_repository.py            76     35     26      2    42%   21-37, 41-61, 82, 108-120, 124-145, 162, 192-233, 245
+app/repositorys/financeiro_repository.py         98     10     28     12    83%   24->28, 28->32, 49, 134-151, 168, 170->173, 174, 197, 199->202, 223, 225->228, 228->231, 231->234, 238, 271
+app/repositorys/fiscal_repository.py             54     17     10      1    59%   11-24, 66, 72-75, 100-119, 123-136, 152
+app/repositorys/funcionario_repository.py        76     27     10      2    59%   8-11, 18, 34, 46, 73, 91, 102, 116, 127, 138-147, 151-159, 163, 184->187, 202, 208, 212, 216, 220
+app/repositorys/import_export_repository.py     123     43     32      8    57%   29, 37, 41, 65, 78, 87-91, 116, 118->121, 127, 143, 173-189, 193-197, 209-213, 225, 241, 251-255, 266, 275-279, 290, 299-303, 327
+app/repositorys/pdv_repository.py                81     26     18      3    59%   26-38, 42, 54-55, 68, 104, 126, 140-143, 166, 179-207, 230, 236
+app/repositorys/permission_repository.py         30     11      2      0    59%   9, 18, 29-37, 41, 52, 56, 60, 64
+app/repositorys/platform_repository.py           62     22      2      0    62%   8-11, 22, 26, 38, 50, 54, 65-66, 77, 88-89, 100, 111, 120, 130, 142, 146, 150, 154
+app/repositorys/produto_repository.py            69     19     16      5    65%   11-24, 41, 48, 81-93, 103, 110, 118, 124-133, 145, 149
+app/repositorys/role_repository.py               42     18      6      0    50%   11, 23, 37-45, 49-57, 61-64, 75, 86, 90, 94, 98
+app/security/decorators.py                       79     28     16      4    58%   19, 30, 37, 60-65, 76-77, 81-83, 94-114
+app/security/field_crypto.py                     61      4     14      4    89%   17, 21, 47, 60
+app/security/headers.py                          22      2      8      2    87%   16, 28
+app/security/jwt.py                              17      6      4      1    57%   10, 43-49
+app/security/permissions.py                      61     10     24      5    82%   501-502, 506-507, 527-528, 532-533, 567, 586->562, 600
+app/security/rate_limit.py                       18      1      4      1    91%   14
+app/seeds/seed.py                                66     59     16      0     9%   10-28, 32-146
+app/services/acesso_empresa_service.py           41      6     10      4    76%   24, 37, 57, 64-65, 81
+app/services/adiantamento_service.py            219     49     52     19    74%   30, 68-82, 89->92, 122, 129, 213, 236, 301-303, 307, 334-336, 341->343, 344, 346, 351-352, 358-359, 364, 368-369, 374, 378-379, 384, 388-389, 392, 399, 403-404, 407, 416-419, 424, 431-433, 442-445
+app/services/audit_service.py                    23      1      6      3    86%   28->36, 31, 53->55
+app/services/auth_service.py                     32      9     12      4    66%   16, 20-22, 27, 29, 34-36
+app/services/banco_emissor_service.py           162    140     44      0    11%   18-101, 106-165, 170-250, 255, 280, 299, 319-322, 326-332
+app/services/boleto_provider.py                 140     59     18      4    54%   38, 41, 44, 63-65, 76->79, 99-102, 118-121, 147, 164-168, 175-191, 207-209, 217-245, 249-253, 257-260, 270, 278-284
+app/services/boleto_service.py                  400    247    118     15    33%   36-48, 52-78, 82-87, 109-113, 130-134, 151-155, 174-185, 189-194, 198-264, 271, 274, 276, 304-305, 309-311, 315-337, 341-383, 387-413, 417-436, 443, 448, 472, 485-487, 496, 498, 500, 513->526, 516-517, 522-524, 546, 559-589, 593, 658-663, 667-675, 681-682, 687, 690-691, 695-699
+app/services/calculo_juros_multa_service.py      49     49     16      0     0%   1-75
+app/services/categoria_service.py                29     16      4      0    39%   11-12, 16-24, 28-37, 41-45
+app/services/cliente_service.py                 784    294    258     63    57%   28-35, 39-46, 61-64, 90, 93, 116-118, 122-159, 163-172, 176-182, 186-198, 213, 225-230, 234-236, 245-247, 286-288, 303, 323-351, 364, 369, 409-410, 426-428, 447, 454, 482-484, 507, 544, 571, 573, 582->590, 590->600, 637, 639, 680-709, 727, 730, 736, 752-775, 820, 829-856, 861->896, 863->896, 912-958, 981, 991-1045, 1052, 1056, 1060, 1064, 1068, 1102, 1118, 1121, 1127-1130, 1138-1139, 1144, 1147-1148, 1153, 1156-1157, 1159, 1165, 1168-1169, 1171, 1177, 1180-1181, 1183, 1186, 1193-1196, 1202-1205, 1362-1363, 1368-1369, 1382-1385, 1396, 1398, 1400, 1403-1413, 1420, 1422, 1427, 1431, 1433, 1436, 1439, 1472, 1488
+app/services/comunicacao_service.py             116     86     34      1    21%   18-46, 60-112, 121-124, 134, 138-149, 153-161, 174-223, 227-233
+app/services/cupom_service.py                   117     90     26      0    19%   12, 16-48, 52-85, 89-98, 102-104, 118-131, 135-138, 142-150, 154-165, 169-173, 177-180
+app/services/estoque_service.py                 491    167    166     48    61%   37-42, 50-55, 64-69, 99-140, 156-160, 165, 186-188, 192-217, 226-258, 300->298, 304, 314, 326-328, 342-345, 349, 353, 360, 381-382, 391, 420, 490, 513-515, 527->530, 545, 562, 564-567, 579->582, 597, 600->605, 602->605, 621, 623-626, 639->642, 646, 650, 667-668, 675-678, 685, 688, 691, 694, 706, 738-740, 754->757, 760, 774, 777-780, 798, 803, 811, 841, 844, 850-851, 857-858, 863-865, 869-870, 873, 885, 891, 895-896, 899, 906, 910-911, 915-921, 926, 931, 941, 944-945, 951-952, 954, 960, 969-982, 989-991
+app/services/financeiro_service.py              393    160    124     39    54%   67-86, 92->95, 117-400, 468, 474, 477, 481, 499-501, 512, 516->519, 537-541, 552, 567->570, 570->573, 592-596, 603, 611, 624, 628, 632->670, 636-639, 642, 645->648, 667->632, 671, 673-676, 697, 701, 720, 723-726, 747, 769-771, 779->782, 787, 824, 826, 873-901, 920->923, 986-988, 994-995, 999-1001, 1006, 1010-1011, 1016, 1020-1021, 1024, 1031, 1035-1036, 1039, 1048-1051, 1058-1061, 1070
+app/services/fiscal_provider.py                 166     41     26      7    71%   39, 42, 45, 70-74, 77-83, 154->159, 157->159, 180-184, 194, 198-208, 217, 280, 287, 298, 306-310
+app/services/fiscal_service.py                  506    146    116     36    66%   44-47, 67-73, 84, 87->94, 127, 129, 141->145, 152-154, 158-160, 168, 172->185, 203-205, 213, 218->230, 234, 237-241, 283-284, 291-293, 297-310, 314-331, 335-344, 348-357, 364, 372, 376, 379-380, 385-386, 388, 482-503, 513, 527, 542, 546, 563, 565, 567, 569, 573, 619-622, 658-661, 728, 734, 738-739, 745, 749-750, 755, 759-760, 763, 772->774, 779->781, 787-789
+app/services/funcionario_service.py             183    156     68      0    11%   12-55, 59, 63, 67-131, 135-205, 209-226, 230-236, 240-246, 250, 254-265, 269-272
+app/services/import_export_service.py           577    223    162     41    58%   140-165, 215->218, 255, 259, 266, 268, 286, 298-302, 323-345, 364, 367->381, 369->381, 385, 391-399, 419-429, 452-520, 524-563, 567-586, 590-615, 631-633, 670-675, 692-693, 707-708, 718-719, 752-756, 779-780, 821-854, 865->864, 867, 880-882, 885, 910, 916-919, 929, 933-938, 943, 955, 968, 970, 978, 983, 987-994, 997, 1003-1005, 1008, 1010, 1014-1017, 1018->1020, 1022-1023, 1026, 1033, 1039, 1042, 1044, 1050-1053, 1057-1061, 1065-1069, 1079-1080
+app/services/parcelamento_service.py             74     74     24      0     0%   1-93
+app/services/pdv_service.py                     413    106    120     41    69%   20-28, 59-77, 85, 93, 99-112, 116-120, 140, 146, 157, 182, 188, 319, 322, 325, 377-379, 387, 391, 401->403, 407, 409, 416->420, 429, 480-482, 492-494, 600-602, 609-616, 623-627, 632, 635, 647, 665, 672, 693, 701, 707->713, 727, 734, 739-745, 755-756, 761, 765-766, 771, 775-776, 779, 786, 790-791, 794, 805-806, 809, 818-821, 829-830, 835, 838-840, 846-847, 849, 856
+app/services/permission_service.py               76     60     22      0    16%   10, 14-15, 19-45, 49-76, 80-92, 96-102
+app/services/platform_service.py                282    228     84      0    15%   16-30, 34-84, 88-110, 114-138, 142-188, 192-237, 241-256, 268-290, 302-311, 342-355, 373, 385-400, 404-424, 428-431, 435-438, 442-445, 449-458, 462-468, 472-477, 481-487, 491, 495
+app/services/produto_service.py                 228    112     74     19    46%   14-15, 24-25, 64, 70, 73->78, 76, 79, 81->84, 85, 88, 91, 129-234, 238-252, 257, 261-262, 265, 273, 277-278, 281, 288-290, 294-295, 298, 307-310, 319-320, 327-330, 351, 356
+app/services/role_service.py                    118    100     48      0    11%   10, 14-54, 58-102, 106-118, 122-134, 138-144, 148-168
+app/services/saas_plan_service.py                26     16      4      0    33%   39-42, 46-57, 61-62
+app/services/tenant_bootstrap_service.py         73      0     28      1    99%   119->111
+app/services/tenant_entitlement_service.py       41      4     12      4    85%   15, 24, 43, 61
+app/services/time_service.py                     43      3     10      3    89%   41, 47, 60
+app/utils/helpers.py                             14     14      4      0     0%   1-17
+-----------------------------------------------------------------------------------------
+TOTAL                                          9988   4229   2102    431    53%
+
+14 files skipped due to complete coverage.
+Coverage XML written to file coverage.xml
+Required test coverage of 50% reached. Total coverage: 53.42%
+============================= 63 passed in 29.63s ==============================

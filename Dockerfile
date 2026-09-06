@@ -1,13 +1,9 @@
-FROM python:3.12-slim
+FROM python:3.12.12-slim-bookworm@sha256:593bd06efe90efa80dc4eee3948be7c0fde4134606dd40d8dd8dbcade98e669c
 
 WORKDIR /app
 
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends curl \
-    && rm -rf /var/lib/apt/lists/*
-
 COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+RUN python -m pip install --no-cache-dir --require-hashes -r requirements.txt
 
 COPY . .
 RUN sed -i 's/\r$//' /app/docker-entrypoint.sh \
@@ -18,7 +14,7 @@ RUN sed -i 's/\r$//' /app/docker-entrypoint.sh \
 
 ENV FLASK_APP=wsgi.py
 
-HEALTHCHECK --interval=30s --timeout=5s --retries=3 CMD curl -fsS http://127.0.0.1:5000/api/ready || exit 1
+HEALTHCHECK --interval=5s --timeout=5s --retries=6 CMD python -c "from urllib.request import urlopen; urlopen('http://127.0.0.1:5000/api/ready', timeout=4)"
 
 USER appuser
 

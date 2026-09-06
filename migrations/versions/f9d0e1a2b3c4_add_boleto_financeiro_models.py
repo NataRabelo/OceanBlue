@@ -187,8 +187,9 @@ def downgrade():
     op.drop_table('eventos_boleto')
 
     op.drop_index(op.f('ix_financeiro_tenant_boleto_parcela'), table_name='lancamentos_financeiros')
-    op.drop_constraint(None, 'lancamentos_financeiros', type_='foreignkey')
-    op.drop_constraint(None, 'lancamentos_financeiros', type_='foreignkey')
+    for constraint in sa.inspect(op.get_bind()).get_foreign_keys('lancamentos_financeiros'):
+        if constraint['constrained_columns'] in [['boleto_id'], ['parcela_boleto_id']]:
+            op.drop_constraint(constraint['name'], 'lancamentos_financeiros', type_='foreignkey')
     op.drop_column('lancamentos_financeiros', 'parcela_boleto_id')
     op.drop_column('lancamentos_financeiros', 'boleto_id')
 

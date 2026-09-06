@@ -14,3 +14,10 @@ venv/
 .idea/
 docker-compose.yml
 README.md
+instance/
+htmlcov/
+.coverage
+.coverage.*
+coverage.xml
+junit.xml
+docs/evidencias/
