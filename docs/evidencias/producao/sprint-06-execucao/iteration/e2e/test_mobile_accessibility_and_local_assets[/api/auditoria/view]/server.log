@@ -1,0 +1,71 @@
+[2026-09-07 06:25:19 +0000] [16] [INFO] Starting gunicorn 21.2.0
+[2026-09-07 06:25:19 +0000] [16] [INFO] Listening at: http://127.0.0.1:8765 (16)
+[2026-09-07 06:25:19 +0000] [16] [INFO] Using worker: sync
+[2026-09-07 06:25:19 +0000] [24] [INFO] Booting worker with pid: 24
+[2026-09-07 06:25:19 +0000] [25] [INFO] Booting worker with pid: 25
+{"level": "INFO", "event": "http_request", "error_type": null, "request_id": "3f8282e86ad72b80c73ecb005e99d766", "route": "/login", "method": "GET", "status": 200, "duration_ms": 9.764}
+127.0.0.1 - - [07/Sep/2026:06:25:20 +0000] "GET /login HTTP/1.1" 200 4229 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/140.0.7339.16 Safari/537.36"
+{"level": "INFO", "event": "http_request", "error_type": null, "request_id": "e7da2d4f92f5ee5154c6b21077380495", "route": "/static/<path:filename>", "method": "GET", "status": 200, "duration_ms": 0.657}
+127.0.0.1 - - [07/Sep/2026:06:25:20 +0000] "GET /static/vendor/tailwind.css HTTP/1.1" 200 0 "http://127.0.0.1:8765/login" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/140.0.7339.16 Safari/537.36"
+{"level": "INFO", "event": "http_request", "error_type": null, "request_id": "75d849e65557baeec2ac14f58f1ab768", "route": "/static/<path:filename>", "method": "GET", "status": 200, "duration_ms": 1.586}
+{"level": "INFO", "event": "http_request", "error_type": null, "request_id": "ad17d2632d2ae58fc93ff95e4362ce51", "route": "/static/<path:filename>", "method": "GET", "status": 200, "duration_ms": 1.534}
+127.0.0.1 - - [07/Sep/2026:06:25:20 +0000] "GET /static/css/forms/login-form.css HTTP/1.1" 200 0 "http://127.0.0.1:8765/login" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/140.0.7339.16 Safari/537.36"
+{"level": "INFO", "event": "http_request", "error_type": null, "request_id": "c3e4cebf4e175c6993b5b2ba7960cfa5", "route": "/static/<path:filename>", "method": "GET", "status": 200, "duration_ms": 0.332}
+127.0.0.1 - - [07/Sep/2026:06:25:20 +0000] "GET /static/vendor/lucide.min.js HTTP/1.1" 200 0 "http://127.0.0.1:8765/login" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/140.0.7339.16 Safari/537.36"
+127.0.0.1 - - [07/Sep/2026:06:25:20 +0000] "GET /static/css/core/core.css HTTP/1.1" 200 0 "http://127.0.0.1:8765/login" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/140.0.7339.16 Safari/537.36"
+{"level": "INFO", "event": "http_request", "error_type": null, "request_id": "17249543ac7c5f54d8d9bd001db2c0da", "route": "/static/<path:filename>", "method": "GET", "status": 200, "duration_ms": 2.71}
+127.0.0.1 - - [07/Sep/2026:06:25:20 +0000] "GET /static/js/core/decimal-input.js HTTP/1.1" 200 0 "http://127.0.0.1:8765/login" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/140.0.7339.16 Safari/537.36"
+{"level": "INFO", "event": "http_request", "error_type": null, "request_id": "ae592c0a7ce935c7a4371f5339718a9e", "route": "/login", "method": "POST", "status": 302, "duration_ms": 390.105}
+127.0.0.1 - - [07/Sep/2026:06:25:22 +0000] "POST /login HTTP/1.1" 302 197 "http://127.0.0.1:8765/login" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/140.0.7339.16 Safari/537.36"
+{"level": "INFO", "event": "http_request", "error_type": null, "request_id": "ae4e91977e4e5eb04477a44ed1ca05f3", "route": "/home", "method": "GET", "status": 200, "duration_ms": 107.36}
+127.0.0.1 - - [07/Sep/2026:06:25:22 +0000] "GET /home HTTP/1.1" 200 35700 "http://127.0.0.1:8765/login" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/140.0.7339.16 Safari/537.36"
+{"level": "INFO", "event": "http_request", "error_type": null, "request_id": "d190cb42ac30c24aa3413c363b6d47c1", "route": "/static/<path:filename>", "method": "GET", "status": 200, "duration_ms": 0.528}
+{"level": "INFO", "event": "http_request", "error_type": null, "request_id": "8cf9a3b1d292fe95539e2545c9331299", "route": "/static/<path:filename>", "method": "GET", "status": 200, "duration_ms": 0.565}
+127.0.0.1 - - [07/Sep/2026:06:25:22 +0000] "GET /static/vendor/tailwind.css HTTP/1.1" 200 0 "http://127.0.0.1:8765/home" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/140.0.7339.16 Safari/537.36"
+127.0.0.1 - - [07/Sep/2026:06:25:22 +0000] "GET /static/css/core/core.css HTTP/1.1" 200 0 "http://127.0.0.1:8765/home" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/140.0.7339.16 Safari/537.36"
+{"level": "INFO", "event": "http_request", "error_type": null, "request_id": "f430a32a356d3fea711a04e7cae6d852", "route": "/static/<path:filename>", "method": "GET", "status": 200, "duration_ms": 0.526}
+127.0.0.1 - - [07/Sep/2026:06:25:22 +0000] "GET /static/vendor/lucide.min.js HTTP/1.1" 200 0 "http://127.0.0.1:8765/home" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/140.0.7339.16 Safari/537.36"
+{"level": "INFO", "event": "http_request", "error_type": null, "request_id": "644a3a35ef74ff499e657839a6112ed8", "route": "/static/<path:filename>", "method": "GET", "status": 200, "duration_ms": 1.105}
+127.0.0.1 - - [07/Sep/2026:06:25:22 +0000] "GET /static/css/core/operational.css HTTP/1.1" 200 0 "http://127.0.0.1:8765/home" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/140.0.7339.16 Safari/537.36"
+{"level": "INFO", "event": "http_request", "error_type": null, "request_id": "5cbc1591b4157bb5ee3083b224ec6a06", "route": "/static/<path:filename>", "method": "GET", "status": 200, "duration_ms": 0.547}
+127.0.0.1 - - [07/Sep/2026:06:25:22 +0000] "GET /static/js/core/decimal-input.js HTTP/1.1" 200 0 "http://127.0.0.1:8765/home" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/140.0.7339.16 Safari/537.36"
+{"level": "INFO", "event": "http_request", "error_type": null, "request_id": "0dde5528e657a3c2537136233c0faa11", "route": "/static/<path:filename>", "method": "GET", "status": 200, "duration_ms": 0.721}
+127.0.0.1 - - [07/Sep/2026:06:25:22 +0000] "GET /static/js/core/security.js HTTP/1.1" 200 0 "http://127.0.0.1:8765/home" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/140.0.7339.16 Safari/537.36"
+{"level": "INFO", "event": "http_request", "error_type": null, "request_id": "48b4c3f136e2d43879d85e7260da261c", "route": "/static/<path:filename>", "method": "GET", "status": 200, "duration_ms": 0.674}
+127.0.0.1 - - [07/Sep/2026:06:25:22 +0000] "GET /static/js/core/input-mask.js HTTP/1.1" 200 0 "http://127.0.0.1:8765/home" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/140.0.7339.16 Safari/537.36"
+{"level": "INFO", "event": "http_request", "error_type": null, "request_id": "3a6b64ffecdd2ab6d327d048ef4972c4", "route": "/static/<path:filename>", "method": "GET", "status": 200, "duration_ms": 0.493}
+127.0.0.1 - - [07/Sep/2026:06:25:22 +0000] "GET /static/js/core/theme.js HTTP/1.1" 200 0 "http://127.0.0.1:8765/home" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/140.0.7339.16 Safari/537.36"
+{"level": "INFO", "event": "http_request", "error_type": null, "request_id": "1fd885644a639524ac8e9617d1ed0ba7", "route": "/static/<path:filename>", "method": "GET", "status": 200, "duration_ms": 1.51}
+127.0.0.1 - - [07/Sep/2026:06:25:22 +0000] "GET /static/js/header/header.js HTTP/1.1" 200 0 "http://127.0.0.1:8765/home" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/140.0.7339.16 Safari/537.36"
+{"level": "INFO", "event": "http_request", "error_type": null, "request_id": "4d1f98976be704a1d83e9c1c912c8f59", "route": "/api/estoque/notificacoes/popup", "method": "GET", "status": 200, "duration_ms": 479.396}
+{"level": "INFO", "event": "http_request", "error_type": null, "request_id": "885154f99afdd1d953a63973ed371ae6", "route": "/api/auditoria/view", "method": "GET", "status": 200, "duration_ms": 382.519}
+127.0.0.1 - - [07/Sep/2026:06:25:22 +0000] "GET /api/estoque/notificacoes/popup HTTP/1.1" 200 506 "http://127.0.0.1:8765/home" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/140.0.7339.16 Safari/537.36"
+127.0.0.1 - - [07/Sep/2026:06:25:22 +0000] "GET /api/auditoria/view HTTP/1.1" 200 31507 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/140.0.7339.16 Safari/537.36"
+{"level": "INFO", "event": "http_request", "error_type": null, "request_id": "20aab6354a2af8ead8fc3f809fa8b37f", "route": "/static/<path:filename>", "method": "GET", "status": 200, "duration_ms": 0.438}
+{"level": "INFO", "event": "http_request", "error_type": null, "request_id": "f4e72fe739773f7c8a1b4a0209033ab4", "route": "/static/<path:filename>", "method": "GET", "status": 200, "duration_ms": 0.27}
+127.0.0.1 - - [07/Sep/2026:06:25:22 +0000] "GET /static/vendor/tailwind.css HTTP/1.1" 200 0 "http://127.0.0.1:8765/api/auditoria/view" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/140.0.7339.16 Safari/537.36"
+127.0.0.1 - - [07/Sep/2026:06:25:22 +0000] "GET /static/css/core/core.css HTTP/1.1" 200 0 "http://127.0.0.1:8765/api/auditoria/view" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/140.0.7339.16 Safari/537.36"
+{"level": "INFO", "event": "http_request", "error_type": null, "request_id": "4b4f2a341112c7293db2732e38b48a27", "route": "/static/<path:filename>", "method": "GET", "status": 200, "duration_ms": 0.219}
+127.0.0.1 - - [07/Sep/2026:06:25:22 +0000] "GET /static/vendor/lucide.min.js HTTP/1.1" 200 0 "http://127.0.0.1:8765/api/auditoria/view" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/140.0.7339.16 Safari/537.36"
+{"level": "INFO", "event": "http_request", "error_type": null, "request_id": "033cc8d7714f51d8fe6fefabd84b669b", "route": "/static/<path:filename>", "method": "GET", "status": 200, "duration_ms": 0.426}
+127.0.0.1 - - [07/Sep/2026:06:25:22 +0000] "GET /static/css/core/operational.css HTTP/1.1" 200 0 "http://127.0.0.1:8765/api/auditoria/view" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/140.0.7339.16 Safari/537.36"
+{"level": "INFO", "event": "http_request", "error_type": null, "request_id": "72f8d16fdfb2584723c1db19d1a58b9a", "route": "/static/<path:filename>", "method": "GET", "status": 200, "duration_ms": 1.003}
+127.0.0.1 - - [07/Sep/2026:06:25:22 +0000] "GET /static/js/auditoria.js HTTP/1.1" 200 0 "http://127.0.0.1:8765/api/auditoria/view" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/140.0.7339.16 Safari/537.36"
+{"level": "INFO", "event": "http_request", "error_type": null, "request_id": "65e3827340151b1058deccb9262f1608", "route": "/static/<path:filename>", "method": "GET", "status": 200, "duration_ms": 0.309}
+127.0.0.1 - - [07/Sep/2026:06:25:22 +0000] "GET /static/js/core/decimal-input.js HTTP/1.1" 200 0 "http://127.0.0.1:8765/api/auditoria/view" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/140.0.7339.16 Safari/537.36"
+{"level": "INFO", "event": "http_request", "error_type": null, "request_id": "b8d3d88db5e2ad9a4cadd08445e10674", "route": "/static/<path:filename>", "method": "GET", "status": 200, "duration_ms": 0.439}
+127.0.0.1 - - [07/Sep/2026:06:25:22 +0000] "GET /static/js/core/security.js HTTP/1.1" 200 0 "http://127.0.0.1:8765/api/auditoria/view" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/140.0.7339.16 Safari/537.36"
+{"level": "INFO", "event": "http_request", "error_type": null, "request_id": "206f63b152ce7d44ed0d984a0d706cc9", "route": "/static/<path:filename>", "method": "GET", "status": 200, "duration_ms": 0.308}
+{"level": "INFO", "event": "http_request", "error_type": null, "request_id": "def4415b2440f448aa8fbaefc91c6b98", "route": "/static/<path:filename>", "method": "GET", "status": 200, "duration_ms": 0.586}
+127.0.0.1 - - [07/Sep/2026:06:25:22 +0000] "GET /static/js/core/theme.js HTTP/1.1" 200 0 "http://127.0.0.1:8765/api/auditoria/view" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/140.0.7339.16 Safari/537.36"
+127.0.0.1 - - [07/Sep/2026:06:25:22 +0000] "GET /static/js/core/input-mask.js HTTP/1.1" 200 0 "http://127.0.0.1:8765/api/auditoria/view" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/140.0.7339.16 Safari/537.36"
+{"level": "INFO", "event": "http_request", "error_type": null, "request_id": "0ce057dbf58d44654d2ac3594aad9263", "route": "/static/<path:filename>", "method": "GET", "status": 200, "duration_ms": 0.86}
+127.0.0.1 - - [07/Sep/2026:06:25:22 +0000] "GET /static/js/header/header.js HTTP/1.1" 200 0 "http://127.0.0.1:8765/api/auditoria/view" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/140.0.7339.16 Safari/537.36"
+{"level": "INFO", "event": "http_request", "error_type": null, "request_id": "cfc47057a42321ad456fd0927e2aa415", "route": "/api/auditoria/", "method": "GET", "status": 200, "duration_ms": 72.224}
+127.0.0.1 - - [07/Sep/2026:06:25:23 +0000] "GET /api/auditoria/?limit=50 HTTP/1.1" 200 8218 "http://127.0.0.1:8765/api/auditoria/view" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/140.0.7339.16 Safari/537.36"
+{"level": "INFO", "event": "http_request", "error_type": null, "request_id": "27e8050f5babc5782d7b9ae5349e4704", "route": "/api/estoque/notificacoes/popup", "method": "GET", "status": 200, "duration_ms": 441.881}
+127.0.0.1 - - [07/Sep/2026:06:25:23 +0000] "GET /api/estoque/notificacoes/popup HTTP/1.1" 200 506 "http://127.0.0.1:8765/api/auditoria/view" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/140.0.7339.16 Safari/537.36"
+[2026-09-07 06:25:25 +0000] [16] [INFO] Handling signal: term
+{"level": "INFO", "event": "application_diagnostic", "error_type": null}
+{"level": "INFO", "event": "application_diagnostic", "error_type": null}
+[2026-09-07 06:25:25 +0000] [16] [INFO] Shutting down: Master

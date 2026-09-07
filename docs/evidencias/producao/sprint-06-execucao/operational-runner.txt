@@ -1,0 +1,5 @@
+Exception: C:\Users\Rabel\.codex\worktrees\3e5d\OceanBlue\scripts\validate_operational_proof.ps1:15
+Line |
+  15 |      if ($LASTEXITCODE -ne 0) { throw "Docker failed: $Log" }
+     |                                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | Docker failed: source-create.txt

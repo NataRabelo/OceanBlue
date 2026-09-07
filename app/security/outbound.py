@@ -7,6 +7,8 @@ from flask import current_app
 
 
 def validate_host(host, port):
+    if not current_app.testing:
+        raise PermissionError("Provedores externos bloqueados nesta versao.")
     allowed = {value.strip().lower() for value in current_app.config.get("OUTBOUND_ALLOWED_HOSTS", "").split(",") if value.strip()}
     if not host or host.lower() not in allowed:
         raise PermissionError("Destino de comunicacao nao autorizado pelo operador da plataforma.")

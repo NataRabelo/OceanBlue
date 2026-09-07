@@ -10,7 +10,7 @@ def register_security_headers(app):
             return None
 
         # Docker healthcheck interno usa HTTP puro via loopback, sem liberar bypass para trafego externo.
-        if request.remote_addr in {"127.0.0.1", "::1"} and request.path in {"/api/health", "/api/ready"}:
+        if request.remote_addr in {"127.0.0.1", "::1"} and request.path in {"/api/health", "/api/ready", "/health", "/readiness"}:
             return None
 
         if request.is_secure:
@@ -33,7 +33,7 @@ def register_security_headers(app):
         response.headers.setdefault(
             "Content-Security-Policy",
             "default-src 'self'; "
-            "script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://unpkg.com; "
+            "script-src 'self' 'unsafe-inline'; "
             "style-src 'self' 'unsafe-inline'; "
             "img-src 'self' data:; "
             "font-src 'self' data:; "

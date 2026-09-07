@@ -1,0 +1,5 @@
+Exception: C:\Users\Rabel\.codex\worktrees\3e5d\OceanBlue\scripts\validate_sprint06.ps1:13
+Line |
+  13 |      if ($LASTEXITCODE -ne 0) { throw "Docker failed: $Log" }
+     |                                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | Docker failed: pipeline.txt

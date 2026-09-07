@@ -1,0 +1,58 @@
+#0 building with "desktop-linux" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 1.07kB done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/python:3.12.12-slim-bookworm@sha256:593bd06efe90efa80dc4eee3948be7c0fde4134606dd40d8dd8dbcade98e669c
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 311B done
+#3 DONE 0.0s
+
+#4 [internal] load build context
+#4 DONE 0.0s
+
+#5 [1/6] FROM docker.io/library/python:3.12.12-slim-bookworm@sha256:593bd06efe90efa80dc4eee3948be7c0fde4134606dd40d8dd8dbcade98e669c
+#5 resolve docker.io/library/python:3.12.12-slim-bookworm@sha256:593bd06efe90efa80dc4eee3948be7c0fde4134606dd40d8dd8dbcade98e669c 0.0s done
+#5 DONE 0.0s
+
+#4 [internal] load build context
+#4 transferring context: 22.90kB 0.0s done
+#4 DONE 0.1s
+
+#6 [2/6] WORKDIR /app
+#6 CACHED
+
+#7 [3/6] COPY requirements.txt .
+#7 CACHED
+
+#8 [4/6] RUN python -m pip install --no-cache-dir --require-hashes -r requirements.txt
+#8 CACHED
+
+#9 [5/6] COPY . .
+#9 DONE 0.1s
+
+#10 [6/6] RUN sed -i 's/\r$//' /app/docker-entrypoint.sh     && cp /app/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh     && chmod +x /usr/local/bin/docker-entrypoint.sh     && adduser --disabled-password --gecos "" appuser     && mkdir -p /app/instance/storage     && chown -R appuser:appuser /app/instance     && chmod 700 /app/instance /app/instance/storage
+#10 0.756 Adding user `appuser' ...
+#10 0.756 Adding new group `appuser' (1000) ...
+#10 0.795 Adding new user `appuser' (1000) with group `appuser (1000)' ...
+#10 0.854 Creating home directory `/home/appuser' ...
+#10 0.854 Copying files from `/etc/skel' ...
+#10 0.895 Adding new user `appuser' to supplemental / extra groups `users' ...
+#10 0.895 Adding user `appuser' to group `users' ...
+#10 DONE 1.0s
+
+#11 exporting to image
+#11 exporting layers
+#11 exporting layers 0.3s done
+#11 exporting manifest sha256:4dd53756082f755dd163b7f1f611543e64a457c9186e770d281a13a720a4d3a2 0.0s done
+#11 exporting config sha256:34a48e7aca9583ad7f9260c5696123315a8c7d3f7c6fdba053b0c466c104b899 0.0s done
+#11 exporting attestation manifest sha256:451b871e661ba708cd8142dcddd5c2a1769fc181d653b5e1fba1bce9912a07f9 0.0s done
+#11 exporting manifest list sha256:f862d6908e7b88082a64936ba54bc8676bedeb94fb33383bbdc340f44f437d3c
+#11 exporting manifest list sha256:f862d6908e7b88082a64936ba54bc8676bedeb94fb33383bbdc340f44f437d3c 0.0s done
+#11 naming to docker.io/library/oceanblue-s06-canonical:latest done
+#11 unpacking to docker.io/library/oceanblue-s06-canonical:latest
+#11 unpacking to docker.io/library/oceanblue-s06-canonical:latest 0.2s done
+#11 DONE 0.7s

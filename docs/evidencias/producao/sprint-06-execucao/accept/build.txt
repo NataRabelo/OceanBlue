@@ -1,0 +1,113 @@
+ Image oceanblue-s06-accept-smoke Building 
+ Image oceanblue-s06-accept-test Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 1.07kB 0.1s done
+#1 DONE 0.1s
+
+#2 [smoke internal] load build definition from Dockerfile
+#2 transferring dockerfile: 1.07kB 0.1s done
+#2 DONE 0.1s
+
+#3 [test internal] load build definition from Dockerfile.test
+#3 transferring dockerfile: 499B 0.0s done
+#3 DONE 0.1s
+
+#4 [smoke internal] load metadata for docker.io/library/python:3.12.12-slim-bookworm@sha256:593bd06efe90efa80dc4eee3948be7c0fde4134606dd40d8dd8dbcade98e669c
+#4 DONE 0.3s
+
+#5 [smoke internal] load .dockerignore
+#5 transferring context:
+#5 transferring context: 311B 0.0s done
+#5 DONE 0.2s
+
+#6 [smoke internal] load build context
+#6 DONE 0.0s
+
+#7 [smoke 1/6] FROM docker.io/library/python:3.12.12-slim-bookworm@sha256:593bd06efe90efa80dc4eee3948be7c0fde4134606dd40d8dd8dbcade98e669c
+#7 resolve docker.io/library/python:3.12.12-slim-bookworm@sha256:593bd06efe90efa80dc4eee3948be7c0fde4134606dd40d8dd8dbcade98e669c 0.1s done
+#7 resolve docker.io/library/python:3.12.12-slim-bookworm@sha256:593bd06efe90efa80dc4eee3948be7c0fde4134606dd40d8dd8dbcade98e669c 0.1s done
+#7 DONE 0.1s
+
+#6 [smoke internal] load build context
+#6 transferring context: 71.12kB 0.1s done
+#6 DONE 0.2s
+
+#8 [test 2/6] WORKDIR /app
+#8 CACHED
+
+#9 [test 3/7] COPY requirements-dev.txt .
+#9 CACHED
+
+#10 [test 4/7] RUN python -m pip install --no-cache-dir --require-hashes -r requirements-dev.txt
+#10 CACHED
+
+#11 [test 5/7] RUN python -m playwright install --with-deps chromium && chmod -R a+rX /opt/playwright
+#11 CACHED
+
+#12 [smoke 3/6] COPY requirements.txt .
+#12 CACHED
+
+#8 [smoke 2/6] WORKDIR /app
+#8 CACHED
+
+#13 [smoke 4/6] RUN python -m pip install --no-cache-dir --require-hashes -r requirements.txt
+#13 CACHED
+
+#14 [smoke 5/6] COPY . .
+#14 ...
+
+#15 [test 6/7] COPY . .
+#15 DONE 1.0s
+
+#14 [smoke 5/6] COPY . .
+#14 DONE 1.0s
+
+#16 [smoke 6/6] RUN sed -i 's/\r$//' /app/docker-entrypoint.sh     && cp /app/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh     && chmod +x /usr/local/bin/docker-entrypoint.sh     && adduser --disabled-password --gecos "" appuser     && mkdir -p /app/instance/storage     && chown -R appuser:appuser /app/instance     && chmod 700 /app/instance /app/instance/storage
+#16 2.589 Adding user `appuser' ...
+#16 2.589 Adding new group `appuser' (1000) ...
+#16 2.957 Adding new user `appuser' (1000) with group `appuser (1000)' ...
+#16 3.275 Creating home directory `/home/appuser' ...
+#16 3.275 Copying files from `/etc/skel' ...
+#16 3.587 Adding new user `appuser' to supplemental / extra groups `users' ...
+#16 3.587 Adding user `appuser' to group `users' ...
+#16 DONE 3.9s
+
+#17 [test 7/7] RUN useradd --create-home tester && chown -R tester:tester /app
+#17 ...
+
+#18 [smoke] exporting to image
+#18 exporting layers 0.9s done
+#18 exporting manifest sha256:eec353dcd28b07ae89cb6103e8a3571eb06d148896d93fa26a49674be70c58bc 0.1s done
+#18 exporting config sha256:d68d42f174a94f12f62b26971c168a3937bdffaef724ee2d04886099b2f821d8 0.1s done
+#18 exporting attestation manifest sha256:311693db8c09bd5c40bd833455ea6a0a136a34d75f6c3d2d832ba0adfb8fe5ba 0.1s done
+#18 exporting manifest list sha256:e31aa5018f4af318af717ec8ba3461f28047d1abf80628fcf0dddd5fdc94cdcc 0.1s done
+#18 naming to docker.io/library/oceanblue-s06-accept-smoke:latest 0.0s done
+#18 unpacking to docker.io/library/oceanblue-s06-accept-smoke:latest
+#18 unpacking to docker.io/library/oceanblue-s06-accept-smoke:latest 0.5s done
+#18 DONE 2.0s
+
+#17 [test 7/7] RUN useradd --create-home tester && chown -R tester:tester /app
+#17 ...
+
+#19 [smoke] resolving provenance for metadata file
+#19 DONE 0.1s
+
+#17 [test 7/7] RUN useradd --create-home tester && chown -R tester:tester /app
+#17 DONE 7.2s
+
+#20 [test] exporting to image
+#20 exporting layers 0.9s done
+#20 exporting manifest sha256:5649500949b63938e8d0075bf265905c2d74cae63b8310c7e41b181b4a0e60af 0.0s done
+#20 exporting config sha256:fa09aac471a71ee8c4e4c23918fa49ce30c0a1a3c2a56445f617455d6772f0e0 0.0s done
+#20 exporting attestation manifest sha256:e83d24473fc9ce8a2c74a691903e2f0d033ecb75cff00fe4f58acaf1a40e3faf
+#20 exporting attestation manifest sha256:e83d24473fc9ce8a2c74a691903e2f0d033ecb75cff00fe4f58acaf1a40e3faf 0.0s done
+#20 exporting manifest list sha256:9f5714a8e091eb91b808d881739651b44f6209da7d3578942609c0d4c3a8abbe 0.0s done
+#20 naming to docker.io/library/oceanblue-s06-accept-test:latest 0.0s done
+#20 unpacking to docker.io/library/oceanblue-s06-accept-test:latest
+#20 unpacking to docker.io/library/oceanblue-s06-accept-test:latest 0.5s done
+#20 DONE 1.8s
+
+#21 [test] resolving provenance for metadata file
+#21 DONE 0.0s
+ Image oceanblue-s06-accept-test Built 
+ Image oceanblue-s06-accept-smoke Built 

@@ -25,13 +25,13 @@ min-h-screen flex flex-col bg-slate-950 text-white
             </div>
 
             <div class="flex flex-col sm:flex-row gap-3 w-full xl:w-auto xl:min-w-[30rem]">
-                <select id="financeiro-empresa"
+                <select id="financeiro-empresa" aria-label="Empresa do financeiro"
                     data-theme-company-select
                     class="w-full sm:w-64 bg-slate-950/80 border border-slate-800 focus:border-sky-500 focus:ring-2 focus:ring-sky-500/20 rounded-xl px-4 py-3 text-sm text-white outline-none transition">
                     <option value="">Todas as empresas</option>
                 </select>
 
-                <select id="financeiro-periodo"
+                <select id="financeiro-periodo" aria-label="Período do resumo"
                     class="w-full sm:w-44 bg-slate-950/80 border border-slate-800 focus:border-sky-500 focus:ring-2 focus:ring-sky-500/20 rounded-xl px-4 py-3 text-sm text-white outline-none transition">
                     <option value="7">7 dias</option>
                     <option value="15">15 dias</option>
@@ -50,11 +50,13 @@ min-h-screen flex flex-col bg-slate-950 text-white
             Lancamentos
         </a>
 
+        {% if config.FEATURE_BOLETO %}
         <a href="{{ url_for('boleto.pagina') }}"
             class="inline-flex items-center gap-2 rounded-xl border border-slate-700 bg-slate-900/80 hover:border-sky-500/40 text-slate-100 font-medium px-5 py-3 transition">
             <i data-lucide="file-text" class="w-4 h-4"></i>
             Boletos
         </a>
+        {% endif %}
 
         {% if ui_flags.can_view_finance_reports %}
         <a href="{{ url_for('financeiro.pagina_relatorios') }}"
@@ -117,7 +119,7 @@ min-h-screen flex flex-col bg-slate-950 text-white
                     <p class="text-sm text-slate-400">Entradas e saidas registradas no periodo selecionado.</p>
                 </div>
             </div>
-            <div id="financeiro-serie-list" class="financeiro-series-list"></div>
+            <div id="financeiro-serie-list" class="financeiro-series-list" tabindex="0" role="region" aria-label="Série financeira"></div>
         </section>
 
         <section class="xl:col-span-3 financeiro-panel">

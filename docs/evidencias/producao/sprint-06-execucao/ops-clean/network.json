@@ -1,0 +1,113 @@
+[
+    {
+        "Name": "oceanblue-s06-ops-clean_test",
+        "Id": "6fac1b954eb92a1f3c237ad4d93702a7fc05f251863a6d99cb8f5eac56ea47fa",
+        "Created": "2026-09-07T07:06:17.979103339Z",
+        "Scope": "local",
+        "Driver": "bridge",
+        "EnableIPv4": true,
+        "EnableIPv6": false,
+        "IPAM": {
+            "Driver": "default",
+            "Options": null,
+            "Config": [
+                {
+                    "Subnet": "172.30.62.0/24",
+                    "IPRange": "172.30.62.128/25",
+                    "Gateway": "172.30.62.128"
+                }
+            ]
+        },
+        "Internal": true,
+        "Attachable": false,
+        "Ingress": false,
+        "ConfigFrom": {
+            "Network": ""
+        },
+        "ConfigOnly": false,
+        "Options": {
+            "com.docker.network.enable_ipv4": "true",
+            "com.docker.network.enable_ipv6": "false"
+        },
+        "Labels": {
+            "com.docker.compose.config-hash": "892c9a193e462c66b3b6da305d5d91487ac7dad6a0e5ddd00ab0b9b41b9c82a9",
+            "com.docker.compose.network": "test",
+            "com.docker.compose.project": "oceanblue-s06-ops-clean",
+            "com.docker.compose.version": "5.5.0"
+        },
+        "Containers": {
+            "5441ce779ddf01a0ccf557e63d0be4a5b1ca26ec1fb9b499b15e16bf67371eae": {
+                "Name": "oceanblue-s06-ops-clean-db-test-1",
+                "EndpointID": "a5c1e00c735db93292df5b57a00ac50443aaab49f27c54603358bb92aff0dbf4",
+                "MacAddress": "06:20:ab:52:c4:5d",
+                "IPv4Address": "172.30.62.129/24",
+                "IPv6Address": ""
+            }
+        },
+        "Status": {
+            "IPAM": {
+                "Subnets": {
+                    "172.30.62.0/24": {
+                        "IPsInUse": 4,
+                        "DynamicIPsAvailable": 125
+                    }
+                }
+            }
+        }
+    },
+    {
+        "Name": "oceanblue-s06-ops-clean-restore_test",
+        "Id": "b5a82a86eef9777b0ccc1332f8ff4c86951d0bab9e05bd6c2ddcebbc267c8a19",
+        "Created": "2026-09-07T07:07:30.34646939Z",
+        "Scope": "local",
+        "Driver": "bridge",
+        "EnableIPv4": true,
+        "EnableIPv6": false,
+        "IPAM": {
+            "Driver": "default",
+            "Options": null,
+            "Config": [
+                {
+                    "Subnet": "172.20.0.0/16",
+                    "Gateway": "172.20.0.1"
+                }
+            ]
+        },
+        "Internal": true,
+        "Attachable": false,
+        "Ingress": false,
+        "ConfigFrom": {
+            "Network": ""
+        },
+        "ConfigOnly": false,
+        "Options": {
+            "com.docker.network.enable_ipv4": "true",
+            "com.docker.network.enable_ipv6": "false"
+        },
+        "Labels": {
+            "com.docker.compose.config-hash": "7822683330841f9dab34e08a64304bde4a4457bab31a9f1137797e1c21242014",
+            "com.docker.compose.network": "test",
+            "com.docker.compose.project": "oceanblue-s06-ops-clean-restore",
+            "com.docker.compose.version": "5.5.0"
+        },
+        "Containers": {
+            "86b75467f3c923176fbbf515ecb552470e965d0985096d864f80fa7ef8dab0ef": {
+                "Name": "oceanblue-s06-ops-clean-restore-db-test-1",
+                "EndpointID": "8277253e6f8ee35c7c9fdac99b554f8487277c050cf05c4300869d4e58f3a2c1",
+                "MacAddress": "52:c5:a9:e6:60:55",
+                "IPv4Address": "172.20.0.2/16",
+                "IPv6Address": ""
+            }
+        },
+        "Status": {
+            "IPAM": {
+                "Subnets": {
+                    "172.20.0.0/16": {
+                        "IPsInUse": 4,
+                        "DynamicIPsAvailable": 65532
+                    }
+                }
+            }
+        }
+    }
+]

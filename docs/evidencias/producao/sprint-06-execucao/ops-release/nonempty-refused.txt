@@ -1,0 +1,5 @@
+Exception: C:\Users\Rabel\.codex\worktrees\3e5d\OceanBlue\scripts\operational_snapshot.ps1:93
+Line |
+  93 |  … ='public'") -ne 0) { throw "Restore requires a new empty database." }
+     |                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | Restore requires a new empty database.

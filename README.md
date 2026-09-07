@@ -48,3 +48,9 @@ Documentos legados foram preservados em `docs/99-legado-ou-backup/` antes da reo
 ## Proximos passos recomendados
 
 Use `docs/10-planejamento-sprints/plano-sprint-2.md` como guia para priorizar correcao de bugs visiveis, validacao de ambiente, decisao de integradores externos e desenho funcional de boleto/fiscal antes de implementar emissao real.
+# Operação de produção
+
+A configuração oficial endurecida está em `compose.production.yml`. Consulte o
+[runbook da Sprint 6](docs/02-instalacao-e-ambiente/producao-sprint-06.md) e a
+[matriz operacional](docs/04-modulos-e-funcionalidades/prontidao-operacional-sprint-06.md)
+antes de qualquer instalação. Os composes de desenvolvimento não substituem esse contrato.

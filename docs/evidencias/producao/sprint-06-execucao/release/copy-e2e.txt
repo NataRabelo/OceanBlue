@@ -1,0 +1,2 @@
+ oceanblue-s06-release-test-1 Copying oceanblue-s06-release-test-1:/tmp/e2e to C:\Users\Rabel\.codex\worktrees\3e5d\OceanBlue\docs\evidencias\producao\sprint-06-execucao\release\e2e
+ oceanblue-s06-release-test-1 Copied oceanblue-s06-release-test-1:/tmp/e2e to C:\Users\Rabel\.codex\worktrees\3e5d\OceanBlue\docs\evidencias\producao\sprint-06-execucao\release\e2e

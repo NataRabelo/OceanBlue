@@ -20,6 +20,8 @@ from app.controllers.ciclos_controller import ciclos_bp
 
 
 def register_blueprints(app):
+    from app.controllers.auditoria_controller import auditoria_bp
+    app.register_blueprint(auditoria_bp, url_prefix="/api/auditoria")
     app.register_blueprint(ciclos_bp, url_prefix="/api")
     app.register_blueprint(health_bp, url_prefix="/api")
     app.register_blueprint(auth_bp)

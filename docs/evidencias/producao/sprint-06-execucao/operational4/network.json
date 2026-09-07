@@ -1,0 +1,113 @@
+[
+    {
+        "Name": "oceanblue-s06-proof4_test",
+        "Id": "ffc9bfc7aa986aa6a8af87e7d9edf5a4fd5c628757175d7a0094f4285fe44651",
+        "Created": "2026-09-07T06:32:58.196910279Z",
+        "Scope": "local",
+        "Driver": "bridge",
+        "EnableIPv4": true,
+        "EnableIPv6": false,
+        "IPAM": {
+            "Driver": "default",
+            "Options": null,
+            "Config": [
+                {
+                    "Subnet": "172.30.62.0/24",
+                    "IPRange": "172.30.62.128/25",
+                    "Gateway": "172.30.62.128"
+                }
+            ]
+        },
+        "Internal": true,
+        "Attachable": false,
+        "Ingress": false,
+        "ConfigFrom": {
+            "Network": ""
+        },
+        "ConfigOnly": false,
+        "Options": {
+            "com.docker.network.enable_ipv4": "true",
+            "com.docker.network.enable_ipv6": "false"
+        },
+        "Labels": {
+            "com.docker.compose.config-hash": "87af0cc776f9776e91ac06262d0ff2ae25d1e3417fec4b61bd219d0863e79b82",
+            "com.docker.compose.network": "test",
+            "com.docker.compose.project": "oceanblue-s06-proof4",
+            "com.docker.compose.version": "5.5.0"
+        },
+        "Containers": {
+            "0d133de3cfc64a8abdb49b3b11d5526aa9914ff84618e2d853611785b4a7f05b": {
+                "Name": "oceanblue-s06-proof4-db-test-1",
+                "EndpointID": "0c5026aefa908d0072d2d9f7b9e86758846ec5ebde50711fcf94189def82dd75",
+                "MacAddress": "36:56:4f:37:06:d2",
+                "IPv4Address": "172.30.62.129/24",
+                "IPv6Address": ""
+            }
+        },
+        "Status": {
+            "IPAM": {
+                "Subnets": {
+                    "172.30.62.0/24": {
+                        "IPsInUse": 4,
+                        "DynamicIPsAvailable": 125
+                    }
+                }
+            }
+        }
+    },
+    {
+        "Name": "oceanblue-s06-proof4-restore_test",
+        "Id": "5f10889d9e52fdc162f1baa98c573e513779a5609500e9c6ea664b4a95b93802",
+        "Created": "2026-09-07T06:34:20.582592258Z",
+        "Scope": "local",
+        "Driver": "bridge",
+        "EnableIPv4": true,
+        "EnableIPv6": false,
+        "IPAM": {
+            "Driver": "default",
+            "Options": null,
+            "Config": [
+                {
+                    "Subnet": "172.23.0.0/16",
+                    "Gateway": "172.23.0.1"
+                }
+            ]
+        },
+        "Internal": true,
+        "Attachable": false,
+        "Ingress": false,
+        "ConfigFrom": {
+            "Network": ""
+        },
+        "ConfigOnly": false,
+        "Options": {
+            "com.docker.network.enable_ipv4": "true",
+            "com.docker.network.enable_ipv6": "false"
+        },
+        "Labels": {
+            "com.docker.compose.config-hash": "58ea68240656f29f01d24f071a8e89162e2ded79fd4a6c148377a35121adfb16",
+            "com.docker.compose.network": "test",
+            "com.docker.compose.project": "oceanblue-s06-proof4-restore",
+            "com.docker.compose.version": "5.5.0"
+        },
+        "Containers": {
+            "d42b28c5208fbbda66513778c7b87a917e398cc5d414dea01e336feb6a65e25a": {
+                "Name": "oceanblue-s06-proof4-restore-db-test-1",
+                "EndpointID": "75d224fe557acbb789c29d52292cb06fd11941d70d10792bb3f092ec10005618",
+                "MacAddress": "86:d8:6a:14:3b:24",
+                "IPv4Address": "172.23.0.2/16",
+                "IPv6Address": ""
+            }
+        },
+        "Status": {
+            "IPAM": {
+                "Subnets": {
+                    "172.23.0.0/16": {
+                        "IPsInUse": 4,
+                        "DynamicIPsAvailable": 65532
+                    }
+                }
+            }
+        }
+    }
+]

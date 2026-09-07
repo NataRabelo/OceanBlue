@@ -248,6 +248,7 @@ class AuditLog(db.Model):
     user_agent = db.Column(db.String(255), nullable=True)
     request_path = db.Column(db.String(255), nullable=True)
     request_method = db.Column(db.String(10), nullable=True)
+    request_id = db.Column(db.String(32), nullable=True, server_default=db.text("NULLIF(current_setting('ocean.request_id', true), '')"))
     criado_em = db.Column(db.DateTime, nullable=False, default=TimeService.now_utc_naive)
 
     tenant = db.relationship("Tenant", backref=db.backref("audit_logs", lazy=True))
@@ -255,6 +256,7 @@ class AuditLog(db.Model):
     __table_args__ = (
         Index("ix_audit_logs_tenant_action_created", "tenant_id", "action", "criado_em"),
         Index("ix_audit_logs_tenant_entity", "tenant_id", "entity_type", "entity_id"),
+        Index("ix_audit_logs_scope_cursor", "tenant_id", "empresa_id", "id"),
     )
 
 

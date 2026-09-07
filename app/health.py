@@ -2,6 +2,7 @@ from flask import Blueprint, current_app, jsonify
 from sqlalchemy import text
 
 from app.extensions import db
+from app.operations import storage_probe
 
 health_bp = Blueprint("health", __name__)
 
@@ -18,10 +19,18 @@ def healthcheck():
 def readiness():
     try:
         db.session.execute(text("SELECT 1"))
+        revision = db.session.execute(text("SELECT version_num FROM alembic_version")).scalar_one()
+        if revision != current_app.config["SCHEMA_REVISION"]:
+            raise RuntimeError("Schema unavailable")
         db.session.commit()
+        try:
+            storage_probe()
+        except OSError:
+            return jsonify(status="error", database="ok", storage="error"), 503
         return jsonify({
             "status": "ok",
             "database": "ok",
+            "storage": "ok",
             "service": "OceanBlue API",
         }), 200
     except Exception as exc:

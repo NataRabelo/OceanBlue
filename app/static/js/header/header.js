@@ -33,6 +33,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (persist) {
             window.localStorage.setItem(sidebarStateStorageKey, normalizedState);
+            if (window.innerWidth < 768) {
+                const target = normalizedState === "expanded"
+                    ? sidebar.querySelector(".sidebar-mobile-close")
+                    : document.querySelector(".tenant-topbar [data-sidebar-toggle]");
+                target?.focus();
+            }
         }
     }
 
@@ -75,4 +81,9 @@ document.addEventListener("DOMContentLoaded", () => {
             window.location.href = "/home";
         });
     }
+    document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && window.innerWidth < 768 && document.body.dataset.sidebarState === "expanded") {
+            setSidebarState("collapsed");
+        }
+    });
 });

@@ -1,0 +1,37 @@
+proxy-1  | /docker-entrypoint.sh: /docker-entrypoint.d/ is not empty, will attempt to perform configuration
+proxy-1  | /docker-entrypoint.sh: Looking for shell scripts in /docker-entrypoint.d/
+proxy-1  | /docker-entrypoint.sh: Launching /docker-entrypoint.d/10-listen-on-ipv6-by-default.sh
+proxy-1  | 10-listen-on-ipv6-by-default.sh: info: can not modify /etc/nginx/conf.d/default.conf (read-only file system?)
+proxy-1  | /docker-entrypoint.sh: Sourcing /docker-entrypoint.d/15-local-resolvers.envsh
+proxy-1  | /docker-entrypoint.sh: Launching /docker-entrypoint.d/20-envsubst-on-templates.sh
+proxy-1  | /docker-entrypoint.sh: Launching /docker-entrypoint.d/30-tune-worker-processes.sh
+proxy-1  | /docker-entrypoint.sh: Configuration complete; ready for start up
+proxy-1  | {"event":"proxy_request","request_id":"63b1ce3cc4a4aaa987a72bb0c086c027","status":200,"duration":0.003}
+proxy-1  | {"event":"proxy_request","request_id":"39eeeda994ece546a5cf5ef8a94fc34e","status":200,"duration":0.013}
+proxy-1  | {"event":"proxy_request","request_id":"747b01d1fc76143a2a5712abeaa12b55","status":200,"duration":0.009}
+proxy-1  | {"event":"proxy_request","request_id":"6daa7a4eb1160e090c1775a05ea1b318","status":200,"duration":0.002}
+proxy-1  | {"event":"proxy_request","request_id":"fa7d10ae483eef49c3a1ef896b17fa61","status":404,"duration":0.002}
+proxy-1  | {"event":"proxy_request","request_id":"bc832e53f954b58c4e9d4871804a1718","status":404,"duration":0.002}
+proxy-1  | {"event":"proxy_request","request_id":"074e2c544c8dc3880c4d2ba9ca3df655","status":404,"duration":0.002}
+proxy-1  | {"event":"proxy_request","request_id":"cf95ae66c4096bf501d16485f74391fe","status":404,"duration":0.000}
+proxy-1  | {"event":"proxy_request","request_id":"459616b43a857cfe91719521fd367073","status":200,"duration":0.002}
+smoke-1  | INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+smoke-1  | INFO  [alembic.runtime.migration] Will assume transactional DDL.
+smoke-1  | [2026-09-07 07:06:32 +0000] [1] [INFO] Starting gunicorn 21.2.0
+smoke-1  | [2026-09-07 07:06:32 +0000] [1] [INFO] Listening at: http://0.0.0.0:5000 (1)
+smoke-1  | [2026-09-07 07:06:32 +0000] [1] [INFO] Using worker: gthread
+smoke-1  | [2026-09-07 07:06:32 +0000] [9] [INFO] Booting worker with pid: 9
+smoke-1  | {"timestamp": "2026-09-07T07:06:34.684732+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "7fa8dcd5158aed707bbaeb9dd3753c45", "route": "/api/ready", "method": "GET", "status": 200, "duration_ms": 16.856}
+smoke-1  | {"timestamp": "2026-09-07T07:06:38.378207+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "63b1ce3cc4a4aaa987a72bb0c086c027", "route": "/health", "method": "GET", "status": 200, "duration_ms": 0.083}
+smoke-1  | {"timestamp": "2026-09-07T07:06:39.558538+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "39eeeda994ece546a5cf5ef8a94fc34e", "route": "/login", "method": "GET", "status": 200, "duration_ms": 9.736}
+smoke-1  | {"timestamp": "2026-09-07T07:06:39.573266+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "747b01d1fc76143a2a5712abeaa12b55", "route": "/readiness", "method": "GET", "status": 200, "duration_ms": 7.284}
+smoke-1  | {"timestamp": "2026-09-07T07:06:39.578889+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "6daa7a4eb1160e090c1775a05ea1b318", "route": "/metrics", "method": "GET", "status": 200, "duration_ms": 0.154}
+smoke-1  | {"timestamp": "2026-09-07T07:06:39.584919+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "fa7d10ae483eef49c3a1ef896b17fa61", "route": "/metrics", "method": "GET", "status": 404, "duration_ms": 0.192}
+smoke-1  | {"timestamp": "2026-09-07T07:06:39.590176+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "bc832e53f954b58c4e9d4871804a1718", "route": "/api/fiscal/view", "method": "GET", "status": 404, "duration_ms": 0.138}
+smoke-1  | {"timestamp": "2026-09-07T07:06:39.595146+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "074e2c544c8dc3880c4d2ba9ca3df655", "route": "/api/financeiro/boletos/view", "method": "GET", "status": 404, "duration_ms": 0.137}
+smoke-1  | {"timestamp": "2026-09-07T07:06:39.628198+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "0ab3dd34530be93054b124c01f6ba9e1", "route": "/login", "method": "GET", "status": 403, "duration_ms": 0.13}
+smoke-1  | {"timestamp": "2026-09-07T07:06:39.816180+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "0586513a55dcb95f685c5c80ee422ceb", "route": "/api/ready", "method": "GET", "status": 200, "duration_ms": 6.024}
+smoke-1  | {"timestamp": "2026-09-07T07:06:41.433440+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "459616b43a857cfe91719521fd367073", "route": "/health", "method": "GET", "status": 200, "duration_ms": 0.152}
+smoke-1  | [2026-09-07 07:06:42 +0000] [1] [INFO] Handling signal: term
+smoke-1  | {"timestamp": "2026-09-07T07:06:42.433944+00:00", "level": "INFO", "event": "application_diagnostic", "error_type": null}
+smoke-1  | [2026-09-07 07:06:42 +0000] [1] [INFO] Shutting down: Master

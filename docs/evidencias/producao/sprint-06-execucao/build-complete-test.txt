@@ -1,0 +1,53 @@
+#0 building with "desktop-linux" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile.test
+#1 transferring dockerfile: 499B 0.0s done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/python:3.12.12-slim-bookworm@sha256:593bd06efe90efa80dc4eee3948be7c0fde4134606dd40d8dd8dbcade98e669c
+#2 DONE 0.1s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 311B done
+#3 DONE 0.0s
+
+#4 [internal] load build context
+#4 DONE 0.0s
+
+#5 [1/7] FROM docker.io/library/python:3.12.12-slim-bookworm@sha256:593bd06efe90efa80dc4eee3948be7c0fde4134606dd40d8dd8dbcade98e669c
+#5 resolve docker.io/library/python:3.12.12-slim-bookworm@sha256:593bd06efe90efa80dc4eee3948be7c0fde4134606dd40d8dd8dbcade98e669c 0.1s done
+#5 DONE 0.1s
+
+#4 [internal] load build context
+#4 transferring context: 46.54kB 0.0s done
+#4 DONE 0.1s
+
+#6 [2/7] WORKDIR /app
+#6 CACHED
+
+#7 [3/7] COPY requirements-dev.txt .
+#7 CACHED
+
+#8 [4/7] RUN python -m pip install --no-cache-dir --require-hashes -r requirements-dev.txt
+#8 CACHED
+
+#9 [5/7] RUN python -m playwright install --with-deps chromium && chmod -R a+rX /opt/playwright
+#9 CACHED
+
+#10 [6/7] COPY . .
+#10 DONE 0.3s
+
+#11 [7/7] RUN useradd --create-home tester && chown -R tester:tester /app
+#11 DONE 2.6s
+
+#12 exporting to image
+#12 exporting layers
+#12 exporting layers 0.3s done
+#12 exporting manifest sha256:3e2b2c13846259bd3b281753180525e641fa18dee880ed72e05accc6287e789f 0.0s done
+#12 exporting config sha256:b80f1e1e6ba65d23f2dd4146b29046e3b0c9431c38501004551d3bf64b40ce0f 0.0s done
+#12 exporting attestation manifest sha256:1d550932c71f5dae6886bbd5ebadad59023b99e95ff9841bbf7d5b42c2dbdc35 0.0s done
+#12 exporting manifest list sha256:0e93bf35b7a44c0525d1ae30c9d0b2cf137e0739efe7ad1ddbf36ebccc480429 0.0s done
+#12 naming to docker.io/library/oceanblue-s06-complete-test:latest done
+#12 unpacking to docker.io/library/oceanblue-s06-complete-test:latest
+#12 unpacking to docker.io/library/oceanblue-s06-complete-test:latest 0.3s done
+#12 DONE 0.8s

@@ -1,0 +1,10 @@
+\set ON_ERROR_STOP on
+REVOKE CREATE ON SCHEMA public FROM PUBLIC;
+GRANT CONNECT ON DATABASE oceanblue TO oceanblue_runtime;
+GRANT USAGE ON SCHEMA public TO oceanblue_runtime;
+GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO oceanblue_runtime;
+GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO oceanblue_runtime;
+REVOKE INSERT, UPDATE, DELETE ON alembic_version FROM oceanblue_runtime;
+REVOKE UPDATE, DELETE ON audit_logs FROM oceanblue_runtime;
+ALTER DEFAULT PRIVILEGES FOR ROLE oceanblue_owner IN SCHEMA public GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO oceanblue_runtime;
+ALTER DEFAULT PRIVILEGES FOR ROLE oceanblue_owner IN SCHEMA public GRANT USAGE, SELECT ON SEQUENCES TO oceanblue_runtime;

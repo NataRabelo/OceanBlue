@@ -67,5 +67,6 @@ def restrict_writes(session, context, instances):
 @event.listens_for(Session, "after_begin")
 def identify_audit_actor(session, transaction, connection):
     user = getattr(g, "auth_user", None) if has_request_context() else None
-    connection.execute(db.text("SELECT set_config('ocean.actor_id', :actor, true), set_config('ocean.actor_scope', :scope, true)"),
-                       {"actor": str(inspect(user).identity[0]) if user else "", "scope": ("tenant" if hasattr(type(user), "tenant_id") else "platform") if user else ""})
+    connection.execute(db.text("SELECT set_config('ocean.actor_id', :actor, true), set_config('ocean.actor_scope', :scope, true), set_config('ocean.request_id', :request_id, true)"),
+                       {"actor": str(inspect(user).identity[0]) if user else "", "scope": ("tenant" if hasattr(type(user), "tenant_id") else "platform") if user else "",
+                        "request_id": getattr(g, "request_id", "") if has_request_context() else ""})

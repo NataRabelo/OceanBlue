@@ -1,0 +1,12 @@
+ Container oceanblue-s06-ops-release-restore-smoke-1 Stopping 
+ Container oceanblue-s06-ops-release-restore-smoke-1 Stopped 
+ Container oceanblue-s06-ops-release-restore-smoke-1 Removing 
+ Container oceanblue-s06-ops-release-restore-smoke-1 Removed 
+ Container oceanblue-s06-ops-release-restore-db-test-1 Stopping 
+ Container oceanblue-s06-ops-release-restore-db-test-1 Stopped 
+ Container oceanblue-s06-ops-release-restore-db-test-1 Removing 
+ Container oceanblue-s06-ops-release-restore-db-test-1 Removed 
+ Network oceanblue-s06-ops-release-restore_test Removing 
+ Volume oceanblue-s06-ops-release-restore_smoke-files Removing 
+ Volume oceanblue-s06-ops-release-restore_smoke-files Resource is still in use 
+ Network oceanblue-s06-ops-release-restore_test Removed 

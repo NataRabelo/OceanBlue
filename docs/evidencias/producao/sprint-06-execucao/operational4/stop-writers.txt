@@ -1,0 +1,4 @@
+ Container oceanblue-s06-proof4-proxy-1 Stopping 
+ Container oceanblue-s06-proof4-proxy-1 Stopped 
+ Container oceanblue-s06-proof4-smoke-1 Stopping 
+ Container oceanblue-s06-proof4-smoke-1 Stopped 

@@ -1,0 +1,37 @@
+proxy-1  | /docker-entrypoint.sh: /docker-entrypoint.d/ is not empty, will attempt to perform configuration
+proxy-1  | /docker-entrypoint.sh: Looking for shell scripts in /docker-entrypoint.d/
+proxy-1  | /docker-entrypoint.sh: Launching /docker-entrypoint.d/10-listen-on-ipv6-by-default.sh
+smoke-1  | INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+smoke-1  | INFO  [alembic.runtime.migration] Will assume transactional DDL.
+proxy-1  | 10-listen-on-ipv6-by-default.sh: info: can not modify /etc/nginx/conf.d/default.conf (read-only file system?)
+proxy-1  | /docker-entrypoint.sh: Sourcing /docker-entrypoint.d/15-local-resolvers.envsh
+smoke-1  | [2026-09-07 06:45:48 +0000] [1] [INFO] Starting gunicorn 21.2.0
+smoke-1  | [2026-09-07 06:45:48 +0000] [1] [INFO] Listening at: http://0.0.0.0:5000 (1)
+smoke-1  | [2026-09-07 06:45:48 +0000] [1] [INFO] Using worker: gthread
+smoke-1  | [2026-09-07 06:45:48 +0000] [16] [INFO] Booting worker with pid: 16
+smoke-1  | {"timestamp": "2026-09-07T06:45:50.172423+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "049d36db28341f0893dc7a63a99d7743", "route": "/api/ready", "method": "GET", "status": 200, "duration_ms": 25.991}
+smoke-1  | {"timestamp": "2026-09-07T06:45:53.810123+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "cc51add7d53244f8a7e27135a37c387d", "route": "/health", "method": "GET", "status": 200, "duration_ms": 0.155}
+smoke-1  | {"timestamp": "2026-09-07T06:45:55.055809+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "ebf9a3d6ac573fabf7a3091aa897b3b8", "route": "/login", "method": "GET", "status": 200, "duration_ms": 22.994}
+smoke-1  | {"timestamp": "2026-09-07T06:45:55.077309+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "008c10fb2c329afc108fa5392eac6a9e", "route": "/readiness", "method": "GET", "status": 200, "duration_ms": 10.443}
+smoke-1  | {"timestamp": "2026-09-07T06:45:55.088432+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "06e948c0727e37b24caa0379f541e618", "route": "/metrics", "method": "GET", "status": 200, "duration_ms": 0.297}
+smoke-1  | {"timestamp": "2026-09-07T06:45:55.095449+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "894f9d8e510377635d9367053b44b12c", "route": "/metrics", "method": "GET", "status": 404, "duration_ms": 0.323}
+smoke-1  | {"timestamp": "2026-09-07T06:45:55.102460+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "e500c537d957678c9c69720c78474b73", "route": "/api/fiscal/view", "method": "GET", "status": 404, "duration_ms": 0.318}
+smoke-1  | {"timestamp": "2026-09-07T06:45:55.109615+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "35804b7c8b868931b5efb0fcc36e5c4b", "route": "/api/financeiro/boletos/view", "method": "GET", "status": 404, "duration_ms": 0.159}
+smoke-1  | {"timestamp": "2026-09-07T06:45:55.147405+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "0f1015ce6b2a9c14ea068dc60462ca3f", "route": "/login", "method": "GET", "status": 403, "duration_ms": 0.082}
+smoke-1  | {"timestamp": "2026-09-07T06:45:55.383820+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "59aac5d79e3bf9fe19610d2288b752af", "route": "/api/ready", "method": "GET", "status": 200, "duration_ms": 12.29}
+smoke-1  | {"timestamp": "2026-09-07T06:45:56.918134+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "68c1f0a66c837c0a30ef0e8c837fdded", "route": "/health", "method": "GET", "status": 200, "duration_ms": 0.202}
+smoke-1  | [2026-09-07 06:45:59 +0000] [1] [INFO] Handling signal: term
+smoke-1  | {"timestamp": "2026-09-07T06:45:59.921134+00:00", "level": "INFO", "event": "application_diagnostic", "error_type": null}
+smoke-1  | [2026-09-07 06:46:00 +0000] [1] [INFO] Shutting down: Master
+proxy-1  | /docker-entrypoint.sh: Launching /docker-entrypoint.d/20-envsubst-on-templates.sh
+proxy-1  | /docker-entrypoint.sh: Launching /docker-entrypoint.d/30-tune-worker-processes.sh
+proxy-1  | /docker-entrypoint.sh: Configuration complete; ready for start up
+proxy-1  | {"event":"proxy_request","request_id":"cc51add7d53244f8a7e27135a37c387d","status":200,"duration":0.004}
+proxy-1  | {"event":"proxy_request","request_id":"ebf9a3d6ac573fabf7a3091aa897b3b8","status":200,"duration":0.026}
+proxy-1  | {"event":"proxy_request","request_id":"008c10fb2c329afc108fa5392eac6a9e","status":200,"duration":0.012}
+proxy-1  | {"event":"proxy_request","request_id":"06e948c0727e37b24caa0379f541e618","status":200,"duration":0.002}
+proxy-1  | {"event":"proxy_request","request_id":"894f9d8e510377635d9367053b44b12c","status":404,"duration":0.003}
+proxy-1  | {"event":"proxy_request","request_id":"e500c537d957678c9c69720c78474b73","status":404,"duration":0.003}
+proxy-1  | {"event":"proxy_request","request_id":"35804b7c8b868931b5efb0fcc36e5c4b","status":404,"duration":0.002}
+proxy-1  | {"event":"proxy_request","request_id":"0b5762c2a3f315fa28125de1949a28fe","status":404,"duration":0.000}
+proxy-1  | {"event":"proxy_request","request_id":"68c1f0a66c837c0a30ef0e8c837fdded","status":200,"duration":0.004}

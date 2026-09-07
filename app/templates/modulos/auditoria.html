@@ -1,0 +1,21 @@
+{% extends "bases/base.html" %}
+{% block title %}Auditoria operacional - OceanBlue{% endblock %}
+{% block content %}
+{% set modulo_name = "Auditoria" %}
+{% include "componentes/header_subpages.html" %}
+<main class="page-shell" id="main-content">
+  <h1>Auditoria operacional</h1>
+  <p>Eventos das empresas autorizadas. Dados pessoais e detalhes privados não são exibidos.</p>
+  <form id="audit-filter">
+    <label for="audit-company">Empresa (ID, opcional)</label>
+    <input id="audit-company" type="number" min="1">
+    <button type="submit" class="btn-primary">Consultar</button>
+  </form>
+  <p id="audit-status" role="status" aria-live="polite"></p>
+  <div class="table-scroll" tabindex="0" role="region" aria-label="Eventos de auditoria">
+    <table><caption>Histórico operacional</caption><thead><tr><th scope="col">Data</th><th scope="col">Empresa</th><th scope="col">Ação</th><th scope="col">Status</th><th scope="col">Requisição</th></tr></thead><tbody id="audit-rows"></tbody></table>
+  </div>
+  <button id="audit-next" type="button" class="btn-primary" disabled>Próxima página</button>
+</main>
+<script src="{{ url_for('static', filename='js/auditoria.js') }}"></script>
+{% endblock %}

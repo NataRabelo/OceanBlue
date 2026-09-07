@@ -1,5 +1,6 @@
 #!/bin/sh
 set -e
+umask 077
 
 python - <<'PY'
 import os
@@ -33,6 +34,8 @@ else:
     raise SystemExit(f"Banco indisponivel apos aguardar: {last_error}")
 PY
 
-flask db upgrade
+if [ "${RUN_MIGRATIONS:-true}" = "true" ]; then
+    flask db upgrade
+fi
 
 exec "$@"

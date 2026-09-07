@@ -1,0 +1,13 @@
+ Container oceanblue-s06-proof-db-test-1 Running 
+ Volume oceanblue-s06-proof_proof-tls Creating 
+ Volume oceanblue-s06-proof_smoke-files Creating 
+ Volume oceanblue-s06-proof_proof-tls Creating 
+ Volume oceanblue-s06-proof_smoke-files Creating 
+ Volume oceanblue-s06-proof_proof-tls Created 
+ Volume oceanblue-s06-proof_proof-tls Created 
+ Container oceanblue-s06-proof-proxy-1 Creating 
+ Volume oceanblue-s06-proof_smoke-files Created 
+ Volume oceanblue-s06-proof_smoke-files Created 
+ Container oceanblue-s06-proof-smoke-1 Creating 
+ service:smoke:1 Error response from daemon: invalid mount path: 'size=64m' mount path must be absolute 
+Error response from daemon: invalid mount path: 'size=64m' mount path must be absolute

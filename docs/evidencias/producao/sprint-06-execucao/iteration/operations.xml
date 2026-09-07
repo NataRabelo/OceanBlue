@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="21" time="16.871" timestamp="2026-09-07T06:13:34.647516+00:00" hostname="2b3afa923eb1"><testcase classname="tests.test_sprint06_operations" name="test_production_flags_fail_closed[true-FEATURE_BOLETO]" time="2.153" /><testcase classname="tests.test_sprint06_operations" name="test_production_flags_fail_closed[true-FEATURE_FISCAL]" time="0.974" /><testcase classname="tests.test_sprint06_operations" name="test_production_flags_fail_closed[true-FEATURE_EXTERNAL_PROVIDERS]" time="0.843" /><testcase classname="tests.test_sprint06_operations" name="test_production_flags_fail_closed[garbage-FEATURE_BOLETO]" time="0.852" /><testcase classname="tests.test_sprint06_operations" name="test_production_flags_fail_closed[garbage-FEATURE_FISCAL]" time="0.872" /><testcase classname="tests.test_sprint06_operations" name="test_production_flags_fail_closed[garbage-FEATURE_EXTERNAL_PROVIDERS]" time="0.841" /><testcase classname="tests.test_sprint06_operations" name="test_unsafe_transport_configuration_rejected[overrides0]" time="0.858" /><testcase classname="tests.test_sprint06_operations" name="test_unsafe_transport_configuration_rejected[overrides1]" time="0.823" /><testcase classname="tests.test_sprint06_operations" name="test_unsafe_transport_configuration_rejected[overrides2]" time="0.844" /><testcase classname="tests.test_sprint06_operations" name="test_proxy_trusts_only_transport_peer[10.33.0.2-True]" time="0.047" /><testcase classname="tests.test_sprint06_operations" name="test_proxy_trusts_only_transport_peer[10.34.0.2-False]" time="0.040" /><testcase classname="tests.test_sprint06_operations" name="test_storage_readiness_and_write_failure_closed" time="0.051" /><testcase classname="tests.test_sprint06_operations" name="test_storage_probe_private_atomic_and_no_symlinks" time="0.075" /><testcase classname="tests.test_sprint06_operations" name="test_request_id_redaction_and_metrics" time="0.044" /><testcase classname="tests.test_sprint06_operations" name="test_production_routes_block_even_authenticated[/api/fiscal/view]" time="1.056" /><testcase classname="tests.test_sprint06_operations" name="test_production_routes_block_even_authenticated[/api/financeiro/boletos/view]" time="0.799" /><testcase classname="tests.test_sprint06_operations" name="test_production_routes_block_even_authenticated[/api/fiscal/configuracao]" time="0.982" /><testcase classname="tests.test_sprint06_operations" name="test_production_routes_block_even_authenticated[/api/financeiro/boletos/]" time="1.056" /><testcase classname="tests.test_sprint06_operations" name="test_audit_permission_scope_pagination_and_private_projection" time="1.270" /><testcase classname="tests.test_sprint06_operations" name="test_audit_request_trace_and_lossy_downgrade_refused" time="0.756"><failure message="SystemExit: 1">args = (), kwargs = {'revision': '9c0d1e2f3a4b'}
+
+    @wraps(f)
+    def wrapped(*args, **kwargs):
+        try:
+&gt;           f(*args, **kwargs)
+
+/usr/local/lib/python3.12/site-packages/flask_migrate/__init__.py:111: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/local/lib/python3.12/site-packages/flask_migrate/__init__.py:210: in downgrade
+    command.downgrade(config, revision, sql=sql, tag=tag)
+/usr/local/lib/python3.12/site-packages/alembic/command.py:534: in downgrade
+    script.run_env()
+/usr/local/lib/python3.12/site-packages/alembic/script/base.py:550: in run_env
+    util.load_python_file(self.dir, "env.py")
+/usr/local/lib/python3.12/site-packages/alembic/util/pyfiles.py:114: in load_python_file
+    module = load_module_py(module_id, path)
+/usr/local/lib/python3.12/site-packages/alembic/util/pyfiles.py:132: in load_module_py
+    spec.loader.exec_module(module)  # type: ignore
+migrations/env.py:108: in &lt;module&gt;
+    run_migrations_online()
+migrations/env.py:102: in run_migrations_online
+    context.run_migrations()
+/usr/local/lib/python3.12/site-packages/alembic/runtime/environment.py:970: in run_migrations
+    self.get_context().run_migrations(**kw)
+/usr/local/lib/python3.12/site-packages/alembic/runtime/migration.py:621: in run_migrations
+    step.migration_fn(**kw)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def downgrade():
+        if op.get_bind().execute(sa.text("SELECT EXISTS (SELECT 1 FROM audit_logs WHERE request_id IS NOT NULL)")).scalar():
+&gt;           raise RuntimeError("Downgrade perderia rastreabilidade; restaure backup em banco novo e reconcilie escritas.")
+E           RuntimeError: Downgrade perderia rastreabilidade; restaure backup em banco novo e reconcilie escritas.
+
+migrations/versions/a0d1e2f3a4b5_sprint06_operations.py:25: RuntimeError
+
+During handling of the above exception, another exception occurred:
+
+security_app = &lt;Flask 'app'&gt;
+
+    def test_audit_request_trace_and_lossy_downgrade_refused(security_app):
+        from flask_migrate import downgrade
+        with security_app.test_request_context("/test"):
+            from flask import g
+            g.request_id = "b" * 32
+            AuditService.registrar("TRACE", tenant_id=1, empresa_id=1, commit=True)
+            assert AuditLog.query.filter_by(action="TRACE").one().request_id == "b" * 32
+        with security_app.app_context():
+            with pytest.raises(RuntimeError, match="rastreabilidade"):
+&gt;               downgrade(revision="9c0d1e2f3a4b")
+
+tests/test_sprint06_operations.py:120: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = (), kwargs = {'revision': '9c0d1e2f3a4b'}
+
+    @wraps(f)
+    def wrapped(*args, **kwargs):
+        try:
+            f(*args, **kwargs)
+        except (CommandError, RuntimeError) as exc:
+            log.error('Error: ' + str(exc))
+&gt;           sys.exit(1)
+E           SystemExit: 1
+
+/usr/local/lib/python3.12/site-packages/flask_migrate/__init__.py:114: SystemExit</failure></testcase><testcase classname="tests.test_sprint06_operations" name="test_audit_benchmark_bounded_queries_and_index" time="1.371" /></testsuite></testsuites>

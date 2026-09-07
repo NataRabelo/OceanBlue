@@ -1,0 +1,6 @@
+time="2026-09-07T03:24:57-03:00" level=warning msg="Found orphan containers (oceanblue-s06-mobile, oceanblue-s06-e2e, oceanblue-s06-probe) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up."
+ Container oceanblue-s06-preflight Creating 
+ Container oceanblue-s06-preflight Created 
+.............................                                            [100%]
+----------------------- generated xml file: /tmp/s06.xml -----------------------
+29 passed in 64.94s (0:01:04)

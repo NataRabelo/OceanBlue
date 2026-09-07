@@ -1,4 +1,4 @@
-from flask import has_request_context, request
+from flask import g, has_request_context, request
 
 from app.extensions import db
 from app.models.db import AuditLog
@@ -29,8 +29,7 @@ class AuditService:
             ip_address = request.remote_addr
             if ip_address and "," in ip_address:
                 ip_address = ip_address.split(",", 1)[0].strip()
-            user_agent = (request.headers.get("User-Agent") or "")[:255] or None
-            request_path = request.path
+            request_path = request.url_rule.rule if request.url_rule else "unmatched"
             request_method = request.method
 
         log = AuditLog(
@@ -47,6 +46,7 @@ class AuditService:
             user_agent=user_agent,
             request_path=request_path,
             request_method=request_method,
+            request_id=getattr(g, "request_id", None) if has_request_context() else None,
             criado_em=TimeService.now_utc_naive(),
         )
         db.session.add(log)

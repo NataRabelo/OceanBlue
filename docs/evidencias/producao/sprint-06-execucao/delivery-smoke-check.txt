@@ -1,0 +1,1 @@
+Verified 303 files against delivery smoke image; application, tests, migrations and assets byte-identical to full regression. Only delta: scripts/validate_operational_proof.ps1, host runner cleanup, independently rerun.

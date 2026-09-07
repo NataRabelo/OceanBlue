@@ -1,0 +1,23 @@
+groups:
+  - name: oceanblue
+    rules:
+      - alert: OceanBlueStorageLow
+        expr: oceanblue_storage_free_bytes < 1073741824
+        for: 5m
+        labels: {severity: high}
+        annotations: {summary: "Storage abaixo de 1 GiB livre; revisar retencao antes de apagar"}
+      - alert: OceanBlueReadinessFailed
+        expr: probe_success{job="oceanblue-readiness"} == 0
+        for: 1m
+        labels: {severity: critical}
+        annotations: {summary: "Banco ou storage indisponivel; seguir runbook de incidente"}
+      - alert: OceanBlueErrors
+        expr: rate(oceanblue_errors_total[5m]) / clamp_min(rate(oceanblue_requests_total[5m]), 0.01) > 0.01
+        for: 5m
+        labels: {severity: high}
+        annotations: {summary: "Mais de 1% de respostas 5xx; correlacionar request ID"}
+      - alert: OceanBlueSlowRequests
+        expr: rate(oceanblue_slow_requests_total[5m]) / clamp_min(rate(oceanblue_requests_total[5m]), 0.01) > 0.05
+        for: 5m
+        labels: {severity: warning}
+        annotations: {summary: "Mais de 5% das requisicoes excedem 1 segundo"}

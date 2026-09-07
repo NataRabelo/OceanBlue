@@ -1,0 +1,55 @@
+#0 building with "desktop-linux" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 1.07kB done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/python:3.12.12-slim-bookworm@sha256:593bd06efe90efa80dc4eee3948be7c0fde4134606dd40d8dd8dbcade98e669c
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 311B done
+#3 DONE 0.0s
+
+#4 [1/6] FROM docker.io/library/python:3.12.12-slim-bookworm@sha256:593bd06efe90efa80dc4eee3948be7c0fde4134606dd40d8dd8dbcade98e669c
+#4 resolve docker.io/library/python:3.12.12-slim-bookworm@sha256:593bd06efe90efa80dc4eee3948be7c0fde4134606dd40d8dd8dbcade98e669c 0.0s done
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 23.64kB 0.0s done
+#5 DONE 0.0s
+
+#6 [2/6] WORKDIR /app
+#6 CACHED
+
+#7 [3/6] COPY requirements.txt .
+#7 CACHED
+
+#8 [4/6] RUN python -m pip install --no-cache-dir --require-hashes -r requirements.txt
+#8 CACHED
+
+#9 [5/6] COPY . .
+#9 DONE 0.2s
+
+#10 [6/6] RUN sed -i 's/\r$//' /app/docker-entrypoint.sh     && cp /app/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh     && chmod +x /usr/local/bin/docker-entrypoint.sh     && adduser --disabled-password --gecos "" appuser     && mkdir -p /app/instance/storage     && chown -R appuser:appuser /app/instance     && chmod 700 /app/instance /app/instance/storage
+#10 0.586 Adding user `appuser' ...
+#10 0.586 Adding new group `appuser' (1000) ...
+#10 0.627 Adding new user `appuser' (1000) with group `appuser (1000)' ...
+#10 0.701 Creating home directory `/home/appuser' ...
+#10 0.701 Copying files from `/etc/skel' ...
+#10 0.732 Adding new user `appuser' to supplemental / extra groups `users' ...
+#10 0.732 Adding user `appuser' to group `users' ...
+#10 DONE 0.8s
+
+#11 exporting to image
+#11 exporting layers
+#11 exporting layers 0.3s done
+#11 exporting manifest sha256:d14d96626587c7721f26c8282931361e36386be10789978eb6b9429a19b1ee60 0.0s done
+#11 exporting config sha256:5e7c7b65f0512b313ebf098dc776fa797d480459df8b27637e9b42e3f96bc352 0.0s done
+#11 exporting attestation manifest sha256:95a792408f4ac1c3695b0be7cf60ee3729ddba97f466f2400af3b15afbfc4385 0.0s done
+#11 exporting manifest list sha256:bb806e181c1f5f62cec16c38cd50a972f5376a28b7603007de549b53129b6930
+#11 exporting manifest list sha256:bb806e181c1f5f62cec16c38cd50a972f5376a28b7603007de549b53129b6930 0.0s done
+#11 naming to docker.io/library/oceanblue-s06-delivery-smoke:latest done
+#11 unpacking to docker.io/library/oceanblue-s06-delivery-smoke:latest
+#11 unpacking to docker.io/library/oceanblue-s06-delivery-smoke:latest 0.2s done
+#11 DONE 0.7s

@@ -1,0 +1,54 @@
+#0 building with "desktop-linux" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile.test
+#1 transferring dockerfile: 499B 0.1s done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/python:3.12.12-slim-bookworm@sha256:593bd06efe90efa80dc4eee3948be7c0fde4134606dd40d8dd8dbcade98e669c
+#2 DONE 0.2s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 311B 0.0s done
+#3 DONE 0.0s
+
+#4 [internal] load build context
+#4 DONE 0.0s
+
+#5 [1/7] FROM docker.io/library/python:3.12.12-slim-bookworm@sha256:593bd06efe90efa80dc4eee3948be7c0fde4134606dd40d8dd8dbcade98e669c
+#5 resolve docker.io/library/python:3.12.12-slim-bookworm@sha256:593bd06efe90efa80dc4eee3948be7c0fde4134606dd40d8dd8dbcade98e669c 0.1s done
+#5 DONE 0.1s
+
+#4 [internal] load build context
+#4 transferring context: 44.84kB 0.1s done
+#4 DONE 0.1s
+
+#6 [2/7] WORKDIR /app
+#6 CACHED
+
+#7 [3/7] COPY requirements-dev.txt .
+#7 CACHED
+
+#8 [4/7] RUN python -m pip install --no-cache-dir --require-hashes -r requirements-dev.txt
+#8 CACHED
+
+#9 [5/7] RUN python -m playwright install --with-deps chromium && chmod -R a+rX /opt/playwright
+#9 CACHED
+
+#10 [6/7] COPY . .
+#10 DONE 0.6s
+
+#11 [7/7] RUN useradd --create-home tester && chown -R tester:tester /app
+#11 DONE 4.1s
+
+#12 exporting to image
+#12 exporting layers
+#12 exporting layers 0.4s done
+#12 exporting manifest sha256:75c2d7552166a3645d300c62470308f2d623eb80e06502818a1868eb2750464c 0.0s done
+#12 exporting config sha256:e7434cad9b9857a359b1e1027bd9bc06b1ed79e10c2b2f31502725d8073f1533 0.0s done
+#12 exporting attestation manifest sha256:a8d28eab153032e1ceb41907f20162ed7fa4aa1a75520d22646161635d58f6b5 0.0s done
+#12 exporting manifest list sha256:2eb6e53273502ddc283e12a1adcbba8733b2662d15486f3d4cf235cd855ff7d6
+#12 exporting manifest list sha256:2eb6e53273502ddc283e12a1adcbba8733b2662d15486f3d4cf235cd855ff7d6 0.0s done
+#12 naming to docker.io/library/oceanblue-s06-proofbuild-test:latest done
+#12 unpacking to docker.io/library/oceanblue-s06-proofbuild-test:latest
+#12 unpacking to docker.io/library/oceanblue-s06-proofbuild-test:latest 0.3s done
+#12 DONE 0.9s

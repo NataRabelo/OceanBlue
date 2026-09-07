@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='vendor/tailwind.css') }}">
   <script src="{{ url_for('static', filename='vendor/lucide.min.js') }}"></script>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/core/core.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/core/operational.css') }}">
   <script>
     window.__tenantThemeConfig = {{ tenant_theme_config|tojson }};
     window.__tenantUiConfig = {
@@ -31,6 +32,7 @@
 </head>
 
 <body data-theme-mode="{{ current_visual_mode }}" class="{% block body_class %}min-h-screen{% endblock %}">
+  <a class="skip-link" href="#page-content">Ir para o conteúdo</a>
   <script>
     (function () {
       const body = document.body;
@@ -76,7 +78,7 @@
     </div>
   </div>
 
-  {% block content %}{% endblock %}
+  <div id="page-content" tabindex="-1">{% block content %}{% endblock %}</div>
 
   <div id="global-stock-alert-modal" class="modal-overlay hidden fixed inset-0 z-[9998] bg-slate-950/75 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="w-full max-w-2xl bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl overflow-hidden">
@@ -85,7 +87,7 @@
           <h3 class="text-xl font-bold text-white">Alertas operacionais</h3>
           <p class="text-sm text-slate-400 mt-1">Resumo automatico de estoque baixo, ruptura e validade.</p>
         </div>
-        <button type="button" id="global-stock-alert-close"
+        <button type="button" id="global-stock-alert-close" aria-label="Fechar alertas"
           class="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 transition">
           <i data-lucide="x" class="w-5 h-5"></i>
         </button>
@@ -112,8 +114,8 @@
       function toggleScreenLock() {
         const lock = document.getElementById("screen-size-lock");
         if (!lock) return;
-        lock.classList.toggle("hidden", window.innerWidth >= 768);
-        lock.classList.toggle("flex", window.innerWidth < 768);
+        lock.classList.add("hidden");
+        lock.classList.remove("flex");
       }
 
       function formatInteger(value) {

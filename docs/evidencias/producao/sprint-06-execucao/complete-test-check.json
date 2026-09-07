@@ -1,0 +1,11 @@
+{
+  "verified_source_files": 304,
+  "application_tests_migrations_assets_identical_to_full_regression": true,
+  "changed_host_tools": [
+    "scripts/validate_operational_proof.ps1",
+    "scripts/validate_sprint06.ps1",
+    "scripts/validate_workflow.cjs"
+  ],
+  "workflow_static_validation": "workflow.json",
+  "cleanup_rerun": "ops-clean/cleanup-check.txt"
+}

@@ -1,0 +1,101 @@
+ Image oceanblue-s06-final-test Building 
+ Image oceanblue-s06-final-smoke Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 1.07kB 0.0s done
+#1 DONE 0.0s
+
+#2 [test internal] load build definition from Dockerfile.test
+#2 transferring dockerfile: 499B 0.0s done
+#2 DONE 0.0s
+
+#3 [smoke internal] load build definition from Dockerfile
+#3 transferring dockerfile: 1.07kB 0.0s done
+#3 DONE 0.1s
+
+#4 [smoke internal] load metadata for docker.io/library/python:3.12.12-slim-bookworm@sha256:593bd06efe90efa80dc4eee3948be7c0fde4134606dd40d8dd8dbcade98e669c
+#4 DONE 0.0s
+
+#5 [test internal] load .dockerignore
+#5 transferring context: 311B done
+#5 DONE 0.0s
+
+#6 [test 1/7] FROM docker.io/library/python:3.12.12-slim-bookworm@sha256:593bd06efe90efa80dc4eee3948be7c0fde4134606dd40d8dd8dbcade98e669c
+#6 resolve docker.io/library/python:3.12.12-slim-bookworm@sha256:593bd06efe90efa80dc4eee3948be7c0fde4134606dd40d8dd8dbcade98e669c 0.0s done
+#6 DONE 0.1s
+
+#7 [test internal] load build context
+#7 transferring context: 35.53kB 0.0s done
+#7 DONE 0.1s
+
+#8 [smoke 3/6] COPY requirements.txt .
+#8 CACHED
+
+#9 [test 3/7] COPY requirements-dev.txt .
+#9 CACHED
+
+#10 [test 4/7] RUN python -m pip install --no-cache-dir --require-hashes -r requirements-dev.txt
+#10 CACHED
+
+#11 [test 2/7] WORKDIR /app
+#11 CACHED
+
+#12 [test 5/7] RUN python -m playwright install --with-deps chromium && chmod -R a+rX /opt/playwright
+#12 CACHED
+
+#13 [smoke 4/6] RUN python -m pip install --no-cache-dir --require-hashes -r requirements.txt
+#13 CACHED
+
+#14 [smoke 5/6] COPY . .
+#14 ...
+
+#15 [test 6/7] COPY . .
+#15 DONE 0.3s
+
+#14 [smoke 5/6] COPY . .
+#14 DONE 0.3s
+
+#16 [smoke 6/6] RUN sed -i 's/\r$//' /app/docker-entrypoint.sh     && cp /app/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh     && chmod +x /usr/local/bin/docker-entrypoint.sh     && adduser --disabled-password --gecos "" appuser     && mkdir -p /app/instance/storage     && chown -R appuser:appuser /app/instance     && chmod 700 /app/instance /app/instance/storage
+#16 0.804 Adding user `appuser' ...
+#16 0.804 Adding new group `appuser' (1000) ...
+#16 0.889 Adding new user `appuser' (1000) with group `appuser (1000)' ...
+#16 1.025 Creating home directory `/home/appuser' ...
+#16 1.025 Copying files from `/etc/skel' ...
+#16 1.062 Adding new user `appuser' to supplemental / extra groups `users' ...
+#16 1.062 Adding user `appuser' to group `users' ...
+#16 DONE 1.1s
+
+#17 [test 7/7] RUN useradd --create-home tester && chown -R tester:tester /app
+#17 ...
+
+#18 [smoke] exporting to image
+#18 exporting layers 0.4s done
+#18 exporting manifest sha256:223f3a650a11b9ff8f79384a16d5526900b4aba8c589642077840d966d4efc73 0.0s done
+#18 exporting config sha256:0bcf6881a4332f2c874bbaeb4618369287027cf49ea1fae93cb3349b6f7f8a9f 0.0s done
+#18 exporting attestation manifest sha256:e82e8e0a10c4b6d347f828ea86ea2823dbe5b4c82a3c750cee0cb6a9d7d40981 0.0s done
+#18 exporting manifest list sha256:6d3172e2b6cd8d063c3c5bba1eee91e83880619fc906672f49aec3a2814bb9d9 0.0s done
+#18 naming to docker.io/library/oceanblue-s06-final-smoke:latest done
+#18 unpacking to docker.io/library/oceanblue-s06-final-smoke:latest 0.3s done
+#18 DONE 0.9s
+
+#19 [smoke] resolving provenance for metadata file
+#19 DONE 0.1s
+
+#17 [test 7/7] RUN useradd --create-home tester && chown -R tester:tester /app
+#17 DONE 2.9s
+
+#20 [test] exporting to image
+#20 exporting layers 0.4s done
+#20 exporting manifest sha256:d795408958bee876983bf1b8f5a104199ebdc8deb2d07c0082dcbc600de09984 0.0s done
+#20 exporting config sha256:719782cb8921b7be13713191f3ab01ef42f8ff9fda626d97c82d338af937c7c3 0.0s done
+#20 exporting attestation manifest sha256:b21e601f4038ed62c7a5d95ec1eb54fc7a395ceeacc20378478853f1f51ea840
+#20 exporting attestation manifest sha256:b21e601f4038ed62c7a5d95ec1eb54fc7a395ceeacc20378478853f1f51ea840 0.0s done
+#20 exporting manifest list sha256:e79a331887bb863d9cd48e1a1413bc04bcfd6e3df9f9546c1eb94d876ffeabfd 0.0s done
+#20 naming to docker.io/library/oceanblue-s06-final-test:latest done
+#20 unpacking to docker.io/library/oceanblue-s06-final-test:latest
+#20 unpacking to docker.io/library/oceanblue-s06-final-test:latest 0.2s done
+#20 DONE 0.9s
+
+#21 [test] resolving provenance for metadata file
+#21 DONE 0.0s
+ Image oceanblue-s06-final-smoke Built 
+ Image oceanblue-s06-final-test Built 

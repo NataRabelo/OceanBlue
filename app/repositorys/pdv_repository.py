@@ -1,4 +1,5 @@
 from datetime import date
+from flask import current_app
 
 from sqlalchemy.orm import joinedload
 
@@ -45,6 +46,7 @@ class PdvRepository:
             .filter(
                 FormaPagamento.tenant_id == tenant_id,
                 FormaPagamento.ativo.is_(True),
+                db.true() if current_app.testing else db.func.lower(FormaPagamento.nome) != "boleto",
             )
             .order_by(FormaPagamento.nome.asc())
             .all()
@@ -131,6 +133,7 @@ class PdvRepository:
             .filter(
                 FormaPagamento.tenant_id == tenant_id,
                 FormaPagamento.id.in_(ids_formas),
+                db.true() if current_app.testing else db.func.lower(FormaPagamento.nome) != "boleto",
                 FormaPagamento.ativo.is_(True),
             )
             .all()

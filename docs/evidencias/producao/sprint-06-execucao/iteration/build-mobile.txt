@@ -1,0 +1,51 @@
+#0 building with "desktop-linux" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile.test
+#1 transferring dockerfile: 499B 0.0s done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/python:3.12.12-slim-bookworm@sha256:593bd06efe90efa80dc4eee3948be7c0fde4134606dd40d8dd8dbcade98e669c
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 311B done
+#3 DONE 0.0s
+
+#4 [1/7] FROM docker.io/library/python:3.12.12-slim-bookworm@sha256:593bd06efe90efa80dc4eee3948be7c0fde4134606dd40d8dd8dbcade98e669c
+#4 resolve docker.io/library/python:3.12.12-slim-bookworm@sha256:593bd06efe90efa80dc4eee3948be7c0fde4134606dd40d8dd8dbcade98e669c 0.0s done
+#4 DONE 0.1s
+
+#5 [internal] load build context
+#5 transferring context: 59.79kB 0.0s done
+#5 DONE 0.1s
+
+#6 [4/7] RUN python -m pip install --no-cache-dir --require-hashes -r requirements-dev.txt
+#6 CACHED
+
+#7 [2/7] WORKDIR /app
+#7 CACHED
+
+#8 [3/7] COPY requirements-dev.txt .
+#8 CACHED
+
+#9 [5/7] RUN python -m playwright install --with-deps chromium && chmod -R a+rX /opt/playwright
+#9 CACHED
+
+#10 [6/7] COPY . .
+#10 DONE 0.2s
+
+#11 [7/7] RUN useradd --create-home tester && chown -R tester:tester /app
+#11 DONE 1.9s
+
+#12 exporting to image
+#12 exporting layers
+#12 exporting layers 0.3s done
+#12 exporting manifest sha256:cfbce531db6ac56b18b433cbe4bbc8e0a8eaa643e5913101a7109da881d6eba9 0.0s done
+#12 exporting config sha256:3c2b421d47d869713bead53c37e3adb3261399f0888f94cffc97fb587b5b270f 0.0s done
+#12 exporting attestation manifest sha256:e15f6027538a166b9299baad1ebb5fb566a985d152e6f17c8ef5c1e985723aaa 0.0s done
+#12 exporting manifest list sha256:110ff2e1ee7f430ad738681aafbd3d5ca6d1325a4ff522d87be8bd1434833f72 0.0s done
+#12 naming to docker.io/library/oceanblue-s06-dev-test:latest
+#12 naming to docker.io/library/oceanblue-s06-dev-test:latest done
+#12 unpacking to docker.io/library/oceanblue-s06-dev-test:latest
+#12 unpacking to docker.io/library/oceanblue-s06-dev-test:latest 0.2s done
+#12 DONE 0.7s

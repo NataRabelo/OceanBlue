@@ -94,7 +94,7 @@ min-h-screen flex flex-col bg-slate-950 text-white
                 </div>
 
                 <div class="flex flex-col sm:flex-row gap-3 w-full xl:w-auto">
-                    <select id="filtro-empresa"
+                    <select id="filtro-empresa" aria-label="Empresa do estoque"
                         data-theme-company-select
                         class="w-full sm:w-64 bg-slate-950/80 border border-slate-800 focus:border-sky-500 focus:ring-2 focus:ring-sky-500/20 rounded-xl px-4 py-3 text-sm text-white outline-none transition">
                         <option value="">Todas as empresas</option>
@@ -112,7 +112,7 @@ min-h-screen flex flex-col bg-slate-950 text-white
             </div>
         </div>
 
-        <div class="overflow-x-auto">
+        <div class="overflow-x-auto" tabindex="0" role="region" aria-label="Produtos em estoque">
             <table class="w-full min-w-[1240px]">
                 <thead class="bg-slate-950/70">
                     <tr class="border-b border-slate-800">
@@ -153,7 +153,7 @@ min-h-screen flex flex-col bg-slate-950 text-white
             </div>
         </div>
 
-        <div class="overflow-x-auto">
+        <div class="overflow-x-auto" tabindex="0" role="region" aria-label="Movimentações de estoque">
             <table class="w-full min-w-[1000px]">
                 <thead class="bg-slate-950/70">
                     <tr class="border-b border-slate-800">

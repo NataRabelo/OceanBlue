@@ -10,7 +10,9 @@ RUN sed -i 's/\r$//' /app/docker-entrypoint.sh \
     && cp /app/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh \
     && chmod +x /usr/local/bin/docker-entrypoint.sh \
     && adduser --disabled-password --gecos "" appuser \
-    && chown -R appuser:appuser /app
+    && mkdir -p /app/instance/storage \
+    && chown -R appuser:appuser /app/instance \
+    && chmod 700 /app/instance /app/instance/storage
 
 ENV FLASK_APP=wsgi.py
 ENV FLASK_ENV=production
@@ -20,4 +22,4 @@ HEALTHCHECK --interval=5s --timeout=5s --retries=6 CMD python -c "from urllib.re
 USER appuser
 
 ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
-CMD ["gunicorn", "-w", "4", "-b", "0.0.0.0:5000", "--timeout", "60", "--forwarded-allow-ips", "", "wsgi:app"]
+CMD ["gunicorn", "-w", "1", "--threads", "4", "-b", "0.0.0.0:5000", "--timeout", "60", "--forwarded-allow-ips", "", "wsgi:app"]

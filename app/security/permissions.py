@@ -1,4 +1,5 @@
 DEFAULT_PERMISSION_DEFINITIONS = [
+    {"codigo": "visualizar_auditoria", "nome": "Consultar auditoria operacional"},
     {"codigo": "estornar_financeiro", "nome": "Estornar lancamentos financeiros"},
     {"codigo": "reabrir_caixa", "nome": "Reabrir e ajustar caixa"},
     {"codigo": "autorizar_adiantamento", "nome": "Autorizar e baixar adiantamentos"},

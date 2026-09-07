@@ -1,0 +1,14 @@
+{
+  "synthetic": true,
+  "table_count": 48,
+  "sequence_count": 44,
+  "sales": "3:64a5dd4f3fe078afc9846ae8c66f14fe",
+  "ledger": "3:e4ce923e35a14cf570a8f1da4898b1ac",
+  "storage_files": {
+    "database.dump": "222a1f853f474230d8753422817a596c8f7df668090118dd0b191ebff8178e77",
+    "instance/storage/tenants/1/receipts/proof.txt": "5d3d8ada1aec31e045f7f403923f87cf862009f1642a212f904ad1d99dee9b0b"
+  },
+  "backup_log": "BACKUP VERIFIED: tables, sequences and file SHA-256; application stopped.",
+  "restore_log": "RESTORE VERIFIED: new database, all table counts/content hashes, sequences and every file SHA-256 match.",
+  "snapshot_manifest_sha256": "df3307cdc4fb0ab52bc5098feac88666a82552cf91ff89d528c98a7ac3a90516"
+}

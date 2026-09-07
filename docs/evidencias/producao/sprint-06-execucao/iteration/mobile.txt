@@ -1,0 +1,57 @@
+time="2026-09-07T03:21:32-03:00" level=warning msg="Found orphan containers (oceanblue-s06-e2e, oceanblue-s06-probe) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up."
+ Container oceanblue-s06-mobile Creating 
+ Container oceanblue-s06-mobile Created 
+...FF.                                                                   [100%]
+=================================== FAILURES ===================================
+_______ test_mobile_accessibility_and_local_assets[/api/financeiro/view] _______
+
+browser_page = <Page url='http://127.0.0.1:8765/api/financeiro/view'>
+path = '/api/financeiro/view'
+
+    @pytest.mark.parametrize("path", ["/api/auditoria/view", "/api/operacoes/view", "/api/pdv/view", "/api/financeiro/view", "/api/estoque/view"])
+    def test_mobile_accessibility_and_local_assets(browser_page, path):
+        page = browser_page
+        page.set_viewport_size({"width": 390, "height": 844})
+        page.goto("http://127.0.0.1:8765" + path, wait_until="networkidle")
+        expect(page.locator("#screen-size-lock")).to_be_hidden()
+        assert page.evaluate("document.documentElement.scrollWidth <= window.innerWidth + 1")
+        page.add_script_tag(path="tests/vendor/axe.min.js")
+        result = page.evaluate("async () => await axe.run(document, {runOnly: {type: 'tag', values: ['wcag2a', 'wcag2aa', 'wcag21aa']}})")
+        directory = Path("/tmp/e2e") / ("mobile-" + path.split("/")[-2])
+        directory.mkdir(parents=True, exist_ok=True)
+        (directory / "axe.json").write_text(json.dumps(result), encoding="utf-8")
+        page.screenshot(path=str(directory / "screen.png"), full_page=True)
+>       assert not result["violations"], [(item["id"], [node["target"] for node in item["nodes"]]) for item in result["violations"]]
+E       AssertionError: [('scrollable-region-focusable', [['#financeiro-serie-list']]), ('select-name', [['#financeiro-empresa'], ['#financeiro-periodo']])]
+E       assert not [{'description': 'Ensure elements that have scrollable content are accessible by keyboard', 'help': 'Scrollable region...me', 'helpUrl': 'https://dequeuniversity.com/rules/axe/4.10/select-name?application=axeAPI', 'id': 'select-name', ...}]
+
+tests/test_sprint06_browser.py:25: AssertionError
+________ test_mobile_accessibility_and_local_assets[/api/estoque/view] _________
+
+browser_page = <Page url='http://127.0.0.1:8765/api/estoque/view'>
+path = '/api/estoque/view'
+
+    @pytest.mark.parametrize("path", ["/api/auditoria/view", "/api/operacoes/view", "/api/pdv/view", "/api/financeiro/view", "/api/estoque/view"])
+    def test_mobile_accessibility_and_local_assets(browser_page, path):
+        page = browser_page
+        page.set_viewport_size({"width": 390, "height": 844})
+        page.goto("http://127.0.0.1:8765" + path, wait_until="networkidle")
+        expect(page.locator("#screen-size-lock")).to_be_hidden()
+        assert page.evaluate("document.documentElement.scrollWidth <= window.innerWidth + 1")
+        page.add_script_tag(path="tests/vendor/axe.min.js")
+        result = page.evaluate("async () => await axe.run(document, {runOnly: {type: 'tag', values: ['wcag2a', 'wcag2aa', 'wcag21aa']}})")
+        directory = Path("/tmp/e2e") / ("mobile-" + path.split("/")[-2])
+        directory.mkdir(parents=True, exist_ok=True)
+        (directory / "axe.json").write_text(json.dumps(result), encoding="utf-8")
+        page.screenshot(path=str(directory / "screen.png"), full_page=True)
+>       assert not result["violations"], [(item["id"], [node["target"] for node in item["nodes"]]) for item in result["violations"]]
+E       AssertionError: [('scrollable-region-focusable', [['.shadow-black\\/20.mb-8.bg-slate-900\\/80 > .overflow-x-auto'], ['.shadow-black\\/20.bg-slate-900\\/80.overflow-hidden:nth-child(4) > .overflow-x-auto']]), ('select-name', [['#filtro-empresa']])]
+E       assert not [{'description': 'Ensure elements that have scrollable content are accessible by keyboard', 'help': 'Scrollable region...me', 'helpUrl': 'https://dequeuniversity.com/rules/axe/4.10/select-name?application=axeAPI', 'id': 'select-name', ...}]
+
+tests/test_sprint06_browser.py:25: AssertionError
+----------------------- generated xml file: /tmp/s06.xml -----------------------
+=========================== short test summary info ============================
+FAILED tests/test_sprint06_browser.py::test_mobile_accessibility_and_local_assets[/api/financeiro/view]
+FAILED tests/test_sprint06_browser.py::test_mobile_accessibility_and_local_assets[/api/estoque/view]
+2 failed, 4 passed in 45.41s
+

@@ -10,6 +10,10 @@ from scripts.test_environment import configure_test_environment
 
 
 REQUIREMENTS = {
+    "auditoria": "OPS-06 Auditoria com escopo e paginacao",
+    "process_health": "OPS-06 Saude do processo",
+    "critical_readiness": "OPS-06 Banco e storage",
+    "metrics": "OPS-06 Metricas protegidas",
     "ciclos": "FIN-REL-05 Ciclos financeiros e privacidade",
     "health": "OPS-01 Disponibilidade",
     "auth": "AUTH-01 Autenticacao",

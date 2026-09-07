@@ -1,6 +1,7 @@
 {% if current_auth_scope != "platform" and tenant_navigation_groups %}
 {% set current_path = request.path %}
 <aside id="tenantSidebar" class="tenant-sidebar">
+    <button type="button" data-sidebar-toggle class="sidebar-mobile-close">Fechar menu</button>
     <div class="tenant-sidebar__brand">
         <div class="tenant-sidebar__brand-mark">
             <i data-lucide="waves" class="w-5 h-5"></i>

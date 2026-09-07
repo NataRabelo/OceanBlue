@@ -10,5 +10,9 @@ COPY . .
 RUN sed -i 's/\r$//' /app/docker-entrypoint.sh \
     && cp /app/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh \
     && chmod +x /usr/local/bin/docker-entrypoint.sh \
-    && chown -R appuser:appuser /app
+    && chown -R root:root /app \
+    && mkdir -p /app/instance/storage \
+    && chown -R appuser:appuser /app/instance \
+    && chmod 700 /app/instance /app/instance/storage
 USER appuser
+CMD ["gunicorn", "-w", "1", "--threads", "4", "-b", "0.0.0.0:5000", "--timeout", "60", "--forwarded-allow-ips", "", "wsgi:app"]

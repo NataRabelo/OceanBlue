@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="2" skipped="0" tests="6" time="45.412" timestamp="2026-09-07T06:21:34.388424+00:00" hostname="a008450e0c2d"><testcase classname="tests.test_sprint06_browser" name="test_mobile_accessibility_and_local_assets[/api/auditoria/view]" time="7.218" /><testcase classname="tests.test_sprint06_browser" name="test_mobile_accessibility_and_local_assets[/api/operacoes/view]" time="6.376" /><testcase classname="tests.test_sprint06_browser" name="test_mobile_accessibility_and_local_assets[/api/pdv/view]" time="6.289" /><testcase classname="tests.test_sprint06_browser" name="test_mobile_accessibility_and_local_assets[/api/financeiro/view]" time="6.111"><failure message="AssertionError: [('scrollable-region-focusable', [['#financeiro-serie-list']]), ('select-name', [['#financeiro-empresa'], ['#financeiro-periodo']])]&#10;assert not [{'description': 'Ensure elements that have scrollable content are accessible by keyboard', 'help': 'Scrollable region...me', 'helpUrl': 'https://dequeuniversity.com/rules/axe/4.10/select-name?application=axeAPI', 'id': 'select-name', ...}]">browser_page = &lt;Page url='http://127.0.0.1:8765/api/financeiro/view'&gt;
+path = '/api/financeiro/view'
+
+    @pytest.mark.parametrize("path", ["/api/auditoria/view", "/api/operacoes/view", "/api/pdv/view", "/api/financeiro/view", "/api/estoque/view"])
+    def test_mobile_accessibility_and_local_assets(browser_page, path):
+        page = browser_page
+        page.set_viewport_size({"width": 390, "height": 844})
+        page.goto("http://127.0.0.1:8765" + path, wait_until="networkidle")
+        expect(page.locator("#screen-size-lock")).to_be_hidden()
+        assert page.evaluate("document.documentElement.scrollWidth &lt;= window.innerWidth + 1")
+        page.add_script_tag(path="tests/vendor/axe.min.js")
+        result = page.evaluate("async () =&gt; await axe.run(document, {runOnly: {type: 'tag', values: ['wcag2a', 'wcag2aa', 'wcag21aa']}})")
+        directory = Path("/tmp/e2e") / ("mobile-" + path.split("/")[-2])
+        directory.mkdir(parents=True, exist_ok=True)
+        (directory / "axe.json").write_text(json.dumps(result), encoding="utf-8")
+        page.screenshot(path=str(directory / "screen.png"), full_page=True)
+&gt;       assert not result["violations"], [(item["id"], [node["target"] for node in item["nodes"]]) for item in result["violations"]]
+E       AssertionError: [('scrollable-region-focusable', [['#financeiro-serie-list']]), ('select-name', [['#financeiro-empresa'], ['#financeiro-periodo']])]
+E       assert not [{'description': 'Ensure elements that have scrollable content are accessible by keyboard', 'help': 'Scrollable region...me', 'helpUrl': 'https://dequeuniversity.com/rules/axe/4.10/select-name?application=axeAPI', 'id': 'select-name', ...}]
+
+tests/test_sprint06_browser.py:25: AssertionError</failure></testcase><testcase classname="tests.test_sprint06_browser" name="test_mobile_accessibility_and_local_assets[/api/estoque/view]" time="5.925"><failure message="AssertionError: [('scrollable-region-focusable', [['.shadow-black\\/20.mb-8.bg-slate-900\\/80 &gt; .overflow-x-auto'], ['.shadow-black\\/20.bg-slate-900\\/80.overflow-hidden:nth-child(4) &gt; .overflow-x-auto']]), ('select-name', [['#filtro-empresa']])]&#10;assert not [{'description': 'Ensure elements that have scrollable content are accessible by keyboard', 'help': 'Scrollable region...me', 'helpUrl': 'https://dequeuniversity.com/rules/axe/4.10/select-name?application=axeAPI', 'id': 'select-name', ...}]">browser_page = &lt;Page url='http://127.0.0.1:8765/api/estoque/view'&gt;
+path = '/api/estoque/view'
+
+    @pytest.mark.parametrize("path", ["/api/auditoria/view", "/api/operacoes/view", "/api/pdv/view", "/api/financeiro/view", "/api/estoque/view"])
+    def test_mobile_accessibility_and_local_assets(browser_page, path):
+        page = browser_page
+        page.set_viewport_size({"width": 390, "height": 844})
+        page.goto("http://127.0.0.1:8765" + path, wait_until="networkidle")
+        expect(page.locator("#screen-size-lock")).to_be_hidden()
+        assert page.evaluate("document.documentElement.scrollWidth &lt;= window.innerWidth + 1")
+        page.add_script_tag(path="tests/vendor/axe.min.js")
+        result = page.evaluate("async () =&gt; await axe.run(document, {runOnly: {type: 'tag', values: ['wcag2a', 'wcag2aa', 'wcag21aa']}})")
+        directory = Path("/tmp/e2e") / ("mobile-" + path.split("/")[-2])
+        directory.mkdir(parents=True, exist_ok=True)
+        (directory / "axe.json").write_text(json.dumps(result), encoding="utf-8")
+        page.screenshot(path=str(directory / "screen.png"), full_page=True)
+&gt;       assert not result["violations"], [(item["id"], [node["target"] for node in item["nodes"]]) for item in result["violations"]]
+E       AssertionError: [('scrollable-region-focusable', [['.shadow-black\\/20.mb-8.bg-slate-900\\/80 &gt; .overflow-x-auto'], ['.shadow-black\\/20.bg-slate-900\\/80.overflow-hidden:nth-child(4) &gt; .overflow-x-auto']]), ('select-name', [['#filtro-empresa']])]
+E       assert not [{'description': 'Ensure elements that have scrollable content are accessible by keyboard', 'help': 'Scrollable region...me', 'helpUrl': 'https://dequeuniversity.com/rules/axe/4.10/select-name?application=axeAPI', 'id': 'select-name', ...}]
+
+tests/test_sprint06_browser.py:25: AssertionError</failure></testcase><testcase classname="tests.test_sprint06_browser" name="test_mobile_sale_retry_and_reversal" time="13.221" /></testsuite></testsuites>

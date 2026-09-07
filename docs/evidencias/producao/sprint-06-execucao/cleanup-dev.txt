@@ -1,0 +1,47 @@
+ Container oceanblue-s06-dev-smoke-1 Stopping 
+ Container oceanblue-s06-probe Stopping 
+ Container oceanblue-s06-preflight Stopping 
+ Container oceanblue-s06-mobile-final Stopping 
+ Container oceanblue-s06-mobile Stopping 
+ Container oceanblue-s06-e2e Stopping 
+ Container oceanblue-s06-dev-smoke-1 Stopped 
+ Container oceanblue-s06-dev-smoke-1 Removing 
+ Container oceanblue-s06-probe Stopped 
+ Container oceanblue-s06-probe Removing 
+ Container oceanblue-s06-preflight Stopped 
+ Container oceanblue-s06-preflight Removing 
+ Container oceanblue-s06-mobile-final Stopped 
+ Container oceanblue-s06-mobile-final Removing 
+ Container oceanblue-s06-e2e Stopped 
+ Container oceanblue-s06-e2e Removing 
+ Container oceanblue-s06-mobile Stopped 
+ Container oceanblue-s06-mobile Removing 
+ Container oceanblue-s06-dev-smoke-1 Removed 
+ Container oceanblue-s06-probe Removed 
+ Container oceanblue-s06-mobile Removed 
+ Container oceanblue-s06-e2e Removed 
+ Container oceanblue-s06-preflight Removed 
+ Container oceanblue-s06-mobile-final Removed 
+ Container oceanblue-s06-dev-db-test-1 Stopping 
+ Container oceanblue-s06-dev-db-test-1 Stopped 
+ Container oceanblue-s06-dev-db-test-1 Removing 
+ Container oceanblue-s06-dev-db-test-1 Removed 
+ Container oceanblue-s06-probe Stopping 
+ Container oceanblue-s06-mobile-final Stopping 
+ Container oceanblue-s06-preflight Stopping 
+ Container oceanblue-s06-mobile Stopping 
+ Container oceanblue-s06-e2e Stopping 
+ Container oceanblue-s06-probe Error Error while Stopping
+ Container oceanblue-s06-probe Removed 
+ Container oceanblue-s06-preflight Error Error while Stopping
+ Container oceanblue-s06-preflight Removed 
+ Container oceanblue-s06-mobile-final Error Error while Stopping
+ Container oceanblue-s06-mobile-final Removed 
+ Container oceanblue-s06-e2e Error Error while Stopping
+ Container oceanblue-s06-e2e Removed 
+ Container oceanblue-s06-mobile Error Error while Stopping
+ Container oceanblue-s06-mobile Removed 
+ Network oceanblue-s06-dev_test Removing 
+ Volume oceanblue-s06-dev_smoke-files Removing 
+ Volume oceanblue-s06-dev_smoke-files Removed 
+ Network oceanblue-s06-dev_test Removed 

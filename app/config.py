@@ -64,6 +64,9 @@ class TestingConfig(Config):
 
 
 class ProductionConfig(Config):
+    SQLALCHEMY_ENGINE_OPTIONS = {**Config.SQLALCHEMY_ENGINE_OPTIONS,
+        "pool_size": 5, "max_overflow": 5, "pool_timeout": 5,
+        "connect_args": {"connect_timeout": 3, "options": "-c statement_timeout=10000 -c lock_timeout=3000"}}
     DEBUG = False
     JWT_COOKIE_SECURE = True
     SESSION_COOKIE_SECURE = True
@@ -115,6 +118,19 @@ class ProductionConfig(Config):
                 raise ValueError("Backend invalido")
         except (ArgumentError, ValueError):
             raise RuntimeError("DATABASE_URL deve ser uma URL PostgreSQL valida.") from None
+        if os.getenv("FORCE_HTTPS", "true") != "true":
+            raise RuntimeError("FORCE_HTTPS deve ser true em producao.")
+        for flag in ("FEATURE_BOLETO", "FEATURE_FISCAL", "FEATURE_EXTERNAL_PROVIDERS"):
+            if os.getenv(flag, "false") != "false":
+                raise RuntimeError(f"{flag} bloqueada nesta versao de producao.")
+        if os.getenv("TRUST_PROXY_HEADERS", "false").lower() in {"1", "true", "yes", "on"}:
+            import ipaddress
+            try:
+                networks = [ipaddress.ip_network(value.strip()) for value in os.getenv("TRUSTED_PROXY_NETWORKS", "").split(",") if value.strip()]
+                if not networks or any(network.prefixlen == 0 for network in networks):
+                    raise ValueError()
+            except ValueError:
+                raise RuntimeError("Proxy exige redes de origem explicitas e restritas.") from None
 
 
 def get_config():

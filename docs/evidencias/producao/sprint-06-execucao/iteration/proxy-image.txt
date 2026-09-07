@@ -1,0 +1,32 @@
+1.28-alpine: Pulling from nginxinc/nginx-unprivileged
+bc3bb88a6392: Pulling fs layer
+de3f5433cf84: Pulling fs layer
+589002ba0eae: Pulling fs layer
+7069fe5ce3c2: Pulling fs layer
+a56f67403765: Pulling fs layer
+7bff903f3e4b: Pulling fs layer
+4b28009d642c: Pulling fs layer
+22ee3e48cf91: Pulling fs layer
+23989ee5bbc8: Pulling fs layer
+e2e4ff0e263c: Download complete
+de3f5433cf84: Download complete
+4b28009d642c: Download complete
+589002ba0eae: Download complete
+7069fe5ce3c2: Download complete
+bc3bb88a6392: Download complete
+22ee3e48cf91: Download complete
+589002ba0eae: Pull complete
+7bff903f3e4b: Download complete
+7069fe5ce3c2: Pull complete
+a56f67403765: Download complete
+23989ee5bbc8: Download complete
+de3f5433cf84: Pull complete
+22ee3e48cf91: Pull complete
+7bff903f3e4b: Pull complete
+4b28009d642c: Pull complete
+a56f67403765: Pull complete
+23989ee5bbc8: Pull complete
+bc3bb88a6392: Pull complete
+Digest: sha256:7377697a821c131a924a7105fafbe7414db4e9fcc77a6f08f776f33f141ec3f8
+Status: Downloaded newer image for nginxinc/nginx-unprivileged:1.28-alpine
+docker.io/nginxinc/nginx-unprivileged:1.28-alpine

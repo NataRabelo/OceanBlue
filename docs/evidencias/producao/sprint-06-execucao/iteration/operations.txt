@@ -1,0 +1,82 @@
+ Container oceanblue-s06-probe Creating 
+ Container oceanblue-s06-probe Created 
+...................F.                                                    [100%]
+=================================== FAILURES ===================================
+_____________ test_audit_request_trace_and_lossy_downgrade_refused _____________
+
+args = (), kwargs = {'revision': '9c0d1e2f3a4b'}
+
+    @wraps(f)
+    def wrapped(*args, **kwargs):
+        try:
+>           f(*args, **kwargs)
+
+/usr/local/lib/python3.12/site-packages/flask_migrate/__init__.py:111: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/local/lib/python3.12/site-packages/flask_migrate/__init__.py:210: in downgrade
+    command.downgrade(config, revision, sql=sql, tag=tag)
+/usr/local/lib/python3.12/site-packages/alembic/command.py:534: in downgrade
+    script.run_env()
+/usr/local/lib/python3.12/site-packages/alembic/script/base.py:550: in run_env
+    util.load_python_file(self.dir, "env.py")
+/usr/local/lib/python3.12/site-packages/alembic/util/pyfiles.py:114: in load_python_file
+    module = load_module_py(module_id, path)
+/usr/local/lib/python3.12/site-packages/alembic/util/pyfiles.py:132: in load_module_py
+    spec.loader.exec_module(module)  # type: ignore
+migrations/env.py:108: in <module>
+    run_migrations_online()
+migrations/env.py:102: in run_migrations_online
+    context.run_migrations()
+/usr/local/lib/python3.12/site-packages/alembic/runtime/environment.py:970: in run_migrations
+    self.get_context().run_migrations(**kw)
+/usr/local/lib/python3.12/site-packages/alembic/runtime/migration.py:621: in run_migrations
+    step.migration_fn(**kw)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def downgrade():
+        if op.get_bind().execute(sa.text("SELECT EXISTS (SELECT 1 FROM audit_logs WHERE request_id IS NOT NULL)")).scalar():
+>           raise RuntimeError("Downgrade perderia rastreabilidade; restaure backup em banco novo e reconcilie escritas.")
+E           RuntimeError: Downgrade perderia rastreabilidade; restaure backup em banco novo e reconcilie escritas.
+
+migrations/versions/a0d1e2f3a4b5_sprint06_operations.py:25: RuntimeError
+
+During handling of the above exception, another exception occurred:
+
+security_app = <Flask 'app'>
+
+    def test_audit_request_trace_and_lossy_downgrade_refused(security_app):
+        from flask_migrate import downgrade
+        with security_app.test_request_context("/test"):
+            from flask import g
+            g.request_id = "b" * 32
+            AuditService.registrar("TRACE", tenant_id=1, empresa_id=1, commit=True)
+            assert AuditLog.query.filter_by(action="TRACE").one().request_id == "b" * 32
+        with security_app.app_context():
+            with pytest.raises(RuntimeError, match="rastreabilidade"):
+>               downgrade(revision="9c0d1e2f3a4b")
+
+tests/test_sprint06_operations.py:120: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = (), kwargs = {'revision': '9c0d1e2f3a4b'}
+
+    @wraps(f)
+    def wrapped(*args, **kwargs):
+        try:
+            f(*args, **kwargs)
+        except (CommandError, RuntimeError) as exc:
+            log.error('Error: ' + str(exc))
+>           sys.exit(1)
+E           SystemExit: 1
+
+/usr/local/lib/python3.12/site-packages/flask_migrate/__init__.py:114: SystemExit
+----------------------------- Captured stderr call -----------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running downgrade a0d1e2f3a4b5 -> 9c0d1e2f3a4b
+ERROR [flask_migrate] Error: Downgrade perderia rastreabilidade; restaure backup em banco novo e reconcilie escritas.
+----------------------- generated xml file: /tmp/s06.xml -----------------------
+=========================== short test summary info ============================
+FAILED tests/test_sprint06_operations.py::test_audit_request_trace_and_lossy_downgrade_refused
+1 failed, 20 passed in 16.87s
+

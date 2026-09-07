@@ -4,9 +4,10 @@ import sys
 
 from flask import Flask
 from flask_jwt_extended import get_jwt_identity, verify_jwt_in_request
-from werkzeug.middleware.proxy_fix import ProxyFix
+from app.security.proxy import TrustedProxy
 
 from app.config import get_config
+from app.operations import OperationalFormatter, register_operations
 from app.extensions import db, jwt, migrate
 from app.models.db import Funcionario, ModoVisualEmpresa, PlatformOwner
 from app.routes import register_blueprints
@@ -26,6 +27,8 @@ def register_extensions(app: Flask) -> None:
 
 def register_context_processors(app: Flask) -> None:
     tenant_navigation_items = [
+        {"label": "Auditoria", "href": "/api/auditoria/view", "icon": "list-checks",
+         "permission": "visualizar_auditoria", "group": "Configuracoes", "active_prefixes": ["/api/auditoria/"]},
         {
             "label": "Home Operacional",
             "endpoint": "main.home",
@@ -200,6 +203,8 @@ def register_context_processors(app: Flask) -> None:
     def _build_navigation(permission_codes, ui_flags):
         navigation = []
         for item in tenant_navigation_items:
+            if item.get("label") == "Fiscal" and not app.config["FEATURE_FISCAL"]:
+                continue
             flag = item.get("flag")
             if flag and not ui_flags.get(flag):
                 continue
@@ -251,7 +256,7 @@ def register_context_processors(app: Flask) -> None:
             "can_view_finance_reports": "visualizar_relatorio_financeiro" in permission_codes,
             "can_manage_finance_entries": "criar_lancamento_financeiro" in permission_codes,
             "can_close_cashier": "fechar_caixa" in permission_codes,
-            "can_view_fiscal": "visualizar_fiscal" in permission_codes,
+            "can_view_fiscal": app.config["FEATURE_FISCAL"] and "visualizar_fiscal" in permission_codes,
             "can_manage_fiscal": "gerenciar_fiscal" in permission_codes,
             "can_view_notifications": "visualizar_notificacao" in permission_codes,
             "can_manage_stock_alerts": "gerenciar_alerta_estoque" in permission_codes,
@@ -352,7 +357,7 @@ def register_commands(app: Flask) -> None:
 
 def configure_logging(app: Flask) -> None:
     log_level = logging.DEBUG if app.debug else logging.INFO
-    formatter = logging.Formatter("%(asctime)s %(levelname)s [%(name)s] %(message)s")
+    formatter = OperationalFormatter()
     gunicorn_logger = logging.getLogger("gunicorn.error")
 
     if gunicorn_logger.handlers:
@@ -363,6 +368,8 @@ def configure_logging(app: Flask) -> None:
         app.logger.handlers = [stream_handler]
 
     app.logger.setLevel(log_level)
+    for handler in app.logger.handlers:
+        handler.setFormatter(formatter)
     logging.getLogger().setLevel(log_level)
 
 
@@ -375,21 +382,18 @@ def create_app() -> Flask:
     app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL")
 
     if os.getenv("TRUST_PROXY_HEADERS", "false").lower() in {"1", "true", "yes", "on"}:
-        app.wsgi_app = ProxyFix(
-            app.wsgi_app,
-            x_for=int(os.getenv("PROXY_FIX_X_FOR", "1")),
-            x_proto=int(os.getenv("PROXY_FIX_X_PROTO", "1")),
-            x_host=int(os.getenv("PROXY_FIX_X_HOST", "1")),
-            x_port=int(os.getenv("PROXY_FIX_X_PORT", "0")),
-            x_prefix=int(os.getenv("PROXY_FIX_X_PREFIX", "0")),
-        )
+        app.wsgi_app = TrustedProxy(app.wsgi_app, os.getenv("TRUSTED_PROXY_NETWORKS", ""))
 
     configure_logging(app)
+    register_operations(app)
 
     register_extensions(app)
     register_errors(app)
     register_security_headers(app)
     register_blueprints(app)
+    from app.health import healthcheck, readiness
+    app.add_url_rule("/health", "process_health", healthcheck)
+    app.add_url_rule("/readiness", "critical_readiness", readiness)
     register_context_processors(app)
     register_commands(app)
 

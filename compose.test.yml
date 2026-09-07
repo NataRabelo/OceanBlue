@@ -28,6 +28,7 @@ services:
     command: ["sh", "-c", "python -m pip check && python -m scripts.inventory --check && python -m scripts.validate_migrations && python -m pytest --junitxml=/tmp/junit.xml"]
   smoke:
     profiles: [smoke]
+    volumes: [smoke-files:/app/instance]
     build:
       context: .
       dockerfile: Dockerfile
@@ -43,3 +44,5 @@ services:
 networks:
   test:
     internal: true
+volumes:
+  smoke-files: {}

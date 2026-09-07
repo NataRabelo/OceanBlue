@@ -1,0 +1,36 @@
+rule_files: [alerts.yml]
+evaluation_interval: 1m
+tests:
+  - interval: 1m
+    input_series:
+      - series: 'probe_success{job="oceanblue-readiness"}'
+        values: '0x10'
+      - series: oceanblue_requests_total
+        values: '0+100x10'
+      - series: oceanblue_errors_total
+        values: '0+2x10'
+      - series: oceanblue_slow_requests_total
+        values: '0+10x10'
+      - series: oceanblue_storage_free_bytes
+        values: '100x10'
+    alert_rule_test:
+      - eval_time: 6m
+        alertname: OceanBlueReadinessFailed
+        exp_alerts:
+          - exp_labels: {severity: critical, job: oceanblue-readiness}
+            exp_annotations: {summary: "Banco ou storage indisponivel; seguir runbook de incidente"}
+      - eval_time: 6m
+        alertname: OceanBlueErrors
+        exp_alerts:
+          - exp_labels: {severity: high}
+            exp_annotations: {summary: "Mais de 1% de respostas 5xx; correlacionar request ID"}
+      - eval_time: 6m
+        alertname: OceanBlueSlowRequests
+        exp_alerts:
+          - exp_labels: {severity: warning}
+            exp_annotations: {summary: "Mais de 5% das requisicoes excedem 1 segundo"}
+      - eval_time: 6m
+        alertname: OceanBlueStorageLow
+        exp_alerts:
+          - exp_labels: {severity: high}
+            exp_annotations: {summary: "Storage abaixo de 1 GiB livre; revisar retencao antes de apagar"}
