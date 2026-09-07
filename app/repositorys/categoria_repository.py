@@ -1,4 +1,5 @@
 from app.extensions import db
+from app.services.transaction_service import save
 from app.models.db import CategoriaProduto
 
 
@@ -23,14 +24,14 @@ class CategoriaRepository:
     @staticmethod
     def criar(categoria):
         db.session.add(categoria)
-        db.session.commit()
+        save()
         return categoria
 
     @staticmethod
     def atualizar():
-        db.session.commit()
+        save()
 
     @staticmethod
     def deletar(categoria):
         db.session.delete(categoria)
-        db.session.commit()
+        save()

@@ -1,5 +1,6 @@
 window.importExportPage = {
     contexto: null,
+    prevalidacao: null,
 };
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -35,6 +36,13 @@ function bindImportExportActions() {
     if (importEntity) {
         importEntity.addEventListener("change", () => atualizarAjudaEntidade("import"));
     }
+
+    const resetPreview = () => {
+        importExportPage.prevalidacao = null;
+        if (importButton) importButton.textContent = "Pre-validar arquivo";
+    };
+    importEntity?.addEventListener("change", resetPreview);
+    document.getElementById("import-file")?.addEventListener("change", resetPreview);
 
     if (exportEntity) {
         exportEntity.addEventListener("change", () => atualizarAjudaEntidade("export"));
@@ -78,6 +86,8 @@ function bindImportExportActions() {
                 const formData = new FormData();
                 formData.append("entidade", entidade);
                 formData.append("arquivo", arquivo);
+                const preview = importExportPage.prevalidacao?.arquivo !== arquivo || importExportPage.prevalidacao?.entidade !== entidade;
+                formData.append("pre_validar", preview ? "true" : "false");
 
                 const result = await requestImportExportJson("/api/importacao-exportacao/importar", {
                     method: "POST",
@@ -85,9 +95,15 @@ function bindImportExportActions() {
                 });
 
                 renderResultadoImportacao(result.data || null);
-                showImportExportMessage(result.message || "Importacao concluida.", "success");
+                showImportExportMessage(result.message || "Importacao concluida.", result.data?.falhas ? "error" : "success");
 
-                if (input) {
+                if (preview && !result.data?.falhas && result.data?.validas > 0) {
+                    importExportPage.prevalidacao = { arquivo, entidade };
+                    importButton.textContent = "Confirmar importacao do lote";
+                } else {
+                    resetPreview();
+                }
+                if (input && result.data?.confirmado) {
                     input.value = "";
                 }
             } catch (error) {
@@ -306,7 +322,7 @@ function renderResultadoImportacao(resultado) {
     container.innerHTML = `
         <div>
             <strong class="text-white text-lg">${escapeImportExportHtml(resultado.nome_entidade || "Importacao")}</strong>
-            <p class="text-slate-400 mt-2">Processamento concluido para o ultimo lote enviado.</p>
+            <p class="text-slate-400 mt-2">${resultado.confirmado ? "Lote confirmado integralmente." : `Nenhuma linha gravada. Linhas validas: ${Number(resultado.validas || 0)}.`}</p>
         </div>
 
         <div class="import-export-result-grid">

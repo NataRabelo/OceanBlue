@@ -11,6 +11,12 @@ from app.services.cliente_service import ClienteService
 from app.services.comunicacao_service import ComunicacaoService
 from app.services.tenant_bootstrap_service import TenantBootstrapService
 from app.services.time_service import TimeService
+from app.extensions import db
+from app.models.db import ProdutoEmpresa, ItemVenda, StatusVenda
+from app.services.transaction_service import after_commit
+
+
+from app.services.transaction_service import atomic_operation
 
 
 class EstoqueService:
@@ -294,6 +300,9 @@ class EstoqueService:
 
     @staticmethod
     def processar_alertas_por_produtos(tenant_id, empresa_id, produto_ids):
+        if db.session.info.get("atomic_operation"):
+            after_commit(lambda: EstoqueService.processar_alertas_por_produtos(tenant_id, empresa_id, produto_ids))
+            return
         ids_unicos = []
         for produto_id in produto_ids or []:
             produto_id_int = EstoqueService._to_optional_int(produto_id, "Produto")
@@ -472,6 +481,7 @@ class EstoqueService:
         return assunto, conteudo, html_conteudo
 
     @staticmethod
+    @atomic_operation
     def registrar_movimentacao_manual(data, tenant_id, escopo, funcionario_id):
         empresa_ids = AcessoEmpresaService.filtrar_empresa_ids(escopo)
         produto_empresa_id = EstoqueService._to_int(data.get("produto_empresa_id"), "Produto")
@@ -515,6 +525,7 @@ class EstoqueService:
             raise
 
     @staticmethod
+    @atomic_operation
     def registrar_saida_por_venda(
         venda_id,
         empresa_id,
@@ -567,6 +578,7 @@ class EstoqueService:
             raise
 
     @staticmethod
+    @atomic_operation
     def registrar_entrada_por_cancelamento_venda(
         venda_id,
         empresa_id,
@@ -626,6 +638,7 @@ class EstoqueService:
             raise
 
     @staticmethod
+    @atomic_operation
     def registrar_entrada_por_cancelamento_item_venda(
         venda_id,
         empresa_id,
@@ -668,7 +681,7 @@ class EstoqueService:
                 EstoqueService.processar_alertas_por_produtos(
                     tenant_id=tenant_id,
                     empresa_id=empresa_id,
-                    produto_ids=[produto_id],
+                    produto_ids=[item_venda.produto_id],
                 )
 
             return movimento
@@ -678,6 +691,7 @@ class EstoqueService:
             raise
 
     @staticmethod
+    @atomic_operation
     def cancelar_movimento(movimento_id, data, tenant_id, escopo, funcionario_id):
         empresa_ids = AcessoEmpresaService.filtrar_empresa_ids(escopo)
         movimento = EstoqueRepository.buscar_movimento_por_id(movimento_id, tenant_id, empresa_ids=empresa_ids)
@@ -685,7 +699,7 @@ class EstoqueService:
             raise ValueError("Movimentacao nao encontrada.")
 
         if movimento.revertido:
-            raise ValueError("Esta movimentacao ja foi cancelada anteriormente.")
+            return MovimentoEstoque.query.filter_by(tenant_id=tenant_id, movimento_origem_id=movimento.id).first()
 
         if movimento.venda_id:
             raise ValueError("Use o modulo do PDV para cancelar movimentos originados de venda.")
@@ -740,6 +754,7 @@ class EstoqueService:
             raise
 
     @staticmethod
+    @atomic_operation
     def registrar_saida_por_adiantamento(
         tenant_id,
         empresa_id,
@@ -796,6 +811,38 @@ class EstoqueService:
     ):
         if quantidade <= 0:
             raise ValueError("A quantidade deve ser maior que zero.")
+
+        db.session.flush()
+        db.session.refresh(produto_empresa, with_for_update={"of": ProdutoEmpresa})
+        if produto_empresa.tenant_id != tenant_id:
+            raise PermissionError("Produto indisponivel neste tenant.")
+        if venda_id and not item_venda_id:
+            raise ValueError("Item da venda obrigatorio para movimentacao idempotente.")
+        if item_venda_id:
+            item = ItemVenda.query.filter_by(id=item_venda_id, tenant_id=tenant_id, venda_id=venda_id).first()
+            if not item or item.produto_id != produto_empresa.produto_id or item.venda.empresa_id != produto_empresa.empresa_id:
+                raise ValueError("Item incompativel com a venda e o estoque.")
+            previous = MovimentoEstoque.query.filter_by(tenant_id=tenant_id, item_venda_id=item_venda_id)
+            if tipo_movimento == TipoMovimentoEstoque.SAIDA and motivo == MotivoMovimentoEstoque.VENDA:
+                if quantidade != item.quantidade:
+                    raise ValueError("Quantidade da baixa difere do item da venda.")
+                existing = previous.filter_by(tipo_movimento=TipoMovimentoEstoque.SAIDA, motivo=MotivoMovimentoEstoque.VENDA).first()
+                if existing:
+                    if existing.quantidade != quantidade:
+                        raise ValueError("Baixa do item ja registrada com outra quantidade.")
+                    return existing
+            elif tipo_movimento == TipoMovimentoEstoque.ENTRADA and motivo == MotivoMovimentoEstoque.DEVOLUCAO:
+                if item.venda.status != StatusVenda.CANCELADA and not item.quantidade_cancelada:
+                    raise ValueError("Item ainda nao cancelado.")
+                if not previous.filter_by(tipo_movimento=TipoMovimentoEstoque.SAIDA, motivo=MotivoMovimentoEstoque.VENDA).first():
+                    raise ValueError("Baixa original da venda nao encontrada.")
+                returns = previous.filter_by(tipo_movimento=TipoMovimentoEstoque.ENTRADA, motivo=MotivoMovimentoEstoque.DEVOLUCAO).all()
+                restored = sum(record.quantidade for record in returns)
+                target = int(item.quantidade_cancelada or 0) or int(item.quantidade)
+                if restored >= target:
+                    return returns[-1]
+                if restored + quantidade > target:
+                    raise ValueError("Devolucao ultrapassa a quantidade cancelada do item.")
 
         estoque_atual = int(produto_empresa.estoque_atual)
 
@@ -869,6 +916,8 @@ class EstoqueService:
         except (InvalidOperation, ValueError):
             raise ValueError(f"Valor invalido para {field_name}.")
 
+        if not valor.is_finite() or abs(valor) >= Decimal("10000000000"):
+            raise ValueError(f"Valor invalido para {field_name}.")
         if valor <= 0 and obrigatorio:
             raise ValueError(f"{field_name.capitalize()} deve ser maior que zero.")
 
@@ -891,7 +940,7 @@ class EstoqueService:
             raise ValueError(f"Informe {field_name}.")
 
         try:
-            valor = int(str(value).strip().replace(".", "").replace(",", ""))
+            valor = int(str(value).strip())
         except (TypeError, ValueError):
             raise ValueError(f"Valor invalido para {field_name}.")
 

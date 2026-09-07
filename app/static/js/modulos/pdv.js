@@ -261,7 +261,7 @@ function bindSaleActions() {
                 }
 
                 const payload = montarPayloadVenda();
-                pdvPage.payloadConfirmacaoPendente = payload;
+                pdvPage.payloadConfirmacaoPendente = { ...payload, idempotency_key: crypto.randomUUID() };
                 abrirModalConfirmacaoVenda(payload);
             } catch (error) {
                 showMessage(error.message || "Erro ao registrar a venda.", "error");
@@ -1279,14 +1279,20 @@ function abrirModalVenda(vendaId, focarCancelamento) {
 async function cancelarItemVenda(itemId) {
     if (!pdvPage.vendaSelecionada) return;
 
+    pdvPage.cancelamentosPendentes ??= {};
+    const operation = `${pdvPage.vendaSelecionada.id}:${itemId}`;
+    const motivoAtual = (document.getElementById("pdv-sale-cancel-reason")?.value || "").trim();
+    pdvPage.cancelamentosPendentes[operation] ??= { motivo: motivoAtual, idempotency_key: crypto.randomUUID() };
+
     try {
         const motivo = (document.getElementById("pdv-sale-cancel-reason")?.value || "").trim();
         const result = await requestJson(`/api/pdv/vendas/${pdvPage.vendaSelecionada.id}/itens/${itemId}/cancelar`, {
             method: "POST",
             headers: getAuthHeaders(true),
-            body: JSON.stringify({ motivo })
+            body: JSON.stringify(pdvPage.cancelamentosPendentes[operation])
         });
 
+        delete pdvPage.cancelamentosPendentes[operation];
         showMessage(result.message || "Item cancelado com sucesso.", "success");
         await carregarDadosPdv();
         abrirModalVenda(pdvPage.vendaSelecionada.id, false);

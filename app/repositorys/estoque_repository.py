@@ -1,6 +1,7 @@
 from sqlalchemy.orm import joinedload
 
 from app.extensions import db
+from app.services.transaction_service import save
 from app.models.db import (
     ConfiguracaoNotificacaoEstoque,
     Empresa,
@@ -238,7 +239,7 @@ class EstoqueRepository:
 
     @staticmethod
     def salvar():
-        db.session.commit()
+        save()
 
     @staticmethod
     def rollback():

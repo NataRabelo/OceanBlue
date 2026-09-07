@@ -2,6 +2,8 @@ from sqlalchemy import func
 from sqlalchemy.orm import joinedload
 
 from app.extensions import db
+from app.repositorys.funcionario_repository import _digits_only_expression
+from app.services.transaction_service import save
 from app.models.db import (
     CategoriaFinanceira,
     CategoriaProduto,
@@ -199,7 +201,7 @@ class ImportExportRepository:
             .options(joinedload(Funcionario.role))
             .filter(
                 Funcionario.tenant_id == tenant_id,
-                Funcionario.cpf == valor,
+                _digits_only_expression(Funcionario.cpf) == valor,
             )
             .first()
         )
@@ -320,7 +322,7 @@ class ImportExportRepository:
 
     @staticmethod
     def salvar():
-        db.session.commit()
+        save()
 
     @staticmethod
     def rollback():

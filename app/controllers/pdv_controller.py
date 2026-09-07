@@ -105,6 +105,8 @@ def criar_venda():
         escopo = AcessoEmpresaService.obter_escopo(funcionario_id, tenant_id)
         data = request.get_json(silent=True) or {}
 
+        if not data.get("idempotency_key"):
+            raise ValueError("Informe idempotency_key para registrar a venda com seguranca.")
         venda = PdvService.criar_venda(data, tenant_id, escopo, funcionario_id)
         AuditService.registrar(
             "pdv.sale_created",
@@ -165,6 +167,8 @@ def cancelar_item_venda(venda_id, item_id):
         escopo = AcessoEmpresaService.obter_escopo(funcionario_id, tenant_id)
         data = request.get_json(silent=True) or {}
 
+        if not data.get("idempotency_key"):
+            raise ValueError("Informe idempotency_key para cancelar o item com seguranca.")
         venda = PdvService.cancelar_item_venda(venda_id, item_id, data, tenant_id, escopo, funcionario_id)
         AuditService.registrar(
             "pdv.sale_item_cancelled",

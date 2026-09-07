@@ -7,6 +7,9 @@ from app.security.password import validate_password
 from app.extensions import db
 
 
+from app.services.transaction_service import atomic_operation
+
+
 class FuncionarioService:
 
     @staticmethod
@@ -65,6 +68,7 @@ class FuncionarioService:
         return FuncionarioRepository.listar_roles_por_tenant(tenant_id)
 
     @staticmethod
+    @atomic_operation
     def criar(data, tenant_id):
         try:
             nome = (data.get("nome") or "").strip()
@@ -98,7 +102,7 @@ class FuncionarioService:
                 raise ValueError("Nome de usuario ja cadastrado no sistema.")
 
             empresa = FuncionarioRepository.buscar_empresa_por_id(empresa_id, tenant_id)
-            if not empresa:
+            if not empresa or not empresa.ativo:
                 raise ValueError("Empresa nao encontrada.")
 
             role = FuncionarioRepository.buscar_role_por_id(role_id, tenant_id)
@@ -126,6 +130,8 @@ class FuncionarioService:
                 ativo=True
             )
             FuncionarioRepository.adicionar(funcionario_empresa)
+            db.session.flush()
+            FuncionarioService._sincronizar_empresas(funcionario, data, tenant_id, empresa.id)
             FuncionarioRepository.salvar()
 
             return FuncionarioRepository.buscar_funcionario_empresa_por_id(funcionario_empresa.id, tenant_id)
@@ -134,6 +140,7 @@ class FuncionarioService:
             raise
 
     @staticmethod
+    @atomic_operation
     def atualizar(funcionario_empresa_id, data, tenant_id):
         try:
             funcionario_empresa = FuncionarioRepository.buscar_funcionario_empresa_por_id(funcionario_empresa_id, tenant_id)
@@ -180,7 +187,7 @@ class FuncionarioService:
                 raise ValueError("Nome de usuario ja cadastrado no sistema.")
 
             empresa = FuncionarioRepository.buscar_empresa_por_id(empresa_id, tenant_id)
-            if not empresa:
+            if not empresa or not empresa.ativo:
                 raise ValueError("Empresa nao encontrada.")
 
             role = FuncionarioRepository.buscar_role_por_id(role_id, tenant_id)
@@ -199,8 +206,15 @@ class FuncionarioService:
                 validate_password(senha)
                 funcionario.senha_hash = generate_password_hash(senha)
 
-            funcionario_empresa.empresa_id = empresa.id
+            if "empresa_ids" not in data and funcionario_empresa.empresa_id != empresa.id:
+                data = {**data, "empresa_ids": [empresa.id]}
             funcionario_empresa.ativo = ativo
+
+            FuncionarioService._sincronizar_empresas(funcionario, data, tenant_id, empresa.id)
+            if funcionario_empresa.empresa_id not in set(data.get("empresa_ids", [funcionario_empresa.empresa_id])):
+                funcionario_empresa = FuncionarioEmpresa.query.filter_by(
+                    tenant_id=tenant_id, funcionario_id=funcionario.id, empresa_id=empresa.id
+                ).first()
 
             FuncionarioRepository.salvar()
             return FuncionarioRepository.buscar_funcionario_empresa_por_id(funcionario_empresa.id, tenant_id)
@@ -209,6 +223,7 @@ class FuncionarioService:
             raise
 
     @staticmethod
+    @atomic_operation
     def deletar(funcionario_empresa_id, tenant_id):
         try:
             funcionario_empresa = FuncionarioRepository.buscar_funcionario_empresa_por_id(funcionario_empresa_id, tenant_id)
@@ -219,7 +234,7 @@ class FuncionarioService:
             funcionario = funcionario_empresa.funcionario
 
             FuncionarioRepository.deletar(funcionario_empresa)
-            FuncionarioRepository.salvar()
+            db.session.flush()
 
             total_vinculos = FuncionarioRepository.contar_vinculos_funcionario(funcionario_id, tenant_id)
             if total_vinculos == 0 and funcionario is not None:
@@ -228,6 +243,31 @@ class FuncionarioService:
         except Exception:
             FuncionarioRepository.rollback()
             raise
+
+    @staticmethod
+    def _sincronizar_empresas(funcionario, data, tenant_id, empresa_id):
+        if "empresa_ids" not in data:
+            return
+        values = data["empresa_ids"]
+        if not isinstance(values, list) or not values:
+            raise ValueError("Informe ao menos uma empresa.")
+        empresa_ids = {FuncionarioService._to_int(value, "Empresa") for value in values}
+        if empresa_id not in empresa_ids:
+            raise ValueError("A empresa principal deve estar entre os vinculos.")
+        for company_id in empresa_ids:
+            company = FuncionarioRepository.buscar_empresa_por_id(company_id, tenant_id)
+            if not company or not company.ativo:
+                raise ValueError("Empresa indisponivel neste tenant.")
+        links = FuncionarioEmpresa.query.filter_by(tenant_id=tenant_id, funcionario_id=funcionario.id).all()
+        for link in links:
+            if link.empresa_id not in empresa_ids:
+                db.session.delete(link)
+            else:
+                link.ativo = funcionario.ativo
+        existing = {link.empresa_id for link in links}
+        for company_id in sorted(empresa_ids - existing):
+            db.session.add(FuncionarioEmpresa(tenant_id=tenant_id, funcionario_id=funcionario.id,
+                                              empresa_id=company_id, ativo=funcionario.ativo))
 
     @staticmethod
     def _to_bool(value, default=False):
@@ -251,7 +291,10 @@ class FuncionarioService:
 
     @staticmethod
     def _normalizar_cpf(value):
-        return "".join(char for char in str(value or "") if char.isdigit())
+        cpf = "".join(char for char in str(value or "") if char.isdigit())
+        if len(cpf) != 11:
+            raise ValueError("CPF deve conter 11 digitos.")
+        return cpf
 
     @staticmethod
     def _to_non_negative_decimal(value, field_name):
@@ -263,7 +306,7 @@ class FuncionarioService:
         except (InvalidOperation, ValueError):
             raise ValueError(f"Valor invalido para {field_name}.")
 
-        if valor < 0:
+        if not valor.is_finite() or valor < 0 or valor >= Decimal("10000000000"):
             raise ValueError(f"{field_name.capitalize()} nao pode ser negativo.")
 
         return valor.quantize(Decimal("0.01"))

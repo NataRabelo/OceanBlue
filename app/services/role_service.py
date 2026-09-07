@@ -4,6 +4,9 @@ from app.repositorys.role_repository import RoleRepository
 from app.security.permissions import get_permission_dependency_codes, normalize_permission_codes
 
 
+from app.services.transaction_service import atomic_operation
+
+
 class RoleService:
 
     @staticmethod
@@ -11,6 +14,7 @@ class RoleService:
         return RoleRepository.listar(tenant_id)
 
     @staticmethod
+    @atomic_operation
     def criar(data, tenant_id):
         try:
             nome = (data.get("nome") or "").strip()
@@ -55,6 +59,7 @@ class RoleService:
             raise
 
     @staticmethod
+    @atomic_operation
     def atualizar(role_id, data, tenant_id):
         try:
             role = RoleRepository.buscar_por_id(role_id, tenant_id)
@@ -103,6 +108,7 @@ class RoleService:
             raise
 
     @staticmethod
+    @atomic_operation
     def deletar(role_id, tenant_id):
         try:
             role = RoleRepository.buscar_por_id(role_id, tenant_id)

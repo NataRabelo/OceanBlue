@@ -9,6 +9,9 @@ from app.services.financeiro_service import FinanceiroService
 from app.services.tenant_bootstrap_service import TenantBootstrapService
 
 
+from app.services.transaction_service import atomic_operation
+
+
 class AdiantamentoService:
     FORMA_PADRAO = "Vale em folha"
 
@@ -189,6 +192,7 @@ class AdiantamentoService:
         }
 
     @staticmethod
+    @atomic_operation
     def criar(data, tenant_id, escopo, responsavel_id):
         try:
             AdiantamentoService._garantir_base_operacional(tenant_id)

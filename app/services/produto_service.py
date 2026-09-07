@@ -8,6 +8,9 @@ from app.services.acesso_empresa_service import AcessoEmpresaService
 from app.services.tenant_entitlement_service import TenantEntitlementService
 
 
+from app.services.transaction_service import atomic_operation
+
+
 class ProdutoService:
 
     @staticmethod
@@ -26,7 +29,10 @@ class ProdutoService:
         return ProdutoRepository.listar_empresas(tenant_id, empresa_ids)
 
     @staticmethod
+    @atomic_operation
     def criar(data, tenant_id, escopo, funcionario_id=None):
+        if data.get("produto_id"):
+            return ProdutoService._vincular(data, tenant_id, escopo)
         TenantEntitlementService.validar_limite_produtos(
             tenant_id,
             ProdutoRepository.contar_produtos(tenant_id),
@@ -37,7 +43,7 @@ class ProdutoService:
         empresa_id = ProdutoService._to_int(data.get("empresa_id"), "Empresa")
         codigo_barras = ProdutoService._normalize_barcode(data.get("codigo_barras"))
         possui_ncm = ProdutoService._to_bool(data.get("possui_ncm", False))
-        ncm = (data.get("ncm") or "").strip() or None
+        ncm = ProdutoService._normalize_ncm(data.get("ncm"))
         estoque_minimo = ProdutoService._to_non_negative_int(data.get("estoque_minimo", 0), "estoque minimo")
         valor_compra = ProdutoService._to_decimal(data.get("valor_compra", 0), "valor de compra", 2)
         valor_varejo = ProdutoService._to_decimal(
@@ -58,7 +64,7 @@ class ProdutoService:
         data_validade = ProdutoService._to_optional_date(data.get("data_validade"))
         ativo = ProdutoService._to_bool(data.get("ativo", True))
 
-        if not nome:
+        if not nome or len(nome) > 150:
             raise ValueError("Nome do produto e obrigatorio.")
 
         if not empresa_id:
@@ -73,7 +79,7 @@ class ProdutoService:
         categoria = None
         if categoria_id:
             categoria = ProdutoRepository.buscar_categoria_por_id(categoria_id, tenant_id)
-            if not categoria:
+            if not categoria or not categoria.ativo:
                 raise ValueError("Categoria nao encontrada.")
 
         if ProdutoRepository.buscar_produto_por_nome(nome, tenant_id):
@@ -100,7 +106,7 @@ class ProdutoService:
             possui_ncm=possui_ncm,
             ncm=ncm,
             codigo_barras=codigo_barras,
-            ativo=ativo
+            ativo=True
         )
         ProdutoRepository.adicionar(produto)
         db.session.flush()
@@ -126,6 +132,7 @@ class ProdutoService:
         return ProdutoRepository.buscar_produto_empresa_por_id(produto_empresa.id, tenant_id, empresa_ids)
 
     @staticmethod
+    @atomic_operation
     def atualizar(produto_empresa_id, data, tenant_id, escopo):
         empresa_ids = AcessoEmpresaService.filtrar_empresa_ids(escopo)
         produto_empresa = ProdutoRepository.buscar_produto_empresa_por_id(produto_empresa_id, tenant_id, empresa_ids)
@@ -140,7 +147,7 @@ class ProdutoService:
         empresa_id = ProdutoService._to_int(data.get("empresa_id"), "Empresa")
         codigo_barras = ProdutoService._normalize_barcode(data.get("codigo_barras"))
         possui_ncm = ProdutoService._to_bool(data.get("possui_ncm", False))
-        ncm = (data.get("ncm") or "").strip() or None
+        ncm = ProdutoService._normalize_ncm(data.get("ncm"))
         estoque_minimo = ProdutoService._to_non_negative_int(data.get("estoque_minimo", 0), "estoque minimo")
         valor_compra = ProdutoService._to_decimal(data.get("valor_compra", 0), "valor de compra", 2)
         valor_varejo = ProdutoService._to_decimal(
@@ -161,7 +168,7 @@ class ProdutoService:
         data_validade = ProdutoService._to_optional_date(data.get("data_validade"))
         ativo = ProdutoService._to_bool(data.get("ativo", True))
 
-        if not nome:
+        if not nome or len(nome) > 150:
             raise ValueError("Nome do produto e obrigatorio.")
 
         if not empresa_id:
@@ -176,7 +183,7 @@ class ProdutoService:
         categoria = None
         if categoria_id:
             categoria = ProdutoRepository.buscar_categoria_por_id(categoria_id, tenant_id)
-            if not categoria:
+            if not categoria or not categoria.ativo:
                 raise ValueError("Categoria nao encontrada.")
 
         produto_existente = ProdutoRepository.buscar_produto_por_nome(
@@ -218,9 +225,11 @@ class ProdutoService:
         produto.codigo_barras = codigo_barras
         produto.possui_ncm = possui_ncm
         produto.ncm = ncm
-        produto.ativo = ativo
+        if ativo:
+            produto.ativo = True
 
-        produto_empresa.empresa_id = empresa.id
+        if produto_empresa.empresa_id != empresa.id:
+            raise ValueError("Crie um novo vinculo para outra empresa; o estoque nao pode ser transferido pelo cadastro.")
         produto_empresa.estoque_minimo = estoque_minimo
         produto_empresa.valor_compra = valor_compra
         produto_empresa.valor_venda = valor_varejo
@@ -235,6 +244,7 @@ class ProdutoService:
         return ProdutoRepository.buscar_produto_empresa_por_id(produto_empresa.id, tenant_id, empresa_ids)
 
     @staticmethod
+    @atomic_operation
     def deletar(produto_empresa_id, tenant_id, escopo):
         empresa_ids = AcessoEmpresaService.filtrar_empresa_ids(escopo)
         produto_empresa = ProdutoRepository.buscar_produto_empresa_por_id(produto_empresa_id, tenant_id, empresa_ids)
@@ -244,13 +254,49 @@ class ProdutoService:
         produto_id = produto_empresa.produto_id
         produto = produto_empresa.produto
 
+        from app.models.db import MovimentoEstoque, ItemVenda, Venda
+        if produto_empresa.estoque_atual or MovimentoEstoque.query.filter_by(
+            tenant_id=tenant_id, produto_id=produto_id, empresa_id=produto_empresa.empresa_id
+        ).first() or ItemVenda.query.join(Venda).filter(
+            ItemVenda.produto_id == produto_id, Venda.empresa_id == produto_empresa.empresa_id,
+            Venda.tenant_id == tenant_id
+        ).first():
+            raise ValueError("Produto com saldo ou historico deve ser desativado, preservando seu vinculo.")
+
         ProdutoRepository.deletar(produto_empresa)
-        ProdutoRepository.salvar()
+        db.session.flush()
 
         total_vinculos = ProdutoRepository.contar_vinculos_produto(produto_id, tenant_id)
         if total_vinculos == 0:
             ProdutoRepository.deletar(produto)
             ProdutoRepository.salvar()
+
+    @staticmethod
+    def _vincular(data, tenant_id, escopo):
+        TenantEntitlementService.validar_assinatura(tenant_id)
+        produto = Produto.query.filter_by(id=data["produto_id"], tenant_id=tenant_id).first()
+        empresa_id = ProdutoService._to_int(data.get("empresa_id"), "Empresa")
+        AcessoEmpresaService.validar_empresa(empresa_id, escopo)
+        if not produto or not produto.ativo:
+            raise ValueError("Produto indisponivel.")
+        if ProdutoRepository.existe_produto_empresa(produto.id, empresa_id, tenant_id):
+            raise ValueError("Esse produto ja esta vinculado a essa empresa.")
+        varejo = ProdutoService._to_decimal(data.get("valor_varejo", data.get("valor_venda", 0)), "varejo")
+        atacado = ProdutoService._to_decimal(data.get("valor_atacado", varejo), "atacado")
+        if atacado > varejo:
+            raise ValueError("O valor de atacado nao pode ser maior que o valor de varejo.")
+        vinculo = ProdutoEmpresa(
+            tenant_id=tenant_id, produto_id=produto.id, empresa_id=empresa_id,
+            estoque_atual=0, estoque_minimo=ProdutoService._to_non_negative_int(data.get("estoque_minimo"), "estoque minimo"),
+            valor_compra=ProdutoService._to_decimal(data.get("valor_compra"), "compra"),
+            valor_venda=varejo, valor_varejo=varejo, valor_atacado=atacado,
+            quantidade_minima_atacado=ProdutoService._to_positive_int(data.get("quantidade_minima_atacado"), "quantidade minima", 1),
+            data_validade=ProdutoService._to_optional_date(data.get("data_validade")),
+            ativo=ProdutoService._to_bool(data.get("ativo", True)),
+        )
+        db.session.add(vinculo)
+        db.session.flush()
+        return vinculo
 
     @staticmethod
     def _to_decimal(value, field_name, casas=2):
@@ -262,7 +308,7 @@ class ProdutoService:
         except (InvalidOperation, ValueError):
             raise ValueError(f"Valor invalido para {field_name}.")
 
-        if valor < 0:
+        if not valor.is_finite() or valor < 0 or valor >= Decimal("10000000000"):
             raise ValueError(f"{field_name.capitalize()} nao pode ser negativo.")
 
         quant = "0." + ("0" * (casas - 1)) + "1" if casas > 0 else "1"
@@ -274,7 +320,7 @@ class ProdutoService:
             value = 0
 
         try:
-            valor = int(str(value).strip().replace(".", "").replace(",", ""))
+            valor = int(str(value).strip())
         except (TypeError, ValueError):
             raise ValueError(f"Valor invalido para {field_name}.")
 
@@ -291,7 +337,7 @@ class ProdutoService:
             raise ValueError(f"{field_name.capitalize()} e obrigatoria.")
 
         try:
-            valor = int(str(value).strip().replace(".", "").replace(",", ""))
+            valor = int(str(value).strip())
         except (TypeError, ValueError):
             raise ValueError(f"Valor invalido para {field_name}.")
 
@@ -331,9 +377,18 @@ class ProdutoService:
             raise ValueError("Data de validade invalida. Use o formato YYYY-MM-DD.")
 
     @staticmethod
+    def _normalize_ncm(value):
+        ncm = str(value or "").strip().replace(".", "")
+        if ncm and (len(ncm) != 8 or not ncm.isascii() or not ncm.isdigit()):
+            raise ValueError("NCM deve conter 8 digitos.")
+        return ncm or None
+
+    @staticmethod
     def _normalize_barcode(value):
-        digits = "".join(char for char in str(value or "") if char.isdigit())
-        return digits or None
+        code = str(value or "").strip()
+        if code and (not code.isascii() or not code.isdigit() or len(code) > 60):
+            raise ValueError("Codigo de barras deve conter ate 60 digitos.")
+        return code or None
 
     @staticmethod
     def _gerar_codigo_barras(tenant_id, ignorar_produto_id=None):

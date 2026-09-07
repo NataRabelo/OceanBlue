@@ -1,5 +1,5 @@
 from flask import g, has_request_context
-from sqlalchemy import event
+from sqlalchemy import event, inspect
 from sqlalchemy.orm import Session, with_loader_criteria
 
 from app.extensions import db
@@ -68,4 +68,4 @@ def restrict_writes(session, context, instances):
 def identify_audit_actor(session, transaction, connection):
     user = getattr(g, "auth_user", None) if has_request_context() else None
     connection.execute(db.text("SELECT set_config('ocean.actor_id', :actor, true), set_config('ocean.actor_scope', :scope, true)"),
-                       {"actor": str(user.id) if user else "", "scope": ("tenant" if hasattr(user, "tenant_id") else "platform") if user else ""})
+                       {"actor": str(inspect(user).identity[0]) if user else "", "scope": ("tenant" if hasattr(type(user), "tenant_id") else "platform") if user else ""})

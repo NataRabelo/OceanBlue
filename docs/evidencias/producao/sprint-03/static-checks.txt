@@ -1,0 +1,5 @@
+SYNTAX OK: pdv.js
+SYNTAX OK: funcionario.js
+SYNTAX OK: produto.js
+SYNTAX OK: import_export.js
+WHITESPACE OK

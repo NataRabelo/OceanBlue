@@ -1,0 +1,2 @@
+ oceanblue-s03-final-test-1 Copying oceanblue-s03-final-test-1:/tmp/junit.xml to C:\Users\Rabel\.codex\worktrees\c6d4\OceanBlue\docs\evidencias\producao\sprint-03\junit.xml
+ oceanblue-s03-final-test-1 Copied oceanblue-s03-final-test-1:/tmp/junit.xml to C:\Users\Rabel\.codex\worktrees\c6d4\OceanBlue\docs\evidencias\producao\sprint-03\junit.xml

@@ -323,11 +323,20 @@ def test_import_quota_partial_rows_updates_and_password_policy(security_app, ent
         def upload():
             return FileStorage(stream=BytesIO(content), filename="import.xlsx")
         result = ImportExportService.importar_entidade(entity, upload(), 1, scope, 1)
-        assert result["criadas"] == 1 and result["falhas"] == 1, result
+        assert result["criadas"] == 0 and result["falhas"] == 1 and not result["confirmado"], result
         assert result["erros"][0]["mensagem"] == "Limite do plano atingido."
         result = ImportExportService.importar_entidade(entity, upload(), 1, scope, 1)
-        assert result["atualizadas"] == 1 and result["falhas"] == 1, result
+        assert result["atualizadas"] == 0 and result["falhas"] == 1 and not result["confirmado"], result
         assert "INSERT INTO" not in json.dumps(result)
+
+        sheet.delete_rows(3)
+        single = BytesIO()
+        workbook.save(single)
+        content = single.getvalue()
+        created = ImportExportService.importar_entidade(entity, upload(), 1, scope, 1)
+        assert created["confirmado"] and created["criadas"] == 1 and created["falhas"] == 0
+        updated = ImportExportService.importar_entidade(entity, upload(), 1, scope, 1)
+        assert updated["confirmado"] and updated["atualizadas"] == 1 and updated["falhas"] == 0
 
 
 def test_all_tenant_tables_and_foreign_keys_have_database_integrity_guard(security_app):

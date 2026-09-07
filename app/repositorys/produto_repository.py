@@ -1,6 +1,7 @@
 from sqlalchemy.orm import joinedload
 
 from app.extensions import db
+from app.services.transaction_service import save
 from app.models.db import Produto, ProdutoEmpresa, CategoriaProduto, Empresa
 
 
@@ -134,7 +135,7 @@ class ProdutoRepository:
 
     @staticmethod
     def salvar():
-        db.session.commit()
+        save()
 
     @staticmethod
     def adicionar(obj):

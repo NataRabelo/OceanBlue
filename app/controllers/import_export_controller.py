@@ -117,11 +117,12 @@ def importar():
             tenant_id,
             escopo,
             funcionario_id,
+            pre_validar=request.form.get("pre_validar", "").lower() in ("1", "true", "sim"),
         )
 
         return jsonify({
             "success": True,
-            "message": "Importacao processada com sucesso.",
+            "message": "Lote confirmado." if resultado["confirmado"] else "Lote nao gravado. Confira o relatorio de validacao.",
             "data": resultado,
         })
     except PermissionError as exc:

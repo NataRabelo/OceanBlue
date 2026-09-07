@@ -468,6 +468,21 @@ class MovimentoCarteiraCliente(ModeloBase):
     )
 
 
+class OperacaoIdempotente(ModeloBase):
+    __tablename__ = "operacoes_idempotentes"
+
+    empresa_id = db.Column(db.Integer, db.ForeignKey("empresas.id"), nullable=False)
+    funcionario_id = db.Column(db.Integer, db.ForeignKey("funcionarios.id"), nullable=False)
+    operacao = db.Column(db.String(80), nullable=False)
+    chave = db.Column(db.String(128), nullable=False)
+    payload_hash = db.Column(db.String(64), nullable=False)
+    resposta = db.Column(db.JSON, nullable=False)
+
+    __table_args__ = (
+        UniqueConstraint("tenant_id", "funcionario_id", "operacao", "chave", name="uq_operacao_idempotente"),
+    )
+
+
 class CategoriaProduto(ModeloBase):
     __tablename__ = "categorias_produto"
 
@@ -665,6 +680,8 @@ class MovimentoEstoque(ModeloBase):
         CheckConstraint("valor_unitario IS NULL OR valor_unitario >= 0", name="ck_movimento_estoque_valor_unitario_non_negative"),
         CheckConstraint("valor_total IS NULL OR valor_total >= 0", name="ck_movimento_estoque_valor_total_non_negative"),
         Index("ix_mov_estoque_tenant_empresa_produto", "tenant_id", "empresa_id", "produto_id"),
+        Index("uq_mov_estoque_saida_item", "tenant_id", "item_venda_id", unique=True,
+              postgresql_where=db.text("item_venda_id IS NOT NULL AND tipo_movimento = 'SAIDA' AND motivo = 'VENDA'")),
     )
 
 

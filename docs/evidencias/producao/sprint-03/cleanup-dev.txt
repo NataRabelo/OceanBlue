@@ -1,0 +1,6 @@
+ Container oceanblue-s03-dev-db-test-1 Stopping 
+ Container oceanblue-s03-dev-db-test-1 Stopped 
+ Container oceanblue-s03-dev-db-test-1 Removing 
+ Container oceanblue-s03-dev-db-test-1 Removed 
+ Network oceanblue-s03-dev_test Removing 
+ Network oceanblue-s03-dev_test Removed 

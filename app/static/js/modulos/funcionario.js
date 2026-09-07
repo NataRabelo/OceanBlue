@@ -33,7 +33,6 @@ document.addEventListener("DOMContentLoaded", async () => {
             senha: "",
             salario: formatMoneyForDisplay(item.salario),
             meta: formatMoneyForDisplay(item.meta),
-            empresa_id: item.empresa_id || "",
             role_id: item.role_id || "",
             ativo: Boolean(item.ativo)
         }),
@@ -42,7 +41,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             limparFormularioEdicao();
         },
         beforeOpenEditModal: async (item) => {
-            await Promise.all([carregarEmpresas(item.empresa_id), carregarRoles(item.role_id)]);
+            await Promise.all([carregarEmpresas(item.empresa_ids || [item.empresa_id]), carregarRoles(item.role_id)]);
             preencherCheckboxAtivo("edicao-ativo", item.ativo);
         },
         beforeSubmitCreate: (payload) => normalizarPayload(payload, false),
@@ -138,7 +137,7 @@ async function carregarEmpresas(selectedId = "") {
                 option.value = empresa.id;
                 option.textContent = empresa.nome_fantasia || empresa.razao_social || `Empresa #${empresa.id}`;
 
-                if (String(empresa.id) === currentValue) {
+                if ((Array.isArray(selectedId) && select.id === "edicao-empresa_id" ? selectedId.map(String) : [currentValue]).includes(String(empresa.id))) {
                     option.selected = true;
                 }
 
@@ -198,7 +197,9 @@ function normalizarPayload(payload, isEdit) {
     data.senha = (data.senha || "").trim();
     data.salario = normalizeMoneyForApi(data.salario);
     data.meta = normalizeMoneyForApi(data.meta);
-    data.empresa_id = data.empresa_id || "";
+    const companySelect = document.getElementById(isEdit ? "edicao-empresa_id" : "cadastro-empresa_id");
+    data.empresa_ids = Array.from(companySelect.selectedOptions).map(option => Number(option.value)).filter(Boolean);
+    data.empresa_id = data.empresa_ids[0] || "";
     data.role_id = data.role_id || "";
     data.ativo = obterCheckboxAtivo(isEdit ? "edicao-ativo" : "cadastro-ativo");
 

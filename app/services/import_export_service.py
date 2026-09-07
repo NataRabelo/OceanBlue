@@ -1,6 +1,7 @@
 from datetime import date, datetime
 from decimal import Decimal, InvalidOperation
 from io import BytesIO
+from itertools import islice
 import unicodedata
 
 from openpyxl import Workbook, load_workbook
@@ -24,6 +25,9 @@ from app.security.errors import public_error
 from app.services.tenant_entitlement_service import TenantEntitlementService
 from app.services.acesso_empresa_service import AcessoEmpresaService
 from app.services.time_service import TimeService
+from app.extensions import db
+from app.services.transaction_service import atomic_operation
+from app.services.produto_service import ProdutoService
 
 
 class ImportExportService:
@@ -61,6 +65,9 @@ class ImportExportService:
                 {"key": "estoque_minimo", "header": "estoque_minimo", "required": False, "example": "5"},
                 {"key": "valor_compra", "header": "valor_compra", "required": False, "example": "4,50"},
                 {"key": "valor_venda", "header": "valor_venda", "required": False, "example": "7,50"},
+                {"key": "valor_varejo", "header": "valor_varejo", "required": False, "example": "7,50"},
+                {"key": "valor_atacado", "header": "valor_atacado", "required": False, "example": "6,50"},
+                {"key": "quantidade_minima_atacado", "header": "quantidade_minima_atacado", "required": False, "example": "6"},
                 {"key": "data_validade", "header": "data_validade", "required": False, "example": "2026-12-31"},
                 {"key": "ativo", "header": "ativo", "required": False, "example": "SIM"},
             ],
@@ -249,7 +256,8 @@ class ImportExportService:
         }
 
     @classmethod
-    def importar_entidade(cls, entidade, arquivo, tenant_id, escopo, funcionario_id):
+    @atomic_operation
+    def importar_entidade(cls, entidade, arquivo, tenant_id, escopo, funcionario_id, pre_validar=False):
         TenantEntitlementService.validar_assinatura(tenant_id)
         cls._get_entity_config(entidade)
         cls._validate_operation(entidade, escopo, "import")
@@ -261,9 +269,12 @@ class ImportExportService:
         if not nome_arquivo.endswith((".xlsx", ".xlsm")):
             raise ValueError("Formato invalido. Use um arquivo .xlsx.")
 
-        workbook = load_workbook(arquivo, data_only=True)
+        workbook = load_workbook(arquivo, data_only=False, read_only=True)
         sheet = cls._get_data_sheet(workbook)
-        rows = list(sheet.iter_rows(values_only=True))
+        cells = list(islice(sheet.iter_rows(), cls.MAX_IMPORT_ROWS + 2))
+        formula_rows = {number for number, row in enumerate(cells, start=1) if any(cell.data_type == "f" for cell in row)}
+        rows = [tuple(cell.value for cell in row) for row in cells]
+        workbook.close()
 
         if not rows:
             raise ValueError("A planilha nao possui dados para importar.")
@@ -282,8 +293,12 @@ class ImportExportService:
             "criadas": 0,
             "atualizadas": 0,
             "erros": [],
+            "pre_validacao": bool(pre_validar),
+            "confirmado": False,
+            "linhas": [],
         }
 
+        batch = db.session.begin_nested()
         for excel_row_number, values in enumerate(rows[1:], start=2):
             if cls._row_is_empty(values):
                 continue
@@ -292,21 +307,32 @@ class ImportExportService:
             row = cls._extract_row(values, index_map)
 
             try:
-                action = cls._dispatch_import(entidade, row, tenant_id, escopo, funcionario_id)
-                ImportExportRepository.salvar()
+                if excel_row_number in formula_rows:
+                    raise ValueError("Formulas nao sao aceitas; informe valores na planilha.")
+                with db.session.begin_nested():
+                    action = cls._dispatch_import(entidade, row, tenant_id, escopo, funcionario_id)
+                    ImportExportRepository.flush()
+                summary["linhas"].append({"linha": excel_row_number, "acao": action, "valida": True})
                 summary["sucesso"] += 1
                 if action == "criado":
                     summary["criadas"] += 1
                 else:
                     summary["atualizadas"] += 1
             except Exception as exc:
-                ImportExportRepository.rollback()
                 summary["falhas"] += 1
+                summary["linhas"].append({"linha": excel_row_number, "valida": False})
                 summary["erros"].append({
                     "linha": excel_row_number,
                     "mensagem": public_error(exc),
                 })
 
+        if summary["falhas"] or pre_validar:
+            batch.rollback()
+            summary["validas"] = summary["sucesso"]
+            summary["sucesso"] = summary["criadas"] = summary["atualizadas"] = 0
+        else:
+            batch.commit()
+            summary["confirmado"] = True
         return summary
 
     @classmethod
@@ -351,15 +377,22 @@ class ImportExportService:
     def _import_produto(cls, row, tenant_id, escopo, funcionario_id):
         empresa = cls._resolve_empresa(tenant_id, escopo, row.get("empresa"))
         nome = cls._required_text(row.get("nome"), "nome")
-        codigo_barras = cls._optional_text(row.get("codigo_barras"))
+        codigo_barras = ProdutoService._normalize_barcode(row.get("codigo_barras"))
         descricao = cls._optional_text(row.get("descricao"))
         categoria_nome = cls._optional_text(row.get("categoria"))
         possui_ncm = cls._parse_bool(row.get("possui_ncm"), default=False)
-        ncm = cls._optional_text(row.get("ncm"))
+        ncm = ProdutoService._normalize_ncm(row.get("ncm"))
         estoque_atual = cls._parse_int(row.get("estoque_atual"), default=0, field_name="estoque_atual")
         estoque_minimo = cls._parse_int(row.get("estoque_minimo"), default=0, field_name="estoque_minimo")
         valor_compra = cls._parse_decimal(row.get("valor_compra"), default="0.00", field_name="valor_compra")
         valor_venda = cls._parse_decimal(row.get("valor_venda"), default="0.00", field_name="valor_venda")
+        valor_varejo = cls._parse_decimal(row.get("valor_varejo"), default=valor_venda, field_name="valor_varejo")
+        valor_atacado = cls._parse_decimal(row.get("valor_atacado"), default=valor_varejo, field_name="valor_atacado")
+        minimo_atacado = cls._parse_int(row.get("quantidade_minima_atacado"), default=1, field_name="quantidade_minima_atacado")
+        if valor_atacado > valor_varejo or minimo_atacado < 1:
+            raise ValueError("Atacado deve ser menor ou igual ao varejo e a quantidade minima deve ser positiva.")
+        if len(nome) > 150:
+            raise ValueError("Nome do produto deve ter ate 150 caracteres.")
         data_validade = cls._parse_optional_date(row.get("data_validade"), "data_validade")
         ativo = cls._parse_bool(row.get("ativo"), default=True)
 
@@ -368,7 +401,11 @@ class ImportExportService:
 
         categoria = None
         if categoria_nome:
+            if len(categoria_nome) > 100:
+                raise ValueError("Categoria deve ter ate 100 caracteres.")
             categoria = ImportExportRepository.buscar_categoria_produto_por_nome(tenant_id, categoria_nome)
+            if categoria and not categoria.ativo:
+                raise ValueError("Categoria inativa.")
             if not categoria:
                 categoria = CategoriaProduto(
                     tenant_id=tenant_id,
@@ -391,16 +428,19 @@ class ImportExportService:
         acao = "criado"
 
         if produto:
+            codigo_barras = codigo_barras or produto.codigo_barras or ProdutoService._gerar_codigo_barras(tenant_id)
             produto.nome = nome
             produto.descricao = descricao
             produto.codigo_barras = codigo_barras
             produto.categoria_id = categoria.id if categoria else None
             produto.possui_ncm = possui_ncm
             produto.ncm = ncm
-            produto.ativo = ativo
+            if ativo:
+                produto.ativo = True
             produto.atualizado_em = TimeService.now_utc_naive()
             acao = "atualizado"
         else:
+            codigo_barras = codigo_barras or ProdutoService._gerar_codigo_barras(tenant_id)
             produto = Produto(
                 tenant_id=tenant_id,
                 categoria_id=categoria.id if categoria else None,
@@ -410,7 +450,7 @@ class ImportExportService:
                 possui_ncm=possui_ncm,
                 ncm=ncm,
                 codigo_barras=codigo_barras,
-                ativo=ativo,
+                ativo=True,
                 criado_em=TimeService.now_utc_naive(),
                 atualizado_em=TimeService.now_utc_naive(),
             )
@@ -419,13 +459,16 @@ class ImportExportService:
 
         produto_empresa = ImportExportRepository.buscar_produto_empresa(tenant_id, produto.id, empresa.id)
         if produto_empresa:
-            produto_empresa.estoque_atual = estoque_atual
+            db.session.flush()
+            db.session.refresh(produto_empresa, with_for_update={"of": ProdutoEmpresa})
+            if row.get("estoque_atual") not in (None, "") and estoque_atual != produto_empresa.estoque_atual:
+                raise ValueError("Estoque de produto existente deve ser alterado por movimentacao.")
             produto_empresa.estoque_minimo = estoque_minimo
             produto_empresa.valor_compra = valor_compra
-            produto_empresa.valor_venda = valor_venda
-            produto_empresa.valor_varejo = valor_venda
-            produto_empresa.valor_atacado = valor_venda
-            produto_empresa.quantidade_minima_atacado = 1
+            produto_empresa.valor_venda = valor_varejo
+            produto_empresa.valor_varejo = valor_varejo
+            produto_empresa.valor_atacado = valor_atacado
+            produto_empresa.quantidade_minima_atacado = minimo_atacado
             produto_empresa.data_validade = data_validade
             produto_empresa.ativo = ativo
             produto_empresa.atualizado_em = TimeService.now_utc_naive()
@@ -435,19 +478,28 @@ class ImportExportService:
             tenant_id=tenant_id,
             produto_id=produto.id,
             empresa_id=empresa.id,
-            estoque_atual=estoque_atual,
+            estoque_atual=0,
             estoque_minimo=estoque_minimo,
             valor_compra=valor_compra,
-            valor_venda=valor_venda,
-            valor_varejo=valor_venda,
-            valor_atacado=valor_venda,
-            quantidade_minima_atacado=1,
+            valor_venda=valor_varejo,
+            valor_varejo=valor_varejo,
+            valor_atacado=valor_atacado,
+            quantidade_minima_atacado=minimo_atacado,
             data_validade=data_validade,
             ativo=ativo,
             criado_em=TimeService.now_utc_naive(),
             atualizado_em=TimeService.now_utc_naive(),
         )
         ImportExportRepository.adicionar(produto_empresa)
+        ImportExportRepository.flush()
+        if estoque_atual:
+            from app.services.estoque_service import EstoqueService
+            from app.models.db import TipoMovimentoEstoque, MotivoMovimentoEstoque
+            EstoqueService._registrar_movimento(
+                tenant_id, produto_empresa, TipoMovimentoEstoque.ENTRADA,
+                MotivoMovimentoEstoque.AJUSTE, estoque_atual, funcionario_id=funcionario_id,
+                observacao="Saldo inicial de importacao.",
+            )
         return acao
 
     @classmethod
@@ -457,7 +509,9 @@ class ImportExportService:
         empresa = cls._resolve_empresa(tenant_id, escopo, row.get("empresa"))
         role = cls._resolve_role(tenant_id, row.get("role"))
         nome = cls._required_text(row.get("nome"), "nome")
-        cpf = cls._required_text(row.get("cpf"), "cpf")
+        cpf = "".join(char for char in cls._required_text(row.get("cpf"), "cpf") if char.isdigit())
+        if len(cpf) != 11:
+            raise ValueError("CPF deve conter 11 digitos.")
         usuario = cls._required_text(row.get("usuario"), "usuario")
         senha = cls._optional_text(row.get("senha"))
         salario = cls._parse_decimal(row.get("salario"), default="0.00", field_name="salario")
@@ -664,6 +718,9 @@ class ImportExportService:
                 "estoque_minimo": int(item.estoque_minimo or 0),
                 "valor_compra": cls._decimal_to_excel(item.valor_compra),
                 "valor_venda": cls._decimal_to_excel(item.valor_venda),
+                "valor_varejo": cls._decimal_to_excel(item.valor_varejo),
+                "valor_atacado": cls._decimal_to_excel(item.valor_atacado),
+                "quantidade_minima_atacado": item.quantidade_minima_atacado,
                 "data_validade": item.data_validade.isoformat() if item.data_validade else "",
                 "ativo": cls._excel_bool(item.ativo),
             }
@@ -874,6 +931,9 @@ class ImportExportService:
     @classmethod
     def _build_header_map(cls, header_row, columns):
         actual_headers = [cls._normalize_header(value) for value in header_row]
+        headers = [value for value in actual_headers if value]
+        if len(headers) != len(set(headers)):
+            raise ValueError("Cabecalho possui colunas duplicadas.")
         index_map = {}
         missing_required = []
 
@@ -991,16 +1051,13 @@ class ImportExportService:
         if value in (None, ""):
             return default
 
-        if isinstance(value, int):
-            parsed = value
-        elif isinstance(value, float):
-            parsed = int(value)
-        else:
-            texto = str(value).strip().replace(".", "").replace(",", "")
-            try:
-                parsed = int(texto)
-            except ValueError:
-                raise ValueError(f"Valor invalido para {field_name}.")
+        try:
+            number = Decimal(str(value).strip())
+            if not number.is_finite() or number != number.to_integral_value():
+                raise ValueError()
+            parsed = int(number)
+        except (InvalidOperation, ValueError, OverflowError):
+            raise ValueError(f"Valor invalido para {field_name}.")
 
         if parsed < 0:
             raise ValueError(f"{field_name} nao pode ser negativo.")
@@ -1031,7 +1088,7 @@ class ImportExportService:
             except (InvalidOperation, ValueError):
                 raise ValueError(f"Valor invalido para {field_name}.")
 
-        if decimal_value < 0:
+        if not decimal_value.is_finite() or decimal_value < 0 or decimal_value >= Decimal("10000000000"):
             raise ValueError(f"{field_name} nao pode ser negativo.")
 
         return decimal_value.quantize(Decimal("0.01"))
@@ -1110,6 +1167,11 @@ class ImportExportService:
 
     @staticmethod
     def _workbook_to_bytes(workbook):
+        for sheet in workbook:
+            for row in sheet:
+                for cell in row:
+                    if isinstance(cell.value, str):
+                        cell.data_type = "s"
         buffer = BytesIO()
         workbook.save(buffer)
         buffer.seek(0)

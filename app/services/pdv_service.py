@@ -11,6 +11,11 @@ from app.services.financeiro_service import FinanceiroService
 from app.services.tenant_entitlement_service import TenantEntitlementService
 from app.services.tenant_bootstrap_service import TenantBootstrapService
 from app.services.time_service import TimeService
+from app.services.idempotency_service import idempotent
+from app.services.transaction_service import after_commit
+
+
+from app.services.transaction_service import atomic_operation
 
 
 class PdvService:
@@ -120,6 +125,8 @@ class PdvService:
         return PdvService.serializar_venda(venda)
 
     @staticmethod
+    @atomic_operation
+    @idempotent
     def criar_venda(data, tenant_id, escopo, funcionario_id):
         try:
             PdvService._garantir_base_operacional(tenant_id)
@@ -297,20 +304,23 @@ class PdvService:
 
             empresa_ids = AcessoEmpresaService.filtrar_empresa_ids(escopo)
             venda = PdvRepository.buscar_venda_por_id(venda.id, tenant_id, empresa_ids=empresa_ids)
-            email_venda = ClienteService.enviar_email_venda_automatica(
-                venda=venda,
-                tenant_id=tenant_id,
-                funcionario_id=funcionario_id,
-            )
-            venda = PdvRepository.buscar_venda_por_id(venda.id, tenant_id, empresa_ids=empresa_ids)
             dados_venda = PdvService.serializar_venda(venda)
-            dados_venda["email_venda"] = email_venda
+            dados_venda["email_venda"] = {"status": "PENDENTE"}
+            def notify_sale():
+                notification = ClienteService.enviar_email_venda_automatica(
+                    venda=venda, tenant_id=tenant_id, funcionario_id=funcionario_id,
+                )
+                if not data.get("idempotency_key"):
+                    dados_venda["email_venda"] = notification
+            after_commit(notify_sale)
             return dados_venda
         except Exception:
             PdvRepository.rollback()
             raise
 
     @staticmethod
+    @atomic_operation
+    @idempotent
     def cancelar_venda(venda_id, data, tenant_id, escopo, funcionario_id):
         try:
             empresa_ids = AcessoEmpresaService.filtrar_empresa_ids(escopo)
@@ -318,6 +328,8 @@ class PdvService:
             if not venda:
                 raise ValueError("Venda nao encontrada.")
 
+            if venda.status == StatusVenda.CANCELADA:
+                return PdvService.serializar_venda(venda)
             if venda.status != StatusVenda.FINALIZADA:
                 raise ValueError("Somente vendas finalizadas podem ser canceladas.")
 
@@ -379,6 +391,8 @@ class PdvService:
             raise
 
     @staticmethod
+    @atomic_operation
+    @idempotent
     def cancelar_item_venda(venda_id, item_id, data, tenant_id, escopo, funcionario_id):
         try:
             empresa_ids = AcessoEmpresaService.filtrar_empresa_ids(escopo)
@@ -771,7 +785,7 @@ class PdvService:
             raise ValueError(f"Informe {field_name}.")
 
         try:
-            valor = int(str(value).strip().replace(".", "").replace(",", ""))
+            valor = int(str(value).strip())
         except (TypeError, ValueError):
             raise ValueError(f"Valor invalido para {field_name}.")
 
@@ -790,7 +804,7 @@ class PdvService:
         except (InvalidOperation, ValueError):
             raise ValueError(f"Valor invalido para {field_name}.")
 
-        if valor <= 0:
+        if not valor.is_finite() or valor <= 0 or valor >= Decimal("10000000000"):
             raise ValueError(f"{field_name.capitalize()} deve ser maior que zero.")
 
         return valor.quantize(Decimal("0.01"))
@@ -805,7 +819,7 @@ class PdvService:
         except (InvalidOperation, ValueError):
             raise ValueError(f"Valor invalido para {field_name}.")
 
-        if valor < 0:
+        if not valor.is_finite() or valor < 0 or valor >= Decimal("10000000000"):
             raise ValueError(f"{field_name.capitalize()} nao pode ser negativo.")
 
         return valor.quantize(Decimal("0.01"))

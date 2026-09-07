@@ -106,6 +106,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 `);
             }
 
+            if (window.userHasPermission?.("criar_produto")) {
+                actions.push(`<button type="button" onclick="vincularProdutoEmpresa(${item.id})" class="text-sky-300 px-2 py-2" title="Vincular em outra empresa">Vincular</button>`);
+            }
+
             return `
                 <tr class="hover:bg-slate-800/40 transition">
                     <td class="px-5 py-4 align-middle">
@@ -365,13 +369,25 @@ function setupNcmToggle(checkboxId, inputId) {
     applyState();
 }
 
+async function vincularProdutoEmpresa(itemId) {
+    const item = produtoPage.items.find(record => record.id === itemId);
+    if (!item) return;
+    await produtoPage.openCreateModal();
+    produtoPage.fillForm("form-cadastro", {
+        ...produtoPage.config.mapItemToEditForm(item),
+        produto_id: item.produto_id,
+        empresa_id: "",
+    });
+    produtoPage.showMessage("Selecione a nova empresa e seus precos. O novo estoque inicia em zero; os dados gerais permanecem compartilhados.", "success");
+}
+
 function normalizeProdutoPayload(payload, isEdit) {
     const data = { ...payload };
 
     data.nome = (data.nome || "").trim();
     data.descricao = (data.descricao || "").trim();
     data.categoria_id = data.categoria_id || "";
-    data.empresa_id = data.empresa_id || "";
+    data.empresa_id = isEdit ? document.getElementById("edicao-empresa_id").value : (data.empresa_id || "");
     data.codigo_barras = normalizeDigits(data.codigo_barras, 50);
     data.possui_ncm = getCheckboxValue(isEdit ? "edicao-possui_ncm" : "cadastro-possui_ncm");
     data.ncm = normalizeNcm(data.ncm);

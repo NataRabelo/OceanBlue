@@ -3,6 +3,7 @@ from datetime import date
 from sqlalchemy.orm import joinedload
 
 from app.extensions import db
+from app.services.transaction_service import save
 from app.models.db import (
     CarteiraCliente,
     Cliente,
@@ -358,7 +359,7 @@ class ClienteRepository:
 
     @staticmethod
     def salvar():
-        db.session.commit()
+        save()
 
     @staticmethod
     def rollback():
