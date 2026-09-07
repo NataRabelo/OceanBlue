@@ -12,6 +12,8 @@ from app.models.db import Funcionario, ModoVisualEmpresa, PlatformOwner
 from app.routes import register_blueprints
 from app.security.headers import register_security_headers
 from app.security.jwt import get_auth_scope
+from app.security.errors import register_errors
+from app.security import isolation
 from app.seeds.seed import run_seed
 from app.services.acesso_empresa_service import AcessoEmpresaService
 
@@ -336,6 +338,8 @@ def register_context_processors(app: Flask) -> None:
 
 
 def register_commands(app: Flask) -> None:
+    from app.cli.security import register_security_commands
+    register_security_commands(app)
     @app.cli.command("seed")
     def seed_command():
         """Executa a carga inicial de dados do sistema."""
@@ -379,6 +383,7 @@ def create_app() -> Flask:
     configure_logging(app)
 
     register_extensions(app)
+    register_errors(app)
     register_security_headers(app)
     register_blueprints(app)
     register_context_processors(app)

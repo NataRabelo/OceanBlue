@@ -27,10 +27,12 @@ Veja [instalacao, testes e homologacao](docs/02-instalacao-e-ambiente/como-rodar
 2. Configure `DATABASE_URL`, `SECRET_KEY`, `JWT_SECRET_KEY` e `FIELD_ENCRYPTION_KEY`.
 3. Instale dependencias com `pip install --require-hashes -r requirements.txt` ou use Docker.
 4. Execute as migrations com `flask db upgrade`.
-5. Use `flask seed` apenas em demonstracao isolada: ele cria senhas fixas e nao e apropriado para producao.
+5. Configure `PLATFORM_OWNER_USER` e uma `PLATFORM_OWNER_PASSWORD` exclusiva (12 a 128 caracteres) e execute `flask seed`. Em producao, somente o dono da plataforma e criado; a senha nao e exibida.
 6. Inicie a aplicacao com `flask run` em desenvolvimento ou `docker compose up -d --build` em ambiente Docker.
 
 ## Documentacao
+
+Autenticacao, isolamento, cotas e rotacao: [guia de seguranca da Sprint 2](docs/02-instalacao-e-ambiente/seguranca-sprint-02.md).
 
 A nova base documental da Sprint 1 esta em `docs/`. O relatorio executivo esta em `relatorio-sprint-1/resumo-executivo.md`.
 

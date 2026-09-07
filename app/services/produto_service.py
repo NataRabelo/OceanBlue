@@ -2,6 +2,7 @@ from datetime import datetime
 from decimal import Decimal, InvalidOperation
 
 from app.models.db import Produto, ProdutoEmpresa
+from app.extensions import db
 from app.repositorys.produto_repository import ProdutoRepository
 from app.services.acesso_empresa_service import AcessoEmpresaService
 from app.services.tenant_entitlement_service import TenantEntitlementService
@@ -102,7 +103,7 @@ class ProdutoService:
             ativo=ativo
         )
         ProdutoRepository.adicionar(produto)
-        ProdutoRepository.salvar()
+        db.session.flush()
 
         produto_empresa = ProdutoEmpresa(
             tenant_id=tenant_id,

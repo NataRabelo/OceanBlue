@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, timedelta
 import enum
 
 from sqlalchemy import CheckConstraint, Index, UniqueConstraint
@@ -220,7 +220,7 @@ class Tenant(db.Model):
     limite_funcionarios = db.Column(db.Integer, nullable=False, default=5)
     limite_produtos = db.Column(db.Integer, nullable=False, default=500)
     limite_vendas_mes = db.Column(db.Integer, nullable=False, default=1500)
-    trial_ate = db.Column(db.Date, nullable=True)
+    trial_ate = db.Column(db.Date, nullable=True, default=lambda: TimeService.today_br() + timedelta(days=14))
     criado_em = db.Column(db.DateTime, nullable=False, default=TimeService.now_utc_naive)
     atualizado_em = db.Column(db.DateTime, nullable=False, default=TimeService.now_utc_naive, onupdate=TimeService.now_utc_naive)
 
@@ -265,6 +265,7 @@ class PlatformOwner(db.Model):
     nome = db.Column(db.String(150), nullable=False)
     usuario = db.Column(db.String(80), nullable=False, unique=True)
     senha_hash = db.Column(db.String(255), nullable=False)
+    session_version = db.Column(db.Integer, nullable=False, default=1, server_default="1")
     ativo = db.Column(db.Boolean, nullable=False, default=True)
     criado_em = db.Column(db.DateTime, nullable=False, default=TimeService.now_utc_naive)
     atualizado_em = db.Column(db.DateTime, nullable=False, default=TimeService.now_utc_naive, onupdate=TimeService.now_utc_naive)
@@ -341,6 +342,7 @@ class Funcionario(ModeloBase):
     cpf = db.Column(db.String(14), nullable=False)
     usuario = db.Column(db.String(80), nullable=False)
     senha_hash = db.Column(db.String(255), nullable=False)
+    session_version = db.Column(db.Integer, nullable=False, default=1, server_default="1")
     salario = db.Column(db.Numeric(12, 2), nullable=False, default=0)
     meta = db.Column(db.Numeric(12, 2), nullable=False, default=0)
     ativo = db.Column(db.Boolean, nullable=False, default=True)
@@ -900,7 +902,7 @@ class ConfiguracaoAsaasEmpresa(ModeloBase):
 
     empresa_id = db.Column(db.Integer, db.ForeignKey("empresas.id"), nullable=False)
     ambiente = db.Column(db.String(20), nullable=False, default="sandbox")
-    api_key = db.Column(db.String(500), nullable=True)
+    api_key = db.Column(db.Text, nullable=True)
     wallet_id = db.Column(db.String(120), nullable=True)
     provider_codigo = db.Column(db.String(80), nullable=False, default="asaas")
     status_configuracao = db.Column(db.String(30), nullable=False, default="PENDENTE")
@@ -908,7 +910,7 @@ class ConfiguracaoAsaasEmpresa(ModeloBase):
     ultima_validacao_status = db.Column(db.String(30), nullable=True)
     ultima_validacao_mensagem = db.Column(db.Text, nullable=True)
     webhook_url = db.Column(db.String(255), nullable=True)
-    webhook_auth_token = db.Column(db.String(500), nullable=True)
+    webhook_auth_token = db.Column(db.Text, nullable=True)
     webhook_ativo = db.Column(db.Boolean, nullable=False, default=False)
     dias_apos_vencimento_cancelamento = db.Column(db.Integer, nullable=True)
     notificacoes_desabilitadas = db.Column(db.Boolean, nullable=False, default=True)
@@ -1118,16 +1120,16 @@ class ConfiguracaoClienteEmpresa(ModeloBase):
     smtp_host = db.Column(db.String(180), nullable=True)
     smtp_port = db.Column(db.Integer, nullable=False, default=587)
     smtp_usuario = db.Column(db.String(150), nullable=True)
-    smtp_senha = db.Column(db.String(255), nullable=True)
+    smtp_senha = db.Column(db.Text, nullable=True)
     smtp_tls = db.Column(db.Boolean, nullable=False, default=True)
     smtp_ssl = db.Column(db.Boolean, nullable=False, default=False)
     whatsapp_habilitado = db.Column(db.Boolean, nullable=False, default=False)
     whatsapp_api_url = db.Column(db.String(255), nullable=True)
-    whatsapp_token = db.Column(db.String(255), nullable=True)
+    whatsapp_token = db.Column(db.Text, nullable=True)
     whatsapp_remetente = db.Column(db.String(80), nullable=True)
     sms_habilitado = db.Column(db.Boolean, nullable=False, default=False)
     sms_api_url = db.Column(db.String(255), nullable=True)
-    sms_token = db.Column(db.String(255), nullable=True)
+    sms_token = db.Column(db.Text, nullable=True)
     sms_remetente = db.Column(db.String(80), nullable=True)
     request_timeout_segundos = db.Column(db.Integer, nullable=False, default=15)
 
@@ -1176,11 +1178,11 @@ class ConfiguracaoFiscalEmpresa(ModeloBase):
     certificado_caminho = db.Column(db.String(255), nullable=True)
     certificado_senha_env = db.Column(db.String(120), nullable=True)
     csc_id = db.Column(db.String(20), nullable=True)
-    csc_token = db.Column(db.String(255), nullable=True)
+    csc_token = db.Column(db.Text, nullable=True)
     integrador_provider = db.Column(db.String(80), nullable=False, default="mock_nfce")
     integrador_credencial_env = db.Column(db.String(120), nullable=True)
-    focus_token_homologacao = db.Column(db.String(500), nullable=True)
-    focus_token_producao = db.Column(db.String(500), nullable=True)
+    focus_token_homologacao = db.Column(db.Text, nullable=True)
+    focus_token_producao = db.Column(db.Text, nullable=True)
     focus_cnpj_emitente = db.Column(db.String(14), nullable=True)
     focus_status_configuracao = db.Column(db.String(30), nullable=False, default="PENDENTE")
     focus_ultima_validacao_em = db.Column(db.DateTime, nullable=True)

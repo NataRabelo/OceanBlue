@@ -16,8 +16,9 @@
   window.fetch = function secureFetch(input, init) {
     const options = init ? { ...init } : {};
     const method = options.method || (input && input.method) || "GET";
+    const targetUrl = new URL(typeof input === "string" || input instanceof URL ? input : input.url, window.location.href);
 
-    if (isUnsafeMethod(method)) {
+    if (targetUrl.origin === window.location.origin && isUnsafeMethod(method)) {
       const csrfToken = decodeURIComponent(getCookie("csrf_access_token"));
       if (csrfToken) {
         const headers = new Headers(options.headers || (input && input.headers) || {});

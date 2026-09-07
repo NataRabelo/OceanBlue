@@ -19,7 +19,9 @@ from app.models.db import (
     TipoDesconto,
 )
 from app.repositorys.import_export_repository import ImportExportRepository
-from app.security.password import hash_password
+from app.security.password import hash_password, validate_password
+from app.security.errors import public_error
+from app.services.tenant_entitlement_service import TenantEntitlementService
 from app.services.acesso_empresa_service import AcessoEmpresaService
 from app.services.time_service import TimeService
 
@@ -76,7 +78,7 @@ class ImportExportService:
                 {"key": "nome", "header": "nome", "required": True, "example": "Maria Silva"},
                 {"key": "cpf", "header": "cpf", "required": True, "example": "123.456.789-10"},
                 {"key": "usuario", "header": "usuario", "required": True, "example": "maria.silva"},
-                {"key": "senha", "header": "senha", "required": False, "example": "123456"},
+                {"key": "senha", "header": "senha", "required": False, "example": ""},
                 {"key": "salario", "header": "salario", "required": False, "example": "2500,00"},
                 {"key": "meta", "header": "meta", "required": False, "example": "18000,00"},
                 {"key": "ativo", "header": "ativo", "required": False, "example": "SIM"},
@@ -248,6 +250,7 @@ class ImportExportService:
 
     @classmethod
     def importar_entidade(cls, entidade, arquivo, tenant_id, escopo, funcionario_id):
+        TenantEntitlementService.validar_assinatura(tenant_id)
         cls._get_entity_config(entidade)
         cls._validate_operation(entidade, escopo, "import")
 
@@ -301,7 +304,7 @@ class ImportExportService:
                 summary["falhas"] += 1
                 summary["erros"].append({
                     "linha": excel_row_number,
-                    "mensagem": str(exc),
+                    "mensagem": public_error(exc),
                 })
 
         return summary
@@ -480,11 +483,13 @@ class ImportExportService:
             funcionario.ativo = ativo
             funcionario.atualizado_em = TimeService.now_utc_naive()
             if senha:
+                validate_password(senha)
                 funcionario.senha_hash = hash_password(senha)
             acao = "atualizado"
         else:
             if not senha:
                 raise ValueError("Informe a senha para novos funcionarios.")
+            validate_password(senha)
 
             funcionario = Funcionario(
                 tenant_id=tenant_id,
@@ -753,7 +758,7 @@ class ImportExportService:
             sheet["A10"] = "Observacao"
             sheet["A10"].fill = cls.SECTION_FILL
             sheet["A10"].font = cls.HEADER_FONT
-            sheet["A11"] = "A senha pode ficar em branco apenas para atualizar funcionarios ja existentes."
+            sheet["A11"] = "Novos funcionarios exigem senha exclusiva de 12 a 128 caracteres. Em atualizacoes, deixe em branco para manter a atual."
 
         sheet["D3"] = "Colunas"
         sheet["D3"].fill = cls.SECTION_FILL
@@ -920,6 +925,10 @@ class ImportExportService:
 
     @classmethod
     def _validate_operation(cls, entidade, escopo, operation):
+        if entidade == "funcionarios" and operation == "import" and (
+            not AcessoEmpresaService.eh_admin(escopo) or AcessoEmpresaService.filtrar_empresa_ids(escopo) is not None
+        ):
+            raise PermissionError("Administracao de acessos restrita ao administrador do tenant.")
         config = cls._get_entity_config(entidade)
         permission_codes = [
             cls.GENERIC_OPERATION_PERMISSIONS[operation],

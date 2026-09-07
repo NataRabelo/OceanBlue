@@ -1,6 +1,6 @@
 from app.models.db import Empresa, Funcionario, FuncionarioEmpresa, ModoVisualEmpresa, Tenant, TipoEmpresa
 from app.repositorys.platform_repository import PlatformRepository
-from app.security.password import hash_password
+from app.security.password import hash_password, validate_password
 from app.security.permissions import ADMIN_ROLE_CODE
 from app.services.audit_service import AuditService
 from app.services.saas_plan_service import SaasPlanService
@@ -203,13 +203,8 @@ class PlatformService:
                 codigo=data.get("plano_codigo") or tenant.plano_codigo,
                 status=status,
             )
-            if "trial_ate" in data:
-                if data.get("trial_ate"):
-                    tenant.trial_ate = PlatformService._to_date(data.get("trial_ate"), "trial ate")
-                elif status != "trial":
-                    tenant.trial_ate = None
-            elif status != "trial":
-                tenant.trial_ate = None
+            if data.get("trial_ate"):
+                tenant.trial_ate = PlatformService._to_date(data.get("trial_ate"), "trial ate")
 
             for field_name, attr_name in (
                 ("limite_empresas", "limite_empresas"),
@@ -268,6 +263,7 @@ class PlatformService:
         nome = (data.get("nome") or "").strip()
         usuario = (data.get("usuario") or "").strip()
         senha = (data.get("senha") or "").strip()
+        validate_password(senha)
         cpf = PlatformService._normalizar_cpf(data.get("cpf"))
 
         if not nome:
@@ -347,7 +343,7 @@ class PlatformService:
         if status not in {"active", "trial"}:
             bloqueado = True
             motivo = "Assinatura inativa ou suspensa."
-        elif status == "trial" and trial_ate and trial_ate < hoje:
+        elif status == "trial" and (not trial_ate or trial_ate < hoje):
             bloqueado = True
             motivo = "Periodo de teste expirado."
 

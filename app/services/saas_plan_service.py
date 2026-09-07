@@ -44,15 +44,21 @@ class SaasPlanService:
     @classmethod
     def apply_plan(cls, tenant, codigo=None, status=None, trial_days=14):
         plan = cls.get_plan(codigo or tenant.plano_codigo)
+        status = (status or getattr(tenant, "assinatura_status", None) or "trial").strip().lower()
+        if status not in {"active", "trial", "past_due", "suspended", "canceled"}:
+            raise ValueError("Status de assinatura invalido.")
+        if not 1 <= trial_days <= 30:
+            raise ValueError("Duracao de trial invalida.")
         tenant.plano_codigo = plan["codigo"]
-        tenant.assinatura_status = status or getattr(tenant, "assinatura_status", None) or "trial"
+        tenant.assinatura_status = status
         tenant.limite_empresas = plan["limite_empresas"]
         tenant.limite_funcionarios = plan["limite_funcionarios"]
         tenant.limite_produtos = plan["limite_produtos"]
         tenant.limite_vendas_mes = plan["limite_vendas_mes"]
 
         if tenant.assinatura_status == "trial" and not tenant.trial_ate:
-            tenant.trial_ate = (TimeService.now_utc_naive() + timedelta(days=trial_days)).date()
+            created_at = TimeService.to_brasilia(tenant.criado_em)
+            tenant.trial_ate = (created_at.date() if created_at else TimeService.today_br()) + timedelta(days=trial_days)
 
         return tenant
 

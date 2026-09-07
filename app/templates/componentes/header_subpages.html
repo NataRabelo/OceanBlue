@@ -77,9 +77,13 @@
             </a>
             {% endif %}
 
-            <a href="/logout" class="flex items-center gap-3 px-4 py-2.5 text-sm text-rose-400 hover:bg-rose-500/10 transition-colors mt-1 font-medium">
+            <a href="/senha" class="block px-4 py-3">Alterar senha</a>
+            <form action="/logout" method="POST">
+                <input type="hidden" name="csrf_token" value="{{ request.cookies.get('csrf_access_token', '') }}">
+                <button type="submit" class="flex items-center gap-3 px-4 py-2.5 text-sm text-rose-400 hover:bg-rose-500/10 transition-colors mt-1 font-medium">
                 <i data-lucide="log-out" class="w-4 h-4"></i> Sair do Sistema
-            </a>
+            </button>
+            </form>
         </div>
     </div>
 </header>

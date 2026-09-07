@@ -11,7 +11,7 @@ class SecurityHeadersHttpsTestCase(unittest.TestCase):
         self.app.config["FORCE_HTTPS"] = True
         register_security_headers(self.app)
 
-        @self.app.route("/healthcheck")
+        @self.app.route("/api/health")
         def healthcheck():
             return "ok"
 
@@ -19,7 +19,7 @@ class SecurityHeadersHttpsTestCase(unittest.TestCase):
 
     def test_loopback_http_request_bypasses_https_enforcement_for_internal_healthcheck(self):
         response = self.client.get(
-            "/healthcheck",
+            "/api/health",
             environ_overrides={"REMOTE_ADDR": "127.0.0.1", "wsgi.url_scheme": "http"},
         )
 
@@ -28,7 +28,7 @@ class SecurityHeadersHttpsTestCase(unittest.TestCase):
 
     def test_external_http_request_still_requires_https(self):
         response = self.client.get(
-            "/healthcheck",
+            "/api/health",
             environ_overrides={"REMOTE_ADDR": "10.0.0.50", "wsgi.url_scheme": "http"},
         )
 
@@ -37,11 +37,20 @@ class SecurityHeadersHttpsTestCase(unittest.TestCase):
 
     def test_forwarded_for_loopback_does_not_bypass_https_enforcement(self):
         response = self.client.get(
-            "/healthcheck",
+            "/api/health",
             headers={"X-Forwarded-For": "127.0.0.1"},
             environ_overrides={"REMOTE_ADDR": "10.0.0.50", "wsgi.url_scheme": "http"},
         )
 
+        self.assertEqual(response.status_code, 403)
+
+    def test_forwarded_proto_is_not_trusted_without_proxyfix(self):
+        response = self.client.get("/api/health", headers={"X-Forwarded-Proto": "https"},
+                                   environ_overrides={"REMOTE_ADDR": "10.0.0.50"})
+        self.assertEqual(response.status_code, 403)
+
+    def test_loopback_cannot_bypass_https_on_login(self):
+        response = self.client.get("/login", environ_overrides={"REMOTE_ADDR": "127.0.0.1"})
         self.assertEqual(response.status_code, 403)
 
 

@@ -1,3 +1,4 @@
+from app.security.integrations import require_real_integration
 import hashlib
 import base64
 import json
@@ -159,6 +160,7 @@ class FocusNFeProvider(FiscalProvider):
         return {key: value for key, value in payload.items() if value not in (None, "")}
 
     def _request(self, method, path, payload):
+        require_real_integration()
         token = self._token()
         body = json.dumps(payload).encode("utf-8") if payload is not None else None
         auth = base64.b64encode(f"{token}:".encode("utf-8")).decode("ascii")
@@ -195,17 +197,7 @@ class FocusNFeProvider(FiscalProvider):
         return token
 
     def _salvar_url(self, nota, url, suffix):
-        if not url:
-            return None
-        base_dir = _storage_base() / "tenants" / str(nota.tenant_id) / nota.ambiente.value.lower() / "fiscal" / "nfce" / TimeService.now_utc_naive().strftime("%Y/%m")
-        base_dir.mkdir(parents=True, exist_ok=True)
-        path = base_dir / f"nfce_{nota.serie}_{nota.numero}_{suffix}"
-        try:
-            with request.urlopen(url, timeout=self.timeout) as response:
-                path.write_bytes(response.read())
-            return str(path)
-        except Exception:
-            return None
+        raise PermissionError("Download fiscal real desativado nesta versao.")
 
 
 class MockIntegradorFiscalProvider(FiscalProvider):
@@ -269,15 +261,8 @@ class MockIntegradorFiscalProvider(FiscalProvider):
 
 
 def get_fiscal_provider(_configuracao=None):
-    if (
-        _configuracao
-        and getattr(_configuracao, "integrador_provider", None) == "focus_nfe"
-        and (
-            getattr(_configuracao, "focus_token_homologacao", None)
-            or getattr(_configuracao, "focus_token_producao", None)
-        )
-    ):
-        return FocusNFeProvider(_configuracao)
+    if _configuracao and getattr(_configuracao, "integrador_provider", None) == "focus_nfe":
+        raise PermissionError("Integracao fiscal real desativada nesta versao.")
     return MockIntegradorFiscalProvider()
 
 

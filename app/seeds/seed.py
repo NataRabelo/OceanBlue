@@ -3,16 +3,19 @@ import os
 
 from app.models.db import Empresa, Funcionario, FuncionarioEmpresa, PlatformOwner, Tenant, TipoEmpresa
 from app.security.password import hash_password
+from app.security.password import validate_password
+from flask import current_app
 from app.services.tenant_bootstrap_service import TenantBootstrapService
 
 
 def _garantir_platform_owner():
     owner_name = os.getenv("PLATFORM_OWNER_NAME", "Owner Plataforma")
     owner_user = os.getenv("PLATFORM_OWNER_USER", "platform")
-    owner_password = os.getenv("PLATFORM_OWNER_PASSWORD", "123456")
+    owner_password = os.getenv("PLATFORM_OWNER_PASSWORD")
 
     owner = PlatformOwner.query.filter_by(usuario=owner_user).first()
     if not owner:
+        validate_password(owner_password)
         owner = PlatformOwner(
             nome=owner_name,
             usuario=owner_user,
@@ -23,7 +26,6 @@ def _garantir_platform_owner():
         db.session.commit()
         print("Platform owner criado")
         print(f"Usuario plataforma: {owner_user}")
-        print(f"Senha plataforma: {owner_password}")
     else:
         print("Platform owner ja existe")
 
@@ -31,12 +33,16 @@ def _garantir_platform_owner():
 def run_seed():
     print("Iniciando seed...")
     _garantir_platform_owner()
+    if not current_app.debug or os.getenv("SEED_DEMO", "").lower() != "true":
+        return
+    demo_password = os.getenv("SEED_DEMO_PASSWORD")
+    validate_password(demo_password)
 
     tenant_nome = "BlueOcean"
     tenant = Tenant.query.filter_by(nome=tenant_nome).first()
 
     if not tenant:
-        tenant = Tenant(nome=tenant_nome)
+        tenant = Tenant(nome=tenant_nome, limite_empresas=3)
         db.session.add(tenant)
         db.session.commit()
         print("Tenant criado")
@@ -108,7 +114,7 @@ def run_seed():
             nome="Administrador",
             cpf="123.456.789-00",
             usuario=usuario_admin,
-            senha_hash=hash_password("123456"),
+            senha_hash=hash_password(demo_password),
             ativo=True
         )
         db.session.add(funcionario)
@@ -116,7 +122,6 @@ def run_seed():
 
         print("Funcionario admin criado")
         print("Usuario: admin")
-        print("Senha: 123456")
     else:
         if funcionario.role_id != role_admin.id:
             funcionario.role_id = role_admin.id

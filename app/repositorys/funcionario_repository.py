@@ -59,7 +59,10 @@ class FuncionarioRepository:
             empresa_id
             for (empresa_id,) in (
                 db.session.query(FuncionarioEmpresa.empresa_id)
+                .join(Empresa, Empresa.id == FuncionarioEmpresa.empresa_id)
                 .filter(
+                    Empresa.tenant_id == tenant_id,
+                    Empresa.ativo.is_(True),
                     FuncionarioEmpresa.funcionario_id == funcionario_id,
                     FuncionarioEmpresa.tenant_id == tenant_id,
                     FuncionarioEmpresa.ativo.is_(True)
@@ -188,6 +191,8 @@ class FuncionarioRepository:
 
     @staticmethod
     def busca_funcionario_por_usuario(usuario: str, tenant_id=None):
+        if tenant_id is None:
+            raise ValueError("Tenant obrigatorio para localizar usuario.")
         query = (
             Funcionario.query
             .options(

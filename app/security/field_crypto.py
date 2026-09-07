@@ -1,75 +1,69 @@
 import base64
 import hashlib
 import hmac
-import os
 
+from cryptography.fernet import Fernet, InvalidToken
 from flask import current_app
+
+from app.security.secrets import load_field_keys
 
 
 class FieldCrypto:
-    PREFIX = "enc:v1:"
-    NONCE_SIZE = 16
-    MAC_SIZE = 32
+    PREFIX = "enc:v2:"
+    LEGACY_PREFIX = "enc:v1:"
 
     @classmethod
     def encrypt(cls, value):
         if value in (None, ""):
             return None
-
         text = str(value)
-        if text.startswith(cls.PREFIX):
-            return text
-
-        key = cls._key()
-        nonce = os.urandom(cls.NONCE_SIZE)
-        plaintext = text.encode("utf-8")
-        ciphertext = cls._xor(plaintext, cls._keystream(key, nonce, len(plaintext)))
-        mac = hmac.new(key, nonce + ciphertext, hashlib.sha256).digest()
-        payload = base64.urlsafe_b64encode(nonce + mac + ciphertext).decode("ascii")
-        return cls.PREFIX + payload
+        if text.startswith("enc:"):
+            text = cls.decrypt(text)
+        keys, active = cls._keys()
+        payload = cls._fernet(keys[active]).encrypt(text.encode()).decode()
+        return f"{cls.PREFIX}{active}:{payload}"
 
     @classmethod
     def decrypt(cls, value):
         if value in (None, ""):
             return None
-
         text = str(value)
-        if not text.startswith(cls.PREFIX):
+        try:
+            if text.startswith(cls.PREFIX):
+                identifier, token = text[len(cls.PREFIX):].split(":", 1)
+                keys, active = cls._keys()
+                return cls._fernet(keys[identifier]).decrypt(token.encode()).decode()
+            if text.startswith(cls.LEGACY_PREFIX):
+                raw = base64.b64decode(text[len(cls.LEGACY_PREFIX):], altchars=b"-_", validate=True)
+                if len(raw) < 48:
+                    raise ValueError()
+                nonce, mac, ciphertext = raw[:16], raw[16:48], raw[48:]
+                key = hashlib.sha256(current_app.config["FIELD_ENCRYPTION_KEY"].encode()).digest()
+                if not hmac.compare_digest(mac, hmac.new(key, nonce + ciphertext, hashlib.sha256).digest()):
+                    raise ValueError()
+                stream = bytearray()
+                counter = 0
+                while len(stream) < len(ciphertext):
+                    stream.extend(hmac.new(key, nonce + counter.to_bytes(8, "big"), hashlib.sha256).digest())
+                    counter += 1
+                return bytes(left ^ right for left, right in zip(ciphertext, stream)).decode()
+            if text.startswith("enc:"):
+                raise ValueError()
             return text
-
-        raw = base64.urlsafe_b64decode(text[len(cls.PREFIX):].encode("ascii"))
-        nonce = raw[:cls.NONCE_SIZE]
-        mac = raw[cls.NONCE_SIZE:cls.NONCE_SIZE + cls.MAC_SIZE]
-        ciphertext = raw[cls.NONCE_SIZE + cls.MAC_SIZE:]
-        key = cls._key()
-        expected_mac = hmac.new(key, nonce + ciphertext, hashlib.sha256).digest()
-        if not hmac.compare_digest(mac, expected_mac):
-            raise ValueError("Campo sensivel criptografado com assinatura invalida.")
-
-        plaintext = cls._xor(ciphertext, cls._keystream(key, nonce, len(ciphertext)))
-        return plaintext.decode("utf-8")
+        except (InvalidToken, ValueError, KeyError, UnicodeError):
+            raise ValueError("Campo sensivel invalido ou chave indisponivel.") from None
 
     @classmethod
     def is_encrypted(cls, value):
-        return isinstance(value, str) and value.startswith(cls.PREFIX)
+        return isinstance(value, str) and value.startswith("enc:")
 
     @staticmethod
-    def _key():
-        secret = current_app.config.get("FIELD_ENCRYPTION_KEY") if current_app else os.getenv("FIELD_ENCRYPTION_KEY")
-        if not secret:
-            raise RuntimeError("FIELD_ENCRYPTION_KEY nao configurada.")
-        return hashlib.sha256(str(secret).encode("utf-8")).digest()
+    def _fernet(secret):
+        return Fernet(base64.urlsafe_b64encode(hashlib.sha256(secret.encode()).digest()))
 
     @staticmethod
-    def _keystream(key, nonce, length):
-        output = bytearray()
-        counter = 0
-        while len(output) < length:
-            counter_bytes = counter.to_bytes(8, "big")
-            output.extend(hmac.new(key, nonce + counter_bytes, hashlib.sha256).digest())
-            counter += 1
-        return bytes(output[:length])
-
-    @staticmethod
-    def _xor(left, right):
-        return bytes(a ^ b for a, b in zip(left, right))
+    def _keys():
+        config = current_app.config
+        if config.get("FIELD_ENCRYPTION_KEYS") or not current_app.debug and not current_app.testing:
+            return load_field_keys(config)
+        return {"primary": config["FIELD_ENCRYPTION_KEY"]}, "primary"

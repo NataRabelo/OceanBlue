@@ -9,6 +9,7 @@ from flask import render_template
 
 from app.models.db import CanalMensagemCliente
 from app.security.field_crypto import FieldCrypto
+from app.security.outbound import NoRedirect, validate_host, validate_webhook
 
 
 class ComunicacaoService:
@@ -64,6 +65,9 @@ class ComunicacaoService:
             raise ValueError("Host SMTP nao configurado.")
         if not configuracao.email_remetente:
             raise ValueError("Email remetente nao configurado.")
+        if not configuracao.smtp_ssl and not configuracao.smtp_tls:
+            raise PermissionError("O envio SMTP exige TLS.")
+        validate_host(configuracao.smtp_host, int(configuracao.smtp_port or 587))
 
         mensagem = EmailMessage()
         remetente_nome = (configuracao.email_remetente_nome or "").strip()
@@ -135,7 +139,6 @@ class ComunicacaoService:
 
     @staticmethod
     def _formatar_erro_autenticacao_smtp(configuracao, exc):
-        detalhe = exc.smtp_error.decode("utf-8", errors="ignore") if isinstance(exc.smtp_error, bytes) else str(exc.smtp_error)
         host = (configuracao.smtp_host or "").strip().lower()
 
         if host == "smtp.gmail.com":
@@ -143,10 +146,9 @@ class ComunicacaoService:
                 "Falha de autenticacao no Gmail SMTP. "
                 "Use uma senha de app do Google com a verificacao em duas etapas ativa. "
                 "Se a senha foi copiada no formato 'xxxx xxxx xxxx xxxx', remova os espacos. "
-                f"Detalhe: {detalhe or exc}"
             ).strip()
 
-        return f"Falha de autenticacao SMTP: {detalhe or exc}".strip()
+        return "Falha de autenticacao SMTP. Confira as credenciais configuradas."
 
     @staticmethod
     def _renderizar_email_generico_html(configuracao, destinatario, assunto, conteudo, cliente=None):
@@ -202,11 +204,13 @@ class ComunicacaoService:
         if token:
             headers["Authorization"] = f"Bearer {token}"
 
+        validate_webhook(endpoint)
         requisicao = request.Request(endpoint, data=body, headers=headers, method="POST")
         timeout = max(int(configuracao.request_timeout_segundos or 15), 1)
 
         try:
-            with request.urlopen(requisicao, timeout=timeout) as response:
+            opener = request.build_opener(request.ProxyHandler({}), NoRedirect())
+            with opener.open(requisicao, timeout=timeout) as response:
                 resposta = response.read().decode("utf-8", errors="ignore")
                 return {
                     "canal": canal.value,
@@ -215,12 +219,11 @@ class ComunicacaoService:
                     "resposta": resposta or f"Mensagem enviada via webhook de {canal.value.lower()}.",
                 }
         except error.HTTPError as exc:
-            corpo = exc.read().decode("utf-8", errors="ignore")
             raise ValueError(
-                f"Falha ao enviar {canal.value.lower()}: HTTP {exc.code}. {corpo}".strip()
-            ) from exc
+                f"Falha ao enviar {canal.value.lower()}: HTTP {exc.code}."
+            ) from None
         except error.URLError as exc:
-            raise ValueError(f"Falha ao conectar ao servidor de {canal.value.lower()}: {exc.reason}.") from exc
+            raise ValueError(f"Falha ao conectar ao servidor de {canal.value.lower()}.") from None
 
     @staticmethod
     def _to_canal(value):

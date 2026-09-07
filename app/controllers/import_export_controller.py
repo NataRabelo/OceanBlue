@@ -1,3 +1,4 @@
+from app.security.errors import public_error
 from io import BytesIO
 
 from flask import Blueprint, flash, jsonify, redirect, render_template, request, send_file, url_for
@@ -8,6 +9,7 @@ from app.security.jwt import get_auth_scope
 from app.services.acesso_empresa_service import AcessoEmpresaService
 from app.services.import_export_service import ImportExportService
 from app.services.tenant_bootstrap_service import TenantBootstrapService
+from app.services.tenant_entitlement_service import TenantEntitlementService
 
 import_export_bp = Blueprint("import_export", __name__)
 
@@ -19,9 +21,7 @@ def _resolver_contexto(required_permission="visualizar_importacao_exportacao"):
     tenant_id = get_jwt().get("tenant_id")
     funcionario_id = int(get_jwt_identity())
 
-    TenantBootstrapService.garantir_permissoes_e_roles(tenant_id)
-    TenantBootstrapService.garantir_cadastros_operacionais(tenant_id)
-    db.session.commit()
+    TenantEntitlementService.validar_assinatura(tenant_id)
 
     escopo = AcessoEmpresaService.obter_escopo(funcionario_id, tenant_id)
     if required_permission and not AcessoEmpresaService.possui_permissao(escopo, required_permission):
@@ -37,10 +37,10 @@ def pagina():
         _resolver_contexto()
         return render_template("modulos/import_export/import_export.html")
     except PermissionError as exc:
-        flash(str(exc), "warning")
+        flash(public_error(exc), "warning")
         return redirect(url_for("main.home"))
     except Exception as exc:
-        flash(f"Erro ao abrir o modulo de importacao e exportacao: {exc}", "warning")
+        flash(public_error(exc), "warning")
         return redirect(url_for("main.home"))
 
 
@@ -53,10 +53,10 @@ def contexto():
         return jsonify({"success": True, "data": dados})
     except PermissionError as exc:
         db.session.rollback()
-        return jsonify({"success": False, "message": str(exc)}), 403
+        return jsonify({"success": False, "message": public_error(exc)}), 403
     except Exception as exc:
         db.session.rollback()
-        return jsonify({"success": False, "message": str(exc)}), 400
+        return jsonify({"success": False, "message": public_error(exc)}), 400
 
 
 @import_export_bp.route("/template", methods=["GET"])
@@ -75,10 +75,10 @@ def baixar_template():
         )
     except PermissionError as exc:
         db.session.rollback()
-        return jsonify({"success": False, "message": str(exc)}), 403
+        return jsonify({"success": False, "message": public_error(exc)}), 403
     except Exception as exc:
         db.session.rollback()
-        return jsonify({"success": False, "message": str(exc)}), 400
+        return jsonify({"success": False, "message": public_error(exc)}), 400
 
 
 @import_export_bp.route("/exportar", methods=["GET"])
@@ -98,10 +98,10 @@ def exportar():
         )
     except PermissionError as exc:
         db.session.rollback()
-        return jsonify({"success": False, "message": str(exc)}), 403
+        return jsonify({"success": False, "message": public_error(exc)}), 403
     except Exception as exc:
         db.session.rollback()
-        return jsonify({"success": False, "message": str(exc)}), 400
+        return jsonify({"success": False, "message": public_error(exc)}), 400
 
 
 @import_export_bp.route("/importar", methods=["POST"])
@@ -126,7 +126,7 @@ def importar():
         })
     except PermissionError as exc:
         db.session.rollback()
-        return jsonify({"success": False, "message": str(exc)}), 403
+        return jsonify({"success": False, "message": public_error(exc)}), 403
     except Exception as exc:
         db.session.rollback()
-        return jsonify({"success": False, "message": str(exc)}), 400
+        return jsonify({"success": False, "message": public_error(exc)}), 400

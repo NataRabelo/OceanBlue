@@ -299,6 +299,10 @@ function renderFuncionarioActions(item) {
         `);
     }
 
+    if (funcionarioCanEdit()) {
+        actions.push(`<button type="button" onclick="emitirRedefinicaoFuncionario(${Number(item.funcionario_id)})" class="px-3 py-2 text-sky-300" title="Emitir codigo de redefinicao de senha">Redefinir senha</button>`);
+    }
+
     return actions.length
         ? actions.join("")
         : '<span class="text-xs font-medium text-slate-500">Somente leitura</span>';
@@ -310,4 +314,21 @@ function getAuthHeaders() {
         "Content-Type": "application/json",
         ...(token ? { Authorization: `Bearer ${token}` } : {})
     };
+}
+
+async function emitirRedefinicaoFuncionario(funcionarioId) {
+    try {
+        const response = await fetch(`/api/auth/funcionarios/${funcionarioId}/redefinicao`, {
+            method: "POST",
+            credentials: "same-origin",
+            headers: getAuthHeaders()
+        });
+        const result = await response.json();
+        if (!response.ok || !result.success) {
+            throw new Error(result.message || "Nao foi possivel emitir o codigo.");
+        }
+        window.prompt("Codigo de uso unico, valido por 15 minutos. Entregue por canal seguro para uso em Redefinir senha:", result.token);
+    } catch (error) {
+        window.alert(error.message);
+    }
 }

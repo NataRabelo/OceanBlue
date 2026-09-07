@@ -1,4 +1,5 @@
 from app.models.db import Role, RolePermission
+from app.extensions import db
 from app.repositorys.role_repository import RoleRepository
 from app.security.permissions import get_permission_dependency_codes, normalize_permission_codes
 
@@ -38,7 +39,7 @@ class RoleService:
                 ativo=ativo
             )
             RoleRepository.adicionar(role)
-            RoleRepository.salvar()
+            db.session.flush()
 
             for permission in permissions:
                 RoleRepository.adicionar(RolePermission(
@@ -86,7 +87,7 @@ class RoleService:
             for link in list(role.permissions_links):
                 RoleRepository.deletar(link)
 
-            RoleRepository.salvar()
+            db.session.flush()
 
             for permission in permissions:
                 RoleRepository.adicionar(RolePermission(

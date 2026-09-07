@@ -80,3 +80,21 @@ def test_production_startup_rejects_invalid_database_without_leaking_url(databas
     assert result.returncode != 0
     assert "DATABASE_URL deve ser uma URL PostgreSQL valida" in result.stderr
     assert "private-database-password" not in result.stderr
+
+
+@pytest.mark.parametrize("overrides", [
+    {"SECRET_KEY": "a" * 40},
+    {"JWT_SECRET_KEY": "jwt-dev-secret-change-me-32-bytes-min"},
+    {"FIELD_ENCRYPTION_KEY": "validation-session-secret-32-characters"},
+    {"FIELD_ENCRYPTION_KEYS": "{malformed-private-key}"},
+    {"FIELD_ENCRYPTION_ACTIVE_KEY_ID": "unknown"},
+    {"FIELD_ENCRYPTION_KEYS": '{"primary":"short"}'},
+    {"LOGIN_RATE_LIMIT_ATTEMPTS": "0"},
+    {"LOGIN_RATE_LIMIT_WINDOW_SECONDS": "-1"},
+    {"JWT_SIGNING_KEY_ID": ""},
+    {"FIELD_ENCRYPTION_KEYS": '{"primary":"validation-jwt-secret-32-characters"}'},
+])
+def test_production_rejects_unsafe_secret_and_attempt_configuration(overrides):
+    result = run_startup(overrides)
+    assert result.returncode != 0
+    assert "malformed-private-key" not in result.stderr

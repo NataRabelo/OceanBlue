@@ -1,3 +1,4 @@
+from app.security.errors import public_error
 from flask import Blueprint, jsonify, render_template, request
 from flask_jwt_extended import get_jwt, jwt_required
 
@@ -33,7 +34,7 @@ def listar_empresas_disponiveis():
             ]
         }), 200
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 500
+        return jsonify({"success": False, "message": public_error(e)}), 500
 
 
 @funcionario_bp.route("/roles-disponiveis", methods=["GET"])
@@ -56,7 +57,7 @@ def listar_roles_disponiveis():
             ]
         }), 200
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 500
+        return jsonify({"success": False, "message": public_error(e)}), 500
 
 
 @funcionario_bp.route("/", methods=["GET"])
@@ -67,7 +68,7 @@ def listar():
         funcionarios = FuncionarioService.listar(tenant_id)
         return jsonify({"success": True, "data": funcionarios}), 200
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 500
+        return jsonify({"success": False, "message": public_error(e)}), 500
 
 
 @funcionario_bp.route("/", methods=["POST"])
@@ -97,7 +98,7 @@ def criar():
             "message": "Funcionario cadastrado com sucesso."
         }), 201
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 400
+        return jsonify({"success": False, "message": public_error(e)}), 400
 
 
 @funcionario_bp.route("/<int:funcionario_empresa_id>", methods=["PUT"])
@@ -127,7 +128,7 @@ def atualizar(funcionario_empresa_id):
             "message": "Funcionario atualizado com sucesso."
         }), 200
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 400
+        return jsonify({"success": False, "message": public_error(e)}), 400
 
 
 @funcionario_bp.route("/<int:funcionario_empresa_id>", methods=["DELETE"])
@@ -142,4 +143,4 @@ def deletar(funcionario_empresa_id):
             "message": "Funcionario excluido com sucesso."
         }), 200
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 400
+        return jsonify({"success": False, "message": public_error(e)}), 400

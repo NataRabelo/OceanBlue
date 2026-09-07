@@ -26,7 +26,7 @@ class AuditService:
         request_method = None
 
         if has_request_context():
-            ip_address = request.headers.get("X-Forwarded-For", request.remote_addr)
+            ip_address = request.remote_addr
             if ip_address and "," in ip_address:
                 ip_address = ip_address.split(",", 1)[0].strip()
             user_agent = (request.headers.get("User-Agent") or "")[:255] or None

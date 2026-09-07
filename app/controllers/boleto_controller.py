@@ -1,3 +1,4 @@
+from app.security.errors import public_error
 from flask import Blueprint, jsonify, render_template, request
 from flask_jwt_extended import get_jwt, get_jwt_identity, jwt_required
 
@@ -29,7 +30,7 @@ def listar_bancos_emissores():
         dados = BoletoService.listar_bancos_emissores(tenant_id, escopo, empresa_id=empresa_id, ativo=ativo)
         return jsonify({"success": True, "data": dados})
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 400
+        return jsonify({"success": False, "message": public_error(e)}), 400
 
 
 @boleto_bp.route("/configuracoes-parcelamento", methods=["GET"])
@@ -45,7 +46,7 @@ def listar_configuracoes_parcelamento():
         dados = BoletoService.listar_configuracoes_parcelamento(tenant_id, escopo, empresa_id=empresa_id, ativo=ativo)
         return jsonify({"success": True, "data": dados})
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 400
+        return jsonify({"success": False, "message": public_error(e)}), 400
 
 
 @boleto_bp.route("/regras-juros-multa", methods=["GET"])
@@ -60,7 +61,7 @@ def listar_regras_juros_multa():
         dados = BoletoService.listar_regras_juros_multa(tenant_id, escopo, empresa_id=empresa_id)
         return jsonify({"success": True, "data": dados})
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 400
+        return jsonify({"success": False, "message": public_error(e)}), 400
 
 
 @boleto_bp.route("", methods=["GET"])
@@ -78,7 +79,7 @@ def listar_boletos():
         dados = BoletoService.listar_boletos(tenant_id, escopo, empresa_id=empresa_id, status=status, banco_emissor_id=banco_emissor_id, limite=limite)
         return jsonify({"success": True, "data": dados})
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 400
+        return jsonify({"success": False, "message": public_error(e)}), 400
 
 
 @boleto_bp.route("", methods=["POST"])
@@ -93,7 +94,7 @@ def criar_boleto():
         boleto = BoletoService.criar_boleto(data, tenant_id, escopo, funcionario_id)
         return jsonify({"success": True, "message": "Boleto criado com sucesso.", "data": boleto}), 201
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 400
+        return jsonify({"success": False, "message": public_error(e)}), 400
 
 
 @boleto_bp.route("/<int:boleto_id>", methods=["GET"])
@@ -108,7 +109,7 @@ def buscar_boleto(boleto_id):
         boleto = BoletoService.buscar_boleto(tenant_id, escopo, boleto_id, empresa_id=empresa_id)
         return jsonify({"success": True, "data": boleto})
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 400
+        return jsonify({"success": False, "message": public_error(e)}), 400
 
 
 @boleto_bp.route("/<int:boleto_id>/baixar", methods=["POST"])
@@ -123,7 +124,7 @@ def baixar_boleto(boleto_id):
         boleto = BoletoService.baixar_boleto(tenant_id, escopo, boleto_id, data, funcionario_id)
         return jsonify({"success": True, "message": "Baixa registrada.", "data": boleto})
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 400
+        return jsonify({"success": False, "message": public_error(e)}), 400
 
 
 @boleto_bp.route("/configuracao-asaas", methods=["GET"])
@@ -140,7 +141,7 @@ def obter_configuracao_asaas():
         dados = BoletoService.obter_configuracao_asaas(tenant_id, escopo, empresa_id)
         return jsonify({"success": True, "data": dados})
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 400
+        return jsonify({"success": False, "message": public_error(e)}), 400
 
 
 @boleto_bp.route("/configuracao-asaas/<int:empresa_id>", methods=["PUT"])
@@ -155,7 +156,7 @@ def atualizar_configuracao_asaas(empresa_id):
         dados = BoletoService.atualizar_configuracao_asaas(tenant_id, escopo, empresa_id, data)
         return jsonify({"success": True, "message": "Configuracao Asaas atualizada.", "data": dados})
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 400
+        return jsonify({"success": False, "message": public_error(e)}), 400
 
 
 @boleto_bp.route("/<int:boleto_id>/registrar", methods=["POST"])
@@ -169,7 +170,7 @@ def registrar_boleto(boleto_id):
         boleto = BoletoService.registrar_boleto(tenant_id, escopo, boleto_id, funcionario_id)
         return jsonify({"success": True, "message": "Registro bancario homologado processado.", "data": boleto})
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 400
+        return jsonify({"success": False, "message": public_error(e)}), 400
 
 
 @boleto_bp.route("/<int:boleto_id>/consultar-status", methods=["POST"])
@@ -183,7 +184,7 @@ def consultar_status_boleto(boleto_id):
         boleto = BoletoService.consultar_status_bancario(tenant_id, escopo, boleto_id, funcionario_id)
         return jsonify({"success": True, "message": "Status bancario consultado.", "data": boleto})
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 400
+        return jsonify({"success": False, "message": public_error(e)}), 400
 
 
 @boleto_bp.route("/<int:boleto_id>/retorno", methods=["POST"])
@@ -198,34 +199,12 @@ def processar_retorno_boleto(boleto_id):
         boleto = BoletoService.processar_retorno_bancario(tenant_id, escopo, boleto_id, data, funcionario_id)
         return jsonify({"success": True, "message": "Retorno bancario processado de forma idempotente.", "data": boleto})
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 400
+        return jsonify({"success": False, "message": public_error(e)}), 400
 
 
 @boleto_bp.route("/webhook/asaas/<int:tenant_id>/<int:empresa_id>", methods=["POST"])
 def webhook_asaas(tenant_id, empresa_id):
-    try:
-        from app.models.db import ConfiguracaoAsaasEmpresa, Boleto
-        from app.security.field_crypto import FieldCrypto
-
-        config = ConfiguracaoAsaasEmpresa.query.filter_by(tenant_id=tenant_id, empresa_id=empresa_id, ativo=True).first()
-        if not config or not config.webhook_ativo:
-            return jsonify({"success": False, "message": "Webhook Asaas nao configurado."}), 404
-        expected = FieldCrypto.decrypt(config.webhook_auth_token)
-        received = request.headers.get("asaas-access-token")
-        if expected and received != expected:
-            return jsonify({"success": False, "message": "Webhook Asaas nao autorizado."}), 401
-
-        payload = request.get_json(silent=True) or {}
-        payment = payload.get("payment") or {}
-        payment_id = payment.get("id")
-        boleto = Boleto.query.filter_by(tenant_id=tenant_id, empresa_id=empresa_id, registro_bancario_id=payment_id).first()
-        if not boleto:
-            return jsonify({"success": True, "message": "Evento recebido, cobranca nao vinculada."})
-        escopo = {"empresa_ids": [empresa_id], "permission_codes": set(), "is_admin": False}
-        dados = BoletoService.processar_retorno_bancario(tenant_id, escopo, boleto.id, payload, funcionario_id=None)
-        return jsonify({"success": True, "message": "Webhook Asaas processado.", "data": dados})
-    except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 400
+    return jsonify(success=False, message="Integracao bancaria real desativada nesta versao."), 403
 
 
 @boleto_bp.route("/<int:boleto_id>/recalcular-juros", methods=["POST"])
@@ -240,7 +219,7 @@ def recalcular_juros(boleto_id):
         boleto = BoletoService.recalcular_juros_multa(tenant_id, escopo, boleto_id, data_referencia=data.get("data_referencia"), funcionario_id=funcionario_id)
         return jsonify({"success": True, "message": "Juros e multa recalculados.", "data": boleto})
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 400
+        return jsonify({"success": False, "message": public_error(e)}), 400
 
 
 # ============= CONFIGURAÇÃO DE BANCOS EMISSORES =============
@@ -257,7 +236,7 @@ def criar_banco_emissor():
         banco = BancoEmissorService.criar_banco_emissor(data, tenant_id, escopo, funcionario_id)
         return jsonify({"success": True, "message": "Banco emissor criado com sucesso.", "data": banco}), 201
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 400
+        return jsonify({"success": False, "message": public_error(e)}), 400
 
 
 @boleto_bp.route("/configuracoes-parcelamento", methods=["POST"])
@@ -272,7 +251,7 @@ def criar_configuracao_parcelamento():
         config = BancoEmissorService.criar_configuracao_parcelamento(data, tenant_id, escopo)
         return jsonify({"success": True, "message": "Configuração de parcelamento criada com sucesso.", "data": config}), 201
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 400
+        return jsonify({"success": False, "message": public_error(e)}), 400
 
 
 @boleto_bp.route("/regras-juros-multa", methods=["POST"])
@@ -287,4 +266,4 @@ def criar_regra_juros_multa():
         regra = BancoEmissorService.criar_regra_juros_multa(data, tenant_id, escopo)
         return jsonify({"success": True, "message": "Regra de juros e multa criada com sucesso.", "data": regra}), 201
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 400
+        return jsonify({"success": False, "message": public_error(e)}), 400

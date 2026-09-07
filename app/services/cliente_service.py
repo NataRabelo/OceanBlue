@@ -17,6 +17,7 @@ from app.models.db import (
 )
 from app.repositorys.cliente_repository import ClienteRepository
 from app.security.field_crypto import FieldCrypto
+from app.security.errors import public_error
 from app.services.acesso_empresa_service import AcessoEmpresaService
 from app.services.comunicacao_service import ComunicacaoService
 from app.services.time_service import TimeService
@@ -385,7 +386,7 @@ class ClienteService:
                         "cliente_id": cliente.id,
                         "cliente_nome": cliente.nome,
                         "status": "IGNORADO",
-                        "motivo": str(exc),
+                        "motivo": public_error(exc),
                     })
                     continue
 
@@ -484,7 +485,7 @@ class ClienteService:
             return {
                 "status": "ERRO",
                 "destinatario": destinatario,
-                "erro": str(exc),
+                "erro": public_error(exc),
             }
 
     @staticmethod
@@ -538,7 +539,7 @@ class ClienteService:
             ClienteRepository.salvar()
         except Exception as exc:
             log.status = StatusMensagemCliente.ERRO
-            log.erro = str(exc)
+            log.erro = public_error(exc)
             ClienteRepository.salvar()
             if propagar_erro:
                 raise

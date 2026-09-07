@@ -1,3 +1,4 @@
+from app.security.errors import public_error
 from flask import Blueprint, jsonify, render_template, request
 from flask_jwt_extended import get_jwt, get_jwt_identity, jwt_required
 
@@ -53,7 +54,7 @@ def listar():
             ]
         })
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 500
+        return jsonify({"success": False, "message": public_error(e)}), 500
 
 
 @produto_bp.route("/auxiliares", methods=["GET"])
@@ -74,7 +75,7 @@ def auxiliares():
             }
         })
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 500
+        return jsonify({"success": False, "message": public_error(e)}), 500
 
 
 @produto_bp.route("/", methods=["POST"])
@@ -113,7 +114,7 @@ def criar():
             }
         }), 201
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 400
+        return jsonify({"success": False, "message": public_error(e)}), 400
 
 
 @produto_bp.route("/<int:produto_empresa_id>", methods=["PUT"])
@@ -153,7 +154,7 @@ def atualizar(produto_empresa_id):
             "message": "Produto atualizado com sucesso."
         })
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 400
+        return jsonify({"success": False, "message": public_error(e)}), 400
 
 
 @produto_bp.route("/<int:produto_empresa_id>", methods=["DELETE"])
@@ -167,4 +168,4 @@ def deletar(produto_empresa_id):
 
         return jsonify({"success": True, "message": "Produto deletado com sucesso."})
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 400
+        return jsonify({"success": False, "message": public_error(e)}), 400

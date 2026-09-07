@@ -1,3 +1,4 @@
+from app.security.errors import public_error
 from flask import Blueprint, jsonify, render_template, request
 from flask_jwt_extended import get_jwt, get_jwt_identity, jwt_required
 
@@ -26,7 +27,7 @@ def auxiliares():
         dados = PdvService.listar_auxiliares(tenant_id, escopo)
         return jsonify({"success": True, "data": dados})
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 500
+        return jsonify({"success": False, "message": public_error(e)}), 500
 
 
 @pdv_bp.route("/produtos", methods=["GET"])
@@ -45,7 +46,7 @@ def listar_produtos():
         dados = PdvService.listar_produtos(tenant_id, escopo, empresa_id, busca=busca)
         return jsonify({"success": True, "data": dados})
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 400
+        return jsonify({"success": False, "message": public_error(e)}), 400
 
 
 @pdv_bp.route("/produtos/codigo-barras", methods=["GET"])
@@ -69,7 +70,7 @@ def buscar_produto_por_codigo_barras():
         )
         return jsonify({"success": True, "data": dados})
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 400
+        return jsonify({"success": False, "message": public_error(e)}), 400
 
 
 @pdv_bp.route("/vendas", methods=["GET"])
@@ -92,7 +93,7 @@ def listar_vendas():
         )
         return jsonify({"success": True, "data": dados})
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 400
+        return jsonify({"success": False, "message": public_error(e)}), 400
 
 
 @pdv_bp.route("/vendas", methods=["POST"])
@@ -122,7 +123,7 @@ def criar_venda():
             "data": venda,
         }), 201
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 400
+        return jsonify({"success": False, "message": public_error(e)}), 400
 
 
 @pdv_bp.route("/vendas/<int:venda_id>/cancelar", methods=["POST"])
@@ -152,7 +153,7 @@ def cancelar_venda(venda_id):
             "data": venda,
         })
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 400
+        return jsonify({"success": False, "message": public_error(e)}), 400
 
 
 @pdv_bp.route("/vendas/<int:venda_id>/itens/<int:item_id>/cancelar", methods=["POST"])
@@ -182,7 +183,7 @@ def cancelar_item_venda(venda_id, item_id):
             "data": venda,
         })
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 400
+        return jsonify({"success": False, "message": public_error(e)}), 400
 
 
 @pdv_bp.route("/vendas/<int:venda_id>/comprovante", methods=["GET"])
@@ -195,4 +196,4 @@ def comprovante_venda(venda_id):
         venda = PdvService.obter_venda(venda_id, tenant_id, escopo)
         return render_template("relatorios/comprovante_venda.html", venda=venda)
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 400
+        return jsonify({"success": False, "message": public_error(e)}), 400

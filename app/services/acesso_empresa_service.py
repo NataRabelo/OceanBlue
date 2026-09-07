@@ -33,7 +33,7 @@ class AcessoEmpresaService:
     @staticmethod
     def obter_escopo(funcionario_id, tenant_id):
         funcionario = FuncionarioRepository.busca_funcionario_por_id(funcionario_id, tenant_id)
-        if not funcionario:
+        if not funcionario or not funcionario.ativo or not funcionario.role or not funcionario.role.ativo or funcionario.role.tenant_id != tenant_id:
             raise PermissionError("Funcionario autenticado nao encontrado.")
 
         empresa_ids = FuncionarioRepository.listar_ids_empresas_por_funcionario(funcionario_id, tenant_id)
@@ -58,6 +58,9 @@ class AcessoEmpresaService:
 
     @staticmethod
     def validar_empresa(empresa_id, escopo):
+        empresa = FuncionarioRepository.buscar_empresa_por_id(empresa_id, escopo["tenant_id"])
+        if not empresa or not empresa.ativo:
+            raise PermissionError("Empresa indisponivel neste tenant.")
         if AcessoEmpresaService.possui_permissao(escopo, VISUALIZAR_TODAS_EMPRESAS):
             return
 

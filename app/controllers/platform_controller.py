@@ -1,3 +1,4 @@
+from app.security.errors import public_error
 from flask import Blueprint, jsonify, render_template, request
 
 from app.security.decorators import platform_owner_required
@@ -20,7 +21,7 @@ def listar_tenants():
         tenants = PlatformService.listar_tenants()
         return jsonify({"success": True, "data": tenants})
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 500
+        return jsonify({"success": False, "message": public_error(e)}), 500
 
 
 @platform_bp.route("/api/platform/planos", methods=["GET"])
@@ -37,9 +38,9 @@ def criar_tenant():
         tenant = PlatformService.criar_tenant(data)
         return jsonify({"success": True, "data": tenant}), 201
     except ValueError as e:
-        return jsonify({"success": False, "message": str(e)}), 400
+        return jsonify({"success": False, "message": public_error(e)}), 400
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 500
+        return jsonify({"success": False, "message": public_error(e)}), 500
 
 
 @platform_bp.route("/api/platform/tenants/<int:tenant_id>/empresas", methods=["POST"])
@@ -50,9 +51,9 @@ def criar_empresa(tenant_id):
         empresa = PlatformService.criar_empresa(tenant_id, data)
         return jsonify({"success": True, "data": empresa}), 201
     except ValueError as e:
-        return jsonify({"success": False, "message": str(e)}), 400
+        return jsonify({"success": False, "message": public_error(e)}), 400
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 500
+        return jsonify({"success": False, "message": public_error(e)}), 500
 
 
 @platform_bp.route("/api/platform/tenants/<int:tenant_id>/empresas/<int:empresa_id>/visual", methods=["PUT"])
@@ -63,9 +64,9 @@ def atualizar_visual_empresa(tenant_id, empresa_id):
         empresa = PlatformService.atualizar_visual_empresa(tenant_id, empresa_id, data)
         return jsonify({"success": True, "data": empresa})
     except ValueError as e:
-        return jsonify({"success": False, "message": str(e)}), 400
+        return jsonify({"success": False, "message": public_error(e)}), 400
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 500
+        return jsonify({"success": False, "message": public_error(e)}), 500
 
 
 @platform_bp.route("/api/platform/tenants/<int:tenant_id>/admins", methods=["POST"])
@@ -76,9 +77,9 @@ def criar_admin(tenant_id):
         admin = PlatformService.criar_admin(tenant_id, data)
         return jsonify({"success": True, "data": admin}), 201
     except ValueError as e:
-        return jsonify({"success": False, "message": str(e)}), 400
+        return jsonify({"success": False, "message": public_error(e)}), 400
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 500
+        return jsonify({"success": False, "message": public_error(e)}), 500
 
 
 @platform_bp.route("/api/platform/tenants/<int:tenant_id>/assinatura", methods=["PUT"])
@@ -89,6 +90,6 @@ def atualizar_assinatura(tenant_id):
         tenant = PlatformService.atualizar_assinatura(tenant_id, data)
         return jsonify({"success": True, "data": tenant})
     except ValueError as e:
-        return jsonify({"success": False, "message": str(e)}), 400
+        return jsonify({"success": False, "message": public_error(e)}), 400
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 500
+        return jsonify({"success": False, "message": public_error(e)}), 500

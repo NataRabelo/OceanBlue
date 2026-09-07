@@ -40,11 +40,19 @@ min-h-screen login-page
         <div>
           <p class="login-overline">Acesso protegido</p>
           <h2 class="text-2xl font-bold text-white tracking-tight">Entrar no sistema</h2>
-          <p class="text-slate-400 text-sm mt-2">Use o mesmo login para plataforma e operacao do tenant.</p>
+          <p class="text-slate-400 text-sm mt-2">Informe o ambiente e o nome da sua organizacao.</p>
         </div>
       </div>
 
       <form action="/login" method="POST" class="space-y-6">
+        <input type="hidden" name="login_csrf" value="{{ session.get('login_csrf', '') }}">
+        <label class="input-label" for="scope">Ambiente</label>
+        <select id="scope" name="scope" class="input-field">
+          <option value="tenant">Minha organizacao</option>
+          <option value="platform">Administracao da plataforma</option>
+        </select>
+        <label class="input-label" for="tenant">Organizacao (acesso operacional)</label>
+        <input id="tenant" name="tenant" type="text" class="input-field" autocomplete="organization">
         <div class="space-y-4">
           <div>
             <label class="input-label">Usuario</label>
@@ -70,6 +78,7 @@ min-h-screen login-page
         </button>
 
         <div class="login-footnote">
+          <a href="/redefinir-senha">Redefinir senha com codigo do administrador</a>
           <p>Dono da plataforma acessa o painel global.</p>
           <p>Usuarios do tenant entram no ambiente operacional.</p>
         </div>

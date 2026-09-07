@@ -1,3 +1,4 @@
+from app.security.errors import public_error
 from flask import Blueprint, jsonify, render_template, request
 from flask_jwt_extended import get_jwt, get_jwt_identity, jwt_required
 
@@ -25,7 +26,7 @@ def auxiliares():
         dados = AdiantamentoService.listar_auxiliares(tenant_id, escopo)
         return jsonify({"success": True, "data": dados})
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 500
+        return jsonify({"success": False, "message": public_error(e)}), 500
 
 
 @adiantamento_bp.route("/", methods=["GET"])
@@ -49,7 +50,7 @@ def listar():
         )
         return jsonify({"success": True, "data": dados})
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 400
+        return jsonify({"success": False, "message": public_error(e)}), 400
 
 
 @adiantamento_bp.route("/resumo", methods=["GET"])
@@ -69,7 +70,7 @@ def resumo():
         )
         return jsonify({"success": True, "data": dados})
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 400
+        return jsonify({"success": False, "message": public_error(e)}), 400
 
 
 @adiantamento_bp.route("/", methods=["POST"])
@@ -88,4 +89,4 @@ def criar():
             "data": AdiantamentoService.serializar(registro),
         }), 201
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 400
+        return jsonify({"success": False, "message": public_error(e)}), 400

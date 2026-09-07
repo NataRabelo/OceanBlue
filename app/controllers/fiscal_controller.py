@@ -1,3 +1,4 @@
+from app.security.errors import public_error
 from flask import Blueprint, jsonify, render_template, request, send_file
 from flask_jwt_extended import get_jwt, get_jwt_identity, jwt_required
 
@@ -25,7 +26,7 @@ def auxiliares():
         dados = FiscalService.listar_auxiliares(tenant_id, escopo)
         return jsonify({"success": True, "data": dados})
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 400
+        return jsonify({"success": False, "message": public_error(e)}), 400
 
 
 @fiscal_bp.route("/configuracao", methods=["GET"])
@@ -43,7 +44,7 @@ def obter_configuracao():
         dados = FiscalService.obter_configuracao(empresa_id, tenant_id, escopo)
         return jsonify({"success": True, "data": dados})
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 400
+        return jsonify({"success": False, "message": public_error(e)}), 400
 
 
 @fiscal_bp.route("/configuracao/<int:empresa_id>", methods=["PUT"])
@@ -61,7 +62,7 @@ def atualizar_configuracao(empresa_id):
             "data": configuracao,
         })
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 400
+        return jsonify({"success": False, "message": public_error(e)}), 400
 
 
 @fiscal_bp.route("/notas", methods=["GET"])
@@ -75,7 +76,7 @@ def listar_notas():
         dados = FiscalService.listar_notas(tenant_id, escopo, limite=limite)
         return jsonify({"success": True, "data": dados})
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 400
+        return jsonify({"success": False, "message": public_error(e)}), 400
 
 
 @fiscal_bp.route("/notas/prevalidar", methods=["POST"])
@@ -97,7 +98,7 @@ def prevalidar_venda():
             "data": resultado,
         })
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 400
+        return jsonify({"success": False, "message": public_error(e)}), 400
 
 
 @fiscal_bp.route("/notas/emitir", methods=["POST"])
@@ -119,7 +120,7 @@ def emitir_nota_venda():
             "data": nota,
         })
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 400
+        return jsonify({"success": False, "message": public_error(e)}), 400
 
 
 @fiscal_bp.route("/notas/<int:nota_id>/xml", methods=["GET"])
@@ -138,7 +139,7 @@ def baixar_xml_nota(nota_id):
             mimetype="application/xml",
         )
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 400
+        return jsonify({"success": False, "message": public_error(e)}), 400
 
 
 @fiscal_bp.route("/notas/<int:nota_id>/consultar", methods=["POST"])
@@ -151,7 +152,7 @@ def consultar_nota(nota_id):
         nota = FiscalService.consultar_nota_venda(nota_id, tenant_id, escopo)
         return jsonify({"success": True, "message": "Status da NFC-e consultado.", "data": nota})
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 400
+        return jsonify({"success": False, "message": public_error(e)}), 400
 
 
 @fiscal_bp.route("/notas/<int:nota_id>/cancelar", methods=["POST"])
@@ -165,7 +166,7 @@ def cancelar_nota(nota_id):
         nota = FiscalService.cancelar_nota_venda(nota_id, data.get("justificativa"), tenant_id, escopo)
         return jsonify({"success": True, "message": "Cancelamento de NFC-e processado.", "data": nota})
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 400
+        return jsonify({"success": False, "message": public_error(e)}), 400
 
 
 @fiscal_bp.route("/notas/<int:nota_id>/danfe", methods=["GET"])
@@ -184,4 +185,4 @@ def baixar_danfe_nota(nota_id):
             mimetype="text/html",
         )
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 400
+        return jsonify({"success": False, "message": public_error(e)}), 400

@@ -26,6 +26,11 @@ def permission_required(permissao_codigo):
                 funcionario_id = int(get_jwt_identity())
                 escopo = AcessoEmpresaService.obter_escopo(funcionario_id, tenant_id)
 
+                if permissao_codigo.startswith(("criar_", "editar_", "excluir_")) and permissao_codigo.rsplit("_", 1)[-1] in {"role", "permission", "funcionario"} and (
+                    not AcessoEmpresaService.eh_admin(escopo) or AcessoEmpresaService.filtrar_empresa_ids(escopo) is not None
+                ):
+                    raise PermissionError("Administracao de acessos restrita ao administrador do tenant.")
+
                 if not AcessoEmpresaService.possui_permissao(escopo, permissao_codigo):
                     return jsonify({
                         "success": False,

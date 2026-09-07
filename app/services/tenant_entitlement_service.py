@@ -23,7 +23,7 @@ class TenantEntitlementService:
         if status not in TenantEntitlementService.ACTIVE_STATUSES:
             raise PermissionError("Assinatura inativa. Regularize o plano para continuar usando o sistema.")
 
-        if status == "trial" and tenant.trial_ate and tenant.trial_ate < TimeService.today_br():
+        if status == "trial" and (not tenant.trial_ate or tenant.trial_ate < TimeService.today_br()):
             raise PermissionError("Periodo de teste expirado. Ative uma assinatura para continuar.")
 
         return tenant

@@ -3,6 +3,8 @@ from decimal import Decimal, InvalidOperation
 from app.models.db import Funcionario, FuncionarioEmpresa
 from app.repositorys.funcionario_repository import FuncionarioRepository
 from app.security.password import generate_password_hash
+from app.security.password import validate_password
+from app.extensions import db
 
 
 class FuncionarioService:
@@ -83,6 +85,7 @@ class FuncionarioService:
                 raise ValueError("Usuario e obrigatorio.")
             if not senha:
                 raise ValueError("Senha e obrigatoria.")
+            validate_password(senha)
             if not empresa_id:
                 raise ValueError("Empresa e obrigatoria.")
             if not role_id:
@@ -114,7 +117,7 @@ class FuncionarioService:
                 ativo=ativo
             )
             FuncionarioRepository.adicionar(funcionario)
-            FuncionarioRepository.salvar()
+            db.session.flush()
 
             funcionario_empresa = FuncionarioEmpresa(
                 tenant_id=tenant_id,
@@ -193,6 +196,7 @@ class FuncionarioService:
             funcionario.ativo = ativo
 
             if senha:
+                validate_password(senha)
                 funcionario.senha_hash = generate_password_hash(senha)
 
             funcionario_empresa.empresa_id = empresa.id

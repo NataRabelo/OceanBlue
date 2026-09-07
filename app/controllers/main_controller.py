@@ -1,3 +1,4 @@
+from app.security.errors import public_error
 from pathlib import Path
 
 from flask import Blueprint, current_app, flash, redirect, render_template, send_from_directory, url_for
@@ -46,7 +47,7 @@ def index():
     try:
         return redirect(url_for("auth.login"))
     except Exception as e:
-        flash("Erro ao redirecionar para a tela de login: " + str(e), "warning")
+        flash("Erro ao redirecionar para a tela de login: " + public_error(e), "warning")
         return 404
 
 
@@ -75,7 +76,7 @@ def home():
         return render_template("pages/home.html")
 
     except Exception as e:
-        flash("Erro ao redirecionar para a home: " + str(e), "warning")
+        flash("Erro ao redirecionar para a home: " + public_error(e), "warning")
         return redirect(url_for("auth.login"))
 
 
@@ -95,10 +96,10 @@ def settings_home():
         return render_template("pages/home_configuracoes.html")
 
     except PermissionError as e:
-        flash(str(e), "warning")
+        flash(public_error(e), "warning")
         return redirect(url_for("main.home"))
     except Exception as e:
-        flash("Erro ao redirecionar para as configuracoes: " + str(e), "warning")
+        flash("Erro ao redirecionar para as configuracoes: " + public_error(e), "warning")
         return redirect(url_for("main.home"))
 
 
@@ -114,7 +115,7 @@ def pdv_home():
         return render_template("pages/home_pdv.html")
 
     except Exception as e:
-        flash("Erro ao redirecionar para o pdv: " + str(e), "warning")
+        flash("Erro ao redirecionar para o pdv: " + public_error(e), "warning")
         return redirect(url_for("main.home"))
 
 
@@ -130,7 +131,7 @@ def estoque_home():
         return render_template("pages/home_estoque.html")
 
     except Exception as e:
-        flash("Erro ao redirecionar para o estoque: " + str(e), "warning")
+        flash("Erro ao redirecionar para o estoque: " + public_error(e), "warning")
         return redirect(url_for("main.home"))
 
 
@@ -146,5 +147,5 @@ def financeiro_home():
         return render_template("pages/home_financeiro.html")
 
     except Exception as e:
-        flash("Erro ao redirecionar para o financeiro: " + str(e), "warning")
+        flash("Erro ao redirecionar para o financeiro: " + public_error(e), "warning")
         return redirect(url_for("main.home"))

@@ -121,9 +121,12 @@ class PermissionsSecurityTestCase(unittest.TestCase):
             db.session.commit()
 
     def _login_operador(self):
+        self.client.get("/login")
+        with self.client.session_transaction() as browser_session:
+            csrf = browser_session["login_csrf"]
         response = self.client.post(
             "/login",
-            data={"usuario": "operador.restrito", "senha": "123456"},
+            data={"usuario": "operador.restrito", "senha": "123456", "tenant": self.tenant.nome, "login_csrf": csrf},
             follow_redirects=False,
         )
         self.assertEqual(response.status_code, 302)
@@ -213,17 +216,20 @@ class PermissionsSecurityTestCase(unittest.TestCase):
         self.assertEqual(log.actor_id, self.operador.id)
 
     def test_rate_limit_bloqueia_excesso_de_tentativas_de_login(self):
+        self.client.get("/login")
+        with self.client.session_transaction() as browser_session:
+            csrf = browser_session["login_csrf"]
         for _index in range(self.app.config["LOGIN_RATE_LIMIT_ATTEMPTS"]):
             response = self.client.post(
                 "/login",
-                data={"usuario": "usuario.bloqueado", "senha": "senha-errada"},
+                data={"usuario": "usuario.bloqueado", "senha": "senha-errada", "tenant": self.tenant.nome, "login_csrf": csrf},
                 follow_redirects=False,
             )
             self.assertEqual(response.status_code, 401)
 
         blocked = self.client.post(
             "/login",
-            data={"usuario": "usuario.bloqueado", "senha": "senha-errada"},
+            data={"usuario": "usuario.bloqueado", "senha": "senha-errada", "tenant": self.tenant.nome, "login_csrf": csrf},
             follow_redirects=False,
         )
         self.assertEqual(blocked.status_code, 429)

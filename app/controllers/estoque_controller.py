@@ -1,3 +1,4 @@
+from app.security.errors import public_error
 from flask import Blueprint, jsonify, render_template, request
 from flask_jwt_extended import get_jwt, get_jwt_identity, jwt_required
 
@@ -91,7 +92,7 @@ def listar_saldos():
             ]
         })
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 500
+        return jsonify({"success": False, "message": public_error(e)}), 500
 
 
 @estoque_bp.route("/movimentos", methods=["GET"])
@@ -110,7 +111,7 @@ def listar_movimentos():
             "data": [_serializar_movimento(item) for item in movimentos]
         })
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 500
+        return jsonify({"success": False, "message": public_error(e)}), 500
 
 
 @estoque_bp.route("/auxiliares", methods=["GET"])
@@ -127,7 +128,7 @@ def auxiliares():
             "data": dados
         })
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 500
+        return jsonify({"success": False, "message": public_error(e)}), 500
 
 
 @estoque_bp.route("/notificacoes", methods=["GET"])
@@ -151,7 +152,7 @@ def listar_notificacoes():
             "data": dados
         })
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 500
+        return jsonify({"success": False, "message": public_error(e)}), 500
 
 
 @estoque_bp.route("/notificacoes/popup", methods=["GET"])
@@ -168,7 +169,7 @@ def popup_notificacoes():
             "data": dados
         })
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 500
+        return jsonify({"success": False, "message": public_error(e)}), 500
 
 
 @estoque_bp.route("/notificacoes/configuracao", methods=["GET"])
@@ -185,7 +186,7 @@ def obter_configuracao_alerta():
             "data": dados
         })
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 400
+        return jsonify({"success": False, "message": public_error(e)}), 400
 
 
 @estoque_bp.route("/notificacoes/configuracao", methods=["PUT"])
@@ -204,7 +205,7 @@ def atualizar_configuracao_alerta():
             "data": dados
         })
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 400
+        return jsonify({"success": False, "message": public_error(e)}), 400
 
 
 @estoque_bp.route("/indicadores/produtos-mais-vendidos", methods=["GET"])
@@ -234,7 +235,7 @@ def listar_produtos_mais_vendidos():
             "data": dados
         })
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 400
+        return jsonify({"success": False, "message": public_error(e)}), 400
 
 
 @estoque_bp.route("/movimentos/manual", methods=["POST"])
@@ -253,7 +254,7 @@ def criar_movimento_manual():
             "data": _serializar_movimento(movimento)
         }), 201
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 400
+        return jsonify({"success": False, "message": public_error(e)}), 400
 
 
 @estoque_bp.route("/movimentos/<int:movimento_id>/cancelar", methods=["POST"])
@@ -272,4 +273,4 @@ def cancelar_movimento(movimento_id):
             "data": _serializar_movimento(movimento),
         })
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 400
+        return jsonify({"success": False, "message": public_error(e)}), 400

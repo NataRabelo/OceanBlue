@@ -1,3 +1,4 @@
+from app.security.errors import public_error
 from flask import Blueprint, jsonify, render_template, request
 from flask_jwt_extended import get_jwt, get_jwt_identity, jwt_required
 
@@ -40,7 +41,7 @@ def auxiliares():
         dados = FinanceiroService.listar_auxiliares(tenant_id, escopo)
         return jsonify({"success": True, "data": dados})
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 500
+        return jsonify({"success": False, "message": public_error(e)}), 500
 
 
 @financeiro_bp.route("/dashboard", methods=["GET"])
@@ -60,7 +61,7 @@ def dashboard():
         )
         return jsonify({"success": True, "data": dados})
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 400
+        return jsonify({"success": False, "message": public_error(e)}), 400
 
 
 @financeiro_bp.route("/lancamentos", methods=["GET"])
@@ -86,7 +87,7 @@ def listar_lancamentos():
         )
         return jsonify({"success": True, "data": dados})
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 400
+        return jsonify({"success": False, "message": public_error(e)}), 400
 
 
 @financeiro_bp.route("/lancamentos", methods=["POST"])
@@ -105,7 +106,7 @@ def criar_lancamento():
             "data": lancamento,
         }), 201
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 400
+        return jsonify({"success": False, "message": public_error(e)}), 400
 
 
 @financeiro_bp.route("/fechamentos", methods=["GET"])
@@ -125,7 +126,7 @@ def listar_fechamentos():
         )
         return jsonify({"success": True, "data": dados})
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 400
+        return jsonify({"success": False, "message": public_error(e)}), 400
 
 
 @financeiro_bp.route("/fechamentos", methods=["POST"])
@@ -144,7 +145,7 @@ def criar_fechamento():
             "data": fechamento,
         }), 201
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 400
+        return jsonify({"success": False, "message": public_error(e)}), 400
 
 
 @financeiro_bp.route("/relatorios/fluxo-caixa/impressao", methods=["GET"])
@@ -166,7 +167,7 @@ def relatorio_fluxo_caixa_impressao():
         )
         return render_template("relatorios/fluxo_caixa.html", relatorio=relatorio)
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 400
+        return jsonify({"success": False, "message": public_error(e)}), 400
 
 
 @financeiro_bp.route("/relatorios/adiantamentos/impressao", methods=["GET"])
@@ -197,7 +198,7 @@ def relatorio_adiantamentos_impressao():
             resumo=resumo,
         )
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 400
+        return jsonify({"success": False, "message": public_error(e)}), 400
 
 
 @financeiro_bp.route("/relatorios/produtos-mais-vendidos/impressao", methods=["GET"])
@@ -220,4 +221,4 @@ def relatorio_produtos_mais_vendidos_impressao():
         )
         return render_template("relatorios/produtos_mais_vendidos.html", relatorio=relatorio)
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 400
+        return jsonify({"success": False, "message": public_error(e)}), 400

@@ -25,6 +25,7 @@ class FakeResponse:
 
 
 def test_asaas_provider_cria_cliente_e_cobranca_boleto(monkeypatch):
+    monkeypatch.setattr("app.services.boleto_provider.require_real_integration", lambda: None)
     calls = []
 
     def fake_urlopen(req, timeout):
@@ -71,6 +72,7 @@ def test_asaas_provider_cria_cliente_e_cobranca_boleto(monkeypatch):
 
 
 def test_focus_provider_emite_nfce_com_ref_idempotente(monkeypatch):
+    monkeypatch.setattr("app.services.fiscal_provider.require_real_integration", lambda: None)
     calls = []
 
     def fake_urlopen(req, timeout):

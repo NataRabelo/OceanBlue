@@ -1,3 +1,4 @@
+from app.security.errors import public_error
 from flask import Blueprint, jsonify, render_template, request
 from flask_jwt_extended import get_jwt, jwt_required
 
@@ -35,7 +36,7 @@ def listar():
             ]
         }), 200
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 500
+        return jsonify({"success": False, "message": public_error(e)}), 500
 
 
 @permission_bp.route("/", methods=["POST"])
@@ -57,7 +58,7 @@ def criar():
             }
         }), 201
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 400
+        return jsonify({"success": False, "message": public_error(e)}), 400
 
 
 @permission_bp.route("/<int:permission_id>", methods=["PUT"])
@@ -80,7 +81,7 @@ def atualizar(permission_id):
             "message": "Permission atualizada com sucesso."
         }), 200
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 400
+        return jsonify({"success": False, "message": public_error(e)}), 400
 
 
 @permission_bp.route("/<int:permission_id>", methods=["DELETE"])
@@ -91,4 +92,4 @@ def deletar(permission_id):
         PermissionService.deletar(permission_id, tenant_id)
         return jsonify({"success": True, "message": "Permission excluida com sucesso."}), 200
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 400
+        return jsonify({"success": False, "message": public_error(e)}), 400

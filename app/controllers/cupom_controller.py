@@ -1,3 +1,4 @@
+from app.security.errors import public_error
 from flask import Blueprint, jsonify, render_template, request
 from flask_jwt_extended import get_jwt, get_jwt_identity, jwt_required
 
@@ -21,7 +22,7 @@ def listar():
         tenant_id = get_jwt().get("tenant_id")
         return jsonify({"success": True, "data": CupomService.listar(tenant_id)})
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 500
+        return jsonify({"success": False, "message": public_error(e)}), 500
 
 
 @cupom_bp.route("/", methods=["POST"])
@@ -38,7 +39,7 @@ def criar():
             "data": CupomService.serializar(cupom),
         }), 201
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 400
+        return jsonify({"success": False, "message": public_error(e)}), 400
 
 
 @cupom_bp.route("/<int:cupom_id>", methods=["PUT"])
@@ -54,7 +55,7 @@ def atualizar(cupom_id):
             "data": CupomService.serializar(cupom),
         })
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 400
+        return jsonify({"success": False, "message": public_error(e)}), 400
 
 
 @cupom_bp.route("/<int:cupom_id>", methods=["DELETE"])
@@ -65,4 +66,4 @@ def deletar(cupom_id):
         CupomService.deletar(cupom_id, tenant_id)
         return jsonify({"success": True, "message": "Cupom excluido com sucesso."})
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 400
+        return jsonify({"success": False, "message": public_error(e)}), 400

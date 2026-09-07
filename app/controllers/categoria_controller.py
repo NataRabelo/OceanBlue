@@ -1,3 +1,4 @@
+from app.security.errors import public_error
 from flask import Blueprint, jsonify, render_template, request
 from flask_jwt_extended import get_jwt, get_jwt_identity, jwt_required
 
@@ -32,7 +33,7 @@ def listar():
             ]
         })
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 500
+        return jsonify({"success": False, "message": public_error(e)}), 500
 
 
 @categoria_bp.route("/", methods=["POST"])
@@ -52,7 +53,7 @@ def criar():
             }
         }), 201
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 400
+        return jsonify({"success": False, "message": public_error(e)}), 400
 
 
 @categoria_bp.route("/<int:categoria_id>", methods=["PUT"])
@@ -65,7 +66,7 @@ def atualizar(categoria_id):
 
         return jsonify({"success": True, "message": "Atualizado com sucesso"})
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 400
+        return jsonify({"success": False, "message": public_error(e)}), 400
 
 
 @categoria_bp.route("/<int:categoria_id>", methods=["DELETE"])
@@ -77,4 +78,4 @@ def deletar(categoria_id):
 
         return jsonify({"success": True, "message": "Deletado com sucesso"})
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 400
+        return jsonify({"success": False, "message": public_error(e)}), 400

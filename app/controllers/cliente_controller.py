@@ -1,3 +1,4 @@
+from app.security.errors import public_error
 from flask import Blueprint, jsonify, render_template, request
 from flask_jwt_extended import get_jwt, get_jwt_identity, jwt_required
 
@@ -25,7 +26,7 @@ def auxiliares():
         dados = ClienteService.listar_auxiliares(tenant_id, escopo)
         return jsonify({"success": True, "data": dados})
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 400
+        return jsonify({"success": False, "message": public_error(e)}), 400
 
 
 @cliente_bp.route("/", methods=["GET"])
@@ -39,7 +40,7 @@ def listar():
         dados = ClienteService.listar(tenant_id, escopo, busca=busca)
         return jsonify({"success": True, "data": dados})
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 400
+        return jsonify({"success": False, "message": public_error(e)}), 400
 
 
 @cliente_bp.route("/", methods=["POST"])
@@ -55,7 +56,7 @@ def criar():
             "data": ClienteService.serializar_cliente(cliente),
         }), 201
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 400
+        return jsonify({"success": False, "message": public_error(e)}), 400
 
 
 @cliente_bp.route("/<int:cliente_id>", methods=["PUT"])
@@ -71,7 +72,7 @@ def atualizar(cliente_id):
             "data": ClienteService.serializar_cliente(cliente),
         })
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 400
+        return jsonify({"success": False, "message": public_error(e)}), 400
 
 
 @cliente_bp.route("/<int:cliente_id>", methods=["DELETE"])
@@ -82,7 +83,7 @@ def deletar(cliente_id):
         ClienteService.deletar(cliente_id, tenant_id)
         return jsonify({"success": True, "message": "Cliente inativado com sucesso."})
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 400
+        return jsonify({"success": False, "message": public_error(e)}), 400
 
 
 @cliente_bp.route("/<int:cliente_id>/carteira", methods=["GET"])
@@ -95,7 +96,7 @@ def obter_carteira(cliente_id):
         dados = ClienteService.obter_carteira(cliente_id, tenant_id, escopo)
         return jsonify({"success": True, "data": dados})
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 400
+        return jsonify({"success": False, "message": public_error(e)}), 400
 
 
 @cliente_bp.route("/<int:cliente_id>/historico-vendas", methods=["GET"])
@@ -109,7 +110,7 @@ def historico_vendas(cliente_id):
         dados = ClienteService.obter_historico_vendas(cliente_id, tenant_id, escopo, limite=limite)
         return jsonify({"success": True, "data": dados})
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 400
+        return jsonify({"success": False, "message": public_error(e)}), 400
 
 
 @cliente_bp.route("/<int:cliente_id>/mensagens", methods=["GET"])
@@ -120,7 +121,7 @@ def listar_mensagens(cliente_id):
         dados = ClienteService.listar_mensagens(cliente_id, tenant_id)
         return jsonify({"success": True, "data": dados})
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 400
+        return jsonify({"success": False, "message": public_error(e)}), 400
 
 
 @cliente_bp.route("/<int:cliente_id>/mensagens", methods=["POST"])
@@ -138,7 +139,7 @@ def enviar_mensagem(cliente_id):
             "data": mensagem,
         }), 201
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 400
+        return jsonify({"success": False, "message": public_error(e)}), 400
 
 
 @cliente_bp.route("/mensagens/disparo-coletivo", methods=["POST"])
@@ -159,7 +160,7 @@ def enviar_mensagem_coletiva():
             "data": resumo,
         }), 201
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 400
+        return jsonify({"success": False, "message": public_error(e)}), 400
 
 
 @cliente_bp.route("/configuracoes", methods=["GET"])
@@ -172,7 +173,7 @@ def listar_configuracoes():
         dados = ClienteService.listar_configuracoes_empresa(tenant_id, escopo)
         return jsonify({"success": True, "data": dados})
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 400
+        return jsonify({"success": False, "message": public_error(e)}), 400
 
 
 @cliente_bp.route("/configuracoes/<int:empresa_id>", methods=["GET"])
@@ -185,7 +186,7 @@ def obter_configuracao(empresa_id):
         dados = ClienteService.obter_configuracao_empresa(empresa_id, tenant_id, escopo)
         return jsonify({"success": True, "data": dados})
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 400
+        return jsonify({"success": False, "message": public_error(e)}), 400
 
 
 @cliente_bp.route("/configuracoes/<int:empresa_id>", methods=["PUT"])
@@ -203,7 +204,7 @@ def atualizar_configuracao(empresa_id):
             "data": dados,
         })
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 400
+        return jsonify({"success": False, "message": public_error(e)}), 400
 
 
 @cliente_bp.route("/configuracoes/<int:empresa_id>/testar", methods=["POST"])
@@ -221,4 +222,4 @@ def testar_configuracao(empresa_id):
             "data": dados,
         })
     except Exception as e:
-        return jsonify({"success": False, "message": str(e)}), 400
+        return jsonify({"success": False, "message": public_error(e)}), 400

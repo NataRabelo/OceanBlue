@@ -1,3 +1,4 @@
+from app.security.integrations import require_real_integration
 import hashlib
 import json
 import os
@@ -142,6 +143,7 @@ class AsaasProvider(BoletoProvider):
         return data.get("id")
 
     def _request(self, method, path, payload):
+        require_real_integration()
         token = FieldCrypto.decrypt(self.configuracao.api_key)
         if not token:
             raise ValueError("Token Asaas nao configurado para a empresa.")
@@ -249,7 +251,7 @@ def get_boleto_provider(_banco_emissor=None):
     empresa = getattr(_banco_emissor, "empresa", None)
     configuracao = getattr(empresa, "configuracao_asaas", None)
     if configuracao and configuracao.ativo and configuracao.api_key:
-        return AsaasProvider(configuracao)
+        raise PermissionError("Integracao bancaria real desativada nesta versao.")
     return MockApiBancariaProvider()
 
 
