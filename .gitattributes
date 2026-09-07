@@ -12,3 +12,4 @@ app/static/vendor/* -text -whitespace
 tests/vendor/* -text -whitespace
 docs/evidencias/producao/sprint-06-execucao/** -text -whitespace
 docs/evidencias/producao/sprint-06-validacao/** -text -whitespace
+docs/evidencias/producao/sprint-07-execucao/** -text -whitespace

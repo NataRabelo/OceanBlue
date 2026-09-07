@@ -32,7 +32,7 @@ min-h-screen flex flex-col bg-slate-950 text-white
                 {% endif %}
 
                 {% if has_permission("criar_role") %}
-                <button type="button" onclick="rolePage.openCreateModal()"
+                <button type="button" id="role-create-button" disabled onclick="rolePage.openCreateModal()"
                     class="inline-flex items-center gap-2 rounded-xl bg-sky-500 hover:bg-sky-400 text-slate-950 font-semibold px-5 py-3 transition-all duration-200 shadow-lg shadow-sky-500/20">
                     <i data-lucide="plus" class="w-4 h-4"></i>
                     Nova Role

@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="4" skipped="0" tests="32" time="222.045" timestamp="2026-09-07T09:22:31.048282+00:00" hostname="80b4e9172444"><testcase classname="tests.test_sprint07_audit" name="test_http_identifiers_never_select_a_different_record[True-product_company]" time="15.251" /><testcase classname="tests.test_sprint07_audit" name="test_http_identifiers_never_select_a_different_record[True-product_category]" time="4.402" /><testcase classname="tests.test_sprint07_audit" name="test_http_identifiers_never_select_a_different_record[True-employee_company]" time="5.665" /><testcase classname="tests.test_sprint07_audit" name="test_http_identifiers_never_select_a_different_record[True-employee_role]" time="9.546" /><testcase classname="tests.test_sprint07_audit" name="test_http_identifiers_never_select_a_different_record[True-stock]" time="5.382" /><testcase classname="tests.test_sprint07_audit" name="test_http_identifiers_never_select_a_different_record[True-role_permission]" time="3.850" /><testcase classname="tests.test_sprint07_audit" name="test_http_identifiers_never_select_a_different_record[True-platform_company]" time="6.928" /><testcase classname="tests.test_sprint07_audit" name="test_http_identifiers_never_select_a_different_record[1.5-product_company]" time="6.995" /><testcase classname="tests.test_sprint07_audit" name="test_http_identifiers_never_select_a_different_record[1.5-product_category]" time="3.312" /><testcase classname="tests.test_sprint07_audit" name="test_http_identifiers_never_select_a_different_record[1.5-employee_company]" time="6.183" /><testcase classname="tests.test_sprint07_audit" name="test_http_identifiers_never_select_a_different_record[1.5-employee_role]" time="4.555" /><testcase classname="tests.test_sprint07_audit" name="test_http_identifiers_never_select_a_different_record[1.5-stock]" time="5.612" /><testcase classname="tests.test_sprint07_audit" name="test_http_identifiers_never_select_a_different_record[1.5-role_permission]" time="3.785" /><testcase classname="tests.test_sprint07_audit" name="test_http_identifiers_never_select_a_different_record[1.5-platform_company]" time="4.508" /><testcase classname="tests.test_sprint07_audit" name="test_string_identifiers_preserve_valid_employee_product_and_stock_flow" time="8.992" /><testcase classname="tests.test_sprint07_audit" name="test_cashback_remains_spendable_until_brazil_midnight" time="12.792" /><testcase classname="tests.test_sprint07_audit" name="test_coupon_import_and_selection_share_brazil_expiry_date" time="9.692" /><testcase classname="tests.test_sprint07_audit" name="test_reports_cash_closure_and_series_use_same_brazil_day" time="10.391"><failure message="sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedTable) missing FROM-clause entry for table &quot;itens_venda&quot;&#10;LINE 2: FROM produtos_empresa JOIN vendas ON vendas.id = itens_venda...&#10;                                                         ^&#10;&#10;[SQL: SELECT coalesce(sum((itens_venda.quantidade - itens_venda.quantidade_cancelada) * produtos_empresa.valor_compra), %(coalesce_2)s) AS coalesce_1 &#10;FROM produtos_empresa JOIN vendas ON vendas.id = itens_venda.venda_id JOIN produtos_empresa ON produtos_empresa.produto_id = itens_venda.produto_id AND produtos_empresa.empresa_id = vendas.empresa_id AND produtos_empresa.tenant_id = %(tenant_id_1)s, itens_venda &#10;WHERE vendas.tenant_id = %(tenant_id_2)s AND vendas.status = %(status_1)s AND vendas.data_venda &gt;= %(data_venda_1)s AND vendas.data_venda &lt; %(data_venda_2)s AND vendas.empresa_id = %(empresa_id_1)s]&#10;[parameters: {'coalesce_2': 0, 'tenant_id_1': 1, 'tenant_id_2': 1, 'status_1': 'FINALIZADA', 'data_venda_1': datetime.datetime(2026, 9, 2, 3, 0), 'data_venda_2': datetime.datetime(2026, 9, 3, 3, 0), 'empresa_id_1': 1}]&#10;(Background on this error at: https://sqlalche.me/e/20/f405)">/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   psycopg2.errors.UndefinedTable: missing FROM-clause entry for table "itens_venda"
+E   LINE 2: FROM produtos_empresa JOIN vendas ON vendas.id = itens_venda...
+E                                                            ^
+
+The above exception was the direct cause of the following exception:
+tests/test_sprint07_audit.py:156: in test_reports_cash_closure_and_series_use_same_brazil_day
+    dashboard = FinanceiroService.obter_dashboard(1, scope(), 1, periodo_dias=1)
+app/services/financeiro_service.py:218: in obter_dashboard
+    .scalar()
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/query.py:2842: in scalar
+    ret = self.one()
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/query.py:2815: in one
+    return self._iter().one()  # type: ignore
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/query.py:2864: in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/session.py:2373: in execute
+    return self._execute_internal(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/session.py:2271: in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/context.py:306: in orm_execute_statement
+    result = conn.execute(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1421: in execute
+    return meth(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/sql/elements.py:526: in _execute_on_connection
+    return connection._execute_clauseelement(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1643: in _execute_clauseelement
+    ret = self._execute_context(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1848: in _execute_context
+    return self._exec_single_context(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1988: in _exec_single_context
+    self._handle_dbapi_exception(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2365: in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedTable) missing FROM-clause entry for table "itens_venda"
+E   LINE 2: FROM produtos_empresa JOIN vendas ON vendas.id = itens_venda...
+E                                                            ^
+E   
+E   [SQL: SELECT coalesce(sum((itens_venda.quantidade - itens_venda.quantidade_cancelada) * produtos_empresa.valor_compra), %(coalesce_2)s) AS coalesce_1 
+E   FROM produtos_empresa JOIN vendas ON vendas.id = itens_venda.venda_id JOIN produtos_empresa ON produtos_empresa.produto_id = itens_venda.produto_id AND produtos_empresa.empresa_id = vendas.empresa_id AND produtos_empresa.tenant_id = %(tenant_id_1)s, itens_venda 
+E   WHERE vendas.tenant_id = %(tenant_id_2)s AND vendas.status = %(status_1)s AND vendas.data_venda &gt;= %(data_venda_1)s AND vendas.data_venda &lt; %(data_venda_2)s AND vendas.empresa_id = %(empresa_id_1)s]
+E   [parameters: {'coalesce_2': 0, 'tenant_id_1': 1, 'tenant_id_2': 1, 'status_1': 'FINALIZADA', 'data_venda_1': datetime.datetime(2026, 9, 2, 3, 0), 'data_venda_2': datetime.datetime(2026, 9, 3, 3, 0), 'empresa_id_1': 1}]
+E   (Background on this error at: https://sqlalche.me/e/20/f405)</failure></testcase><testcase classname="tests.test_sprint07_audit" name="test_stock_default_period_uses_brazil_today[semana]" time="4.330" /><testcase classname="tests.test_sprint07_audit" name="test_stock_default_period_uses_brazil_today[mes]" time="9.057" /><testcase classname="tests.test_sprint07_audit" name="test_stock_default_period_uses_brazil_today[periodo]" time="5.301" /><testcase classname="tests.test_sprint07_audit" name="test_monthly_series_does_not_move_late_evening_to_next_month" time="9.207"><failure message="sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedTable) missing FROM-clause entry for table &quot;itens_venda&quot;&#10;LINE 2: FROM produtos_empresa JOIN vendas ON vendas.id = itens_venda...&#10;                                                         ^&#10;&#10;[SQL: SELECT coalesce(sum((itens_venda.quantidade - itens_venda.quantidade_cancelada) * produtos_empresa.valor_compra), %(coalesce_2)s) AS coalesce_1 &#10;FROM produtos_empresa JOIN vendas ON vendas.id = itens_venda.venda_id JOIN produtos_empresa ON produtos_empresa.produto_id = itens_venda.produto_id AND produtos_empresa.empresa_id = vendas.empresa_id AND produtos_empresa.tenant_id = %(tenant_id_1)s, itens_venda &#10;WHERE vendas.tenant_id = %(tenant_id_2)s AND vendas.status = %(status_1)s AND vendas.data_venda &gt;= %(data_venda_1)s AND vendas.data_venda &lt; %(data_venda_2)s AND vendas.empresa_id = %(empresa_id_1)s]&#10;[parameters: {'coalesce_2': 0, 'tenant_id_1': 1, 'tenant_id_2': 1, 'status_1': 'FINALIZADA', 'data_venda_1': datetime.datetime(2026, 8, 31, 3, 0), 'data_venda_2': datetime.datetime(2026, 9, 1, 3, 0), 'empresa_id_1': 1}]&#10;(Background on this error at: https://sqlalche.me/e/20/f405)">/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   psycopg2.errors.UndefinedTable: missing FROM-clause entry for table "itens_venda"
+E   LINE 2: FROM produtos_empresa JOIN vendas ON vendas.id = itens_venda...
+E                                                            ^
+
+The above exception was the direct cause of the following exception:
+tests/test_sprint07_audit.py:183: in test_monthly_series_does_not_move_late_evening_to_next_month
+    dashboard = FinanceiroService.obter_dashboard(1, scope(), 1, periodo_dias=1)
+app/services/financeiro_service.py:218: in obter_dashboard
+    .scalar()
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/query.py:2842: in scalar
+    ret = self.one()
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/query.py:2815: in one
+    return self._iter().one()  # type: ignore
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/query.py:2864: in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/session.py:2373: in execute
+    return self._execute_internal(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/session.py:2271: in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/context.py:306: in orm_execute_statement
+    result = conn.execute(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1421: in execute
+    return meth(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/sql/elements.py:526: in _execute_on_connection
+    return connection._execute_clauseelement(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1643: in _execute_clauseelement
+    ret = self._execute_context(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1848: in _execute_context
+    return self._exec_single_context(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1988: in _exec_single_context
+    self._handle_dbapi_exception(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2365: in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedTable) missing FROM-clause entry for table "itens_venda"
+E   LINE 2: FROM produtos_empresa JOIN vendas ON vendas.id = itens_venda...
+E                                                            ^
+E   
+E   [SQL: SELECT coalesce(sum((itens_venda.quantidade - itens_venda.quantidade_cancelada) * produtos_empresa.valor_compra), %(coalesce_2)s) AS coalesce_1 
+E   FROM produtos_empresa JOIN vendas ON vendas.id = itens_venda.venda_id JOIN produtos_empresa ON produtos_empresa.produto_id = itens_venda.produto_id AND produtos_empresa.empresa_id = vendas.empresa_id AND produtos_empresa.tenant_id = %(tenant_id_1)s, itens_venda 
+E   WHERE vendas.tenant_id = %(tenant_id_2)s AND vendas.status = %(status_1)s AND vendas.data_venda &gt;= %(data_venda_1)s AND vendas.data_venda &lt; %(data_venda_2)s AND vendas.empresa_id = %(empresa_id_1)s]
+E   [parameters: {'coalesce_2': 0, 'tenant_id_1': 1, 'tenant_id_2': 1, 'status_1': 'FINALIZADA', 'data_venda_1': datetime.datetime(2026, 8, 31, 3, 0), 'data_venda_2': datetime.datetime(2026, 9, 1, 3, 0), 'empresa_id_1': 1}]
+E   (Background on this error at: https://sqlalche.me/e/20/f405)</failure></testcase><testcase classname="tests.test_sprint07_audit" name="test_partial_returns_reduce_rankings_revenue_cost_and_demand" time="20.903"><failure message="sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedTable) missing FROM-clause entry for table &quot;itens_venda&quot;&#10;LINE 2: FROM produtos_empresa JOIN vendas ON vendas.id = itens_venda...&#10;                                                         ^&#10;&#10;[SQL: SELECT coalesce(sum((itens_venda.quantidade - itens_venda.quantidade_cancelada) * produtos_empresa.valor_compra), %(coalesce_2)s) AS coalesce_1 &#10;FROM produtos_empresa JOIN vendas ON vendas.id = itens_venda.venda_id JOIN produtos_empresa ON produtos_empresa.produto_id = itens_venda.produto_id AND produtos_empresa.empresa_id = vendas.empresa_id AND produtos_empresa.tenant_id = %(tenant_id_1)s, itens_venda &#10;WHERE vendas.tenant_id = %(tenant_id_2)s AND vendas.status = %(status_1)s AND vendas.data_venda &gt;= %(data_venda_1)s AND vendas.data_venda &lt; %(data_venda_2)s AND vendas.empresa_id = %(empresa_id_1)s]&#10;[parameters: {'coalesce_2': 0, 'tenant_id_1': 1, 'tenant_id_2': 1, 'status_1': 'FINALIZADA', 'data_venda_1': datetime.datetime(2026, 8, 9, 3, 0), 'data_venda_2': datetime.datetime(2026, 9, 8, 3, 0), 'empresa_id_1': 1}]&#10;(Background on this error at: https://sqlalche.me/e/20/f405)">/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   psycopg2.errors.UndefinedTable: missing FROM-clause entry for table "itens_venda"
+E   LINE 2: FROM produtos_empresa JOIN vendas ON vendas.id = itens_venda...
+E                                                            ^
+
+The above exception was the direct cause of the following exception:
+tests/test_sprint07_audit.py:198: in test_partial_returns_reduce_rankings_revenue_cost_and_demand
+    dashboard = FinanceiroService.obter_dashboard(1, scope(), 1)
+app/services/financeiro_service.py:218: in obter_dashboard
+    .scalar()
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/query.py:2842: in scalar
+    ret = self.one()
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/query.py:2815: in one
+    return self._iter().one()  # type: ignore
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/query.py:2864: in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/session.py:2373: in execute
+    return self._execute_internal(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/session.py:2271: in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/context.py:306: in orm_execute_statement
+    result = conn.execute(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1421: in execute
+    return meth(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/sql/elements.py:526: in _execute_on_connection
+    return connection._execute_clauseelement(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1643: in _execute_clauseelement
+    ret = self._execute_context(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1848: in _execute_context
+    return self._exec_single_context(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1988: in _exec_single_context
+    self._handle_dbapi_exception(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2365: in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedTable) missing FROM-clause entry for table "itens_venda"
+E   LINE 2: FROM produtos_empresa JOIN vendas ON vendas.id = itens_venda...
+E                                                            ^
+E   
+E   [SQL: SELECT coalesce(sum((itens_venda.quantidade - itens_venda.quantidade_cancelada) * produtos_empresa.valor_compra), %(coalesce_2)s) AS coalesce_1 
+E   FROM produtos_empresa JOIN vendas ON vendas.id = itens_venda.venda_id JOIN produtos_empresa ON produtos_empresa.produto_id = itens_venda.produto_id AND produtos_empresa.empresa_id = vendas.empresa_id AND produtos_empresa.tenant_id = %(tenant_id_1)s, itens_venda 
+E   WHERE vendas.tenant_id = %(tenant_id_2)s AND vendas.status = %(status_1)s AND vendas.data_venda &gt;= %(data_venda_1)s AND vendas.data_venda &lt; %(data_venda_2)s AND vendas.empresa_id = %(empresa_id_1)s]
+E   [parameters: {'coalesce_2': 0, 'tenant_id_1': 1, 'tenant_id_2': 1, 'status_1': 'FINALIZADA', 'data_venda_1': datetime.datetime(2026, 8, 9, 3, 0), 'data_venda_2': datetime.datetime(2026, 9, 8, 3, 0), 'empresa_id_1': 1}]
+E   (Background on this error at: https://sqlalche.me/e/20/f405)</failure></testcase><testcase classname="tests.test_sprint07_audit" name="test_returned_item_disappears_from_rankings_while_sale_remains_active" time="9.498" /><testcase classname="tests.test_sprint07_audit" name="test_dashboard_partial_return_with_cashback_matches_reconciliation" time="23.829"><failure message="sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedTable) missing FROM-clause entry for table &quot;itens_venda&quot;&#10;LINE 2: FROM produtos_empresa JOIN vendas ON vendas.id = itens_venda...&#10;                                                         ^&#10;&#10;[SQL: SELECT coalesce(sum((itens_venda.quantidade - itens_venda.quantidade_cancelada) * produtos_empresa.valor_compra), %(coalesce_2)s) AS coalesce_1 &#10;FROM produtos_empresa JOIN vendas ON vendas.id = itens_venda.venda_id JOIN produtos_empresa ON produtos_empresa.produto_id = itens_venda.produto_id AND produtos_empresa.empresa_id = vendas.empresa_id AND produtos_empresa.tenant_id = %(tenant_id_1)s, itens_venda &#10;WHERE vendas.tenant_id = %(tenant_id_2)s AND vendas.status = %(status_1)s AND vendas.data_venda &gt;= %(data_venda_1)s AND vendas.data_venda &lt; %(data_venda_2)s AND vendas.empresa_id = %(empresa_id_1)s]&#10;[parameters: {'coalesce_2': 0, 'tenant_id_1': 1, 'tenant_id_2': 1, 'status_1': 'FINALIZADA', 'data_venda_1': datetime.datetime(2026, 8, 9, 3, 0), 'data_venda_2': datetime.datetime(2026, 9, 8, 3, 0), 'empresa_id_1': 1}]&#10;(Background on this error at: https://sqlalche.me/e/20/f405)">/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   psycopg2.errors.UndefinedTable: missing FROM-clause entry for table "itens_venda"
+E   LINE 2: FROM produtos_empresa JOIN vendas ON vendas.id = itens_venda...
+E                                                            ^
+
+The above exception was the direct cause of the following exception:
+tests/test_sprint07_audit.py:246: in test_dashboard_partial_return_with_cashback_matches_reconciliation
+    dashboard = FinanceiroService.obter_dashboard(1, scope(), 1)
+app/services/financeiro_service.py:218: in obter_dashboard
+    .scalar()
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/query.py:2842: in scalar
+    ret = self.one()
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/query.py:2815: in one
+    return self._iter().one()  # type: ignore
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/query.py:2864: in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/session.py:2373: in execute
+    return self._execute_internal(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/session.py:2271: in _execute_internal
+    result: Result[Any] = compile_state_cls.orm_execute_statement(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/context.py:306: in orm_execute_statement
+    result = conn.execute(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1421: in execute
+    return meth(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/sql/elements.py:526: in _execute_on_connection
+    return connection._execute_clauseelement(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1643: in _execute_clauseelement
+    ret = self._execute_context(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1848: in _execute_context
+    return self._exec_single_context(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1988: in _exec_single_context
+    self._handle_dbapi_exception(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2365: in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedTable) missing FROM-clause entry for table "itens_venda"
+E   LINE 2: FROM produtos_empresa JOIN vendas ON vendas.id = itens_venda...
+E                                                            ^
+E   
+E   [SQL: SELECT coalesce(sum((itens_venda.quantidade - itens_venda.quantidade_cancelada) * produtos_empresa.valor_compra), %(coalesce_2)s) AS coalesce_1 
+E   FROM produtos_empresa JOIN vendas ON vendas.id = itens_venda.venda_id JOIN produtos_empresa ON produtos_empresa.produto_id = itens_venda.produto_id AND produtos_empresa.empresa_id = vendas.empresa_id AND produtos_empresa.tenant_id = %(tenant_id_1)s, itens_venda 
+E   WHERE vendas.tenant_id = %(tenant_id_2)s AND vendas.status = %(status_1)s AND vendas.data_venda &gt;= %(data_venda_1)s AND vendas.data_venda &lt; %(data_venda_2)s AND vendas.empresa_id = %(empresa_id_1)s]
+E   [parameters: {'coalesce_2': 0, 'tenant_id_1': 1, 'tenant_id_2': 1, 'status_1': 'FINALIZADA', 'data_venda_1': datetime.datetime(2026, 8, 9, 3, 0), 'data_venda_2': datetime.datetime(2026, 9, 8, 3, 0), 'empresa_id_1': 1}]
+E   (Background on this error at: https://sqlalche.me/e/20/f405)</failure></testcase><testcase classname="tests.test_release_candidate" name="test_release_rejects_incomplete_or_ambiguous_junit[&lt;testsuites&gt;&lt;testsuite tests=&quot;0&quot; /&gt;&lt;/testsuites&gt;]" time="0.140" /><testcase classname="tests.test_release_candidate" name="test_release_rejects_incomplete_or_ambiguous_junit[&lt;testsuites&gt;&lt;testsuite tests=&quot;1&quot;&gt;&lt;testcase classname=&quot;suite&quot; name=&quot;case&quot;&gt;&lt;skipped /&gt;&lt;/testcase&gt;&lt;/testsuite&gt;&lt;/testsuites&gt;]" time="0.035" /><testcase classname="tests.test_release_candidate" name="test_release_rejects_incomplete_or_ambiguous_junit[&lt;testsuites&gt;&lt;testsuite tests=&quot;2&quot;&gt;&lt;testcase classname=&quot;suite&quot; name=&quot;case&quot;/&gt;&lt;testcase classname=&quot;suite&quot; name=&quot;case&quot;/&gt;&lt;/testsuite&gt;&lt;/testsuites&gt;]" time="0.012" /><testcase classname="tests.test_release_candidate" name="test_release_rejects_incomplete_or_ambiguous_junit[&lt;testsuites&gt;&lt;testsuite tests=&quot;9&quot;&gt;&lt;testcase classname=&quot;suite&quot; name=&quot;case&quot;/&gt;&lt;/testsuite&gt;&lt;/testsuites&gt;]" time="0.012" /><testcase classname="tests.test_release_candidate" name="test_release_rejects_incomplete_or_ambiguous_junit[&lt;testsuites&gt;&lt;testsuite tests=&quot;1&quot; errors=&quot;1&quot;&gt;&lt;testcase classname=&quot;suite&quot; name=&quot;case&quot;/&gt;&lt;/testsuite&gt;&lt;/testsuites&gt;]" time="0.023" /><testcase classname="tests.test_release_candidate" name="test_release_archive_is_reproducible_and_contains_only_expected_sources" time="0.087" /><testcase classname="tests.test_release_candidate" name="test_release_retains_structured_evidence_without_success_trace_duplication" time="0.077" /></testsuite></testsuites>

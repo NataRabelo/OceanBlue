@@ -593,7 +593,7 @@ class ImportExportService:
             raise ValueError("valor_desconto deve ser maior que zero.")
         if tipo_desconto == TipoDesconto.PERCENTUAL and valor_desconto > Decimal("100.00"):
             raise ValueError("valor_desconto percentual nao pode ultrapassar 100.")
-        if data_validade < date.today():
+        if data_validade < TimeService.today_br():
             raise ValueError("data_validade nao pode estar no passado.")
 
         cupom = ImportExportRepository.buscar_cupom_por_codigo(tenant_id, codigo)

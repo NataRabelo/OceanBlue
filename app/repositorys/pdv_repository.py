@@ -1,10 +1,11 @@
-from datetime import date
+from datetime import timedelta
 from flask import current_app
 
 from sqlalchemy.orm import joinedload
 
 from app.extensions import db
 from app.services.transaction_service import save
+from app.services.time_service import TimeService
 from app.models.db import (
     CategoriaFinanceira,
     Cupom,
@@ -54,7 +55,7 @@ class PdvRepository:
 
     @staticmethod
     def listar_cupons_ativos(tenant_id, data_referencia=None):
-        data_referencia = data_referencia or date.today()
+        data_referencia = data_referencia or TimeService.today_br()
         return (
             Cupom.query
             .filter(
@@ -242,7 +243,8 @@ class PdvRepository:
             .filter(
                 Venda.tenant_id == tenant_id,
                 Venda.empresa_id == empresa_id,
-                db.func.date(Venda.data_venda) == data_referencia,
+                Venda.data_venda >= TimeService.local_date_start_to_utc_naive(data_referencia),
+                Venda.data_venda < TimeService.local_date_start_to_utc_naive(data_referencia + timedelta(days=1)),
                 Venda.status != StatusVenda.CANCELADA,
             )
             .count()

@@ -9,6 +9,9 @@ min-h-screen flex flex-col bg-slate-950 text-white
 {% block styles %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/core/core.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/modulos/estoque.css') }}">
+<style>
+    body[data-theme-mode="modern"] .movimento-hint-label { color: #cbd5e1; }
+</style>
 {% endblock %}
 
 {% block content %}
@@ -192,7 +195,7 @@ min-h-screen flex flex-col bg-slate-950 text-white
                 <h3 class="text-xl font-bold text-white">Nova movimentacao manual</h3>
                 <p class="text-sm text-slate-400 mt-1">Registre entradas e saidas mantendo rastreabilidade por empresa.</p>
             </div>
-            <button type="button" data-close-modal="modal-movimentacao"
+            <button type="button" data-close-modal="modal-movimentacao" aria-label="Fechar movimentacao de estoque"
                 class="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 transition">
                 <i data-lucide="x" class="w-5 h-5"></i>
             </button>

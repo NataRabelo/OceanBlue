@@ -1,0 +1,529 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="6" time="224.068" timestamp="2026-09-07T18:56:50.843596+00:00" hostname="87690b9b3480"><testcase classname="tests.test_sprint07_browser" name="test_admin_role_employee_and_restricted_login_journey[chromium-390]" time="40.244" /><testcase classname="tests.test_sprint07_browser" name="test_admin_role_employee_and_restricted_login_journey[chromium-1440]" time="22.548" /><testcase classname="tests.test_sprint07_browser" name="test_admin_role_employee_and_restricted_login_journey[firefox-390]" time="51.194"><failure message="AssertionError: Locator expected to contain text 'Voce nao tem permissao para acessar essa area.'&#10;Actual value: &#10;  Ir para o conteúdo&#10;  &#10;&#10;  &#10;    &#10;        &#10;            &#10;                &#10;            &#10;        &#10;    &#10;&#10;&#10;&#10;&#10;  &#10;    &#10;      &#10;        &#10;      &#10;      Tela nao suportada&#10;      &#10;        Este sistema foi otimizado para notebooks e monitores. Use uma largura minima de 768px para continuar.&#10;      &#10;    &#10;  &#10;&#10;  &#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;    Fechar menu&#10;    &#10;        &#10;            &#10;        &#10;        &#10;            OceanBlue&#10;            Operacao do tenant&#10;        &#10;    &#10;&#10;    &#10;        &#10;        &#10;            Painel&#10;&#10;            &#10;                &#10;                &#10;                &#10;                &#10;                    &#10;                        &#10;                    &#10;                &#10;                &#10;                    &#10;                &#10;&#10;                &#10;                    &#10;                        &#10;                    &#10;                    Home Operacional&#10;                &#10;                &#10;            &#10;        &#10;        &#10;        &#10;            Operacao&#10;&#10;            &#10;                &#10;                &#10;                &#10;                &#10;                    &#10;                &#10;                    &#10;                &#10;                    &#10;                &#10;                &#10;&#10;                &#10;                    &#10;                        &#10;                    &#10;                    Estoque&#10;                &#10;                &#10;            &#10;        &#10;        &#10;        &#10;            Cadastros&#10;&#10;            &#10;                &#10;                &#10;                &#10;                &#10;                    &#10;                &#10;                &#10;&#10;                &#10;                    &#10;                        &#10;                    &#10;                    Produtos&#10;                &#10;                &#10;            &#10;        &#10;        &#10;    &#10;&#10;&#10;&#10;&#10;&#10;    &#10;        &#10;        &#10;            &#10;            &#10;        &#10;        &#10;&#10;        &#10;            Painel operacional&#10;            &#10;                OceanBlue&#10;            &#10;        &#10;    &#10;&#10;    &#10;        &#10;            &#10;                Consulta Atualizada 07&#10;                Consulta Catalogo 07&#10;            &#10;&#10;            &#10;                &#10;                    CO&#10;                &#10;                &#10;            &#10;&#10;            &#10;        &#10;&#10;        &#10;            &#10;                Acesso Rapido&#10;            &#10;&#10;            &#10;            &#10;                 Visao geral&#10;            &#10;&#10;            &#10;&#10;            &#10;                 Módulos na lateral&#10;            &#10;            &#10;&#10;            Alterar senha&#10;            &#10;                &#10;                &#10;                 Sair do Sistema&#10;            &#10;            &#10;        &#10;    &#10;&#10;&#10;&#10;    &#10;        &#10;            &#10;                &#10;                    Operação&#10;                    Módulos liberados para o seu perfil&#10;                &#10;            &#10;&#10;            &#10;                &#10;&#10;                &#10;                &#10;                    &#10;                        &#10;                    &#10;                    Estoque&#10;                    Produtos, categorias, movimentacoes e alertas operacionais.&#10;                &#10;                &#10;&#10;                &#10;&#10;                &#10;&#10;                &#10;            &#10;        &#10;&#10;        &#10;    &#10;&#10;&#10;&#10;&#10;  &#10;    &#10;      &#10;        &#10;          Alertas operacionais&#10;          Resumo automatico de estoque baixo, ruptura e validade.&#10;        &#10;        &#10;          &#10;        &#10;      &#10;&#10;      &#10;        &#10;        &#10;      &#10;    &#10;  &#10;&#10;  &#10;&#10;  &#10;  &#10;  &#10;  &#10;  &#10;  &#10;&#10;  &#10;&#10; &#10;Call log:&#10;  - Expect &quot;to_contain_text&quot; with timeout 5000ms&#10;  - waiting for locator(&quot;body&quot;)&#10;    9 × locator resolved to &lt;body data-theme-mode=&quot;modern&quot; data-sidebar-state=&quot;collapsed&quot; class=&quot;min-h-screen flex flex-col has-tenant-sidebar&quot;&gt;…&lt;/body&gt;&#10;      - unexpected value &quot;&#10;  Ir para o conteúdo&#10;  &#10;&#10;  &#10;    &#10;        &#10;            &#10;                &#10;            &#10;        &#10;    &#10;&#10;&#10;&#10;&#10;  &#10;    &#10;      &#10;        &#10;      &#10;      Tela nao suportada&#10;      &#10;        Este sistema foi otimizado para notebooks e monitores. Use uma largura minima de 768px para continuar.&#10;      &#10;    &#10;  &#10;&#10;  &#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;    Fechar menu&#10;    &#10;        &#10;            &#10;        &#10;        &#10;            OceanBlue&#10;            Operacao do tenant&#10;        &#10;    &#10;&#10;    &#10;        &#10;        &#10;            Painel&#10;&#10;            &#10;                &#10;                &#10;                &#10;                &#10;                    &#10;                        &#10;                    &#10;                &#10;                &#10;                    &#10;                &#10;&#10;                &#10;                    &#10;                        &#10;                    &#10;                    Home Operacional&#10;                &#10;                &#10;            &#10;        &#10;        &#10;        &#10;            Operacao&#10;&#10;            &#10;                &#10;                &#10;                &#10;                &#10;                    &#10;                &#10;                    &#10;                &#10;                    &#10;                &#10;                &#10;&#10;                &#10;                    &#10;                        &#10;                    &#10;                    Estoque&#10;                &#10;                &#10;            &#10;        &#10;        &#10;        &#10;            Cadastros&#10;&#10;            &#10;                &#10;                &#10;                &#10;                &#10;                    &#10;                &#10;                &#10;&#10;                &#10;                    &#10;                        &#10;                    &#10;                    Produtos&#10;                &#10;                &#10;            &#10;        &#10;        &#10;    &#10;&#10;&#10;&#10;&#10;&#10;    &#10;        &#10;        &#10;            &#10;            &#10;        &#10;        &#10;&#10;        &#10;            Painel operacional&#10;            &#10;                OceanBlue&#10;            &#10;        &#10;    &#10;&#10;    &#10;        &#10;            &#10;                Consulta Atualizada 07&#10;                Consulta Catalogo 07&#10;            &#10;&#10;            &#10;                &#10;                    CO&#10;                &#10;                &#10;            &#10;&#10;            &#10;        &#10;&#10;        &#10;            &#10;                Acesso Rapido&#10;            &#10;&#10;            &#10;            &#10;                 Visao geral&#10;            &#10;&#10;            &#10;&#10;            &#10;                 Módulos na lateral&#10;            &#10;            &#10;&#10;            Alterar senha&#10;            &#10;                &#10;                &#10;                 Sair do Sistema&#10;            &#10;            &#10;        &#10;    &#10;&#10;&#10;&#10;    &#10;        &#10;            &#10;                &#10;                    Operação&#10;                    Módulos liberados para o seu perfil&#10;                &#10;            &#10;&#10;            &#10;                &#10;&#10;                &#10;                &#10;                    &#10;                        &#10;                    &#10;                    Estoque&#10;                    Produtos, categorias, movimentacoes e alertas operacionais.&#10;                &#10;                &#10;&#10;                &#10;&#10;                &#10;&#10;                &#10;            &#10;        &#10;&#10;        &#10;    &#10;&#10;&#10;&#10;&#10;  &#10;    &#10;      &#10;        &#10;          Alertas operacionais&#10;          Resumo automatico de estoque baixo, ruptura e validade.&#10;        &#10;        &#10;          &#10;        &#10;      &#10;&#10;      &#10;        &#10;        &#10;      &#10;    &#10;  &#10;&#10;  &#10;&#10;  &#10;  &#10;  &#10;  &#10;  &#10;  &#10;&#10;  &#10;&#10;&quot;">tests/test_sprint07_browser.py:579: in test_admin_role_employee_and_restricted_login_journey
+    expect(page.locator("body")).to_contain_text("Voce nao tem permissao para acessar essa area.")
+E   AssertionError: Locator expected to contain text 'Voce nao tem permissao para acessar essa area.'
+E   Actual value: 
+E     Ir para o conteúdo
+E     
+E   
+E     
+E       
+E           
+E               
+E                   
+E               
+E           
+E       
+E   
+E   
+E   
+E   
+E     
+E       
+E         
+E           
+E         
+E         Tela nao suportada
+E         
+E           Este sistema foi otimizado para notebooks e monitores. Use uma largura minima de 768px para continuar.
+E         
+E       
+E     
+E   
+E     
+E   
+E   
+E   
+E   
+E   
+E   
+E   
+E   
+E   
+E   
+E       Fechar menu
+E       
+E           
+E               
+E           
+E           
+E               OceanBlue
+E               Operacao do tenant
+E           
+E       
+E   
+E       
+E           
+E           
+E               Painel
+E   
+E               
+E                   
+E                   
+E                   
+E                   
+E                       
+E                           
+E                       
+E                   
+E                   
+E                       
+E                   
+E   
+E                   
+E                       
+E                           
+E                       
+E                       Home Operacional
+E                   
+E                   
+E               
+E           
+E           
+E           
+E               Operacao
+E   
+E               
+E                   
+E                   
+E                   
+E                   
+E                       
+E                   
+E                       
+E                   
+E                       
+E                   
+E                   
+E   
+E                   
+E                       
+E                           
+E                       
+E                       Estoque
+E                   
+E                   
+E               
+E           
+E           
+E           
+E               Cadastros
+E   
+E               
+E                   
+E                   
+E                   
+E                   
+E                       
+E                   
+E                   
+E   
+E                   
+E                       
+E                           
+E                       
+E                       Produtos
+E                   
+E                   
+E               
+E           
+E           
+E       
+E   
+E   
+E   
+E   
+E   
+E       
+E           
+E           
+E               
+E               
+E           
+E           
+E   
+E           
+E               Painel operacional
+E               
+E                   OceanBlue
+E               
+E           
+E       
+E   
+E       
+E           
+E               
+E                   Consulta Atualizada 07
+E                   Consulta Catalogo 07
+E               
+E   
+E               
+E                   
+E                       CO
+E                   
+E                   
+E               
+E   
+E               
+E           
+E   
+E           
+E               
+E                   Acesso Rapido
+E               
+E   
+E               
+E               
+E                    Visao geral
+E               
+E   
+E               
+E   
+E               
+E                    Módulos na lateral
+E               
+E               
+E   
+E               Alterar senha
+E               
+E                   
+E                   
+E                    Sair do Sistema
+E               
+E               
+E           
+E       
+E   
+E   
+E   
+E       
+E           
+E               
+E                   
+E                       Operação
+E                       Módulos liberados para o seu perfil
+E                   
+E               
+E   
+E               
+E                   
+E   
+E                   
+E                   
+E                       
+E                           
+E                       
+E                       Estoque
+E                       Produtos, categorias, movimentacoes e alertas operacionais.
+E                   
+E                   
+E   
+E                   
+E   
+E                   
+E   
+E                   
+E               
+E           
+E   
+E           
+E       
+E   
+E   
+E   
+E   
+E     
+E       
+E         
+E           
+E             Alertas operacionais
+E             Resumo automatico de estoque baixo, ruptura e validade.
+E           
+E           
+E             
+E           
+E         
+E   
+E         
+E           
+E           
+E         
+E       
+E     
+E   
+E     
+E   
+E     
+E     
+E     
+E     
+E     
+E     
+E   
+E     
+E   
+E    
+E   Call log:
+E     - Expect "to_contain_text" with timeout 5000ms
+E     - waiting for locator("body")
+E       9 × locator resolved to &lt;body data-theme-mode="modern" data-sidebar-state="collapsed" class="min-h-screen flex flex-col has-tenant-sidebar"&gt;…&lt;/body&gt;
+E         - unexpected value "
+E     Ir para o conteúdo
+E     
+E   
+E     
+E       
+E           
+E               
+E                   
+E               
+E           
+E       
+E   
+E   
+E   
+E   
+E     
+E       
+E         
+E           
+E         
+E         Tela nao suportada
+E         
+E           Este sistema foi otimizado para notebooks e monitores. Use uma largura minima de 768px para continuar.
+E         
+E       
+E     
+E   
+E     
+E   
+E   
+E   
+E   
+E   
+E   
+E   
+E   
+E   
+E   
+E       Fechar menu
+E       
+E           
+E               
+E           
+E           
+E               OceanBlue
+E               Operacao do tenant
+E           
+E       
+E   
+E       
+E           
+E           
+E               Painel
+E   
+E               
+E                   
+E                   
+E                   
+E                   
+E                       
+E                           
+E                       
+E                   
+E                   
+E                       
+E                   
+E   
+E                   
+E                       
+E                           
+E                       
+E                       Home Operacional
+E                   
+E                   
+E               
+E           
+E           
+E           
+E               Operacao
+E   
+E               
+E                   
+E                   
+E                   
+E                   
+E                       
+E                   
+E                       
+E                   
+E                       
+E                   
+E                   
+E   
+E                   
+E                       
+E                           
+E                       
+E                       Estoque
+E                   
+E                   
+E               
+E           
+E           
+E           
+E               Cadastros
+E   
+E               
+E                   
+E                   
+E                   
+E                   
+E                       
+E                   
+E                   
+E   
+E                   
+E                       
+E                           
+E                       
+E                       Produtos
+E                   
+E                   
+E               
+E           
+E           
+E       
+E   
+E   
+E   
+E   
+E   
+E       
+E           
+E           
+E               
+E               
+E           
+E           
+E   
+E           
+E               Painel operacional
+E               
+E                   OceanBlue
+E               
+E           
+E       
+E   
+E       
+E           
+E               
+E                   Consulta Atualizada 07
+E                   Consulta Catalogo 07
+E               
+E   
+E               
+E                   
+E                       CO
+E                   
+E                   
+E               
+E   
+E               
+E           
+E   
+E           
+E               
+E                   Acesso Rapido
+E               
+E   
+E               
+E               
+E                    Visao geral
+E               
+E   
+E               
+E   
+E               
+E                    Módulos na lateral
+E               
+E               
+E   
+E               Alterar senha
+E               
+E                   
+E                   
+E                    Sair do Sistema
+E               
+E               
+E           
+E       
+E   
+E   
+E   
+E       
+E           
+E               
+E                   
+E                       Operação
+E                       Módulos liberados para o seu perfil
+E                   
+E               
+E   
+E               
+E                   
+E   
+E                   
+E                   
+E                       
+E                           
+E                       
+E                       Estoque
+E                       Produtos, categorias, movimentacoes e alertas operacionais.
+E                   
+E                   
+E   
+E                   
+E   
+E                   
+E   
+E                   
+E               
+E           
+E   
+E           
+E       
+E   
+E   
+E   
+E   
+E     
+E       
+E         
+E           
+E             Alertas operacionais
+E             Resumo automatico de estoque baixo, ruptura e validade.
+E           
+E           
+E             
+E           
+E         
+E   
+E         
+E           
+E           
+E         
+E       
+E     
+E   
+E     
+E   
+E     
+E     
+E     
+E     
+E     
+E     
+E   
+E     
+E   
+E   "</failure></testcase><testcase classname="tests.test_sprint07_browser" name="test_admin_role_employee_and_restricted_login_journey[firefox-1440]" time="27.257" /><testcase classname="tests.test_sprint07_browser" name="test_admin_role_employee_and_restricted_login_journey[webkit-390]" time="47.386" /><testcase classname="tests.test_sprint07_browser" name="test_admin_role_employee_and_restricted_login_journey[webkit-1440]" time="34.362" /></testsuite></testsuites>

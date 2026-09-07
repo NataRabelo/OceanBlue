@@ -1,0 +1,207 @@
+{
+  "status": "focal_cases_passed",
+  "release_acceptance": "Pending new rc3 source-bound scan, BOTH complete FULL868 parent regressions each including all72 browser cases with actual process exit0, and operational proof; prior rc2 candidate rejected by human visual review. Focal process exit1 is not a green gate.",
+  "correction": {
+    "root_cause": "Native skip-link focus aligned main at viewport y0 under an81px sticky header; translucent header/dropdown surfaces let underlying content collide visually.",
+    "fix": "Keep native anchor/focus behavior; ResizeObserver sets main scroll-margin-top to actual header height+16px. Modern header and menu use opaque#0f172a; confirmed small header/menu labels use#94a3b8.",
+    "no_workaround": "No screenshot scroll reset, hidden content, CSP relaxation, Axe exclusion, skipped tests or weakened overflow assertions.",
+    "files_sha256": {
+      "app/static/js/header/header.js": "819f649dfa60276b2aba51c718e3b88e7d7a3cfabcfdb4835acf610d4d4d9952",
+      "app/templates/bases/base.html": "fc09752e7ae040efb7adda5494ff9825855cd54b6e69cf1f5a7bf056e22ca9ad",
+      "tests/test_sprint07_browser.py": "61a1fc4b452a2c1796d3880c4c580865d0bcca7c19cccdd92a68437c32f7c9d5"
+    }
+  },
+  "red": {
+    "junit": "header-red-junit.xml",
+    "tests": 3,
+    "failed": 3,
+    "duration_seconds": 101.547,
+    "engines": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "width": 320,
+    "path": "/api/importacao-exportacao/view",
+    "header_bottom": 81,
+    "main_top_after_skip": 0,
+    "heading_top_after_skip": 0,
+    "focused_element": "main-content",
+    "canonical_red_png": "../visual-rejected-candidate/webkit-admin-320.png",
+    "menu_contrast_red": 3.751444575665684,
+    "menu_red_foreground": "#64748b",
+    "menu_background": "#0f172a"
+  },
+  "distinct_probe_runs": [
+    {
+      "run": "geometry-red",
+      "tests": 3,
+      "passed": 0,
+      "failed": 3,
+      "seconds": 101.547
+    },
+    {
+      "run": "geometry-green (intermediate, failed)",
+      "tests": 3,
+      "passed": 0,
+      "failed": 3,
+      "seconds": 77.107
+    },
+    {
+      "run": "geometry-green2",
+      "tests": 3,
+      "passed": 3,
+      "failed": 0,
+      "seconds": 104.185
+    },
+    {
+      "run": "geometry-visual",
+      "tests": 3,
+      "passed": 3,
+      "failed": 0,
+      "seconds": 89.304
+    },
+    {
+      "run": "header-desktop",
+      "tests": 1,
+      "passed": 0,
+      "failed": 1,
+      "seconds": 27.102
+    },
+    {
+      "run": "header-menu",
+      "tests": 2,
+      "passed": 0,
+      "failed": 2,
+      "seconds": 62.559
+    },
+    {
+      "run": "header-menu2 (before explicit animation-settled label measurement)",
+      "tests": 2,
+      "passed": 2,
+      "failed": 0,
+      "seconds": 53.2
+    },
+    {
+      "run": "header-menu3 (confirmed label contrast)",
+      "tests": 2,
+      "passed": 0,
+      "failed": 2,
+      "seconds": 53.297
+    },
+    {
+      "run": "header-all72 (final corrected source)",
+      "tests": 72,
+      "passed": 72,
+      "failed": 0,
+      "seconds": 1886.495
+    }
+  ],
+  "green": {
+    "junit": "header-green-junit.xml",
+    "tests": 72,
+    "passed": 72,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "duration_seconds": 1886.495,
+    "engines": [
+      {
+        "name": "chromium",
+        "version": "140.0.7339.16",
+        "passed": 24
+      },
+      {
+        "name": "firefox",
+        "version": "141.0",
+        "passed": 24
+      },
+      {
+        "name": "webkit",
+        "version": "26.0",
+        "passed": 24
+      }
+    ],
+    "navigation_cases": 54,
+    "journey_cases": 18,
+    "navigation_widths": [
+      320,
+      768,
+      1440
+    ],
+    "journey_widths": [
+      390,
+      1440
+    ],
+    "screen_navigation_checks": 225,
+    "axe_screen_state_checks": 345,
+    "axe_violations": 0,
+    "overflow_failures": 0,
+    "http_js_external_errors": 0,
+    "geometry_states": {
+      "normal-scroll": 225,
+      "skip-to-content": 225,
+      "sidebar-focus-restored": 75,
+      "user-dropdown": 12,
+      "user-menu-focus-restored": 12
+    },
+    "minimum_skip_heading_gap_px": 16,
+    "representative_all_three_engines": {
+      "width": 320,
+      "path": "/api/importacao-exportacao/view",
+      "header_bottom": 81,
+      "main_top_after_skip": 97,
+      "heading_top_after_skip": 97,
+      "focused_element": "main-content",
+      "main_top_after_sidebar_escape": 97,
+      "header_opaque": true,
+      "menu_opaque": true,
+      "menu_within_viewport": true
+    },
+    "normal_scroll_y": {
+      "chromium": 787,
+      "firefox": 858,
+      "webkit": 720
+    },
+    "normal_scroll_note": "Ordinary PageDown intentionally scrolls main start offscreen; opaque header readability remains asserted and visually checked.",
+    "menu_label_contrast": 6.9626547485416275,
+    "menu_label_foreground": "#94a3b8",
+    "menu_background": "#0f172a",
+    "pytest_exit_code": 1,
+    "coverage_percent": 45.69,
+    "unchanged_global_coverage_minimum_percent": 50,
+    "exit_reason": "Browser-only coverage below global threshold; no test failure."
+  },
+  "visual_review": {
+    "original_curated_pngs_reviewed": 15,
+    "corrected_corresponding_pngs_reviewed": 15,
+    "corrected_skip_and_normal_scroll_pngs_reviewed": 6,
+    "opened_menu_pngs_reviewed": 12,
+    "result": "No additional functional/readability blocker. Main heading visible below header with focus retained; opaque header and menu readable. Intentional toast overlay, keyboard-scroll audit table and dark-text audit inputs are not defects.",
+    "repository_green_pngs": [
+      "sprint07-webkit-320-skip-to-content.png",
+      "sprint07-webkit-320-normal-scroll.png"
+    ]
+  },
+  "evidence": {
+    "host_directory": "C:/Users/Rabel/AppData/Local/Temp/sprint07-ui-header-all72-final",
+    "probe_visual_directory": "C:/Users/Rabel/AppData/Local/Temp/sprint07-header-visuals",
+    "red_directory": "C:/Users/Rabel/AppData/Local/Temp/sprint07-header-red",
+    "json_files": 72,
+    "png_files": 72,
+    "total_bytes": 13086733,
+    "success_traces": 0,
+    "files_per_canonical_case": 2,
+    "canonical_pngs_copied_to_repository": 0,
+    "probe_pngs_copied_to_repository": 2
+  },
+  "environment": {
+    "project": "oceanblue-s07-ui",
+    "image": "sha256:a446f9569c753fc6458efc208e91d985e4561c6cef3f131b7ac8fcd89a2a61c1",
+    "source": "Current app/tests read-only mounts; focal evidence, not final release binding.",
+    "origin": "http://127.0.0.1:8767",
+    "backend_network_internal": true,
+    "published_ports": 0,
+    "cleanup": "Exclusive geometry runner, database container and network removed; parent resources untouched."
+  }
+}

@@ -1,0 +1,75 @@
+{
+  "status": "observed_rc5_failure_and_deterministic_readiness_red",
+  "original_browser_json": {
+    "engine": "firefox",
+    "version": "141.0",
+    "screens": [],
+    "errors": [
+      "rolePage is not defined"
+    ],
+    "external_requests": [],
+    "http_errors": [],
+    "passed": false,
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    }
+  },
+  "original_trace": "C:/Users/Rabel/AppData/Local/Temp/sprint07-rc5-role-red-trace.zip",
+  "observed_timing_ms": {
+    "create_button_click": {
+      "call_id": "call@11696",
+      "start": 476190.521,
+      "visible_enabled_stable": 476671.898,
+      "onclick_error": 477006.464,
+      "end": 477008.336
+    },
+    "role_script": {
+      "url": "http://127.0.0.1:8767/static/js/modulos/role.js",
+      "start": 476219.934,
+      "duration": 3080.071,
+      "status": 200
+    },
+    "crud_script": {
+      "url": "http://127.0.0.1:8767/static/js/core/crud.js",
+      "start": 476187.889,
+      "duration": 2717.663,
+      "status": 200
+    },
+    "hidden_form_fill": {
+      "call_id": "call@11720",
+      "start": 479467.39,
+      "end": 499485.822,
+      "timeout_ms": 20000
+    }
+  },
+  "root_cause": "Server-rendered Nova Role button was enabled before footer role.js loaded. Inline handler referenced missing rolePage. Scripts later completed200 and roles API loaded; no evidence of GC, stale context or backend failure.",
+  "deterministic_red": {
+    "browser_json": {
+      "engine": "firefox",
+      "version": "141.0",
+      "screens": [],
+      "errors": [],
+      "external_requests": [],
+      "http_errors": [],
+      "role_before_script": {
+        "disabled": false,
+        "initialized": false,
+        "script_held": true
+      },
+      "passed": false,
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      }
+    },
+    "source": "Original role.html/role.js before readiness patch; exact localhost role.js request held without mock response, then real request released in finally.",
+    "command": "docker exec oceanblue-s07-ui-role python -m pytest tests/test_sprint07_browser.py -k 'test_admin_role_employee_and_restricted_login_journey and firefox and 1440' --no-cov --tb=short -q --junitxml=/tmp/sprint07-role-red.xml",
+    "pytest_exit_code": 1,
+    "failed": 1,
+    "deselected": 71,
+    "pytest_duration_seconds": 30.13,
+    "junit": "red-junit.xml"
+  },
+  "minimal_fix": "Render only Nova Role with native disabled and id; enable after synchronous rolePage.init() returns with handlers bound. No fictitious await, silent click no-op, or test readiness sleep."
+}

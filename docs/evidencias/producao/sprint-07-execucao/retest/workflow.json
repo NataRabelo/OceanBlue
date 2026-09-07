@@ -1,0 +1,11 @@
+{
+  "workflow": "OceanBlue verification",
+  "timeout_minutes": 90,
+  "full_suite": true,
+  "all_migrations": true,
+  "coverage_gate_percent": 50,
+  "branch_coverage": true,
+  "always_collect_evidence": true,
+  "always_cleanup": true,
+  "workflow_sha256": "51cf917af5e5ee353d21494a2a494823169de5e5a3013aca918829b2fe4eb252"
+}

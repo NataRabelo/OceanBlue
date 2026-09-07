@@ -6,6 +6,7 @@ from app.services.audit_service import AuditService
 from app.services.saas_plan_service import SaasPlanService
 from app.services.tenant_bootstrap_service import TenantBootstrapService
 from app.services.time_service import TimeService
+from app.services.money_service import positive_integer
 
 
 class PlatformService:
@@ -458,10 +459,7 @@ class PlatformService:
         if value in (None, ""):
             raise ValueError(f"{field_name} e obrigatoria.")
 
-        try:
-            return int(value)
-        except (TypeError, ValueError):
-            raise ValueError(f"{field_name} invalida.")
+        return positive_integer(value, field_name)
 
     @staticmethod
     def _to_date(value, field_name):

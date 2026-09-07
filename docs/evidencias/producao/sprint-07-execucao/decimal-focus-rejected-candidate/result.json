@@ -1,0 +1,12 @@
+{
+  "status": "rejected",
+  "project": "oceanblue-s07-rc4",
+  "regression": {"tests": 868, "passed": 868, "failures": 0, "errors": 0, "skipped": 0, "process_exit_code": 0, "junit_seconds": 2959.179},
+  "retest": {"tests": 868, "passed": 867, "failures": 1, "errors": 0, "skipped": 0, "process_exit_code": 1, "junit_seconds": 3152.712},
+  "failed_case": "tests.test_sprint07_browser.test_catalog_client_sale_stock_financial_audit_journey[firefox-1440]",
+  "reason": "Deferred selection of a decimal input could steal focus in Firefox. The next field's value 3 overwrote wholesale price 10; the submitted product already had wholesale price 3 and minimum 1, so the observed sale total 6 was consistent with the incorrectly entered product. See ../decimal-focus-correction/ for trace and focused correction.",
+  "operations_run": false,
+  "raw_evidence": ".release-work/oceanblue-s07-rc4",
+  "superseded_curated_regression": ".release-work/rc4-superseded-evidence/regression",
+  "release_approved": false
+}

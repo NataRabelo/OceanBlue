@@ -23,24 +23,24 @@ min-h-screen flex flex-col bg-slate-950 text-white
                 <p class="text-slate-400 mt-2">Indicadores de venda transferidos para o estoque em uma tela separada.</p>
             </div>
 
-            <div class="flex flex-col sm:flex-row gap-3 w-full lg:w-auto">
-                <select id="filtro-empresa"
+            <div class="flex flex-col sm:flex-row flex-wrap gap-3 w-full lg:w-auto">
+                <select id="filtro-empresa" aria-label="Empresa dos indicadores"
                     data-theme-company-select
                     class="w-full sm:w-64 bg-slate-950/80 border border-slate-800 focus:border-sky-500 focus:ring-2 focus:ring-sky-500/20 rounded-xl px-4 py-3 text-sm text-white outline-none transition">
                     <option value="">Todas as empresas</option>
                 </select>
 
-                <select id="estoque-best-sellers-periodo"
+                <select id="estoque-best-sellers-periodo" aria-label="Periodo dos indicadores"
                     class="w-full sm:w-44 bg-slate-950/80 border border-slate-800 focus:border-sky-500 focus:ring-2 focus:ring-sky-500/20 rounded-xl px-4 py-3 text-sm text-white outline-none transition">
                     <option value="semana">Semana</option>
                     <option value="mes" selected>Mes</option>
                     <option value="periodo">Periodo</option>
                 </select>
 
-                <input id="estoque-best-sellers-data-inicio" type="date"
+                <input id="estoque-best-sellers-data-inicio" type="date" aria-label="Data inicial dos indicadores"
                     class="w-full sm:w-44 bg-slate-950/80 border border-slate-800 focus:border-sky-500 focus:ring-2 focus:ring-sky-500/20 rounded-xl px-4 py-3 text-sm text-white outline-none transition">
 
-                <input id="estoque-best-sellers-data-fim" type="date"
+                <input id="estoque-best-sellers-data-fim" type="date" aria-label="Data final dos indicadores"
                     class="w-full sm:w-44 bg-slate-950/80 border border-slate-800 focus:border-sky-500 focus:ring-2 focus:ring-sky-500/20 rounded-xl px-4 py-3 text-sm text-white outline-none transition">
             </div>
         </div>

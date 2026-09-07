@@ -22,3 +22,5 @@ htmlcov/
 coverage.xml
 junit.xml
 docs/evidencias/
+.release-work/
+dist/

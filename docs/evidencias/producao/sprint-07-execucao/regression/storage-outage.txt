@@ -1,0 +1,3 @@
+{"timestamp": "2026-09-07T20:11:23.593377+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "6787d37c7f6704222667caafd478dea0", "route": "/login", "method": "POST", "status": 503, "duration_ms": 1.402}
+STORAGE REAL PERMISSION FAILURE: health 200, readiness 503, writes 503
+STORAGE RECOVERY VERIFIED

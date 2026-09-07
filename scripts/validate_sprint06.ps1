@@ -2,7 +2,7 @@ param([string]$Project = "oceanblue-s06-final", [string]$EvidenceDirectory = "do
 $ErrorActionPreference = "Stop"
 $workspace = Split-Path $PSScriptRoot -Parent
 Set-Location $workspace
-if ($Project -notmatch '^oceanblue-s06-[a-z0-9-]+$') { throw "Exclusive Sprint 6 project required." }
+if ($Project -notmatch '^oceanblue-s0[67]-[a-z0-9-]+$') { throw "Exclusive validation project required." }
 $evidence = [IO.Path]::GetFullPath((Join-Path $workspace $EvidenceDirectory))
 if (Test-Path -LiteralPath $evidence) { throw "New evidence directory required." }
 New-Item -ItemType Directory -Path $evidence | Out-Null
@@ -29,6 +29,7 @@ try {
         & docker @compose cp test:/tmp/e2e (Join-Path $evidence "e2e") 2>&1 | Out-File (Join-Path $evidence "copy-e2e.txt")
         & docker @compose cp test:/tmp/benchmark-s06.json (Join-Path $evidence "benchmark.json") 2>&1 | Out-File (Join-Path $evidence "copy-benchmark.txt")
         & docker @compose cp test:/tmp/load-s06.json (Join-Path $evidence "load.json") 2>&1 | Out-File (Join-Path $evidence "copy-load.txt")
+        & docker @compose cp test:/tmp/http-route-coverage.json (Join-Path $evidence "http-route-coverage.json") 2>&1 | Out-File (Join-Path $evidence "copy-http-routes.txt")
     }
     [xml]$junit = Get-Content -Raw (Join-Path $evidence "junit.xml")
     foreach ($suite in $junit.testsuites.testsuite) {

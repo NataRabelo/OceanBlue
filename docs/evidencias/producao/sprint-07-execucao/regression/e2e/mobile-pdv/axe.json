@@ -1,0 +1,11 @@
+{
+  "raw_sha256": "9bd44a79bf351c2a3c4a60268680f7a2261192c85e963f9351ba15bb7920ee73",
+  "testEngine": {
+    "name": "axe-core",
+    "version": "4.10.3"
+  },
+  "url": "http://127.0.0.1:8765/api/pdv/view",
+  "passed_rule_count": 21,
+  "incomplete_rule_count": 1,
+  "violations": []
+}

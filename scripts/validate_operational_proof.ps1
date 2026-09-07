@@ -1,8 +1,9 @@
-param([string]$Project = "oceanblue-s06-proof", [string]$ImagePrefix = "oceanblue-s06-final", [string]$EvidenceDirectory = "docs/evidencias/producao/sprint-06-execucao/operational")
+param([string]$Project = "oceanblue-s06-proof", [string]$ImagePrefix = "oceanblue-s06-final", [string]$EvidenceDirectory = "docs/evidencias/producao/sprint-06-execucao/operational", [string]$RollbackImage = "sha256:896e64670d1cf36bd15ae5b97784fed1ff564de6b98cbeaadaca9d8fa74529b1", [switch]$EnableHttpLoad)
 $ErrorActionPreference = "Stop"
 $workspace = Split-Path $PSScriptRoot -Parent
 Set-Location $workspace
-if ($Project -notmatch '^oceanblue-s06-[a-z0-9-]+$') { throw "Exclusive Sprint 6 project required." }
+if ($Project -notmatch '^oceanblue-s0[67]-[a-z0-9-]+$') { throw "Exclusive validation project required." }
+if ($RollbackImage -notmatch '^sha256:[a-f0-9]{64}$') { throw "Immutable local rollback image ID required." }
 $evidence = [IO.Path]::GetFullPath((Join-Path $workspace $EvidenceDirectory))
 if (Test-Path -LiteralPath $evidence) { throw "New evidence directory required." }
 New-Item -ItemType Directory -Path $evidence | Out-Null
@@ -81,7 +82,7 @@ try {
     Invoke-RecordedDocker "rollback-start.txt" @("run", "-d", "--rm", "--name", "$restoreProject-rollback", "--label", "com.docker.compose.project=$restoreProject", "--label", "com.docker.compose.service=rollback",
         "--network", "$($restoreProject)_test", "--volumes-from", "$restoreProject-smoke-1", "-e", "DATABASE_URL=postgresql+psycopg2://oceanblue_test:isolated-test-only@db-test:5432/oceanblue_test",
         "-e", "SECRET_KEY=isolated-smoke-session-secret-32-characters", "-e", "JWT_SECRET_KEY=isolated-smoke-jwt-secret-32-characters", "-e", "FIELD_ENCRYPTION_KEY=isolated-smoke-field-secret-32-characters",
-        "--entrypoint", "gunicorn", "sha256:896e64670d1cf36bd15ae5b97784fed1ff564de6b98cbeaadaca9d8fa74529b1", "-w", "1", "-b", "0.0.0.0:5000", "--forwarded-allow-ips", "", "wsgi:app")
+        "--entrypoint", "gunicorn", $RollbackImage, "-w", "1", "-b", "0.0.0.0:5000", "--forwarded-allow-ips", "", "wsgi:app")
     Invoke-RecordedDocker "rollback-smoke.txt" @("exec", "$restoreProject-rollback", "python", "-c", "import time; time.sleep(2); from scripts.validate_smoke import main; main(); from app import create_app; from app.models.db import Venda, LancamentoFinanceiro; app=create_app(); context=app.app_context(); context.push(); assert Venda.query.count()==3; assert LancamentoFinanceiro.query.count()==3; print('PREVIOUS APPLICATION RUNS ON RESTORED SCHEMA; THREE SALES AND LEDGER ENTRIES PRESERVED')")
     Invoke-RecordedDocker "rollback-db-stop.txt" ($destination + @("stop", "db-test"))
     Invoke-RecordedDocker "rollback-db-down.txt" @("exec", "$restoreProject-rollback", "python", "-m", "scripts.validate_security_smoke", "--database-down")
@@ -89,6 +90,11 @@ try {
     Invoke-RecordedDocker "rollback-recovered.txt" @("exec", "$restoreProject-rollback", "python", "-m", "scripts.validate_smoke")
     Invoke-RecordedDocker "rollback-stop.txt" @("stop", "$restoreProject-rollback")
     Invoke-RecordedDocker "migration-downgrade.txt" @("run", "--rm", "--network", "$($restoreProject)_test", "-e", "TEST_DATABASE_URL=postgresql+psycopg2://oceanblue_test:isolated-test-only@db-test:5432/oceanblue_test", "$ImagePrefix-test", "python", "-c", "from scripts.test_environment import configure_test_environment; configure_test_environment(); from app import create_app; from flask_migrate import downgrade, upgrade; from app.extensions import db; from sqlalchemy import text; app=create_app(); context=app.app_context(); context.push(); expected=db.session.execute(text('SELECT count(*), sum(total) FROM vendas')).one(); db.session.remove(); downgrade(revision='9c0d1e2f3a4b'); upgrade(); assert db.session.execute(text('SELECT count(*), sum(total) FROM vendas')).one()==expected; print('MIGRATION DOWNGRADE REUPGRADE WITH THREE SALES VERIFIED; NO REQUEST TRACE DATA PRESENT')")
+    if ($EnableHttpLoad) {
+        Invoke-RecordedDocker "load-start.txt" ($source + @("--profile", "smoke", "up", "-d", "--no-build", "--wait", "--wait-timeout", "120", "smoke", "proxy"))
+        Invoke-RecordedDocker "http-load.json" @("run", "--rm", "--network", "$($Project)_test", "--mount", "type=volume,source=$($Project)_proof-tls,target=/proof-tls,readonly", "$ImagePrefix-test", "python", "-m", "scripts.validate_release_http_load")
+        Invoke-RecordedDocker "load-stop.txt" ($source + @("stop", "smoke", "proxy"))
+    }
     Invoke-RecordedDocker "network.json" @("network", "inspect", "$($Project)_test", "$($restoreProject)_test")
     Invoke-RecordedDocker "proof-logs.txt" ($source + @("--profile", "smoke", "logs", "--no-color", "smoke", "proxy"))
 } finally {

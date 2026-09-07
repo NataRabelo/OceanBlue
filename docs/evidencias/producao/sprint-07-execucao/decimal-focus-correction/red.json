@@ -1,0 +1,133 @@
+{
+  "status": "observed_rc4_failure_and_deterministic_focus_red",
+  "original_browser_json": {
+    "engine": "firefox",
+    "version": "141.0",
+    "screens": [
+      {
+        "violations": [],
+        "rules_passed": 25,
+        "overflow": false,
+        "title": "OceanBlue • Categorias",
+        "path": "/api/categorias/view",
+        "state": "create-category",
+        "width": 1440
+      },
+      {
+        "violations": [],
+        "rules_passed": 26,
+        "overflow": false,
+        "title": "OceanBlue • Produtos",
+        "path": "/api/produtos/view",
+        "state": "create-product",
+        "width": 1440
+      },
+      {
+        "violations": [],
+        "rules_passed": 26,
+        "overflow": false,
+        "title": "OceanBlue - Clientes",
+        "path": "/api/clientes/view",
+        "state": "create-client",
+        "width": 1440
+      },
+      {
+        "violations": [],
+        "rules_passed": 26,
+        "overflow": false,
+        "title": "OceanBlue - Estoque Operacional",
+        "path": "/api/estoque/view",
+        "state": "stock-entry",
+        "width": 1440
+      }
+    ],
+    "errors": [],
+    "external_requests": [],
+    "http_errors": [],
+    "passed": false,
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    }
+  },
+  "original_trace": "C:/Users/Rabel/AppData/Local/Temp/sprint07-rc4-firefox-sale-red-trace.zip",
+  "observed_trace_facts": {
+    "wholesale_fill": {
+      "call_id": "call@10292",
+      "value": "10,00",
+      "start_ms": 415340.322,
+      "end_ms": 415368.069,
+      "after_snapshot_ms": 415371.802,
+      "after_value": "10,00"
+    },
+    "minimum_fill": {
+      "call_id": "call@10294",
+      "selector": "#cadastro-quantidade_minima_atacado",
+      "value": "3",
+      "start_ms": 415378.564,
+      "end_ms": 415408.313,
+      "after_snapshot_ms": 415413.957,
+      "after_wholesale_value": "3"
+    },
+    "product_post": {
+      "time": "2026-09-07T17:27:11.365Z",
+      "resource": "d6b4539c5631636e94326f0a9cf3462ebd924426.json",
+      "valor_varejo": "12.50",
+      "valor_atacado": "3.00",
+      "quantidade_minima_atacado": "1"
+    },
+    "product_response": {
+      "resource": "d466e3b1653b23e4102898dbdd23a8093919b643.json",
+      "valor_varejo": "12.50",
+      "valor_atacado": "3.00",
+      "quantidade_minima_atacado": 1
+    },
+    "pdv_response": {
+      "resource": "c8eb6172f1d3843190639a76396c07c471e3f517.json",
+      "valor_varejo": "12.50",
+      "valor_atacado": "3.00",
+      "quantidade_minima_atacado": 1,
+      "estoque_atual": 7
+    },
+    "conclusion": "Retail never became3. The previous wholesale input received the next field's3 while minimum stayed1. Automatic PDV correctly charged2×3=6 from already-corrupt form data."
+  },
+  "deterministic_red": {
+    "browser_json": {
+      "engine": "firefox",
+      "version": "141.0",
+      "screens": [
+        {
+          "violations": [],
+          "rules_passed": 25,
+          "overflow": false,
+          "title": "OceanBlue • Categorias",
+          "path": "/api/categorias/view",
+          "state": "create-category",
+          "width": 1440
+        }
+      ],
+      "errors": [],
+      "external_requests": [],
+      "http_errors": [],
+      "decimal_focus": {
+        "first": "cadastro-valor_atacado",
+        "immediate": "cadastro-quantidade_minima_atacado",
+        "next_frame": "cadastro-valor_atacado"
+      },
+      "passed": false,
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      }
+    },
+    "source": "Original decimal-input.js without focus guard; same existing browser journey strengthened before product patch.",
+    "command": "docker exec oceanblue-s07-ui-decimal python -m pytest tests/test_sprint07_browser.py -k 'test_catalog_client_sale_stock_financial_audit_journey and firefox and 1440' --no-cov --tb=short -q --junitxml=/tmp/sprint07-decimal-red.xml",
+    "pytest_exit_code": 1,
+    "failed": 1,
+    "deselected": 71,
+    "duration_seconds": 26.75,
+    "junit": "red-junit.xml"
+  },
+  "root_cause": "Unconditional deferred input.select() reclaimed focus in Firefox after synchronous focus moved from wholesale to minimum. Original trace corruption and real next-frame red agree.",
+  "minimal_fix": "Before input.select() in the existing RAF callback, return when document.activeElement !== input. Preserve masking and selection on current focused field."
+}

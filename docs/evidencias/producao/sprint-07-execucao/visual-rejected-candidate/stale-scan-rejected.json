@@ -1,0 +1,7 @@
+{
+  "status": "passed_negative_control",
+  "old_scan_rejected": true,
+  "exit_code": 2,
+  "source_change": "Sticky-header skip-link regression assertions and UI correction after human visual rejection",
+  "next_gate": "Repeat complete source-bound scan before both new complete regressions and operational proof."
+}

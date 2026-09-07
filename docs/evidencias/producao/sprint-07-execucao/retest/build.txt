@@ -1,0 +1,93 @@
+ Image oceanblue-s07-rc6-retest-smoke Building 
+ Image oceanblue-s07-rc6-retest-test Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 1.09kB 0.0s done
+#1 DONE 0.0s
+
+#2 [test internal] load build definition from Dockerfile.test
+#2 transferring dockerfile: 513B 0.0s done
+#2 DONE 0.5s
+
+#3 [smoke internal] load build definition from Dockerfile
+#3 transferring dockerfile: 1.17kB 0.0s done
+#3 DONE 0.5s
+
+#4 [test internal] load metadata for docker.io/library/python:3.12.12-slim-bookworm@sha256:593bd06efe90efa80dc4eee3948be7c0fde4134606dd40d8dd8dbcade98e669c
+#4 DONE 0.3s
+
+#5 [test internal] load .dockerignore
+#5 transferring context: 331B 0.0s done
+#5 DONE 0.0s
+
+#6 [smoke 1/6] FROM docker.io/library/python:3.12.12-slim-bookworm@sha256:593bd06efe90efa80dc4eee3948be7c0fde4134606dd40d8dd8dbcade98e669c
+#6 resolve docker.io/library/python:3.12.12-slim-bookworm@sha256:593bd06efe90efa80dc4eee3948be7c0fde4134606dd40d8dd8dbcade98e669c 0.1s done
+#6 DONE 0.1s
+
+#7 [smoke internal] load build context
+#7 transferring context: 25.00kB 0.2s done
+#7 transferring context: 25.00kB 0.2s done
+#7 DONE 0.2s
+
+#8 [test 6/7] COPY . .
+#8 CACHED
+
+#9 [test 2/6] WORKDIR /app
+#9 CACHED
+
+#10 [test 3/7] COPY requirements-dev.txt .
+#10 CACHED
+
+#11 [test 4/7] RUN python -m pip install --no-cache-dir --require-hashes -r requirements-dev.txt
+#11 CACHED
+
+#12 [test 5/7] RUN python -m playwright install --with-deps chromium firefox webkit && chmod -R a+rX /opt/playwright
+#12 CACHED
+
+#13 [test 7/7] RUN useradd --create-home tester && chown -R tester:tester /app
+#13 CACHED
+
+#9 [smoke 2/6] WORKDIR /app
+#9 CACHED
+
+#14 [smoke 3/6] COPY requirements.txt .
+#14 CACHED
+
+#15 [smoke 4/6] RUN python -m pip install --no-cache-dir --require-hashes -r requirements.txt
+#15 CACHED
+
+#16 [smoke 5/6] COPY . .
+#16 CACHED
+
+#17 [smoke 6/6] RUN sed -i 's/\r$//' /app/docker-entrypoint.sh     && cp /app/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh     && chmod +x /usr/local/bin/docker-entrypoint.sh     && adduser --disabled-password --gecos "" appuser     && mkdir -p /app/instance/storage     && chown -R appuser:appuser /app/instance     && chmod 700 /app/instance /app/instance/storage
+#17 CACHED
+
+#18 [smoke] exporting to image
+#18 exporting layers 0.0s done
+#18 exporting manifest sha256:0941f8b4ec4a23a0f4be68d5a4fd39c344a95be8ff30a2baac588b9c2dc60898 0.1s done
+#18 exporting config sha256:a256f87022e0b5f1fb63040ac425d64bae4a1d6a9f27b38e133ad20195e9efca
+#18 exporting config sha256:a256f87022e0b5f1fb63040ac425d64bae4a1d6a9f27b38e133ad20195e9efca 0.1s done
+#18 exporting attestation manifest sha256:bbfa5102f3302b3acb0288685ec40a28ccc3e8fa9bf4846c978654bc71b9815c
+#18 exporting attestation manifest sha256:bbfa5102f3302b3acb0288685ec40a28ccc3e8fa9bf4846c978654bc71b9815c 0.1s done
+#18 exporting manifest list sha256:93e86dfefdb3f0d63613183dc56b80f29a574320b7267172350965f46defbe72 0.1s done
+#18 naming to docker.io/library/oceanblue-s07-rc6-retest-smoke:latest 0.0s done
+#18 unpacking to docker.io/library/oceanblue-s07-rc6-retest-smoke:latest
+#18 unpacking to docker.io/library/oceanblue-s07-rc6-retest-smoke:latest 0.0s done
+#18 DONE 0.6s
+
+#19 [test] exporting to image
+#19 exporting layers 0.0s done
+#19 exporting manifest sha256:277932804ccd7f8997e660c6af7fae5ab91a32ba2e0293f595fcce2be8dd3a76 0.1s done
+#19 exporting config sha256:8a2c49933d7261c244b0a911f095762f525bcbc77c9895fd1c5dd121b4d8f05c 0.1s done
+#19 exporting attestation manifest sha256:be19e3d7f0dee445d356027b42a9c0609798038eb72957d59be8e1b4cda690e4 0.1s done
+#19 exporting manifest list sha256:d0a196d7b9d85a4a9852af0b94171881d0082ad6adcc171e9ecec514ad9a7e7a 0.1s done
+#19 naming to docker.io/library/oceanblue-s07-rc6-retest-test:latest 0.0s done
+#19 unpacking to docker.io/library/oceanblue-s07-rc6-retest-test:latest 0.0s done
+#19 DONE 0.6s
+
+#20 [smoke] resolving provenance for metadata file
+#20 DONE 0.1s
+
+#21 [test] resolving provenance for metadata file
+#21 DONE 0.1s
+ Image oceanblue-s07-rc6-retest-test Built 
+ Image oceanblue-s07-rc6-retest-smoke Built 

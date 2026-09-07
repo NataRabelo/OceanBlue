@@ -1,0 +1,4 @@
+{"endpoint": "health", "response": {"service": "OceanBlue API", "status": "ok", "version": "1.0.0"}}
+{"endpoint": "ready", "response": {"database": "ok", "service": "OceanBlue API", "status": "ok", "storage": "ok"}}
+PRODUCTION NONROOT SECURE CONFIG HTTP SMOKE OK
+PREVIOUS APPLICATION RUNS ON RESTORED SCHEMA; THREE SALES AND LEDGER ENTRIES PRESERVED

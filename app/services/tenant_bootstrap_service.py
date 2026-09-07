@@ -149,9 +149,6 @@ class TenantBootstrapService:
                 )
                 db.session.add(forma)
                 db.session.flush()
-            else:
-                forma.ativo = True
-
             formas_pagamento[forma.nome] = forma
 
         for definicao in TenantBootstrapService.DEFAULT_CATEGORIAS_FINANCEIRAS:
@@ -169,9 +166,6 @@ class TenantBootstrapService:
                 )
                 db.session.add(categoria)
                 db.session.flush()
-            else:
-                categoria.ativo = True
-
             categorias_financeiras[(categoria.nome, categoria.tipo_categoria.value)] = categoria
 
         for definicao in TenantBootstrapService.DEFAULT_TIPOS_OPERACAO:

@@ -410,6 +410,11 @@ window.CrudPage = class CrudPage {
     }
 
     bindModalClose() {
+        document.querySelectorAll("button[data-close-modal]").forEach((button) => {
+            if (!button.textContent.trim() && !button.hasAttribute("aria-label")) {
+                button.setAttribute("aria-label", "Fechar janela");
+            }
+        });
         document.addEventListener("click", (e) => {
             const closeTrigger = e.target.closest("[data-close-modal]");
             if (!closeTrigger) return;
@@ -486,7 +491,7 @@ window.CrudPage = class CrudPage {
         div.id = "crud-message";
         div.className = `
             fixed top-4 right-4 z-[9999] px-4 py-3 rounded-xl shadow-lg text-sm font-medium
-            ${type === "success" ? "bg-emerald-500 text-white" : "bg-red-500 text-white"}
+            ${type === "success" ? "bg-emerald-500 text-slate-950" : "bg-red-500 text-white"}
         `;
         div.textContent = message;
 

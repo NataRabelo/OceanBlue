@@ -45,9 +45,13 @@ Documentos legados foram preservados em `docs/99-legado-ou-backup/` antes da reo
 - Boleto: existe base de modelos, migration, repository, service e endpoints para cadastro, parcelas, regras de juros/multa e baixa. Nao ha evidencia de integracao bancaria real, remessa CNAB efetiva, registro em API bancaria ou geracao real de PDF.
 - Nota fiscal: existe modulo fiscal com configuracao por empresa, prevalidacao, criacao de nota e geracao de XML interno de NFC-e. Nao ha autorizacao real na SEFAZ, assinatura digital, transmissao, consulta de protocolo real ou cancelamento fiscal.
 
-## Proximos passos recomendados
+## Candidato final
 
-Use `docs/10-planejamento-sprints/plano-sprint-2.md` como guia para priorizar correcao de bugs visiveis, validacao de ambiente, decisao de integradores externos e desenho funcional de boleto/fiscal antes de implementar emissao real.
+Versão `2.1.0-rc.1`. Execute `pwsh -NoProfile -File scripts/validate_release_candidate.ps1`
+para regressão integral, reteste, provas operacionais e pacote verificado. Consulte
+[fechamento da Sprint 7](docs/evidencias/producao/sprint-07-execucao.md) e
+[checklist atual](docs/10-planejamento-sprints/checklist-producao.md). Os planos das Sprints
+anteriores são históricos; não autorizam ativação de integrações neste candidato.
 # Operação de produção
 
 A configuração oficial endurecida está em `compose.production.yml`. Consulte o

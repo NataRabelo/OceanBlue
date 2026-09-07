@@ -143,6 +143,7 @@
 
             if (selectAllOnFocus) {
                 requestAnimationFrame(() => {
+                    if (document.activeElement !== input) return;
                     try {
                         input.select();
                     } catch {

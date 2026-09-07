@@ -73,6 +73,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
 
     window.rolePage.init();
+    const createButton = document.getElementById("role-create-button");
+    if (createButton) createButton.disabled = false;
 
     if (window.lucide) {
         lucide.createIcons();
@@ -121,7 +123,7 @@ function renderPermissionGroups(groups, selected) {
                         ${group.permissions?.length || 0} permiss${(group.permissions?.length || 0) === 1 ? "ao" : "oes"}
                     </span>
                 </div>
-                <p class="mt-3 text-xs text-slate-500">Ao desligar o item "Geral", todas as permissoes dependentes do modulo sao removidas automaticamente.</p>
+                <p class="mt-3 text-xs text-slate-400">Ao desligar o item "Geral", todas as permissoes dependentes do modulo sao removidas automaticamente.</p>
             </div>
             <div class="grid grid-cols-1 gap-3 p-4 lg:grid-cols-2">
                 ${(group.permissions || []).map((permission) => renderPermissionCard(permission, selected)).join("")}
@@ -155,9 +157,9 @@ function renderPermissionCard(permission, selected) {
                     <span class="block text-sm font-medium text-white">${escapeHtml(permission.titulo || permission.nome || permission.codigo)}</span>
                     <span class="inline-flex items-center rounded-full border border-slate-700 bg-slate-900 px-2 py-0.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-300">${badgeLabel}</span>
                 </span>
-                <span class="mt-1 block text-xs text-slate-500">${escapeHtml(permission.codigo || "")}</span>
+                <span class="mt-1 block text-xs text-slate-400">${escapeHtml(permission.codigo || "")}</span>
                 <span class="mt-2 block text-sm leading-relaxed text-slate-400">${escapeHtml(helperText)}</span>
-                <span class="mt-2 block text-[11px] uppercase tracking-[0.16em] text-slate-500">${escapeHtml(dependencyLabel)}</span>
+                <span class="mt-2 block text-[11px] uppercase tracking-[0.16em] text-slate-400">${escapeHtml(dependencyLabel)}</span>
             </span>
         </label>
     `;

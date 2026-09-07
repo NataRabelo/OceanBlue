@@ -1,0 +1,386 @@
+[
+  {
+    "case": "backup-valid",
+    "passed": true,
+    "observed": {
+      "exit_code": 0,
+      "seconds": 18.428,
+      "log": "backup.log",
+      "script_sha256": "56D0E575CC62F71594148287838094AA638EB8EE3254C82F9F5C0E9ACE2CC41A"
+    }
+  },
+  {
+    "case": "roundtrip",
+    "passed": true,
+    "observed": {
+      "exit_code": 0,
+      "seconds": 22.29,
+      "log": "roundtrip.log",
+      "script_sha256": "56D0E575CC62F71594148287838094AA638EB8EE3254C82F9F5C0E9ACE2CC41A"
+    }
+  },
+  {
+    "case": "independent-recovery",
+    "passed": true,
+    "observed": {
+      "backup_seconds": 18.428,
+      "restore_seconds": 22.29,
+      "sequence": "2",
+      "receipt": "synthetic-only: two records",
+      "rows": "2",
+      "lost_captured_records": 0
+    }
+  },
+  {
+    "case": "backup-wrong-revision",
+    "passed": true,
+    "observed": {
+      "exit_code": 1,
+      "seconds": 11.163,
+      "log": "backup-wrong-revision.log",
+      "script_sha256": "56D0E575CC62F71594148287838094AA638EB8EE3254C82F9F5C0E9ACE2CC41A"
+    }
+  },
+  {
+    "case": "format-version",
+    "passed": true,
+    "observed": {
+      "run": {
+        "exit_code": 1,
+        "seconds": 11.787,
+        "log": "format-version.log",
+        "script_sha256": "56D0E575CC62F71594148287838094AA638EB8EE3254C82F9F5C0E9ACE2CC41A"
+      },
+      "database_empty": true
+    }
+  },
+  {
+    "case": "fingerprint-order",
+    "passed": true,
+    "observed": {
+      "run": {
+        "exit_code": 0,
+        "seconds": 18.974,
+        "log": "fingerprint-order.log",
+        "script_sha256": "56D0E575CC62F71594148287838094AA638EB8EE3254C82F9F5C0E9ACE2CC41A"
+      },
+      "database_empty": false
+    }
+  },
+  {
+    "case": "fingerprint-content",
+    "passed": true,
+    "observed": {
+      "run": {
+        "exit_code": 1,
+        "seconds": 20.323,
+        "log": "fingerprint-content.log",
+        "script_sha256": "56D0E575CC62F71594148287838094AA638EB8EE3254C82F9F5C0E9ACE2CC41A"
+      },
+      "database_empty": true
+    }
+  },
+  {
+    "case": "file-hash",
+    "passed": true,
+    "observed": {
+      "run": {
+        "exit_code": 1,
+        "seconds": 11.727,
+        "log": "file-hash.log",
+        "script_sha256": "56D0E575CC62F71594148287838094AA638EB8EE3254C82F9F5C0E9ACE2CC41A"
+      },
+      "database_empty": true
+    }
+  },
+  {
+    "case": "traversal",
+    "passed": true,
+    "observed": {
+      "run": {
+        "exit_code": 1,
+        "seconds": 11.383,
+        "log": "traversal.log",
+        "script_sha256": "56D0E575CC62F71594148287838094AA638EB8EE3254C82F9F5C0E9ACE2CC41A"
+      },
+      "database_empty": true
+    }
+  },
+  {
+    "case": "manifest-pinned",
+    "passed": true,
+    "observed": {
+      "run": {
+        "exit_code": 1,
+        "seconds": 11.233,
+        "log": "manifest-pinned.log",
+        "script_sha256": "56D0E575CC62F71594148287838094AA638EB8EE3254C82F9F5C0E9ACE2CC41A"
+      },
+      "database_empty": true
+    }
+  },
+  {
+    "case": "custody-unpinned",
+    "passed": true,
+    "observed": {
+      "run": {
+        "exit_code": 1,
+        "seconds": 0.65,
+        "log": "custody-unpinned.log",
+        "script_sha256": "56D0E575CC62F71594148287838094AA638EB8EE3254C82F9F5C0E9ACE2CC41A"
+      },
+      "database_empty": true
+    }
+  },
+  {
+    "case": "restore-wrong-revision",
+    "passed": true,
+    "observed": {
+      "run": {
+        "exit_code": 1,
+        "seconds": 14.449,
+        "log": "restore-wrong-revision.log",
+        "script_sha256": "56D0E575CC62F71594148287838094AA638EB8EE3254C82F9F5C0E9ACE2CC41A"
+      },
+      "database_empty": true
+    }
+  },
+  {
+    "case": "postgres-version",
+    "passed": true,
+    "observed": {
+      "run": {
+        "exit_code": 1,
+        "seconds": 11.543,
+        "log": "postgres-version.log",
+        "script_sha256": "56D0E575CC62F71594148287838094AA638EB8EE3254C82F9F5C0E9ACE2CC41A"
+      },
+      "database_empty": true
+    }
+  },
+  {
+    "case": "nonempty-table",
+    "passed": true,
+    "observed": {
+      "run": {
+        "exit_code": 1,
+        "seconds": 11.405,
+        "log": "nonempty-table.log",
+        "script_sha256": "56D0E575CC62F71594148287838094AA638EB8EE3254C82F9F5C0E9ACE2CC41A"
+      },
+      "snapshot_table_absent": true
+    }
+  },
+  {
+    "case": "nonempty-schema",
+    "passed": true,
+    "observed": {
+      "run": {
+        "exit_code": 1,
+        "seconds": 11.998,
+        "log": "nonempty-schema.log",
+        "script_sha256": "56D0E575CC62F71594148287838094AA638EB8EE3254C82F9F5C0E9ACE2CC41A"
+      },
+      "snapshot_table_absent": true
+    }
+  },
+  {
+    "case": "nonempty-sequence",
+    "passed": true,
+    "observed": {
+      "run": {
+        "exit_code": 1,
+        "seconds": 11.363,
+        "log": "nonempty-sequence.log",
+        "script_sha256": "56D0E575CC62F71594148287838094AA638EB8EE3254C82F9F5C0E9ACE2CC41A"
+      },
+      "snapshot_table_absent": true
+    }
+  },
+  {
+    "case": "nonempty-function",
+    "passed": true,
+    "observed": {
+      "run": {
+        "exit_code": 1,
+        "seconds": 14.733,
+        "log": "nonempty-function.log",
+        "script_sha256": "56D0E575CC62F71594148287838094AA638EB8EE3254C82F9F5C0E9ACE2CC41A"
+      },
+      "snapshot_table_absent": true
+    }
+  },
+  {
+    "case": "nonempty-storage",
+    "passed": true,
+    "observed": {
+      "run": {
+        "exit_code": 1,
+        "seconds": 11.603,
+        "log": "nonempty-storage.log",
+        "script_sha256": "56D0E575CC62F71594148287838094AA638EB8EE3254C82F9F5C0E9ACE2CC41A"
+      },
+      "snapshot_table_absent": true
+    }
+  },
+  {
+    "case": "nonempty-storage-link",
+    "passed": true,
+    "observed": {
+      "run": {
+        "exit_code": 1,
+        "seconds": 7.562,
+        "log": "nonempty-storage-link.log",
+        "script_sha256": "56D0E575CC62F71594148287838094AA638EB8EE3254C82F9F5C0E9ACE2CC41A"
+      },
+      "snapshot_table_absent": true
+    }
+  },
+  {
+    "case": "copy-failure",
+    "passed": true,
+    "observed": {
+      "storage": "[\"storage\"]",
+      "run": {
+        "exit_code": 1,
+        "seconds": 16.734,
+        "log": "copy-failure.log",
+        "script_sha256": "56D0E575CC62F71594148287838094AA638EB8EE3254C82F9F5C0E9ACE2CC41A"
+      },
+      "database_empty": true
+    }
+  },
+  {
+    "case": "interrupt",
+    "passed": true,
+    "observed": {
+      "storage": "[\"storage\"]",
+      "run": {
+        "exit_code": 1,
+        "seconds": 20.365,
+        "log": "interrupt.log",
+        "script_sha256": "56D0E575CC62F71594148287838094AA638EB8EE3254C82F9F5C0E9ACE2CC41A"
+      },
+      "database_empty": true
+    }
+  },
+  {
+    "case": "rollback-failure",
+    "passed": true,
+    "observed": {
+      "storage": "[\".oceanblue-restore-incomplete\", \"storage\", \"storage/proof.txt\"]",
+      "run": {
+        "exit_code": 1,
+        "seconds": 16.135,
+        "log": "rollback-failure.log",
+        "script_sha256": "56D0E575CC62F71594148287838094AA638EB8EE3254C82F9F5C0E9ACE2CC41A"
+      },
+      "database_empty": true
+    }
+  },
+  {
+    "case": "interrupted-backup",
+    "passed": true,
+    "observed": {
+      "exit_code": 1,
+      "seconds": 11.608,
+      "log": "interrupted-backup.log",
+      "script_sha256": "56D0E575CC62F71594148287838094AA638EB8EE3254C82F9F5C0E9ACE2CC41A"
+    }
+  },
+  {
+    "case": "active-app",
+    "passed": true,
+    "observed": {
+      "exit_code": 1,
+      "seconds": 1.081,
+      "log": "active-app.log",
+      "script_sha256": "56D0E575CC62F71594148287838094AA638EB8EE3254C82F9F5C0E9ACE2CC41A"
+    }
+  },
+  {
+    "case": "active-db-client",
+    "passed": true,
+    "observed": {
+      "exit_code": 1,
+      "seconds": 4.99,
+      "log": "active-db-client.log",
+      "script_sha256": "56D0E575CC62F71594148287838094AA638EB8EE3254C82F9F5C0E9ACE2CC41A"
+    }
+  },
+  {
+    "case": "shared-storage-writer",
+    "passed": true,
+    "observed": {
+      "exit_code": 1,
+      "seconds": 4.681,
+      "log": "shared-storage-writer.log",
+      "script_sha256": "56D0E575CC62F71594148287838094AA638EB8EE3254C82F9F5C0E9ACE2CC41A"
+    }
+  },
+  {
+    "case": "root-junction",
+    "passed": true,
+    "observed": {
+      "exit_code": 1,
+      "seconds": 0.673,
+      "log": "root-junction.log",
+      "script_sha256": "56D0E575CC62F71594148287838094AA638EB8EE3254C82F9F5C0E9ACE2CC41A"
+    }
+  },
+  {
+    "case": "db-rollback-failure",
+    "passed": true,
+    "observed": {
+      "run": {
+        "exit_code": 1,
+        "seconds": 13.299,
+        "log": "db-rollback-failure.log",
+        "script_sha256": "56D0E575CC62F71594148287838094AA638EB8EE3254C82F9F5C0E9ACE2CC41A"
+      },
+      "incomplete_marker": "True",
+      "database_empty": true
+    }
+  },
+  {
+    "case": "retry-incomplete",
+    "passed": true,
+    "observed": {
+      "exit_code": 1,
+      "seconds": 7.239,
+      "log": "retry-incomplete.log",
+      "script_sha256": "56D0E575CC62F71594148287838094AA638EB8EE3254C82F9F5C0E9ACE2CC41A"
+    }
+  },
+  {
+    "case": "late-db-writer",
+    "passed": true,
+    "observed": {
+      "exit_code": 1,
+      "seconds": 15.999,
+      "log": "late-db-writer.log",
+      "script_sha256": "56D0E575CC62F71594148287838094AA638EB8EE3254C82F9F5C0E9ACE2CC41A"
+    }
+  },
+  {
+    "case": "source-link",
+    "passed": true,
+    "observed": {
+      "exit_code": 1,
+      "seconds": 7.687,
+      "log": "source-link.log",
+      "script_sha256": "56D0E575CC62F71594148287838094AA638EB8EE3254C82F9F5C0E9ACE2CC41A"
+    }
+  },
+  {
+    "case": "hard-kill",
+    "passed": true,
+    "observed": {
+      "marker": "True",
+      "sql_sessions": "0",
+      "reached_after_copy": true,
+      "rollback_observed_seconds": 1.778,
+      "database_empty": true
+    }
+  }
+]

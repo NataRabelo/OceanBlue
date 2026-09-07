@@ -2,6 +2,7 @@ from app.models.db import Role, RolePermission
 from app.extensions import db
 from app.repositorys.role_repository import RoleRepository
 from app.security.permissions import get_permission_dependency_codes, normalize_permission_codes
+from app.services.money_service import positive_integer
 
 
 from app.services.transaction_service import atomic_operation
@@ -136,7 +137,7 @@ class RoleService:
         for value in values:
             if value in (None, ""):
                 continue
-            ids.append(int(value))
+            ids.append(positive_integer(value, "Permission"))
 
         return list(dict.fromkeys(ids))
 

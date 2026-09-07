@@ -11,6 +11,7 @@ from app.services.cliente_service import ClienteService
 from app.services.comunicacao_service import ComunicacaoService
 from app.services.tenant_bootstrap_service import TenantBootstrapService
 from app.services.time_service import TimeService
+from app.services.money_service import positive_integer
 from app.extensions import db
 from app.models.db import ProdutoEmpresa, ItemVenda, StatusVenda
 from app.services.transaction_service import after_commit
@@ -241,7 +242,7 @@ class EstoqueService:
             AcessoEmpresaService.validar_empresa(empresa_id, escopo)
 
         periodo_normalizado = str(periodo or "mes").strip().lower()
-        hoje = date.today()
+        hoje = TimeService.today_br()
 
         if periodo_normalizado == "semana":
             data_inicio_obj = hoje - timedelta(days=6)
@@ -859,10 +860,7 @@ class EstoqueService:
         if value in (None, ""):
             raise ValueError(f"{field_name} e obrigatorio.")
 
-        try:
-            return int(value)
-        except (TypeError, ValueError):
-            raise ValueError(f"{field_name} invalido.")
+        return positive_integer(value, field_name)
 
     @staticmethod
     def _to_optional_date(value):
@@ -893,10 +891,7 @@ class EstoqueService:
     def _to_optional_int(value, field_name):
         if value in (None, ""):
             return None
-        try:
-            return int(value)
-        except (TypeError, ValueError):
-            raise ValueError(f"{field_name} invalido.")
+        return positive_integer(value, field_name)
 
     @staticmethod
     def _esta_dentro_janela_cancelamento(data_base, limite_horas):

@@ -24,13 +24,13 @@ min-h-screen flex flex-col bg-slate-950 text-white
             </div>
 
             <div class="flex flex-col sm:flex-row gap-3 w-full xl:w-auto">
-                <select id="financeiro-empresa"
+                <select id="financeiro-empresa" aria-label="Empresa dos lancamentos"
                     data-theme-company-select
                     class="w-full sm:w-64 bg-slate-950/80 border border-slate-800 focus:border-sky-500 focus:ring-2 focus:ring-sky-500/20 rounded-xl px-4 py-3 text-sm text-white outline-none transition">
                     <option value="">Todas as empresas</option>
                 </select>
 
-                <select id="financeiro-tipo"
+                <select id="financeiro-tipo" aria-label="Tipo de lancamento"
                     class="w-full sm:w-44 bg-slate-950/80 border border-slate-800 focus:border-sky-500 focus:ring-2 focus:ring-sky-500/20 rounded-xl px-4 py-3 text-sm text-white outline-none transition">
                     <option value="">Todos</option>
                     <option value="ENTRADA">Entradas</option>
@@ -56,7 +56,7 @@ min-h-screen flex flex-col bg-slate-950 text-white
             </div>
         </div>
 
-        <div id="financeiro-lancamentos-wrap" class="overflow-x-auto">
+        <div id="financeiro-lancamentos-wrap" class="overflow-x-auto" tabindex="0" role="region" aria-label="Lista de lancamentos financeiros">
             <table class="w-full min-w-[980px]">
                 <thead class="bg-slate-950/70">
                     <tr class="border-b border-slate-800">

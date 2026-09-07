@@ -1,5 +1,10 @@
 # Mapa de funcionalidades
 
+> Inventário original preservado para confronto. Status atuais, implementações, testes e
+> limites estão na [reauditoria da Sprint 7](../evidencias/producao/sprint-07-execucao/auditoria-modulos.md).
+> Mensageria é validada com transporte simulado; emissão Boleto/Fiscal e transporte externo
+> permanecem bloqueados por código e configuração produtiva, independentemente do texto histórico.
+
 ## Plataforma/SaaS
 
 Status: funcional com base implementada.

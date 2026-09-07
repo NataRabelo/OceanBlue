@@ -1,0 +1,2 @@
+ Container oceanblue-s07-rc6-regression-db-test-1 Stopping 
+ Container oceanblue-s07-rc6-regression-db-test-1 Stopped 

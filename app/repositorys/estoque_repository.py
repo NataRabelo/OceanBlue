@@ -1,7 +1,10 @@
+from datetime import timedelta
+
 from sqlalchemy.orm import joinedload
 
 from app.extensions import db
 from app.services.transaction_service import save
+from app.services.time_service import TimeService
 from app.models.db import (
     ConfiguracaoNotificacaoEstoque,
     Empresa,
@@ -196,8 +199,8 @@ class EstoqueRepository:
                 Produto.nome.label("produto_nome"),
                 ProdutoEmpresa.empresa_id.label("empresa_id"),
                 Empresa.nome_fantasia.label("empresa_nome"),
-                db.func.coalesce(db.func.sum(ItemVenda.quantidade), 0).label("quantidade"),
-                db.func.coalesce(db.func.sum(ItemVenda.valor_total), 0).label("faturamento"),
+                db.func.coalesce(db.func.sum(ItemVenda.quantidade - ItemVenda.quantidade_cancelada), 0).label("quantidade"),
+                db.func.coalesce(db.func.sum((ItemVenda.quantidade - ItemVenda.quantidade_cancelada) * ItemVenda.valor_unitario), 0).label("faturamento"),
             )
             .join(ItemVenda, ItemVenda.produto_id == Produto.id)
             .join(Venda, Venda.id == ItemVenda.venda_id)
@@ -213,6 +216,7 @@ class EstoqueRepository:
             .filter(
                 Venda.tenant_id == tenant_id,
                 Venda.status == StatusVenda.FINALIZADA,
+                ItemVenda.quantidade > ItemVenda.quantidade_cancelada,
                 Produto.tenant_id == tenant_id,
             )
             .group_by(Produto.id, Produto.nome, ProdutoEmpresa.empresa_id, Empresa.nome_fantasia)
@@ -226,10 +230,10 @@ class EstoqueRepository:
             query = query.filter(Venda.empresa_id == empresa_id)
 
         if data_inicio is not None:
-            query = query.filter(db.func.date(Venda.data_venda) >= data_inicio)
+            query = query.filter(Venda.data_venda >= TimeService.local_date_start_to_utc_naive(data_inicio))
 
         if data_fim is not None:
-            query = query.filter(db.func.date(Venda.data_venda) <= data_fim)
+            query = query.filter(Venda.data_venda < TimeService.local_date_start_to_utc_naive(data_fim + timedelta(days=1)))
 
         return query.limit(max(limite, 1)).all()
 

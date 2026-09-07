@@ -1,5 +1,9 @@
 # Bugs, riscos e divida tecnica
 
+> Diagnóstico histórico preservado. A situação do código atual e o destino de cada grupo
+> de pendências constam na [reauditoria da Sprint 7](../evidencias/producao/sprint-07-execucao/auditoria-modulos.md).
+> Não use as recomendações históricas de integrações como instruções de produção.
+
 ## Riscos tecnicos principais
 
 - Raiz analisada nao esta em repositorio Git ativo; rastreabilidade e rollback precisam ser confirmados.

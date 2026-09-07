@@ -1,0 +1,194 @@
+{
+  "status": "focal_process_passed",
+  "release_acceptance": "Not a global gate. Pending rc6 fresh source-bound scan, BOTH full868 regressions with coverage and actual process exit0, and parent operational proof.",
+  "runtime_change": "Only Nova Role gets native disabled+id in template and becomes enabled after synchronous rolePage.init() returns with handlers bound. No other button, global initialization or backend change.",
+  "fixture_changes": [
+    "Same journey holds ONLY exact localhost role.js request; asserts disabled before initialization; releases REAL request in finally; asserts enabled+initialized and executes complete role/employee/restricted-login journey.",
+    "Observe transient denial toast in correct order: goto DOMContentLoaded→status200/homeURL/toast text/noRoleTable→networkidle. Preserve timeouts, access control, Axe and errors."
+  ],
+  "total_tests_unchanged": 868,
+  "source_sha256": {
+    "app/templates/modulos/role/role.html": "5050f23780cf479279d8e6e68440bbb62908aa656e4cfa013e8a392d688c55e1",
+    "app/static/js/modulos/role.js": "b3911ace38a36374d9e24a87986d63c24c5d64d7a13ba4e35cc4851d6d5595c4",
+    "tests/test_sprint07_browser.py": "de8e553d18b595a60ce08152f5d1144c111d6a5ca59daf32a85e5b683a328969"
+  },
+  "command": "docker exec oceanblue-s07-ui-role python -m pytest tests/test_sprint07_browser.py -k test_admin_role_employee_and_restricted_login_journey --no-cov --tb=short -q --junitxml=/tmp/sprint07-role-focal6-green.xml",
+  "pytest_exit_code": 0,
+  "passed": 6,
+  "failed": 0,
+  "errors": 0,
+  "skipped": 0,
+  "deselected": 66,
+  "junit_duration_seconds": 166.803,
+  "pytest_duration_seconds": 166.81,
+  "junit": "green-junit.xml",
+  "coverage": "--no-cov applies ONLY to authorized focal invocation; global coverage configuration and50% minimum unchanged.",
+  "distinct_runs": [
+    {
+      "run": "deterministic readiness red before runtime patch",
+      "tests": 1,
+      "passed": 0,
+      "failed": 1,
+      "pytest_exit_code": 1,
+      "junit_seconds": 30.128,
+      "evidence": "red.json",
+      "junit": "red-junit.xml"
+    },
+    {
+      "run": "initial six-case probe rejected by expired-toast observation",
+      "tests": 6,
+      "passed": 5,
+      "failed": 1,
+      "pytest_exit_code": 1,
+      "junit_seconds": 224.068,
+      "evidence": "toast-rejected.json",
+      "junit": "toast-rejected-junit.xml"
+    },
+    {
+      "run": "intermediate invocation interrupted to load exact final assertion order",
+      "pytest_exit_code": 137,
+      "status": "discarded, not accepted"
+    },
+    {
+      "run": "final full six-case focal",
+      "tests": 6,
+      "passed": 6,
+      "failed": 0,
+      "pytest_exit_code": 0,
+      "junit_seconds": 166.803
+    }
+  ],
+  "toast_timing_proof": {
+    "intentional_dismiss_ms": 6500,
+    "observed_favicon_duration_ms": 8364.687,
+    "trace_frames_personally_inspected": true,
+    "details": "toast-rejected.json"
+  },
+  "cases": [
+    {
+      "engine": "chromium",
+      "version": "140.0.7339.16",
+      "width": 1440,
+      "passed": true,
+      "role_before_script": {
+        "disabled": true,
+        "initialized": false,
+        "script_held": true
+      },
+      "role_after_script": {
+        "disabled": false,
+        "initialized": true
+      },
+      "axe_violations": 0,
+      "overflow": false,
+      "http_js_external_errors": 0
+    },
+    {
+      "engine": "chromium",
+      "version": "140.0.7339.16",
+      "width": 390,
+      "passed": true,
+      "role_before_script": {
+        "disabled": true,
+        "initialized": false,
+        "script_held": true
+      },
+      "role_after_script": {
+        "disabled": false,
+        "initialized": true
+      },
+      "axe_violations": 0,
+      "overflow": false,
+      "http_js_external_errors": 0
+    },
+    {
+      "engine": "firefox",
+      "version": "141.0",
+      "width": 1440,
+      "passed": true,
+      "role_before_script": {
+        "disabled": true,
+        "initialized": false,
+        "script_held": true
+      },
+      "role_after_script": {
+        "disabled": false,
+        "initialized": true
+      },
+      "axe_violations": 0,
+      "overflow": false,
+      "http_js_external_errors": 0
+    },
+    {
+      "engine": "firefox",
+      "version": "141.0",
+      "width": 390,
+      "passed": true,
+      "role_before_script": {
+        "disabled": true,
+        "initialized": false,
+        "script_held": true
+      },
+      "role_after_script": {
+        "disabled": false,
+        "initialized": true
+      },
+      "axe_violations": 0,
+      "overflow": false,
+      "http_js_external_errors": 0
+    },
+    {
+      "engine": "webkit",
+      "version": "26.0",
+      "width": 1440,
+      "passed": true,
+      "role_before_script": {
+        "disabled": true,
+        "initialized": false,
+        "script_held": true
+      },
+      "role_after_script": {
+        "disabled": false,
+        "initialized": true
+      },
+      "axe_violations": 0,
+      "overflow": false,
+      "http_js_external_errors": 0
+    },
+    {
+      "engine": "webkit",
+      "version": "26.0",
+      "width": 390,
+      "passed": true,
+      "role_before_script": {
+        "disabled": true,
+        "initialized": false,
+        "script_held": true
+      },
+      "role_after_script": {
+        "disabled": false,
+        "initialized": true
+      },
+      "axe_violations": 0,
+      "overflow": false,
+      "http_js_external_errors": 0
+    }
+  ],
+  "environment": {
+    "project": "oceanblue-s07-ui",
+    "image": "sha256:b169773b09563c20efba966dd4322ffc8e57dcbbda10d94e6048ca06f94ba24f",
+    "source": "Current app/tests read-only mounts; focal proof, not release binding.",
+    "origin": "http://127.0.0.1:8767",
+    "backend_network_internal": true,
+    "published_ports": 0,
+    "started_after_parent_full_finished": true,
+    "cleanup": "Own role runner, database and network removed; parent resources untouched."
+  },
+  "evidence": {
+    "host_directory": "C:/Users/Rabel/AppData/Local/Temp/sprint07-role-focal6-green-final",
+    "json": 6,
+    "png": 6,
+    "success_traces": 0,
+    "repository_png_copies": 0
+  }
+}

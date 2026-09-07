@@ -6,6 +6,7 @@ from app.extensions import db
 from app.repositorys.produto_repository import ProdutoRepository
 from app.services.acesso_empresa_service import AcessoEmpresaService
 from app.services.tenant_entitlement_service import TenantEntitlementService
+from app.services.money_service import positive_integer
 
 
 from app.services.transaction_service import atomic_operation
@@ -274,7 +275,8 @@ class ProdutoService:
     @staticmethod
     def _vincular(data, tenant_id, escopo):
         TenantEntitlementService.validar_assinatura(tenant_id)
-        produto = Produto.query.filter_by(id=data["produto_id"], tenant_id=tenant_id).first()
+        produto_id = positive_integer(data["produto_id"], "Produto")
+        produto = Produto.query.filter_by(id=produto_id, tenant_id=tenant_id).first()
         empresa_id = ProdutoService._to_int(data.get("empresa_id"), "Empresa")
         AcessoEmpresaService.validar_empresa(empresa_id, escopo)
         if not produto or not produto.ativo:
@@ -361,10 +363,7 @@ class ProdutoService:
         if value in (None, ""):
             return None
 
-        try:
-            return int(value)
-        except (TypeError, ValueError):
-            raise ValueError(f"{field_name} invalida.")
+        return positive_integer(value, field_name)
 
     @staticmethod
     def _to_optional_date(value):

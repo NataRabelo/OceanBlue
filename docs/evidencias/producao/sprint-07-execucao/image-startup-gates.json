@@ -1,0 +1,4 @@
+{
+  "before_database": true,
+  "missing_secrets_rejected": 4
+}

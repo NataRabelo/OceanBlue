@@ -999,11 +999,11 @@ function renderCarrinho() {
                 </button>
 
                 <div class="pdv-cart-qty">
-                    <button type="button" class="pdv-icon-btn" onclick="alterarQuantidadeCarrinho(${item.produto_id}, -1)">
+                    <button type="button" class="pdv-icon-btn" aria-label="Diminuir quantidade de ${escapeHtml(item.nome)}" onclick="alterarQuantidadeCarrinho(${item.produto_id}, -1)">
                         <i data-lucide="minus" class="w-4 h-4"></i>
                     </button>
                     <strong class="min-w-[2rem] text-center text-white">${formatInteger(item.quantidade)}</strong>
-                    <button type="button" class="pdv-icon-btn" onclick="alterarQuantidadeCarrinho(${item.produto_id}, 1)">
+                    <button type="button" class="pdv-icon-btn" aria-label="Aumentar quantidade de ${escapeHtml(item.nome)}" onclick="alterarQuantidadeCarrinho(${item.produto_id}, 1)">
                         <i data-lucide="plus" class="w-4 h-4"></i>
                     </button>
                 </div>
@@ -1031,7 +1031,7 @@ function renderPayments() {
 
     container.innerHTML = pdvPage.pagamentos.map((pagamento) => `
         <div class="grid grid-cols-1 md:grid-cols-[minmax(0,1fr)_10rem_3rem] gap-3 items-center">
-            <select class="pdv-payment-forma w-full bg-slate-950 border border-slate-800 focus:border-sky-500 focus:ring-2 focus:ring-sky-500/20 rounded-xl px-4 py-3 text-white outline-none transition"
+            <select aria-label="Forma de pagamento" class="pdv-payment-forma w-full bg-slate-950 border border-slate-800 focus:border-sky-500 focus:ring-2 focus:ring-sky-500/20 rounded-xl px-4 py-3 text-white outline-none transition"
                 data-payment-uid="${pagamento.uid}">
                 <option value="">Forma de pagamento</option>
                 ${pdvPage.auxiliares.formas_pagamento.map((forma) => `
@@ -1042,7 +1042,7 @@ function renderPayments() {
             </select>
 
             <input type="text" inputmode="decimal"
-                class="pdv-payment-valor w-full bg-slate-950 border border-slate-800 focus:border-sky-500 focus:ring-2 focus:ring-sky-500/20 rounded-xl px-4 py-3 text-white outline-none transition"
+                aria-label="Valor do pagamento" class="pdv-payment-valor w-full bg-slate-950 border border-slate-800 focus:border-sky-500 focus:ring-2 focus:ring-sky-500/20 rounded-xl px-4 py-3 text-white outline-none transition"
                 data-payment-uid="${pagamento.uid}"
                 value="${pagamento.valor || ""}"
                 placeholder="0,00">
@@ -1050,7 +1050,7 @@ function renderPayments() {
             <button type="button"
                 class="inline-flex items-center justify-center w-12 h-12 rounded-xl ${pdvPage.pagamentos.length === 1 ? "bg-slate-800 text-slate-600" : "bg-rose-500/10 border border-rose-500/20 text-rose-300 hover:bg-rose-500/20"} transition"
                 ${pdvPage.pagamentos.length === 1 ? "disabled" : ""}
-                data-remove-payment="${pagamento.uid}">
+                data-remove-payment="${pagamento.uid}" aria-label="Remover pagamento">
                 <i data-lucide="x" class="w-4 h-4"></i>
             </button>
         </div>
@@ -1924,7 +1924,7 @@ function showMessage(message, type = "success") {
     div.id = "crud-message";
     div.className = `
         fixed top-4 right-4 z-[9999] px-4 py-3 rounded-xl shadow-lg text-sm font-medium
-        ${type === "success" ? "bg-emerald-500 text-white" : "bg-red-500 text-white"}
+        ${type === "success" ? "bg-emerald-500 text-slate-950" : "bg-red-500 text-white"}
     `;
     div.textContent = message;
     document.body.appendChild(div);

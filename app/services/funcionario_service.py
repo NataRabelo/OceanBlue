@@ -5,6 +5,7 @@ from app.repositorys.funcionario_repository import FuncionarioRepository
 from app.security.password import generate_password_hash
 from app.security.password import validate_password
 from app.extensions import db
+from app.services.money_service import positive_integer
 
 
 from app.services.transaction_service import atomic_operation
@@ -303,10 +304,7 @@ class FuncionarioService:
         if value in (None, ""):
             return None
 
-        try:
-            return int(value)
-        except (TypeError, ValueError):
-            raise ValueError(f"{field_name} invalida.")
+        return positive_integer(value, field_name)
 
     @staticmethod
     def _normalizar_cpf(value):

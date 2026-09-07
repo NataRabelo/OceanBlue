@@ -24,7 +24,7 @@ min-h-screen flex flex-col bg-slate-950 text-white
             </div>
 
             <div class="flex flex-wrap items-center gap-3">
-                <select id="filtro-empresa"
+                <select id="filtro-empresa" aria-label="Empresa dos alertas"
                     data-theme-company-select
                     class="w-full sm:w-64 bg-slate-950/80 border border-slate-800 focus:border-sky-500 focus:ring-2 focus:ring-sky-500/20 rounded-xl px-4 py-3 text-sm text-white outline-none transition">
                     <option value="">Todas as empresas</option>
@@ -93,7 +93,7 @@ min-h-screen flex flex-col bg-slate-950 text-white
 <section class="page-shell mb-8" aria-label="Historico de entregas">
     <h2 class="text-lg font-semibold">Historico de entregas de alertas</h2>
     <p>Selecione uma empresa. A rotina verifica estoque e validade e envia um resumo por dia quando habilitado.</p>
-    <button type="button" id="alertas-executar" class="rounded-xl bg-sky-500 px-5 py-3">Executar rotina</button>
+    <button type="button" id="alertas-executar" class="rounded-xl bg-sky-500 text-slate-950 px-5 py-3">Executar rotina</button>
     <button type="button" id="alertas-atualizar" class="rounded-xl bg-slate-700 px-5 py-3">Atualizar historico</button>
     <div id="alertas-historico" class="space-y-3 mt-4" aria-live="polite"></div>
 </section>

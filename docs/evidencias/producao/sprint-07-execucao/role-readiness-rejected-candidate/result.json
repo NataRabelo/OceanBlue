@@ -1,0 +1,18 @@
+{
+  "status": "rejected",
+  "project": "oceanblue-s07-rc5",
+  "phase": "regression",
+  "process_exit_code": 1,
+  "tests": 868,
+  "passed": 867,
+  "failures": 1,
+  "errors": 1,
+  "skipped": 0,
+  "junit_seconds": 3326.269,
+  "failed_case": "tests.test_sprint07_browser.test_admin_role_employee_and_restricted_login_journey[firefox-1440]",
+  "outcome_note": "Failure and teardown error refer to the same case: the premature button click caused rolePage is not defined, then the form timed out and teardown rejected the recorded page error.",
+  "reason": "Nova Role was clickable before its real local role.js script finished loading. The final fix disables that action until synchronous page initialization completes; see ../role-readiness-correction/ for original trace and deterministic red/green proof.",
+  "retest_and_operations_run": false,
+  "raw_evidence": ".release-work/oceanblue-s07-rc5/regression",
+  "release_approved": false
+}

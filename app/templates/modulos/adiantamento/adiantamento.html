@@ -27,13 +27,13 @@ min-h-screen flex flex-col bg-slate-950 text-white
             </div>
 
             <div class="flex flex-col sm:flex-row gap-3 w-full xl:w-auto">
-                <select id="adiantamento-empresa"
+                <select id="adiantamento-empresa" aria-label="Empresa dos adiantamentos"
                     data-theme-company-select
                     class="w-full sm:w-64 bg-slate-950/80 border border-slate-800 focus:border-sky-500 focus:ring-2 focus:ring-sky-500/20 rounded-xl px-4 py-3 text-sm text-white outline-none transition">
                     <option value="">Todas as empresas</option>
                 </select>
 
-                <input id="adiantamento-competencia" type="month"
+                <input id="adiantamento-competencia" type="month" aria-label="Competencia dos adiantamentos"
                     class="w-full sm:w-48 bg-slate-950/80 border border-slate-800 focus:border-sky-500 focus:ring-2 focus:ring-sky-500/20 rounded-xl px-4 py-3 text-sm text-white outline-none transition">
 
                 {% if has_permission("criar_adiantamento") %}
@@ -100,13 +100,13 @@ min-h-screen flex flex-col bg-slate-950 text-white
                     <p class="text-sm text-slate-400">Rastreamento financeiro e de estoque por funcionario.</p>
                 </div>
 
-                <select id="adiantamento-funcionario"
+                <select id="adiantamento-funcionario" aria-label="Funcionario dos adiantamentos"
                     class="w-full sm:w-72 bg-slate-950/80 border border-slate-800 focus:border-sky-500 focus:ring-2 focus:ring-sky-500/20 rounded-xl px-4 py-3 text-sm text-white outline-none transition">
                     <option value="">Todos os funcionarios</option>
                 </select>
             </div>
 
-            <div id="adiantamento-list-wrap" class="overflow-x-auto">
+            <div id="adiantamento-list-wrap" class="overflow-x-auto" tabindex="0" role="region" aria-label="Lista de adiantamentos">
                 <table class="w-full min-w-[980px]">
                     <thead class="bg-slate-950/70">
                         <tr class="border-b border-slate-800">

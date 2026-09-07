@@ -2,19 +2,20 @@ param(
     [ValidateSet('red', 'green')][string]$Phase = 'green',
     [string]$Project = "oceanblue-s06-snapshot-$([guid]::NewGuid().ToString('N').Substring(0, 10))",
     [string]$EvidenceDirectory = 'docs/evidencias/producao/sprint-06-validacao/snapshot',
-    [switch]$ExtendedOnly
+    [switch]$ExtendedOnly,
+    [string]$Image = 'oceanblue-s06-release-smoke:latest',
+    [string]$DatabaseImage = 'postgres:16@sha256:23af655ba1ddf74eaa002e3deaf5fce022ab8791672336a7c1fb0ef2d57efb7f'
 )
 
 $ErrorActionPreference = 'Stop'
 $workspace = Split-Path $PSScriptRoot -Parent
-if ($Project -notmatch '^oceanblue-s06-snapshot-[a-z0-9-]+$') { throw 'Exclusive snapshot project required.' }
+if ($Project -notmatch '^oceanblue-s0[67]-snapshot-[a-z0-9-]+$') { throw 'Exclusive snapshot project required.' }
 $evidence = [IO.Path]::GetFullPath((Join-Path $workspace "$EvidenceDirectory/$Phase"))
 if (Test-Path -LiteralPath $evidence) { throw 'Use a new evidence directory.' }
 New-Item -ItemType Directory -Path $evidence | Out-Null
 $databaseContainer = "$Project-db"
 $sourceApp = "$Project-source"
 $targetApp = "$Project-target"
-$image = 'oceanblue-s06-release-smoke:latest'
 $snapshotScript = Join-Path $PSScriptRoot 'operational_snapshot.ps1'
 $results = [Collections.Generic.List[object]]::new()
 $label = "com.docker.compose.project=$Project"
@@ -105,8 +106,8 @@ $driver | Set-Content -LiteralPath (Join-Path $evidence 'driver.ps1') -Encoding 
 $existing = Docker ps -aq --filter "label=$label"
 if ($existing) { throw 'Project already exists.' }
 try {
-    Docker image inspect $image oceanblue-s06-release-test:latest postgres:16 --format '{{.Id}}' | Set-Content (Join-Path $evidence 'images.txt')
-    Docker run -d --name $databaseContainer --label $label --network none --tmpfs /var/lib/postgresql/data -e POSTGRES_USER=proof -e POSTGRES_PASSWORD=synthetic-only -e POSTGRES_DB=source_db postgres:16 | Out-Null
+    Docker image inspect $image $DatabaseImage --format '{{.Id}}' | Set-Content (Join-Path $evidence 'images.txt')
+    Docker run -d --name $databaseContainer --label $label --network none --tmpfs /var/lib/postgresql/data -e POSTGRES_USER=proof -e POSTGRES_PASSWORD=synthetic-only -e POSTGRES_DB=source_db $DatabaseImage | Out-Null
     foreach ($app in @($sourceApp, $targetApp)) {
         Docker volume create --label $label "$app-files" | Out-Null
         Docker create --name $app --label $label --network none --mount "type=volume,source=$app-files,target=/app/instance" --entrypoint sleep $image 600 | Out-Null

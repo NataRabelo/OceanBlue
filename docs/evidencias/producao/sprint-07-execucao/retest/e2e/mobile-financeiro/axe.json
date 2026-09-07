@@ -1,0 +1,11 @@
+{
+  "raw_sha256": "59d3801a5dc1b4f51de5d2827d23bb0bacb9ecb900babe790af1d21d38ad773f",
+  "testEngine": {
+    "name": "axe-core",
+    "version": "4.10.3"
+  },
+  "url": "http://127.0.0.1:8765/api/financeiro/view",
+  "passed_rule_count": 23,
+  "incomplete_rule_count": 2,
+  "violations": []
+}

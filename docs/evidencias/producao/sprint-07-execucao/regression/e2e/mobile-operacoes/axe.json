@@ -1,0 +1,11 @@
+{
+  "raw_sha256": "49aee5065af6fc384a44a6ddebdb27becbd89cc73d29de7d79080ed29067b64b",
+  "testEngine": {
+    "name": "axe-core",
+    "version": "4.10.3"
+  },
+  "url": "http://127.0.0.1:8765/api/operacoes/view",
+  "passed_rule_count": 23,
+  "incomplete_rule_count": 1,
+  "violations": []
+}

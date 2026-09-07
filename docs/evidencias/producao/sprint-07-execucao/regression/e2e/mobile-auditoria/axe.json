@@ -1,0 +1,11 @@
+{
+  "raw_sha256": "799a9b2803db17fae02c25d7623e7307b28ba3a38fdc0f790bb97f767c673864",
+  "testEngine": {
+    "name": "axe-core",
+    "version": "4.10.3"
+  },
+  "url": "http://127.0.0.1:8765/api/auditoria/view",
+  "passed_rule_count": 25,
+  "incomplete_rule_count": 1,
+  "violations": []
+}

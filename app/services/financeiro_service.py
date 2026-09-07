@@ -125,6 +125,10 @@ class FinanceiroService:
         periodo = max(int(periodo_dias or 30), 1)
         data_fim = TimeService.today_br()
         data_inicio = data_fim - timedelta(days=periodo - 1)
+        inicio_utc = TimeService.local_date_start_to_utc_naive(data_inicio)
+        fim_utc = TimeService.local_date_start_to_utc_naive(data_fim + timedelta(days=1))
+        data_lancamento_local = db.func.timezone(TimeService.TZ_BR.key,
+            db.func.timezone("UTC", LancamentoFinanceiro.data_lancamento))
 
         base_lancamentos = FinanceiroRepository.query_lancamentos(
             tenant_id=tenant_id,
@@ -159,8 +163,12 @@ class FinanceiroService:
         )
 
         quantidade_vendas = base_vendas.count()
+        base_cashback = Venda.total + Venda.cashback_utilizado
+        cashback_restaurado = sa.case((base_cashback > 0,
+            db.func.round(Venda.valor_cancelado * Venda.cashback_utilizado / base_cashback, 2)), else_=0)
         total_vendas = FinanceiroService._to_decimal_value(
-            base_vendas.with_entities(db.func.coalesce(db.func.sum(Venda.total), 0)).scalar()
+            base_vendas.with_entities(db.func.coalesce(db.func.sum(
+                Venda.total - Venda.valor_cancelado + cashback_restaurado), 0)).scalar()
         )
         ticket_medio = (
             (total_vendas / Decimal(quantidade_vendas)).quantize(Decimal("0.01"))
@@ -188,8 +196,9 @@ class FinanceiroService:
 
         custo_produtos_vendidos = FinanceiroService._to_decimal_value(
             db.session.query(
-                db.func.coalesce(db.func.sum(ItemVenda.quantidade * ProdutoEmpresa.valor_compra), 0)
+                db.func.coalesce(db.func.sum((ItemVenda.quantidade - ItemVenda.quantidade_cancelada) * ProdutoEmpresa.valor_compra), 0)
             )
+            .select_from(ItemVenda)
             .join(Venda, Venda.id == ItemVenda.venda_id)
             .join(
                 ProdutoEmpresa,
@@ -202,8 +211,8 @@ class FinanceiroService:
             .filter(
                 Venda.tenant_id == tenant_id,
                 Venda.status == StatusVenda.FINALIZADA,
-                db.func.date(Venda.data_venda) >= data_inicio,
-                db.func.date(Venda.data_venda) <= data_fim,
+                Venda.data_venda >= inicio_utc,
+                Venda.data_venda < fim_utc,
                 Venda.empresa_id == empresa_id if empresa_id is not None else sa.true(),
                 Venda.empresa_id.in_(empresa_ids) if empresa_ids is not None else sa.true(),
             )
@@ -219,12 +228,12 @@ class FinanceiroService:
         serie_query = (
             base_lancamentos
             .with_entities(
-                db.func.date(LancamentoFinanceiro.data_lancamento).label("dia"),
+                db.func.date(data_lancamento_local).label("dia"),
                 LancamentoFinanceiro.tipo.label("tipo"),
                 db.func.coalesce(db.func.sum(LancamentoFinanceiro.valor), 0).label("valor"),
             )
             .group_by(
-                db.func.date(LancamentoFinanceiro.data_lancamento),
+                db.func.date(data_lancamento_local),
                 LancamentoFinanceiro.tipo,
             )
             .all()
@@ -271,14 +280,14 @@ class FinanceiroService:
         mensal_query = (
             base_lancamentos
             .with_entities(
-                db.extract("year", LancamentoFinanceiro.data_lancamento).label("ano"),
-                db.extract("month", LancamentoFinanceiro.data_lancamento).label("mes"),
+                db.extract("year", data_lancamento_local).label("ano"),
+                db.extract("month", data_lancamento_local).label("mes"),
                 LancamentoFinanceiro.tipo.label("tipo"),
                 db.func.coalesce(db.func.sum(LancamentoFinanceiro.valor), 0).label("valor"),
             )
             .group_by(
-                db.extract("year", LancamentoFinanceiro.data_lancamento),
-                db.extract("month", LancamentoFinanceiro.data_lancamento),
+                db.extract("year", data_lancamento_local),
+                db.extract("month", data_lancamento_local),
                 LancamentoFinanceiro.tipo,
             )
             .all()
@@ -327,7 +336,7 @@ class FinanceiroService:
             db.session.query(
                 Produto.id.label("produto_id"),
                 Produto.nome.label("produto_nome"),
-                db.func.coalesce(db.func.sum(ItemVenda.quantidade), 0).label("quantidade"),
+                db.func.coalesce(db.func.sum(ItemVenda.quantidade - ItemVenda.quantidade_cancelada), 0).label("quantidade"),
                 ProdutoEmpresa.estoque_atual.label("estoque_atual"),
                 ProdutoEmpresa.estoque_minimo.label("estoque_minimo"),
                 ProdutoEmpresa.valor_compra.label("valor_compra"),
@@ -346,8 +355,9 @@ class FinanceiroService:
             .filter(
                 Venda.tenant_id == tenant_id,
                 Venda.status == StatusVenda.FINALIZADA,
-                db.func.date(Venda.data_venda) >= (data_fim - timedelta(days=29)),
-                db.func.date(Venda.data_venda) <= data_fim,
+                Venda.data_venda >= TimeService.local_date_start_to_utc_naive(data_fim - timedelta(days=29)),
+                Venda.data_venda < fim_utc,
+                ItemVenda.quantidade > ItemVenda.quantidade_cancelada,
                 Venda.empresa_id == empresa_id if empresa_id is not None else sa.true(),
                 Venda.empresa_id.in_(empresa_ids) if empresa_ids is not None else sa.true(),
             )
@@ -942,11 +952,12 @@ class FinanceiroService:
             base_vendas
             .join(ItemVenda, ItemVenda.venda_id == Venda.id)
             .join(Produto, Produto.id == ItemVenda.produto_id)
+            .filter(ItemVenda.quantidade > ItemVenda.quantidade_cancelada)
             .with_entities(
                 Produto.id.label("produto_id"),
                 Produto.nome.label("produto_nome"),
-                db.func.coalesce(db.func.sum(ItemVenda.quantidade), 0).label("quantidade"),
-                db.func.coalesce(db.func.sum(ItemVenda.valor_total), 0).label("faturamento"),
+                db.func.coalesce(db.func.sum(ItemVenda.quantidade - ItemVenda.quantidade_cancelada), 0).label("quantidade"),
+                db.func.coalesce(db.func.sum((ItemVenda.quantidade - ItemVenda.quantidade_cancelada) * ItemVenda.valor_unitario), 0).label("faturamento"),
             )
             .group_by(Produto.id, Produto.nome)
             .order_by(db.desc("quantidade"), db.desc("faturamento"))

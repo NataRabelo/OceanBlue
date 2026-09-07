@@ -1,0 +1,7 @@
+{
+  "status": "passed_negative_control",
+  "old_scan_rejected": true,
+  "exit_code": 2,
+  "source_change": "app/templates/modulos/estoque/estoque_indicadores.html: responsive flex-wrap correction after rejected full regression",
+  "next_gate": "Complete scan must be repeated before fresh final regression and retest."
+}

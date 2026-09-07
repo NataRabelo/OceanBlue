@@ -1,0 +1,2 @@
+{"timestamp": "2026-09-07T21:14:16.694272+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "d9d0ada291c71bf1314fc89a56122d25", "route": "/login", "method": "POST", "status": 503, "duration_ms": 0.273}
+{"fault": "incomplete restore marker", "health": 200, "readiness": 503, "writes": 503, "recovery_seconds": 0.08061938600440044}

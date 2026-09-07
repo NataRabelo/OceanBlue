@@ -165,6 +165,7 @@ class FinanceiroRepository:
         data_fim=None,
     ):
         query = LancamentoFinanceiro.query.filter(LancamentoFinanceiro.tenant_id == tenant_id)
+        start_utc, end_utc = _local_date_range_to_utc_naive(data_inicio, data_fim)
 
         if empresa_ids is not None:
             query = query.filter(LancamentoFinanceiro.empresa_id.in_(empresa_ids))
@@ -175,11 +176,11 @@ class FinanceiroRepository:
         if tipo is not None:
             query = query.filter(LancamentoFinanceiro.tipo == tipo)
 
-        if data_inicio is not None:
-            query = query.filter(db.func.date(LancamentoFinanceiro.data_lancamento) >= data_inicio)
+        if start_utc is not None:
+            query = query.filter(LancamentoFinanceiro.data_lancamento >= start_utc)
 
-        if data_fim is not None:
-            query = query.filter(db.func.date(LancamentoFinanceiro.data_lancamento) <= data_fim)
+        if end_utc is not None:
+            query = query.filter(LancamentoFinanceiro.data_lancamento < end_utc)
 
         return query
 

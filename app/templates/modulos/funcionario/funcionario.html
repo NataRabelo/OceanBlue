@@ -8,7 +8,6 @@ min-h-screen flex flex-col bg-slate-950 text-white
 
 {% block styles %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/core/core.css') }}">
-<link rel="stylesheet" href="{{ url_for('static', filename='css/modulos/funcionario.css') }}">
 {% endblock %}
 
 {% block content %}
@@ -23,7 +22,7 @@ min-h-screen flex flex-col bg-slate-950 text-white
                 <p class="text-slate-400 mt-2">Cadastre funcionarios e defina as permissoes de cada perfil.</p>
             </div>
 
-            <div class="flex items-center gap-3">
+            <div class="flex flex-wrap items-center gap-3">
                 {% if has_permission("visualizar_role") %}
                 <a href="/api/roles/view"
                     class="inline-flex items-center gap-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-100 font-medium px-4 py-3 transition-all duration-200 border border-slate-700">

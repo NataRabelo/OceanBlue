@@ -1,0 +1,330 @@
+{
+  "retained": [
+    "copy-failure/instance/storage/proof.txt",
+    "copy-failure/manifest.json",
+    "custody-unpinned/instance/storage/proof.txt",
+    "custody-unpinned/manifest.json",
+    "db-rollback-failure/instance/storage/proof.txt",
+    "db-rollback-failure/manifest.json",
+    "file-hash/instance/storage/proof.txt",
+    "file-hash/manifest.json",
+    "fingerprint-content/instance/storage/proof.txt",
+    "fingerprint-content/manifest.json",
+    "fingerprint-order/instance/storage/proof.txt",
+    "fingerprint-order/manifest.json",
+    "format-version/instance/storage/proof.txt",
+    "format-version/manifest.json",
+    "hard-kill/instance/storage/proof.txt",
+    "hard-kill/manifest.json",
+    "images.txt",
+    "interrupt/instance/storage/proof.txt",
+    "interrupt/manifest.json",
+    "manifest-pinned/instance/storage/proof.txt",
+    "manifest-pinned/manifest.json",
+    "nonempty-function/instance/storage/proof.txt",
+    "nonempty-function/manifest.json",
+    "nonempty-schema/instance/storage/proof.txt",
+    "nonempty-schema/manifest.json",
+    "nonempty-sequence/instance/storage/proof.txt",
+    "nonempty-sequence/manifest.json",
+    "nonempty-storage/instance/storage/proof.txt",
+    "nonempty-storage/manifest.json",
+    "nonempty-storage-link/instance/storage/proof.txt",
+    "nonempty-storage-link/manifest.json",
+    "nonempty-table/instance/storage/proof.txt",
+    "nonempty-table/manifest.json",
+    "postgres-version/instance/storage/proof.txt",
+    "postgres-version/manifest.json",
+    "restore-wrong-revision/instance/storage/proof.txt",
+    "restore-wrong-revision/manifest.json",
+    "results.json",
+    "rollback-failure/instance/storage/proof.txt",
+    "rollback-failure/manifest.json",
+    "summary.json",
+    "traversal/instance/storage/proof.txt",
+    "traversal/manifest.json"
+  ],
+  "omitted": [
+    {
+      "path": "active-app.log",
+      "size": 354,
+      "sha256": "d7f454044f25ff1d9a303d2f629e17dabf6d4cdf91ff5141c6aa54739f7ad8bd"
+    },
+    {
+      "path": "active-db-client.log",
+      "size": 330,
+      "sha256": "e5ddf190204b8fbe59152353e072edf5856dd78ba562c194d5617fc4c6f12ed9"
+    },
+    {
+      "path": "backup-wrong-revision.log",
+      "size": 341,
+      "sha256": "5ea8e9cf8873dc4ec03c7f9f75a708dc158f18c05dd38556f752b476b4f6fbe5"
+    },
+    {
+      "path": "backup.log",
+      "size": 154,
+      "sha256": "32c20114fe246c00c83a4e610a163b5e5309c1feebb51c9acc6892dba0a8a781"
+    },
+    {
+      "path": "copy-failure/database.dump",
+      "size": 4107,
+      "sha256": "209010243e9b2ca37cf149e257298c0f1f1976c318bc1fa8b25a183569c33111"
+    },
+    {
+      "path": "copy-failure.log",
+      "size": 384,
+      "sha256": "391e9a3e64c8f7c18c45d85b4f1217ecfd9634353d427d657008f94ba6827582"
+    },
+    {
+      "path": "custody-unpinned/database.dump",
+      "size": 4107,
+      "sha256": "209010243e9b2ca37cf149e257298c0f1f1976c318bc1fa8b25a183569c33111"
+    },
+    {
+      "path": "custody-unpinned.log",
+      "size": 419,
+      "sha256": "35e1933a0d874dd9835b84d6f9b3d486441515dd2ad6efb4c0d4b886cb8721ad"
+    },
+    {
+      "path": "db-rollback-failure/database.dump",
+      "size": 4107,
+      "sha256": "209010243e9b2ca37cf149e257298c0f1f1976c318bc1fa8b25a183569c33111"
+    },
+    {
+      "path": "db-rollback-failure.log",
+      "size": 454,
+      "sha256": "23969abb69898148fc8d789c425bcfaed2dca1d5eb695a9b00ff272a23177452"
+    },
+    {
+      "path": "driver.ps1",
+      "size": 2476,
+      "sha256": "2b2c50976a910bd4eca75c28c26bbf6853fbf6b9aaf3087f0dcf203997148658"
+    },
+    {
+      "path": "file-hash/database.dump",
+      "size": 4107,
+      "sha256": "209010243e9b2ca37cf149e257298c0f1f1976c318bc1fa8b25a183569c33111"
+    },
+    {
+      "path": "file-hash.log",
+      "size": 300,
+      "sha256": "077ca5864a85c9f16f5fdf6b29115a59078260ad1db4ac9b253267f93ef1fd5e"
+    },
+    {
+      "path": "fingerprint-content/database.dump",
+      "size": 4107,
+      "sha256": "209010243e9b2ca37cf149e257298c0f1f1976c318bc1fa8b25a183569c33111"
+    },
+    {
+      "path": "fingerprint-content.log",
+      "size": 406,
+      "sha256": "e09b333dfac3675a91b5fdd5f9bc65c110f027a7be5711e9e05ef39b4c431391"
+    },
+    {
+      "path": "fingerprint-order/database.dump",
+      "size": 4107,
+      "sha256": "209010243e9b2ca37cf149e257298c0f1f1976c318bc1fa8b25a183569c33111"
+    },
+    {
+      "path": "fingerprint-order.log",
+      "size": 158,
+      "sha256": "e639eba4238a70a3ceb11f4d3359df2fe1fa8e5c5568a03df92301a538c9c82d"
+    },
+    {
+      "path": "format-version/database.dump",
+      "size": 4107,
+      "sha256": "209010243e9b2ca37cf149e257298c0f1f1976c318bc1fa8b25a183569c33111"
+    },
+    {
+      "path": "format-version.log",
+      "size": 350,
+      "sha256": "e9831c87abb5c469ed18393d2fdf2f9a16b90412743d442d9c1186ff530d992d"
+    },
+    {
+      "path": "hard-kill/database.dump",
+      "size": 4107,
+      "sha256": "209010243e9b2ca37cf149e257298c0f1f1976c318bc1fa8b25a183569c33111"
+    },
+    {
+      "path": "hard-kill.kill-ready",
+      "size": 48,
+      "sha256": "d948ebfd48a48b9dbd3a2c8ec2cc63a678c99236987d2c3cb79dc13adb70b672"
+    },
+    {
+      "path": "hard-kill.log",
+      "size": 2,
+      "sha256": "7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6"
+    },
+    {
+      "path": "interrupt/database.dump",
+      "size": 4107,
+      "sha256": "209010243e9b2ca37cf149e257298c0f1f1976c318bc1fa8b25a183569c33111"
+    },
+    {
+      "path": "interrupt.log",
+      "size": 412,
+      "sha256": "e3f9bbfe408a569e80ad1fc11c325f189cba0ec7b801d76bfbd1913ef81a48c8"
+    },
+    {
+      "path": "interrupted-backup.log",
+      "size": 329,
+      "sha256": "e48825b038ec686353a56c252f5996ad4c04080f2764c6e7ec4adfc75335138e"
+    },
+    {
+      "path": "late-db-writer.log",
+      "size": 330,
+      "sha256": "e5ddf190204b8fbe59152353e072edf5856dd78ba562c194d5617fc4c6f12ed9"
+    },
+    {
+      "path": "manifest-pinned/database.dump",
+      "size": 4107,
+      "sha256": "209010243e9b2ca37cf149e257298c0f1f1976c318bc1fa8b25a183569c33111"
+    },
+    {
+      "path": "manifest-pinned.log",
+      "size": 311,
+      "sha256": "685e1ce1c4416e6d80bdb17def23cdbce918de28de0c07a4fabec77080b60bdc"
+    },
+    {
+      "path": "nonempty-function/database.dump",
+      "size": 4107,
+      "sha256": "209010243e9b2ca37cf149e257298c0f1f1976c318bc1fa8b25a183569c33111"
+    },
+    {
+      "path": "nonempty-function.log",
+      "size": 357,
+      "sha256": "8045ec4c1ab543b2a106ad3f0233e4a7e40af2e2b38e5e70f4f513bc888d115a"
+    },
+    {
+      "path": "nonempty-schema/database.dump",
+      "size": 4107,
+      "sha256": "209010243e9b2ca37cf149e257298c0f1f1976c318bc1fa8b25a183569c33111"
+    },
+    {
+      "path": "nonempty-schema.log",
+      "size": 357,
+      "sha256": "8045ec4c1ab543b2a106ad3f0233e4a7e40af2e2b38e5e70f4f513bc888d115a"
+    },
+    {
+      "path": "nonempty-sequence/database.dump",
+      "size": 4107,
+      "sha256": "209010243e9b2ca37cf149e257298c0f1f1976c318bc1fa8b25a183569c33111"
+    },
+    {
+      "path": "nonempty-sequence.log",
+      "size": 357,
+      "sha256": "8045ec4c1ab543b2a106ad3f0233e4a7e40af2e2b38e5e70f4f513bc888d115a"
+    },
+    {
+      "path": "nonempty-storage/database.dump",
+      "size": 4107,
+      "sha256": "209010243e9b2ca37cf149e257298c0f1f1976c318bc1fa8b25a183569c33111"
+    },
+    {
+      "path": "nonempty-storage-link/database.dump",
+      "size": 4107,
+      "sha256": "209010243e9b2ca37cf149e257298c0f1f1976c318bc1fa8b25a183569c33111"
+    },
+    {
+      "path": "nonempty-storage-link.log",
+      "size": 362,
+      "sha256": "b0739ef2498333ed2584bd8ba237d674e9b7a10329f02192477d6457ffa6b357"
+    },
+    {
+      "path": "nonempty-storage.log",
+      "size": 371,
+      "sha256": "89e57162b4e24c910570eeddbb04a54cde7344202685e5a85a53ecf7e3ebeb2c"
+    },
+    {
+      "path": "nonempty-table/database.dump",
+      "size": 4107,
+      "sha256": "209010243e9b2ca37cf149e257298c0f1f1976c318bc1fa8b25a183569c33111"
+    },
+    {
+      "path": "nonempty-table.log",
+      "size": 357,
+      "sha256": "8045ec4c1ab543b2a106ad3f0233e4a7e40af2e2b38e5e70f4f513bc888d115a"
+    },
+    {
+      "path": "postgres-version/database.dump",
+      "size": 4107,
+      "sha256": "209010243e9b2ca37cf149e257298c0f1f1976c318bc1fa8b25a183569c33111"
+    },
+    {
+      "path": "postgres-version.log",
+      "size": 320,
+      "sha256": "08c1d5d13f357185be3a1cceb785e2e73c8ba31750896798fe0dd43fb5db247a"
+    },
+    {
+      "path": "restore-wrong-revision/database.dump",
+      "size": 4107,
+      "sha256": "209010243e9b2ca37cf149e257298c0f1f1976c318bc1fa8b25a183569c33111"
+    },
+    {
+      "path": "restore-wrong-revision.log",
+      "size": 341,
+      "sha256": "5ad536f7b62b0a002ec1ff125c877e1586ea52728f60a3b063ff0a91e0604b4e"
+    },
+    {
+      "path": "retry-incomplete.log",
+      "size": 383,
+      "sha256": "ddfdce80b48d44a727b1b51249ed6f0ec31aec00660131a4ffeab039ecf32fd6"
+    },
+    {
+      "path": "rollback-failure/database.dump",
+      "size": 4107,
+      "sha256": "209010243e9b2ca37cf149e257298c0f1f1976c318bc1fa8b25a183569c33111"
+    },
+    {
+      "path": "rollback-failure.log",
+      "size": 454,
+      "sha256": "23969abb69898148fc8d789c425bcfaed2dca1d5eb695a9b00ff272a23177452"
+    },
+    {
+      "path": "root-junction.log",
+      "size": 335,
+      "sha256": "768eaaeea0bac42f9b59435c29b280c549db52e52723b123dff229135db0245f"
+    },
+    {
+      "path": "roundtrip.log",
+      "size": 158,
+      "sha256": "e639eba4238a70a3ceb11f4d3359df2fe1fa8e5c5568a03df92301a538c9c82d"
+    },
+    {
+      "path": "shared-storage-writer.log",
+      "size": 355,
+      "sha256": "edd1e57b4829cf20e0e231f6e602c933803144ad6a594e863d53d74a411f9a3e"
+    },
+    {
+      "path": "source-link.log",
+      "size": 362,
+      "sha256": "b0739ef2498333ed2584bd8ba237d674e9b7a10329f02192477d6457ffa6b357"
+    },
+    {
+      "path": "synthetic/database.dump",
+      "size": 4107,
+      "sha256": "209010243e9b2ca37cf149e257298c0f1f1976c318bc1fa8b25a183569c33111"
+    },
+    {
+      "path": "synthetic/instance/storage/proof.txt",
+      "size": 28,
+      "sha256": "39cf337f7f00a682745e8d27a34a13d9468d5ec8806f777b4246d91997bd6015"
+    },
+    {
+      "path": "synthetic/manifest.json",
+      "size": 726,
+      "sha256": "5122882d33bfa1163ffacb059017f68c3a1c8c12847004eba1c572f092e35172"
+    },
+    {
+      "path": "traversal/database.dump",
+      "size": 4107,
+      "sha256": "209010243e9b2ca37cf149e257298c0f1f1976c318bc1fa8b25a183569c33111"
+    },
+    {
+      "path": "traversal.log",
+      "size": 337,
+      "sha256": "ab760fce02d38ea9b6221c28e54208db7394bcafa715946f93ccbef5185311d9"
+    }
+  ],
+  "reason": "Raw diagnostic files remain in ignored .release-work; successful binary traces, HTML and synthetic dumps are not duplicated in Git."
+}

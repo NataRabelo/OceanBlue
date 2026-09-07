@@ -1,0 +1,23 @@
+{
+  "status": "rejected_by_human_visual_review",
+  "automated_full_regressions": "868 passed twice, zero failures/errors/skips; identical tested source maps",
+  "operational_proof": "Passed on this superseded image, not acceptance of corrected candidate",
+  "source_manifest_sha256": "e5947d845bf2032b004484fa7e5d7caa20f7da2687e99b3c2253c033c9d9549e",
+  "image_order": [
+    "oceanblue-s07-rc2-regression-test",
+    "oceanblue-s07-rc2-regression-smoke",
+    "oceanblue-s07-rc2-retest-test",
+    "oceanblue-s07-rc2-retest-smoke"
+  ],
+  "image_ids": [
+    "sha256:a446f9569c753fc6458efc208e91d985e4561c6cef3f131b7ac8fcd89a2a61c1",
+    "sha256:c24c2337145f1179bf1db24c7defe83fb5cd5d4444056ad967e9e265d8f57aed",
+    "sha256:c9005b06f076c2ea88c94c943b5854a21bd3a2c1c0e2590690d8e541265a82dd",
+    "sha256:37a35b4a951088a7eb4db40f39ba040dbf28ca544ed3819bc4b06ef81eb1fe26"
+  ],
+  "visual_defect": "Skip link aligns main content underneath translucent sticky header; confirmed in all three admin320 captures, most severe in Firefox/WebKit.",
+  "visual_inspection": "All 15 representative regression PNGs inspected individually; no additional confirmed blocker.",
+  "screenshot_sha256": "4393b6468c917a600366673957d647a399c7de355d64a7815316994ea2005b8f",
+  "next_gate": "Add geometry/focus regression checks, fix root scroll offset and header surface, then run new source-bound scan, both full regressions and operational proof.",
+  "retention": "Compact JUnit/source/visual/operational evidence retained; complete superseded artifacts moved to ignored .release-work/rc2-superseded-evidence without duplicating success traces."
+}

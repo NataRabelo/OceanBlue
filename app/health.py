@@ -1,17 +1,19 @@
 from flask import Blueprint, current_app, jsonify
+from pathlib import Path
 from sqlalchemy import text
 
 from app.extensions import db
 from app.operations import storage_probe
 
 health_bp = Blueprint("health", __name__)
+RELEASE_VERSION = (Path(__file__).resolve().parents[1] / "VERSION").read_text(encoding="utf-8").strip()
 
 @health_bp.route("/health", methods=["GET"])
 def healthcheck():
     return jsonify({
         "status": "ok",
         "service": "OceanBlue API",
-        "version": "1.0.0"
+        "version": RELEASE_VERSION
     }), 200
 
 

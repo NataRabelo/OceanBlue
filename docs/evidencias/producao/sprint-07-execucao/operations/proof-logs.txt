@@ -1,0 +1,373 @@
+smoke-1  | INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+smoke-1  | INFO  [alembic.runtime.migration] Will assume transactional DDL.
+smoke-1  | [2026-09-07 21:14:07 +0000] [1] [INFO] Starting gunicorn 23.0.0
+smoke-1  | [2026-09-07 21:14:07 +0000] [1] [INFO] Listening at: http://0.0.0.0:5000 (1)
+smoke-1  | [2026-09-07 21:14:07 +0000] [1] [INFO] Using worker: gthread
+smoke-1  | [2026-09-07 21:14:07 +0000] [9] [INFO] Booting worker with pid: 9
+smoke-1  | {"timestamp": "2026-09-07T21:14:09.251415+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "c0df22e4190853be89d992dffc5337d2", "route": "/api/ready", "method": "GET", "status": 200, "duration_ms": 88.829}
+smoke-1  | {"timestamp": "2026-09-07T21:14:12.734572+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "e74b71341fba5c6e16351250c0f7c4e1", "route": "/health", "method": "GET", "status": 200, "duration_ms": 0.142}
+smoke-1  | {"timestamp": "2026-09-07T21:14:14.233785+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "4f093843181bb49a1cd026c633724fb1", "route": "/login", "method": "GET", "status": 200, "duration_ms": 9.736}
+smoke-1  | {"timestamp": "2026-09-07T21:14:14.248172+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "f6a21d382dcb9ae6294068091b04e116", "route": "/readiness", "method": "GET", "status": 200, "duration_ms": 5.841}
+smoke-1  | {"timestamp": "2026-09-07T21:14:14.256430+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "d4911d2174e61543019d64287470448e", "route": "/metrics", "method": "GET", "status": 200, "duration_ms": 0.275}
+smoke-1  | {"timestamp": "2026-09-07T21:14:14.262334+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "1b7a37a1dcca9fce89e8e6c59e7431c5", "route": "/metrics", "method": "GET", "status": 404, "duration_ms": 0.222}
+smoke-1  | {"timestamp": "2026-09-07T21:14:14.269380+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "818f38b1ee27ef26277b8a076b5f4cd1", "route": "/api/fiscal/view", "method": "GET", "status": 404, "duration_ms": 0.33}
+smoke-1  | {"timestamp": "2026-09-07T21:14:14.276884+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "baf4c04262db93f5f58154b0fd7bdf06", "route": "/api/financeiro/boletos/view", "method": "GET", "status": 404, "duration_ms": 0.165}
+smoke-1  | {"timestamp": "2026-09-07T21:14:14.314995+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "2fa9fa170efc5934b8e6e978d3c1ed09", "route": "/login", "method": "GET", "status": 403, "duration_ms": 0.116}
+smoke-1  | {"timestamp": "2026-09-07T21:14:14.394734+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "77e0a37705d7cef71c1e2a0651beac9d", "route": "/api/ready", "method": "GET", "status": 200, "duration_ms": 7.257}
+smoke-1  | {"timestamp": "2026-09-07T21:14:15.459302+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "eaec4753f4aa329ea1665f245adb3c60", "route": "/readiness", "method": "GET", "status": 200, "duration_ms": 7.424}
+smoke-1  | {"timestamp": "2026-09-07T21:14:15.461114+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "4e06b9bed49f3c9c8d2e11ca807e9a11", "route": "/health", "method": "GET", "status": 200, "duration_ms": 0.081}
+smoke-1  | {"timestamp": "2026-09-07T21:14:15.463382+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "fd1e34e76c9ce8695c7fe933ef820640", "route": "/readiness", "method": "GET", "status": 503, "duration_ms": 1.313}
+smoke-1  | {"timestamp": "2026-09-07T21:14:15.832381+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "51c16c5d229f59e34d6e13e2d9ae61ab", "route": "/health", "method": "GET", "status": 200, "duration_ms": 0.094}
+smoke-1  | {"timestamp": "2026-09-07T21:14:16.774794+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "2f88ef637376e233d78e0fb15bbacfca", "route": "/readiness", "method": "GET", "status": 200, "duration_ms": 78.522}
+smoke-1  | {"timestamp": "2026-09-07T21:14:17.513301+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "a180468d7bd0f36bcec3858dd4d1a63c", "route": "/readiness", "method": "GET", "status": 200, "duration_ms": 5.385}
+proxy-1  | /docker-entrypoint.sh: /docker-entrypoint.d/ is not empty, will attempt to perform configuration
+proxy-1  | /docker-entrypoint.sh: Looking for shell scripts in /docker-entrypoint.d/
+smoke-1  | [2026-09-07 21:14:17 +0000] [1] [ERROR] Worker (pid:9) was sent SIGKILL! Perhaps out of memory?
+smoke-1  | [2026-09-07 21:14:17 +0000] [43] [INFO] Booting worker with pid: 43
+smoke-1  | {"timestamp": "2026-09-07T21:14:18.476085+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "16178f77a17e469f249702e4b502a13d", "route": "/readiness", "method": "GET", "status": 200, "duration_ms": 23.661}
+smoke-1  | {"timestamp": "2026-09-07T21:14:19.133998+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "474b0f69789b2bdf074c3f85b8d7f0f9", "route": "/health", "method": "GET", "status": 200, "duration_ms": 0.184}
+smoke-1  | {"timestamp": "2026-09-07T21:14:19.609377+00:00", "level": "WARNING", "event": "application_diagnostic", "error_type": "OperationalError", "request_id": "27a1f8d5dadbef8c8b119e9215adf15a"}
+smoke-1  | {"timestamp": "2026-09-07T21:14:19.609670+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "27a1f8d5dadbef8c8b119e9215adf15a", "route": "/api/ready", "method": "GET", "status": 503, "duration_ms": 6.494}
+proxy-1  | /docker-entrypoint.sh: Launching /docker-entrypoint.d/10-listen-on-ipv6-by-default.sh
+proxy-1  | 10-listen-on-ipv6-by-default.sh: info: can not modify /etc/nginx/conf.d/default.conf (read-only file system?)
+smoke-1  | {"timestamp": "2026-09-07T21:14:20.708877+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "dfd4d31604ef6492a9cc7676545ecfba", "route": "/api/health", "method": "GET", "status": 200, "duration_ms": 0.093}
+proxy-1  | /docker-entrypoint.sh: Sourcing /docker-entrypoint.d/15-local-resolvers.envsh
+proxy-1  | /docker-entrypoint.sh: Launching /docker-entrypoint.d/20-envsubst-on-templates.sh
+proxy-1  | /docker-entrypoint.sh: Launching /docker-entrypoint.d/30-tune-worker-processes.sh
+proxy-1  | /docker-entrypoint.sh: Configuration complete; ready for start up
+proxy-1  | {"event":"proxy_request","request_id":"e74b71341fba5c6e16351250c0f7c4e1","status":200,"duration":0.012}
+smoke-1  | {"timestamp": "2026-09-07T21:14:20.712116+00:00", "level": "WARNING", "event": "application_diagnostic", "error_type": "OperationalError", "request_id": "6592630f54b4e86844619b16279a6036"}
+smoke-1  | {"timestamp": "2026-09-07T21:14:20.712310+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "6592630f54b4e86844619b16279a6036", "route": "/api/ready", "method": "GET", "status": 503, "duration_ms": 1.896}
+proxy-1  | {"event":"proxy_request","request_id":"4f093843181bb49a1cd026c633724fb1","status":200,"duration":0.014}
+proxy-1  | {"event":"proxy_request","request_id":"f6a21d382dcb9ae6294068091b04e116","status":200,"duration":0.007}
+proxy-1  | {"event":"proxy_request","request_id":"d4911d2174e61543019d64287470448e","status":200,"duration":0.002}
+proxy-1  | {"event":"proxy_request","request_id":"1b7a37a1dcca9fce89e8e6c59e7431c5","status":404,"duration":0.002}
+proxy-1  | {"event":"proxy_request","request_id":"818f38b1ee27ef26277b8a076b5f4cd1","status":404,"duration":0.003}
+proxy-1  | {"event":"proxy_request","request_id":"baf4c04262db93f5f58154b0fd7bdf06","status":404,"duration":0.002}
+proxy-1  | {"event":"proxy_request","request_id":"55092031ec55d8e6c86ef13ae3d506bb","status":404,"duration":0.000}
+proxy-1  | {"event":"proxy_request","request_id":"51c16c5d229f59e34d6e13e2d9ae61ab","status":200,"duration":0.001}
+proxy-1  | {"event":"proxy_request","request_id":"474b0f69789b2bdf074c3f85b8d7f0f9","status":200,"duration":0.005}
+proxy-1  | {"event":"proxy_request","request_id":"6586800da14ec7ec3c75154d3e1e5106","status":200,"duration":0.003}
+proxy-1  | {"event":"proxy_request","request_id":"a2d6ea1daca216d6783f936f40a9bfac","status":200,"duration":0.001}
+proxy-1  | /docker-entrypoint.sh: /docker-entrypoint.d/ is not empty, will attempt to perform configuration
+proxy-1  | /docker-entrypoint.sh: Looking for shell scripts in /docker-entrypoint.d/
+proxy-1  | /docker-entrypoint.sh: Launching /docker-entrypoint.d/10-listen-on-ipv6-by-default.sh
+proxy-1  | 10-listen-on-ipv6-by-default.sh: info: can not modify /etc/nginx/conf.d/default.conf (read-only file system?)
+proxy-1  | /docker-entrypoint.sh: Sourcing /docker-entrypoint.d/15-local-resolvers.envsh
+proxy-1  | /docker-entrypoint.sh: Launching /docker-entrypoint.d/20-envsubst-on-templates.sh
+proxy-1  | /docker-entrypoint.sh: Launching /docker-entrypoint.d/30-tune-worker-processes.sh
+proxy-1  | /docker-entrypoint.sh: Configuration complete; ready for start up
+proxy-1  | {"event":"proxy_request","request_id":"e18491b93ccefe46cd66f833e0aae12a","status":200,"duration":0.002}
+proxy-1  | {"event":"proxy_request","request_id":"5a288e8b3f640f9b86a30e4b195b1709","status":200,"duration":0.012}
+proxy-1  | {"event":"proxy_request","request_id":"85db390beabace3ce8a3d13d56d734c1","status":200,"duration":0.009}
+proxy-1  | {"event":"proxy_request","request_id":"0a33e04916a467d3b287428555f71204","status":200,"duration":0.002}
+proxy-1  | {"event":"proxy_request","request_id":"13fdff96c9fd7bdd9695f269db17ed32","status":404,"duration":0.001}
+proxy-1  | {"event":"proxy_request","request_id":"90f58dc484c0131ce469fad9ad9e2466","status":404,"duration":0.001}
+proxy-1  | {"event":"proxy_request","request_id":"7794df437cdd37880d825ac50d56bafb","status":404,"duration":0.002}
+smoke-1  | {"timestamp": "2026-09-07T21:14:20.713437+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "61916afe617a80b4e9f0c7fb5abca9d6", "route": "/login", "method": "GET", "status": 403, "duration_ms": 0.057}
+smoke-1  | {"timestamp": "2026-09-07T21:14:20.714416+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "828dd7d2d906cebf7c6221429da216d6", "route": "/login", "method": "GET", "status": 403, "duration_ms": 0.057}
+smoke-1  | {"timestamp": "2026-09-07T21:14:20.715868+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "940269e2fc1f4ed9dc5ab2804f854a37", "route": "/login", "method": "GET", "status": 403, "duration_ms": 0.123}
+smoke-1  | {"timestamp": "2026-09-07T21:14:22.198667+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "6586800da14ec7ec3c75154d3e1e5106", "route": "/health", "method": "GET", "status": 200, "duration_ms": 0.196}
+smoke-1  | {"timestamp": "2026-09-07T21:14:24.758436+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "c3f3174681d722dd3e42fead17881eb3", "route": "/api/ready", "method": "GET", "status": 200, "duration_ms": 20.315}
+smoke-1  | {"timestamp": "2026-09-07T21:14:25.255659+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "a2d6ea1daca216d6783f936f40a9bfac", "route": "/health", "method": "GET", "status": 200, "duration_ms": 0.156}
+smoke-1  | {"timestamp": "2026-09-07T21:14:25.536775+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "5b5a23ef6b9c3ea45b8b43208a604590", "route": "/api/health", "method": "GET", "status": 200, "duration_ms": 0.089}
+smoke-1  | {"timestamp": "2026-09-07T21:14:25.542667+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "c334bcd4c5f8ae02e0f8fac5f97cff2a", "route": "/api/ready", "method": "GET", "status": 200, "duration_ms": 4.633}
+smoke-1  | {"timestamp": "2026-09-07T21:14:25.543909+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "36399dd8a1e3d958e47cd982fd12df31", "route": "/login", "method": "GET", "status": 403, "duration_ms": 0.061}
+smoke-1  | {"timestamp": "2026-09-07T21:14:25.544829+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "be9c0a139f1575d767fd4e9438d58f6c", "route": "/login", "method": "GET", "status": 403, "duration_ms": 0.053}
+smoke-1  | {"timestamp": "2026-09-07T21:14:25.545715+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "bb218e716fe799c516e69a86b46ecdcd", "route": "/login", "method": "GET", "status": 403, "duration_ms": 0.052}
+smoke-1  | {"timestamp": "2026-09-07T21:14:29.873011+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "23ce1ac123dcc214fa15c2038bd8ae54", "route": "/api/ready", "method": "GET", "status": 200, "duration_ms": 5.046}
+smoke-1  | {"timestamp": "2026-09-07T21:14:30.584580+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "6c0897adbab33bd85ede5e1e314708f9", "route": "/api/health", "method": "GET", "status": 200, "duration_ms": 0.25}
+smoke-1  | {"timestamp": "2026-09-07T21:14:30.592121+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "903c7542ce7a046543c35fcf3b56ecbf", "route": "/api/ready", "method": "GET", "status": 200, "duration_ms": 5.673}
+smoke-1  | {"timestamp": "2026-09-07T21:14:30.593576+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "1d814302e88586f13391e867724619bb", "route": "/login", "method": "GET", "status": 403, "duration_ms": 0.065}
+smoke-1  | {"timestamp": "2026-09-07T21:14:30.594767+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "398dad91d7a181ce591e75167b64a763", "route": "/login", "method": "GET", "status": 403, "duration_ms": 0.052}
+smoke-1  | {"timestamp": "2026-09-07T21:14:30.595668+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "37819b46ca37da55d08cff62516e1482", "route": "/login", "method": "GET", "status": 403, "duration_ms": 0.057}
+smoke-1  | {"timestamp": "2026-09-07T21:14:35.350150+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "c2ec6a23ba278300af0fdfa073dffc4c", "route": "/api/ready", "method": "GET", "status": 200, "duration_ms": 158.925}
+smoke-1  | {"timestamp": "2026-09-07T21:14:35.393338+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "e18491b93ccefe46cd66f833e0aae12a", "route": "/health", "method": "GET", "status": 200, "duration_ms": 0.1}
+smoke-1  | {"timestamp": "2026-09-07T21:14:36.496803+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "5a288e8b3f640f9b86a30e4b195b1709", "route": "/login", "method": "GET", "status": 200, "duration_ms": 9.817}
+smoke-1  | {"timestamp": "2026-09-07T21:14:36.510141+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "85db390beabace3ce8a3d13d56d734c1", "route": "/readiness", "method": "GET", "status": 200, "duration_ms": 7.025}
+smoke-1  | {"timestamp": "2026-09-07T21:14:36.516054+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "0a33e04916a467d3b287428555f71204", "route": "/metrics", "method": "GET", "status": 200, "duration_ms": 0.223}
+smoke-1  | {"timestamp": "2026-09-07T21:14:36.522458+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "13fdff96c9fd7bdd9695f269db17ed32", "route": "/metrics", "method": "GET", "status": 404, "duration_ms": 0.208}
+smoke-1  | {"timestamp": "2026-09-07T21:14:36.527286+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "90f58dc484c0131ce469fad9ad9e2466", "route": "/api/fiscal/view", "method": "GET", "status": 404, "duration_ms": 0.164}
+smoke-1  | {"timestamp": "2026-09-07T21:14:36.532052+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "7794df437cdd37880d825ac50d56bafb", "route": "/api/financeiro/boletos/view", "method": "GET", "status": 404, "duration_ms": 0.135}
+smoke-1  | {"timestamp": "2026-09-07T21:14:36.557599+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "237984a1f2e40d65b858def50c51c4da", "route": "/login", "method": "GET", "status": 403, "duration_ms": 0.073}
+smoke-1  | {"timestamp": "2026-09-07T21:14:38.576891+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "8ece6c49c76297a493a0c6515368e689", "route": "/health", "method": "GET", "status": 200, "duration_ms": 0.186}
+smoke-1  | {"timestamp": "2026-09-07T21:14:40.569578+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "c3bb070f380cbae4baf270239699ce63", "route": "/api/ready", "method": "GET", "status": 200, "duration_ms": 11.591}
+smoke-1  | {"timestamp": "2026-09-07T21:14:41.636702+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "2f0189d31a3250139d6f67a3b01ab086", "route": "/health", "method": "GET", "status": 200, "duration_ms": 0.117}
+smoke-1  | [2026-09-07 21:14:44 +0000] [1] [INFO] Handling signal: term
+smoke-1  | {"timestamp": "2026-09-07T21:14:44.640206+00:00", "level": "INFO", "event": "application_diagnostic", "error_type": null}
+smoke-1  | [2026-09-07 21:14:44 +0000] [1] [INFO] Shutting down: Master
+smoke-1  | INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+smoke-1  | INFO  [alembic.runtime.migration] Will assume transactional DDL.
+smoke-1  | [2026-09-07 21:16:42 +0000] [1] [INFO] Starting gunicorn 23.0.0
+smoke-1  | [2026-09-07 21:16:42 +0000] [1] [INFO] Listening at: http://0.0.0.0:5000 (1)
+smoke-1  | [2026-09-07 21:16:42 +0000] [1] [INFO] Using worker: gthread
+smoke-1  | [2026-09-07 21:16:42 +0000] [9] [INFO] Booting worker with pid: 9
+smoke-1  | {"timestamp": "2026-09-07T21:16:45.290993+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "68d513420555ed5f96e85cb7249c3164", "route": "/api/ready", "method": "GET", "status": 200, "duration_ms": 27.956}
+smoke-1  | {"timestamp": "2026-09-07T21:16:49.005192+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "c59a9cee65cf701b610c966ee09ab8a7", "route": "/health", "method": "GET", "status": 200, "duration_ms": 0.103}
+proxy-1  | {"event":"proxy_request","request_id":"ec059798bea8004a2bccc99f35898c05","status":404,"duration":0.000}
+smoke-1  | {"timestamp": "2026-09-07T21:16:50.180309+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "dc3a36b84775e1bfaa1bf8b0677cc430", "route": "/login", "method": "GET", "status": 200, "duration_ms": 11.163}
+smoke-1  | {"timestamp": "2026-09-07T21:16:50.429165+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "16d00f39613afab3246114be52e20d56", "route": "/api/ready", "method": "GET", "status": 200, "duration_ms": 17.524}
+smoke-1  | {"timestamp": "2026-09-07T21:16:50.497473+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "7dc069ef6204cc5fb4cb99cdd5dba608", "route": "/login", "method": "POST", "status": 302, "duration_ms": 310.233}
+smoke-1  | {"timestamp": "2026-09-07T21:16:50.584490+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "2876a1b4e10b547212d4a68260366998", "route": "/home", "method": "GET", "status": 200, "duration_ms": 82.305}
+smoke-1  | {"timestamp": "2026-09-07T21:16:50.687449+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "86f3a71da7d3491d1ae9943d2ba6a63f", "route": "/api/auditoria/", "method": "GET", "status": 200, "duration_ms": 88.777}
+smoke-1  | {"timestamp": "2026-09-07T21:16:50.817016+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "d0f84151bb1ca4d9a2dfd071f7927636", "route": "/api/financeiro/lancamentos", "method": "GET", "status": 200, "duration_ms": 217.252}
+smoke-1  | {"timestamp": "2026-09-07T21:16:50.836440+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "70d9c303b6c342a0de141d848829bfc5", "route": "/api/estoque/movimentos", "method": "GET", "status": 200, "duration_ms": 234.238}
+smoke-1  | {"timestamp": "2026-09-07T21:16:50.850598+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "9f6cb53cf454daa0212c7f800199212c", "route": "/api/pdv/vendas", "method": "GET", "status": 200, "duration_ms": 253.478}
+smoke-1  | {"timestamp": "2026-09-07T21:16:50.911950+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "8499467999aac08b9dd4fa5297f1b37d", "route": "/api/pdv/vendas", "method": "GET", "status": 200, "duration_ms": 205.943}
+smoke-1  | {"timestamp": "2026-09-07T21:16:50.930556+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "c5684cdbb484102bdaeb0f2a673dc183", "route": "/api/financeiro/lancamentos", "method": "GET", "status": 200, "duration_ms": 102.484}
+smoke-1  | {"timestamp": "2026-09-07T21:16:50.997660+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "1cdcb69dd8113df4f06bb00eef6dfdf7", "route": "/api/auditoria/", "method": "GET", "status": 200, "duration_ms": 125.959}
+smoke-1  | {"timestamp": "2026-09-07T21:16:51.002619+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "7bfb5a186380609ca1e2d8e450a2d007", "route": "/api/estoque/movimentos", "method": "GET", "status": 200, "duration_ms": 144.337}
+smoke-1  | {"timestamp": "2026-09-07T21:16:51.040907+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "8579032a29eb596d3a6a645a0581591a", "route": "/api/pdv/vendas", "method": "GET", "status": 200, "duration_ms": 112.307}
+smoke-1  | {"timestamp": "2026-09-07T21:16:51.070747+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "eaacf33541493253ded6525e43ab0987", "route": "/api/financeiro/lancamentos", "method": "GET", "status": 200, "duration_ms": 129.146}
+smoke-1  | {"timestamp": "2026-09-07T21:16:51.119493+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "3ab9b7fc31bedcb91ed98d39931e14c9", "route": "/api/auditoria/", "method": "GET", "status": 200, "duration_ms": 93.775}
+smoke-1  | {"timestamp": "2026-09-07T21:16:51.140772+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "aa6aae3e3fcab1a0c56fb2d1aafab20a", "route": "/api/estoque/movimentos", "method": "GET", "status": 200, "duration_ms": 113.04}
+smoke-1  | {"timestamp": "2026-09-07T21:16:51.174042+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "24f22f9d8c3a49e8892db4f2a04effb9", "route": "/api/pdv/vendas", "method": "GET", "status": 200, "duration_ms": 131.052}
+smoke-1  | {"timestamp": "2026-09-07T21:16:51.213039+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "ab79b96fbb75b655800d68e3cde2403a", "route": "/api/financeiro/lancamentos", "method": "GET", "status": 200, "duration_ms": 133.505}
+smoke-1  | {"timestamp": "2026-09-07T21:16:51.250943+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "64953116e8786f20908b6fe320190970", "route": "/api/estoque/movimentos", "method": "GET", "status": 200, "duration_ms": 109.41}
+smoke-1  | {"timestamp": "2026-09-07T21:16:51.279007+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "b6bddf52377cd27312a896bba4033bae", "route": "/api/auditoria/", "method": "GET", "status": 200, "duration_ms": 128.624}
+smoke-1  | {"timestamp": "2026-09-07T21:16:51.353161+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "50cbbe77531bb3ed454f9bd3fba3af92", "route": "/api/financeiro/lancamentos", "method": "GET", "status": 200, "duration_ms": 113.786}
+smoke-1  | {"timestamp": "2026-09-07T21:16:51.358477+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "b3afda8e4cc42d18b7493d466588f6e8", "route": "/api/pdv/vendas", "method": "GET", "status": 200, "duration_ms": 149.892}
+smoke-1  | {"timestamp": "2026-09-07T21:16:51.381081+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "e54926b3036d9fb123502c0becf9a0c9", "route": "/api/estoque/movimentos", "method": "GET", "status": 200, "duration_ms": 116.753}
+smoke-1  | {"timestamp": "2026-09-07T21:16:51.464601+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "54e44fd698bf54ee63504802cc9661a4", "route": "/api/financeiro/lancamentos", "method": "GET", "status": 200, "duration_ms": 86.294}
+smoke-1  | {"timestamp": "2026-09-07T21:16:51.475002+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "a8d82936362fcc7fc29fe5ee3e4f8e77", "route": "/api/auditoria/", "method": "GET", "status": 200, "duration_ms": 164.577}
+smoke-1  | {"timestamp": "2026-09-07T21:16:51.492760+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "a6494024eaefd5f10cf5b8b3d926b9a1", "route": "/api/pdv/vendas", "method": "GET", "status": 200, "duration_ms": 122.482}
+smoke-1  | {"timestamp": "2026-09-07T21:16:51.533621+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "e76578690fc20739b074cc44a19dff7e", "route": "/api/estoque/movimentos", "method": "GET", "status": 200, "duration_ms": 147.304}
+smoke-1  | {"timestamp": "2026-09-07T21:16:51.574617+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "66372fdc836e2093b9a41aa3f0971f7a", "route": "/api/auditoria/", "method": "GET", "status": 200, "duration_ms": 98.891}
+smoke-1  | {"timestamp": "2026-09-07T21:16:51.689522+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "b4c65cba939c048a2ff1e8605ea93cd1", "route": "/api/pdv/vendas", "method": "GET", "status": 200, "duration_ms": 178.957}
+smoke-1  | {"timestamp": "2026-09-07T21:16:51.721076+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "9cbd332418fe4171bec9dac8e0aaeb0c", "route": "/api/financeiro/lancamentos", "method": "GET", "status": 200, "duration_ms": 201.398}
+smoke-1  | {"timestamp": "2026-09-07T21:16:51.733852+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "df0a7a1747da068c82c1bfc57315dd43", "route": "/api/auditoria/", "method": "GET", "status": 200, "duration_ms": 152.914}
+smoke-1  | {"timestamp": "2026-09-07T21:16:51.735166+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "7acaec4031f9417c5ba14ed5b538ed1d", "route": "/api/estoque/movimentos", "method": "GET", "status": 200, "duration_ms": 185.63}
+smoke-1  | {"timestamp": "2026-09-07T21:16:51.832047+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "1e1adebaaea7807201de73b72f2ee6cd", "route": "/api/pdv/vendas", "method": "GET", "status": 200, "duration_ms": 125.246}
+smoke-1  | {"timestamp": "2026-09-07T21:16:51.865724+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "80568992378f843b33951f2098aa7dcd", "route": "/api/auditoria/", "method": "GET", "status": 200, "duration_ms": 120.083}
+smoke-1  | {"timestamp": "2026-09-07T21:16:51.879397+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "aef52393ae3aad840c318e1bde006c5f", "route": "/api/estoque/movimentos", "method": "GET", "status": 200, "duration_ms": 139.9}
+smoke-1  | {"timestamp": "2026-09-07T21:16:51.886731+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "ede878777d5031fef9f74ee2d84ab6c7", "route": "/api/financeiro/lancamentos", "method": "GET", "status": 200, "duration_ms": 149.276}
+smoke-1  | {"timestamp": "2026-09-07T21:16:51.979188+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "eec95c730e254f37f438bef0c551d93e", "route": "/api/pdv/vendas", "method": "GET", "status": 200, "duration_ms": 127.385}
+proxy-1  | {"event":"proxy_request","request_id":"8ece6c49c76297a493a0c6515368e689","status":200,"duration":0.003}
+proxy-1  | {"event":"proxy_request","request_id":"2f0189d31a3250139d6f67a3b01ab086","status":200,"duration":0.001}
+proxy-1  | /docker-entrypoint.sh: /docker-entrypoint.d/ is not empty, will attempt to perform configuration
+proxy-1  | /docker-entrypoint.sh: Looking for shell scripts in /docker-entrypoint.d/
+proxy-1  | /docker-entrypoint.sh: Launching /docker-entrypoint.d/10-listen-on-ipv6-by-default.sh
+proxy-1  | 10-listen-on-ipv6-by-default.sh: info: can not modify /etc/nginx/conf.d/default.conf (read-only file system?)
+proxy-1  | /docker-entrypoint.sh: Sourcing /docker-entrypoint.d/15-local-resolvers.envsh
+proxy-1  | /docker-entrypoint.sh: Launching /docker-entrypoint.d/20-envsubst-on-templates.sh
+proxy-1  | /docker-entrypoint.sh: Launching /docker-entrypoint.d/30-tune-worker-processes.sh
+proxy-1  | /docker-entrypoint.sh: Configuration complete; ready for start up
+proxy-1  | {"event":"proxy_request","request_id":"c59a9cee65cf701b610c966ee09ab8a7","status":200,"duration":0.002}
+proxy-1  | {"event":"proxy_request","request_id":"dc3a36b84775e1bfaa1bf8b0677cc430","status":200,"duration":0.014}
+proxy-1  | {"event":"proxy_request","request_id":"7dc069ef6204cc5fb4cb99cdd5dba608","status":302,"duration":0.313}
+proxy-1  | {"event":"proxy_request","request_id":"2876a1b4e10b547212d4a68260366998","status":200,"duration":0.084}
+proxy-1  | {"event":"proxy_request","request_id":"86f3a71da7d3491d1ae9943d2ba6a63f","status":200,"duration":0.098}
+proxy-1  | {"event":"proxy_request","request_id":"d0f84151bb1ca4d9a2dfd071f7927636","status":200,"duration":0.232}
+proxy-1  | {"event":"proxy_request","request_id":"70d9c303b6c342a0de141d848829bfc5","status":200,"duration":0.258}
+proxy-1  | {"event":"proxy_request","request_id":"9f6cb53cf454daa0212c7f800199212c","status":200,"duration":0.280}
+proxy-1  | {"event":"proxy_request","request_id":"8499467999aac08b9dd4fa5297f1b37d","status":200,"duration":0.318}
+proxy-1  | {"event":"proxy_request","request_id":"c5684cdbb484102bdaeb0f2a673dc183","status":200,"duration":0.335}
+proxy-1  | {"event":"proxy_request","request_id":"1cdcb69dd8113df4f06bb00eef6dfdf7","status":200,"duration":0.416}
+proxy-1  | {"event":"proxy_request","request_id":"7bfb5a186380609ca1e2d8e450a2d007","status":200,"duration":0.416}
+proxy-1  | {"event":"proxy_request","request_id":"8579032a29eb596d3a6a645a0581591a","status":200,"duration":0.346}
+proxy-1  | {"event":"proxy_request","request_id":"eaacf33541493253ded6525e43ab0987","status":200,"duration":0.243}
+proxy-1  | {"event":"proxy_request","request_id":"3ab9b7fc31bedcb91ed98d39931e14c9","status":200,"duration":0.259}
+proxy-1  | {"event":"proxy_request","request_id":"aa6aae3e3fcab1a0c56fb2d1aafab20a","status":200,"duration":0.290}
+proxy-1  | {"event":"proxy_request","request_id":"24f22f9d8c3a49e8892db4f2a04effb9","status":200,"duration":0.271}
+proxy-1  | {"event":"proxy_request","request_id":"ab79b96fbb75b655800d68e3cde2403a","status":200,"duration":0.292}
+proxy-1  | {"event":"proxy_request","request_id":"64953116e8786f20908b6fe320190970","status":200,"duration":0.242}
+proxy-1  | {"event":"proxy_request","request_id":"b6bddf52377cd27312a896bba4033bae","status":200,"duration":0.274}
+proxy-1  | {"event":"proxy_request","request_id":"b3afda8e4cc42d18b7493d466588f6e8","status":200,"duration":0.321}
+proxy-1  | {"event":"proxy_request","request_id":"50cbbe77531bb3ed454f9bd3fba3af92","status":200,"duration":0.290}
+proxy-1  | {"event":"proxy_request","request_id":"e54926b3036d9fb123502c0becf9a0c9","status":200,"duration":0.246}
+proxy-1  | {"event":"proxy_request","request_id":"54e44fd698bf54ee63504802cc9661a4","status":200,"duration":0.240}
+proxy-1  | {"event":"proxy_request","request_id":"a8d82936362fcc7fc29fe5ee3e4f8e77","status":200,"duration":0.335}
+proxy-1  | {"event":"proxy_request","request_id":"a6494024eaefd5f10cf5b8b3d926b9a1","status":200,"duration":0.315}
+proxy-1  | {"event":"proxy_request","request_id":"e76578690fc20739b074cc44a19dff7e","status":200,"duration":0.277}
+proxy-1  | {"event":"proxy_request","request_id":"66372fdc836e2093b9a41aa3f0971f7a","status":200,"duration":0.282}
+proxy-1  | {"event":"proxy_request","request_id":"b4c65cba939c048a2ff1e8605ea93cd1","status":200,"duration":0.330}
+proxy-1  | {"event":"proxy_request","request_id":"9cbd332418fe4171bec9dac8e0aaeb0c","status":200,"duration":0.360}
+proxy-1  | {"event":"proxy_request","request_id":"df0a7a1747da068c82c1bfc57315dd43","status":200,"duration":0.258}
+proxy-1  | {"event":"proxy_request","request_id":"7acaec4031f9417c5ba14ed5b538ed1d","status":200,"duration":0.349}
+proxy-1  | {"event":"proxy_request","request_id":"1e1adebaaea7807201de73b72f2ee6cd","status":200,"duration":0.356}
+proxy-1  | {"event":"proxy_request","request_id":"80568992378f843b33951f2098aa7dcd","status":200,"duration":0.294}
+proxy-1  | {"event":"proxy_request","request_id":"aef52393ae3aad840c318e1bde006c5f","status":200,"duration":0.337}
+proxy-1  | {"event":"proxy_request","request_id":"ede878777d5031fef9f74ee2d84ab6c7","status":200,"duration":0.371}
+proxy-1  | {"event":"proxy_request","request_id":"eec95c730e254f37f438bef0c551d93e","status":200,"duration":0.284}
+smoke-1  | {"timestamp": "2026-09-07T21:16:51.990619+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "19d3e82597f4c4c0a237eacf0aa928da", "route": "/api/auditoria/", "method": "GET", "status": 200, "duration_ms": 100.31}
+proxy-1  | {"event":"proxy_request","request_id":"19d3e82597f4c4c0a237eacf0aa928da","status":200,"duration":0.256}
+smoke-1  | {"timestamp": "2026-09-07T21:16:52.025815+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "9779a35370753154464de36d16806089", "route": "/api/estoque/movimentos", "method": "GET", "status": 200, "duration_ms": 137.742}
+smoke-1  | {"timestamp": "2026-09-07T21:16:52.031131+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "6d19cf7d3e4f32dc675f82b0ceab5817", "route": "/api/financeiro/lancamentos", "method": "GET", "status": 200, "duration_ms": 153.352}
+smoke-1  | {"timestamp": "2026-09-07T21:16:52.119360+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "32720f476c10d2c1ac16c5133fc756ee", "route": "/api/pdv/vendas", "method": "GET", "status": 200, "duration_ms": 127.942}
+smoke-1  | {"timestamp": "2026-09-07T21:16:52.121212+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "8f731ef2c83804be6c944f8de0614292", "route": "/api/financeiro/lancamentos", "method": "GET", "status": 200, "duration_ms": 123.556}
+proxy-1  | {"event":"proxy_request","request_id":"9779a35370753154464de36d16806089","status":200,"duration":0.290}
+smoke-1  | {"timestamp": "2026-09-07T21:16:52.160328+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "52599ebf5e61e81c1bc81b448a432fc7", "route": "/api/auditoria/", "method": "GET", "status": 200, "duration_ms": 120.861}
+smoke-1  | {"timestamp": "2026-09-07T21:16:52.167288+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "18afb4247c66c7a696ff9b846f5a3e0a", "route": "/api/estoque/movimentos", "method": "GET", "status": 200, "duration_ms": 133.101}
+smoke-1  | {"timestamp": "2026-09-07T21:16:52.240534+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "f61af4e3868442c02acf6818f34db4e7", "route": "/api/financeiro/lancamentos", "method": "GET", "status": 200, "duration_ms": 99.308}
+smoke-1  | {"timestamp": "2026-09-07T21:16:52.252282+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "cab41cf43bb87c2a2249ba479a162e52", "route": "/health", "method": "GET", "status": 200, "duration_ms": 0.124}
+smoke-1  | {"timestamp": "2026-09-07T21:16:52.259341+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "9b96c5160df59bfa40876af0a3cc2ea0", "route": "/api/pdv/vendas", "method": "GET", "status": 200, "duration_ms": 127.316}
+smoke-1  | {"timestamp": "2026-09-07T21:16:52.290141+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "29ef84dd2de2dace564146792cba2d71", "route": "/api/estoque/movimentos", "method": "GET", "status": 200, "duration_ms": 124.514}
+smoke-1  | {"timestamp": "2026-09-07T21:16:52.301150+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "21400eb042db5bf066d9ee6d3c38f2f6", "route": "/api/auditoria/", "method": "GET", "status": 200, "duration_ms": 123.714}
+proxy-1  | {"event":"proxy_request","request_id":"6d19cf7d3e4f32dc675f82b0ceab5817","status":200,"duration":0.298}
+smoke-1  | {"timestamp": "2026-09-07T21:16:52.381797+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "b4ce859c53970ff91ea5cb8e0ba79bbf", "route": "/api/financeiro/lancamentos", "method": "GET", "status": 200, "duration_ms": 109.02}
+proxy-1  | {"event":"proxy_request","request_id":"32720f476c10d2c1ac16c5133fc756ee","status":200,"duration":0.277}
+proxy-1  | {"event":"proxy_request","request_id":"8f731ef2c83804be6c944f8de0614292","status":200,"duration":0.260}
+proxy-1  | {"event":"proxy_request","request_id":"52599ebf5e61e81c1bc81b448a432fc7","status":200,"duration":0.275}
+smoke-1  | {"timestamp": "2026-09-07T21:16:52.385326+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "20ed4d178aaa07c12b3eb2e1b22a7faf", "route": "/api/pdv/vendas", "method": "GET", "status": 200, "duration_ms": 122.602}
+smoke-1  | {"timestamp": "2026-09-07T21:16:52.415914+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "98c88d48ef13951c733c1d9e689ba57c", "route": "/api/auditoria/", "method": "GET", "status": 200, "duration_ms": 103.976}
+smoke-1  | {"timestamp": "2026-09-07T21:16:52.432421+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "d7c2beca30afc2c7bf76c8af77acf103", "route": "/api/estoque/movimentos", "method": "GET", "status": 200, "duration_ms": 128.631}
+proxy-1  | {"event":"proxy_request","request_id":"18afb4247c66c7a696ff9b846f5a3e0a","status":200,"duration":0.283}
+smoke-1  | {"timestamp": "2026-09-07T21:16:52.510648+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "9639aa2364cbddc814284f83628e8f97", "route": "/api/pdv/vendas", "method": "GET", "status": 200, "duration_ms": 111.887}
+proxy-1  | {"event":"proxy_request","request_id":"f61af4e3868442c02acf6818f34db4e7","status":200,"duration":0.251}
+proxy-1  | {"event":"proxy_request","request_id":"cab41cf43bb87c2a2249ba479a162e52","status":200,"duration":0.188}
+proxy-1  | {"event":"proxy_request","request_id":"9b96c5160df59bfa40876af0a3cc2ea0","status":200,"duration":0.274}
+smoke-1  | {"timestamp": "2026-09-07T21:16:52.525756+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "c271209ef1f9f9b4b1b8c51f0b8acfb8", "route": "/api/estoque/movimentos", "method": "GET", "status": 200, "duration_ms": 104.132}
+smoke-1  | {"timestamp": "2026-09-07T21:16:52.540598+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "3837bd238a65d4fca289f177efa5331f", "route": "/api/financeiro/lancamentos", "method": "GET", "status": 200, "duration_ms": 140.869}
+smoke-1  | {"timestamp": "2026-09-07T21:16:52.601633+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "384c7f172e79e9c2ba9e98241eb709ee", "route": "/api/auditoria/", "method": "GET", "status": 200, "duration_ms": 164.726}
+smoke-1  | {"timestamp": "2026-09-07T21:16:52.639736+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "7a2ddc2b927583044c53924fa51a8640", "route": "/api/pdv/vendas", "method": "GET", "status": 200, "duration_ms": 118.105}
+smoke-1  | {"timestamp": "2026-09-07T21:16:52.647226+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "9dd665fb788c43705e945b1907a8db82", "route": "/api/financeiro/lancamentos", "method": "GET", "status": 200, "duration_ms": 115.115}
+smoke-1  | {"timestamp": "2026-09-07T21:16:52.678030+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "93e18a1501777e3b68576a299827abb6", "route": "/api/estoque/movimentos", "method": "GET", "status": 200, "duration_ms": 132.018}
+smoke-1  | {"timestamp": "2026-09-07T21:16:52.727964+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "12afd34fda7e7474e13c52ed63bce28f", "route": "/api/auditoria/", "method": "GET", "status": 200, "duration_ms": 105.421}
+smoke-1  | {"timestamp": "2026-09-07T21:16:52.741708+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "90e300652e9c603f1a553539c2bb36c6", "route": "/api/pdv/vendas", "method": "GET", "status": 200, "duration_ms": 92.811}
+smoke-1  | {"timestamp": "2026-09-07T21:16:52.864312+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "3a905b42da10370787d13d99b036a9ec", "route": "/api/estoque/movimentos", "method": "GET", "status": 200, "duration_ms": 178.642}
+proxy-1  | {"event":"proxy_request","request_id":"29ef84dd2de2dace564146792cba2d71","status":200,"duration":0.262}
+proxy-1  | {"event":"proxy_request","request_id":"21400eb042db5bf066d9ee6d3c38f2f6","status":200,"duration":0.267}
+proxy-1  | {"event":"proxy_request","request_id":"b4ce859c53970ff91ea5cb8e0ba79bbf","status":200,"duration":0.244}
+proxy-1  | {"event":"proxy_request","request_id":"20ed4d178aaa07c12b3eb2e1b22a7faf","status":200,"duration":0.259}
+proxy-1  | {"event":"proxy_request","request_id":"98c88d48ef13951c733c1d9e689ba57c","status":200,"duration":0.244}
+smoke-1  | {"timestamp": "2026-09-07T21:16:52.866051+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "4fe8935da3f65db0d12a818734a68e48", "route": "/api/financeiro/lancamentos", "method": "GET", "status": 200, "duration_ms": 199.7}
+proxy-1  | {"event":"proxy_request","request_id":"d7c2beca30afc2c7bf76c8af77acf103","status":200,"duration":0.267}
+proxy-1  | {"event":"proxy_request","request_id":"9639aa2364cbddc814284f83628e8f97","status":200,"duration":0.261}
+proxy-1  | {"event":"proxy_request","request_id":"c271209ef1f9f9b4b1b8c51f0b8acfb8","status":200,"duration":0.230}
+smoke-1  | {"timestamp": "2026-09-07T21:16:52.898391+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "24242eee3a48367b5b66603522acd281", "route": "/api/auditoria/", "method": "GET", "status": 200, "duration_ms": 151.921}
+smoke-1  | {"timestamp": "2026-09-07T21:16:52.976970+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "b73b40891e044a85cbb77add83e5c821", "route": "/api/pdv/vendas", "method": "GET", "status": 200, "duration_ms": 190.936}
+smoke-1  | {"timestamp": "2026-09-07T21:16:52.984715+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "5ccdfc8ec2bcf91fdc16d39a0ed5d9a8", "route": "/api/financeiro/lancamentos", "method": "GET", "status": 200, "duration_ms": 111.692}
+proxy-1  | {"event":"proxy_request","request_id":"3837bd238a65d4fca289f177efa5331f","status":200,"duration":0.272}
+smoke-1  | {"timestamp": "2026-09-07T21:16:53.000653+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "b534622b79483c168daed352f26370ee", "route": "/api/estoque/movimentos", "method": "GET", "status": 200, "duration_ms": 126.826}
+proxy-1  | {"event":"proxy_request","request_id":"384c7f172e79e9c2ba9e98241eb709ee","status":200,"duration":0.311}
+proxy-1  | {"event":"proxy_request","request_id":"7a2ddc2b927583044c53924fa51a8640","status":200,"duration":0.255}
+smoke-1  | {"timestamp": "2026-09-07T21:16:53.035191+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "24906a9fd7c21b335086b1967e3706d9", "route": "/api/auditoria/", "method": "GET", "status": 200, "duration_ms": 126.907}
+smoke-1  | {"timestamp": "2026-09-07T21:16:53.086362+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "11113262698d4d61651aa218b93bf8b9", "route": "/api/pdv/vendas", "method": "GET", "status": 200, "duration_ms": 92.738}
+smoke-1  | {"timestamp": "2026-09-07T21:16:53.133487+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "338a73b2f1cc06329c26e9d2425ffe13", "route": "/api/financeiro/lancamentos", "method": "GET", "status": 200, "duration_ms": 130.511}
+smoke-1  | {"timestamp": "2026-09-07T21:16:53.147153+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "d50b967f22a56629d7cc9c6f41d0a837", "route": "/api/estoque/movimentos", "method": "GET", "status": 200, "duration_ms": 130.758}
+smoke-1  | {"timestamp": "2026-09-07T21:16:53.169001+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "f2f31ad101276a3bd52555f07084e11c", "route": "/api/auditoria/", "method": "GET", "status": 200, "duration_ms": 127.908}
+smoke-1  | {"timestamp": "2026-09-07T21:16:53.216279+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "91502c8a9fbf9af9d1e90b35ee6c01a1", "route": "/api/pdv/vendas", "method": "GET", "status": 200, "duration_ms": 119.328}
+smoke-1  | {"timestamp": "2026-09-07T21:16:53.273030+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "bb1cd898aadf3711508c7f2a06244a81", "route": "/api/financeiro/lancamentos", "method": "GET", "status": 200, "duration_ms": 120.607}
+smoke-1  | {"timestamp": "2026-09-07T21:16:53.292038+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "93cc17d12a73d1165e2aec8d1f8eb9ab", "route": "/api/auditoria/", "method": "GET", "status": 200, "duration_ms": 113.197}
+proxy-1  | {"event":"proxy_request","request_id":"9dd665fb788c43705e945b1907a8db82","status":200,"duration":0.263}
+smoke-1  | {"timestamp": "2026-09-07T21:16:53.297027+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "6a8535983ecfc4c14278a987bf85cbc8", "route": "/api/estoque/movimentos", "method": "GET", "status": 200, "duration_ms": 142.484}
+proxy-1  | {"event":"proxy_request","request_id":"93e18a1501777e3b68576a299827abb6","status":200,"duration":0.256}
+proxy-1  | {"event":"proxy_request","request_id":"12afd34fda7e7474e13c52ed63bce28f","status":200,"duration":0.295}
+smoke-1  | {"timestamp": "2026-09-07T21:16:53.358380+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "d1613f6cfb346c93486a01b72841d982", "route": "/api/pdv/vendas", "method": "GET", "status": 200, "duration_ms": 118.649}
+smoke-1  | {"timestamp": "2026-09-07T21:16:53.417280+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "4896bdc719968d7d3ff95c35d86706e9", "route": "/api/financeiro/lancamentos", "method": "GET", "status": 200, "duration_ms": 122.118}
+smoke-1  | {"timestamp": "2026-09-07T21:16:53.427105+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "fded0b035d3c621c32bef911aa6ffad7", "route": "/api/estoque/movimentos", "method": "GET", "status": 200, "duration_ms": 127.599}
+proxy-1  | {"event":"proxy_request","request_id":"90e300652e9c603f1a553539c2bb36c6","status":200,"duration":0.250}
+smoke-1  | {"timestamp": "2026-09-07T21:16:53.438887+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "51f6d97d3f57254441b5eff73cfb2642", "route": "/api/auditoria/", "method": "GET", "status": 200, "duration_ms": 118.818}
+proxy-1  | {"event":"proxy_request","request_id":"4fe8935da3f65db0d12a818734a68e48","status":200,"duration":0.335}
+proxy-1  | {"event":"proxy_request","request_id":"3a905b42da10370787d13d99b036a9ec","status":200,"duration":0.321}
+smoke-1  | {"timestamp": "2026-09-07T21:16:53.542221+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "a6deab4dbe7863a39ebb5b49b5125c71", "route": "/api/pdv/vendas", "method": "GET", "status": 200, "duration_ms": 157.685}
+proxy-1  | {"event":"proxy_request","request_id":"24242eee3a48367b5b66603522acd281","status":200,"duration":0.275}
+proxy-1  | {"event":"proxy_request","request_id":"b73b40891e044a85cbb77add83e5c821","status":200,"duration":0.337}
+proxy-1  | {"event":"proxy_request","request_id":"5ccdfc8ec2bcf91fdc16d39a0ed5d9a8","status":200,"duration":0.329}
+proxy-1  | {"event":"proxy_request","request_id":"b534622b79483c168daed352f26370ee","status":200,"duration":0.316}
+smoke-1  | {"timestamp": "2026-09-07T21:16:53.549624+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "ce727572a7f2542149429bf592c28d19", "route": "/api/financeiro/lancamentos", "method": "GET", "status": 200, "duration_ms": 117.068}
+smoke-1  | {"timestamp": "2026-09-07T21:16:53.581916+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "d4f43f2233347da458d52a8816f20c8a", "route": "/api/estoque/movimentos", "method": "GET", "status": 200, "duration_ms": 136.655}
+smoke-1  | {"timestamp": "2026-09-07T21:16:53.607157+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "6a419fcedcedb064edb986aa413c704a", "route": "/api/auditoria/", "method": "GET", "status": 200, "duration_ms": 159.87}
+proxy-1  | {"event":"proxy_request","request_id":"24906a9fd7c21b335086b1967e3706d9","status":200,"duration":0.303}
+smoke-1  | {"timestamp": "2026-09-07T21:16:53.702403+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "17e25cff8d4ded941dc3cf168b4f4f66", "route": "/api/financeiro/lancamentos", "method": "GET", "status": 200, "duration_ms": 149.856}
+smoke-1  | {"timestamp": "2026-09-07T21:16:53.709558+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "a059bc6dc721fbccbfb00082d54b105b", "route": "/api/pdv/vendas", "method": "GET", "status": 200, "duration_ms": 158.313}
+smoke-1  | {"timestamp": "2026-09-07T21:16:53.732285+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "375a8fd6a12b1f9285348028275641f2", "route": "/api/auditoria/", "method": "GET", "status": 200, "duration_ms": 118.026}
+proxy-1  | {"event":"proxy_request","request_id":"11113262698d4d61651aa218b93bf8b9","status":200,"duration":0.311}
+proxy-1  | {"event":"proxy_request","request_id":"338a73b2f1cc06329c26e9d2425ffe13","status":200,"duration":0.270}
+proxy-1  | {"event":"proxy_request","request_id":"d50b967f22a56629d7cc9c6f41d0a837","status":200,"duration":0.278}
+proxy-1  | {"event":"proxy_request","request_id":"f2f31ad101276a3bd52555f07084e11c","status":200,"duration":0.266}
+smoke-1  | {"timestamp": "2026-09-07T21:16:53.790138+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "f6886ff2dc67cdbda3a05b0b348ff5a3", "route": "/api/estoque/movimentos", "method": "GET", "status": 200, "duration_ms": 177.445}
+smoke-1  | {"timestamp": "2026-09-07T21:16:53.866663+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "4b867f4dfc5ec81a7d32a1b312348097", "route": "/api/financeiro/lancamentos", "method": "GET", "status": 200, "duration_ms": 145.256}
+smoke-1  | {"timestamp": "2026-09-07T21:16:53.874431+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "cbf2571ad71b5aeccfdbe5f67bb257e4", "route": "/api/pdv/vendas", "method": "GET", "status": 200, "duration_ms": 163.013}
+smoke-1  | {"timestamp": "2026-09-07T21:16:53.879204+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "a4965c8b8151672c5fea2e5e36548618", "route": "/api/estoque/movimentos", "method": "GET", "status": 200, "duration_ms": 138.12}
+smoke-1  | {"timestamp": "2026-09-07T21:16:53.987758+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "a3138b1baa42e429d5ea880355cecc59", "route": "/api/auditoria/", "method": "GET", "status": 200, "duration_ms": 186.773}
+smoke-1  | {"timestamp": "2026-09-07T21:16:54.057424+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "b369b5af5d555151c7713e0b8cc81c8c", "route": "/api/financeiro/lancamentos", "method": "GET", "status": 200, "duration_ms": 173.158}
+proxy-1  | {"event":"proxy_request","request_id":"91502c8a9fbf9af9d1e90b35ee6c01a1","status":200,"duration":0.235}
+smoke-1  | {"timestamp": "2026-09-07T21:16:54.099662+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "2be99db561a4af3d19c2c6f6ffbeae26", "route": "/api/estoque/movimentos", "method": "GET", "status": 200, "duration_ms": 199.678}
+proxy-1  | {"event":"proxy_request","request_id":"bb1cd898aadf3711508c7f2a06244a81","status":200,"duration":0.289}
+smoke-1  | {"timestamp": "2026-09-07T21:16:54.101471+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "2dfaaf5c422c8a20efa6aaa2921ba2b3", "route": "/api/pdv/vendas", "method": "GET", "status": 200, "duration_ms": 214.529}
+smoke-1  | {"timestamp": "2026-09-07T21:16:54.131375+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "bd0c7756909fc71bedfeaeae1a920420", "route": "/api/auditoria/", "method": "GET", "status": 200, "duration_ms": 134.079}
+proxy-1  | {"event":"proxy_request","request_id":"93cc17d12a73d1165e2aec8d1f8eb9ab","status":200,"duration":0.254}
+proxy-1  | {"event":"proxy_request","request_id":"6a8535983ecfc4c14278a987bf85cbc8","status":200,"duration":0.295}
+smoke-1  | {"timestamp": "2026-09-07T21:16:54.181942+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "8e7fde8cbd1d1e985f45602903081506", "route": "/api/pdv/vendas", "method": "GET", "status": 200, "duration_ms": 98.589}
+smoke-1  | {"timestamp": "2026-09-07T21:16:54.236908+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "2b9f39ad95a41953357a70466d842c98", "route": "/api/financeiro/lancamentos", "method": "GET", "status": 200, "duration_ms": 129.559}
+smoke-1  | {"timestamp": "2026-09-07T21:16:54.244238+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "deff9c2b1d2b1ec758b3b643eb07360a", "route": "/api/auditoria/", "method": "GET", "status": 200, "duration_ms": 97.785}
+smoke-1  | {"timestamp": "2026-09-07T21:16:54.300170+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "f89d3973f20bf67b7503c20b1377f617", "route": "/api/estoque/movimentos", "method": "GET", "status": 200, "duration_ms": 161.164}
+smoke-1  | {"timestamp": "2026-09-07T21:16:54.338904+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "0914089f0b5cd992ebcb19eaf24602b2", "route": "/api/pdv/vendas", "method": "GET", "status": 200, "duration_ms": 137.182}
+smoke-1  | {"timestamp": "2026-09-07T21:16:54.382568+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "a9630b65c839b5da0d2355216b2d342b", "route": "/api/financeiro/lancamentos", "method": "GET", "status": 200, "duration_ms": 131.26}
+smoke-1  | {"timestamp": "2026-09-07T21:16:54.412319+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "ae538b5a2a81cf03b0b0db32dee07bdb", "route": "/api/estoque/movimentos", "method": "GET", "status": 200, "duration_ms": 152.486}
+smoke-1  | {"timestamp": "2026-09-07T21:16:54.432880+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "209683180e1fca5a6c480976df2635ff", "route": "/api/auditoria/", "method": "GET", "status": 200, "duration_ms": 93.028}
+proxy-1  | {"event":"proxy_request","request_id":"d1613f6cfb346c93486a01b72841d982","status":200,"duration":0.275}
+proxy-1  | {"event":"proxy_request","request_id":"4896bdc719968d7d3ff95c35d86706e9","status":200,"duration":0.277}
+proxy-1  | {"event":"proxy_request","request_id":"fded0b035d3c621c32bef911aa6ffad7","status":200,"duration":0.281}
+smoke-1  | {"timestamp": "2026-09-07T21:16:54.480128+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "7b764d3875a16427e0167a2febc0705d", "route": "/api/pdv/vendas", "method": "GET", "status": 200, "duration_ms": 132.731}
+proxy-1  | {"event":"proxy_request","request_id":"51f6d97d3f57254441b5eff73cfb2642","status":200,"duration":0.273}
+smoke-1  | {"timestamp": "2026-09-07T21:16:54.561014+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "3eb3eb257c7833cb8cc9492f9f384cbd", "route": "/api/financeiro/lancamentos", "method": "GET", "status": 200, "duration_ms": 158.359}
+proxy-1  | {"event":"proxy_request","request_id":"ce727572a7f2542149429bf592c28d19","status":200,"duration":0.260}
+smoke-1  | {"timestamp": "2026-09-07T21:16:54.566335+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "061bae46ce655413378599d730d9c902", "route": "/api/auditoria/", "method": "GET", "status": 200, "duration_ms": 130.121}
+proxy-1  | {"event":"proxy_request","request_id":"a6deab4dbe7863a39ebb5b49b5125c71","status":200,"duration":0.319}
+smoke-1  | {"timestamp": "2026-09-07T21:16:54.569984+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "4b97c17f237d383dcc70c0f11c08b1f3", "route": "/api/estoque/movimentos", "method": "GET", "status": 200, "duration_ms": 134.947}
+proxy-1  | {"event":"proxy_request","request_id":"d4f43f2233347da458d52a8816f20c8a","status":200,"duration":0.287}
+proxy-1  | {"event":"proxy_request","request_id":"6a419fcedcedb064edb986aa413c704a","status":200,"duration":0.310}
+proxy-1  | {"event":"proxy_request","request_id":"17e25cff8d4ded941dc3cf168b4f4f66","status":200,"duration":0.282}
+proxy-1  | {"event":"proxy_request","request_id":"a059bc6dc721fbccbfb00082d54b105b","status":200,"duration":0.346}
+proxy-1  | {"event":"proxy_request","request_id":"375a8fd6a12b1f9285348028275641f2","status":200,"duration":0.284}
+proxy-1  | {"event":"proxy_request","request_id":"f6886ff2dc67cdbda3a05b0b348ff5a3","status":200,"duration":0.357}
+proxy-1  | {"event":"proxy_request","request_id":"4b867f4dfc5ec81a7d32a1b312348097","status":200,"duration":0.322}
+proxy-1  | {"event":"proxy_request","request_id":"cbf2571ad71b5aeccfdbe5f67bb257e4","status":200,"duration":0.326}
+proxy-1  | {"event":"proxy_request","request_id":"a4965c8b8151672c5fea2e5e36548618","status":200,"duration":0.287}
+proxy-1  | {"event":"proxy_request","request_id":"a3138b1baa42e429d5ea880355cecc59","status":200,"duration":0.376}
+proxy-1  | {"event":"proxy_request","request_id":"b369b5af5d555151c7713e0b8cc81c8c","status":200,"duration":0.342}
+proxy-1  | {"event":"proxy_request","request_id":"2be99db561a4af3d19c2c6f6ffbeae26","status":200,"duration":0.364}
+proxy-1  | {"event":"proxy_request","request_id":"2dfaaf5c422c8a20efa6aaa2921ba2b3","status":200,"duration":0.418}
+proxy-1  | {"event":"proxy_request","request_id":"bd0c7756909fc71bedfeaeae1a920420","status":200,"duration":0.333}
+proxy-1  | {"event":"proxy_request","request_id":"8e7fde8cbd1d1e985f45602903081506","status":200,"duration":0.316}
+proxy-1  | {"event":"proxy_request","request_id":"deff9c2b1d2b1ec758b3b643eb07360a","status":200,"duration":0.252}
+proxy-1  | {"event":"proxy_request","request_id":"2b9f39ad95a41953357a70466d842c98","status":200,"duration":0.366}
+proxy-1  | {"event":"proxy_request","request_id":"f89d3973f20bf67b7503c20b1377f617","status":200,"duration":0.443}
+proxy-1  | {"event":"proxy_request","request_id":"0914089f0b5cd992ebcb19eaf24602b2","status":200,"duration":0.272}
+proxy-1  | {"event":"proxy_request","request_id":"a9630b65c839b5da0d2355216b2d342b","status":200,"duration":0.282}
+proxy-1  | {"event":"proxy_request","request_id":"ae538b5a2a81cf03b0b0db32dee07bdb","status":200,"duration":0.297}
+proxy-1  | {"event":"proxy_request","request_id":"209683180e1fca5a6c480976df2635ff","status":200,"duration":0.296}
+proxy-1  | {"event":"proxy_request","request_id":"7b764d3875a16427e0167a2febc0705d","status":200,"duration":0.291}
+proxy-1  | {"event":"proxy_request","request_id":"061bae46ce655413378599d730d9c902","status":200,"duration":0.237}
+proxy-1  | {"event":"proxy_request","request_id":"3eb3eb257c7833cb8cc9492f9f384cbd","status":200,"duration":0.316}
+proxy-1  | {"event":"proxy_request","request_id":"4b97c17f237d383dcc70c0f11c08b1f3","status":200,"duration":0.316}
+proxy-1  | {"event":"proxy_request","request_id":"96ba9752a895233a3c1422f2e8c78953","status":200,"duration":0.328}
+proxy-1  | {"event":"proxy_request","request_id":"80fa93091fad57ee247384d2a1788727","status":200,"duration":0.287}
+proxy-1  | {"event":"proxy_request","request_id":"1d8f6c32756f63edf4bdd5ef05a129d4","status":200,"duration":0.276}
+proxy-1  | {"event":"proxy_request","request_id":"5f22a08f09e0846c5b4325de96f0878b","status":200,"duration":0.317}
+proxy-1  | {"event":"proxy_request","request_id":"27cf4bc2285d7406578d406b40b9fe0f","status":200,"duration":0.331}
+proxy-1  | {"event":"proxy_request","request_id":"0fe7a453008cb3d54e5042df2175a23c","status":200,"duration":0.261}
+proxy-1  | {"event":"proxy_request","request_id":"2ef8199b9295330f1249b46c044ada6f","status":200,"duration":0.279}
+proxy-1  | {"event":"proxy_request","request_id":"15433383e7a305d9bc984c7f2a17dc67","status":200,"duration":0.305}
+proxy-1  | {"event":"proxy_request","request_id":"e1c8bc7be4cacdae092027f90f6b48d9","status":200,"duration":0.270}
+proxy-1  | {"event":"proxy_request","request_id":"2438554f704f83716c59fb42111af497","status":200,"duration":0.318}
+proxy-1  | {"event":"proxy_request","request_id":"f1081c905c9499ff97ab60e6c566475a","status":200,"duration":0.286}
+proxy-1  | {"event":"proxy_request","request_id":"6a589923e54f2f90a8d10adb5d0ff86d","status":200,"duration":0.254}
+proxy-1  | {"event":"proxy_request","request_id":"266cf9a4069f61b699d8153784bc8729","status":200,"duration":0.292}
+proxy-1  | {"event":"proxy_request","request_id":"940324ee3dd550d7504319e9bb75e6e9","status":200,"duration":0.329}
+smoke-1  | {"timestamp": "2026-09-07T21:16:54.656273+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "96ba9752a895233a3c1422f2e8c78953", "route": "/api/pdv/vendas", "method": "GET", "status": 200, "duration_ms": 146.834}
+smoke-1  | {"timestamp": "2026-09-07T21:16:54.672576+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "80fa93091fad57ee247384d2a1788727", "route": "/api/financeiro/lancamentos", "method": "GET", "status": 200, "duration_ms": 100.636}
+smoke-1  | {"timestamp": "2026-09-07T21:16:54.711978+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "1d8f6c32756f63edf4bdd5ef05a129d4", "route": "/api/auditoria/", "method": "GET", "status": 200, "duration_ms": 138.826}
+smoke-1  | {"timestamp": "2026-09-07T21:16:54.737553+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "5f22a08f09e0846c5b4325de96f0878b", "route": "/api/estoque/movimentos", "method": "GET", "status": 200, "duration_ms": 162.256}
+smoke-1  | {"timestamp": "2026-09-07T21:16:54.786529+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "27cf4bc2285d7406578d406b40b9fe0f", "route": "/api/pdv/vendas", "method": "GET", "status": 200, "duration_ms": 100.27}
+proxy-1  | {"event":"proxy_request","request_id":"425c953a3b93ea1b8c7826c668cb6823","status":200,"duration":0.302}
+proxy-1  | {"event":"proxy_request","request_id":"75b123f57165b4f23e4a0f4d348203e9","status":200,"duration":0.326}
+proxy-1  | {"event":"proxy_request","request_id":"359642e045145d18627a714d964a6e1f","status":200,"duration":0.002}
+smoke-1  | {"timestamp": "2026-09-07T21:16:54.827459+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "0fe7a453008cb3d54e5042df2175a23c", "route": "/api/financeiro/lancamentos", "method": "GET", "status": 200, "duration_ms": 142.137}
+smoke-1  | {"timestamp": "2026-09-07T21:16:54.849993+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "2ef8199b9295330f1249b46c044ada6f", "route": "/api/auditoria/", "method": "GET", "status": 200, "duration_ms": 119.185}
+smoke-1  | {"timestamp": "2026-09-07T21:16:54.879631+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "15433383e7a305d9bc984c7f2a17dc67", "route": "/api/estoque/movimentos", "method": "GET", "status": 200, "duration_ms": 124.151}
+smoke-1  | {"timestamp": "2026-09-07T21:16:54.940972+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "e1c8bc7be4cacdae092027f90f6b48d9", "route": "/api/financeiro/lancamentos", "method": "GET", "status": 200, "duration_ms": 97.577}
+smoke-1  | {"timestamp": "2026-09-07T21:16:54.991437+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "2438554f704f83716c59fb42111af497", "route": "/api/pdv/vendas", "method": "GET", "status": 200, "duration_ms": 158.78}
+smoke-1  | {"timestamp": "2026-09-07T21:16:54.999904+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "f1081c905c9499ff97ab60e6c566475a", "route": "/api/estoque/movimentos", "method": "GET", "status": 200, "duration_ms": 142.249}
+smoke-1  | {"timestamp": "2026-09-07T21:16:55.004776+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "6a589923e54f2f90a8d10adb5d0ff86d", "route": "/api/auditoria/", "method": "GET", "status": 200, "duration_ms": 118.707}
+smoke-1  | {"timestamp": "2026-09-07T21:16:55.124176+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "266cf9a4069f61b699d8153784bc8729", "route": "/api/financeiro/lancamentos", "method": "GET", "status": 200, "duration_ms": 126.253}
+smoke-1  | {"timestamp": "2026-09-07T21:16:55.158740+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "940324ee3dd550d7504319e9bb75e6e9", "route": "/api/pdv/vendas", "method": "GET", "status": 200, "duration_ms": 201.584}
+smoke-1  | {"timestamp": "2026-09-07T21:16:55.185332+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "425c953a3b93ea1b8c7826c668cb6823", "route": "/api/auditoria/", "method": "GET", "status": 200, "duration_ms": 170.977}
+smoke-1  | {"timestamp": "2026-09-07T21:16:55.187055+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "75b123f57165b4f23e4a0f4d348203e9", "route": "/api/estoque/movimentos", "method": "GET", "status": 200, "duration_ms": 176.887}
+smoke-1  | {"timestamp": "2026-09-07T21:16:55.304024+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "359642e045145d18627a714d964a6e1f", "route": "/health", "method": "GET", "status": 200, "duration_ms": 0.115}
+smoke-1  | {"timestamp": "2026-09-07T21:16:55.575363+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "d60fbf92e176cab9b15252dea3d2f68d", "route": "/api/ready", "method": "GET", "status": 200, "duration_ms": 7.83}
+smoke-1  | [2026-09-07 21:16:56 +0000] [1] [INFO] Handling signal: term
+smoke-1  | {"timestamp": "2026-09-07T21:16:56.568291+00:00", "level": "INFO", "event": "application_diagnostic", "error_type": null}
+smoke-1  | [2026-09-07 21:16:56 +0000] [1] [INFO] Shutting down: Master

@@ -1,0 +1,277 @@
+{
+  "base": "7b0c97f87ec8cf1a9584c389717383c457bc764f",
+  "summaries": {
+    "red.xml": {
+      "name": "pytest",
+      "errors": "0",
+      "failures": "26",
+      "skipped": "0",
+      "tests": "27",
+      "time": "256.085",
+      "timestamp": "2026-09-07T09:25:26.860194+00:00",
+      "hostname": "a05d29a8695e",
+      "unique_cases": 27
+    },
+    "green.xml": {
+      "name": "pytest",
+      "errors": "0",
+      "failures": "0",
+      "skipped": "0",
+      "tests": "35",
+      "time": "187.803",
+      "timestamp": "2026-09-07T09:27:26.738422+00:00",
+      "hostname": "a68463135d95",
+      "unique_cases": 35
+    },
+    "green-empty.xml": {
+      "name": "pytest",
+      "errors": "0",
+      "failures": "0",
+      "skipped": "0",
+      "tests": "2",
+      "time": "28.011",
+      "timestamp": "2026-09-07T09:32:30.358627+00:00",
+      "hostname": "6ee6910c1d65",
+      "unique_cases": 2
+    }
+  },
+  "frozen_sources": {
+    "app/__init__.py": "3be8f8925e39545b3bb6facf465d52d6182ec324887d33be70906eebd0cf2f10",
+    "app/audit/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "app/cli/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "app/cli/alertas.py": "6803c83d7748c7f45ff96a18bac56694ef0e0ed5bc58f0217c68daa254e2c360",
+    "app/cli/ciclos.py": "a67befc680c3fcc62b92d89960cab99389593a17e717af223a9a81d12b4e13e8",
+    "app/cli/security.py": "d238e5c5452d7a829825f2735bd2da6d2d45f6a1fed103c39a2952fbf211fd9b",
+    "app/config.py": "a65346be559632e045a1eff56247b669a78e808d19f88c39e321c886b92bf697",
+    "app/controllers/adiantamento_controller.py": "f98dbccb5b6cb21dedfb09c257422bf3d8fb11deb75fcaf970e95b2b7f2abcd9",
+    "app/controllers/auditoria_controller.py": "aeb2ef3bc8d17d8012204b904fc636bbbe1f556896a7e91af26b40d8e9d4b526",
+    "app/controllers/auth_controller.py": "376785a184ee6bc123e87cd3bd5874e8dcd9ff47cb944af5e493a59e6091bb33",
+    "app/controllers/boleto_controller.py": "a848e70850dbb195efc0295a3d39aa1e62b9db54606f6b887b3cf9f3d0a5947f",
+    "app/controllers/categoria_controller.py": "14c20e4cf242158cc799bd04e827762291b48074533ab9c4f6518ba903161ce4",
+    "app/controllers/ciclos_controller.py": "12fc9ee6bc0439607f3c790252e01c74e57a06e3913275829fb7258c5b5ffe4d",
+    "app/controllers/cliente_controller.py": "9fbd3d7101b45793e680ccd4614642842bfa86255b01752ba104a43ac42a44f3",
+    "app/controllers/cupom_controller.py": "0b72aa49717d821c39c394c5041ed3b737469a0351b0bda0eda29affeea3b08e",
+    "app/controllers/estoque_controller.py": "0ae2a1470e5a47d045e87de21108a5a1acfbcdfe6a02166927617943a2ede3cf",
+    "app/controllers/financeiro_controller.py": "d44cb84325d259104c671bcb9c52d090f40cd78b90a24c2c7838611a69b82f29",
+    "app/controllers/fiscal_controller.py": "92bf027bebd1678491aae3be4836c984822f8a6c5382b56f9158442c0dcac526",
+    "app/controllers/funcionario_controller.py": "ff53eeecd1bc191e0f8096c5cb12d99a5b0764b01e8a5d8ec46face4be1fd081",
+    "app/controllers/import_export_controller.py": "e7f5777ed048fd6e80d271771dbd2cc3eca04ec7746741dfc7ea18a63805eafb",
+    "app/controllers/main_controller.py": "ef8f7c4184655ab08972bace0b7de854ee37eabaad2813d37975cdb99750cfd2",
+    "app/controllers/pdv_controller.py": "28c77c70eb277688d541ce5360b3205a02061a3c4895ddb5919cf9a71cdc1896",
+    "app/controllers/permission_controller.py": "d20b63bdaef478a1d9ba274908fd44378ee6ce0470cd9a3dcd89ab6aedb000eb",
+    "app/controllers/platform_controller.py": "397ef0c2a9aa0c9997a7913898958c17279d344e981287b56bdfdd70ba291faa",
+    "app/controllers/produto_controller.py": "3691d3528c8ac4c823d672fe0a087b151e5f301fe153b2d0fcaa8d9e467bedb9",
+    "app/controllers/role_controller.py": "7b4bd0e0311145bbbec7d2b81904a0f0cbfb4ce2f37abc9c93c7d6b99491bac6",
+    "app/errors/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "app/extensions.py": "a116c428639780002dd61b87e3e656eee26aabfbb3591ab45aee83334a0e1759",
+    "app/health.py": "2e6b4c2070adc7a79de2befb1c0f3d1f84b1f472b85a4ee44377633aa291ba10",
+    "app/models/__init__.py": "53553ff769885c0d5ed1fb9d99772564b573312b4a3c7dc39008cdbf1dfe2e56",
+    "app/models/db.py": "1b05f677ba6d34675daf86f196bd92cf13667a9c7df8763aa40b55dfb16157e1",
+    "app/models/security.py": "d69408648f99964e3dff6f195f7beeaa4eb0483aeac5c1c6bf2a0c8200c2133a",
+    "app/operations.py": "4ac66b70148851655f7e43ad719d0ebb5a1363da0ae2a381093e29a873437612",
+    "app/repositorys/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "app/repositorys/adiantamento_repository.py": "e1ec7d7ff68d7c43f89d64d48ad6a71f9a9c820b9d9b6e1dfc919c48d5c6047c",
+    "app/repositorys/boleto_repository.py": "c4103cf4f53b9681ad08e475a0affd09798f67d7746d4b4582ce10873c64d2f0",
+    "app/repositorys/categoria_repository.py": "f316fa7f0d4f88dd4a58e64c40e3b78470e9df2c26abafbc4b2661e28fa6805b",
+    "app/repositorys/cliente_repository.py": "004949025db15f44cc5eb554bced2f723e2547f068349a2fea0a6865a2240a93",
+    "app/repositorys/cupom_repository.py": "79eccdecc86d2a5514384c887a19bff381fd5f410f5698ef082bd45691dcb643",
+    "app/repositorys/estoque_repository.py": "58b5f2f235d1c7727cb4baeabf3e4ad47377a8e0a35b438b774cd1855b5e2638",
+    "app/repositorys/financeiro_repository.py": "53540b23efc189454b2c5a46500f68091c08ced63939d2e1efb5ab6014788161",
+    "app/repositorys/fiscal_repository.py": "04711cade67abfcba37be0495ef5e06a73fede89c3a6771a7cd0a222fef5e580",
+    "app/repositorys/funcionario_repository.py": "e22c04db34fb8aa03cc23c8c1014cd1e8a3d1205615a2e4a86106ad000600219",
+    "app/repositorys/import_export_repository.py": "0d5a303d38d58294752fda2dccd21de0187065a793e4beae556d5cb341925f66",
+    "app/repositorys/pdv_repository.py": "6f1c1ca76ea91bf3eb2529ec5945de03d6d41ad082f12efd47083d6f3b073391",
+    "app/repositorys/permission_repository.py": "c863d2072fefeb0d5b086e6f5770c9db98d47dc0447c37a0db550ac9edb4234a",
+    "app/repositorys/platform_repository.py": "b3a25e51e9d7f3bf5c20487e4828e850414fa6879322b8459f2cae95f8a43fb8",
+    "app/repositorys/produto_repository.py": "ebe22404e67051b85495ff299760c574c578de4ae9a4878cc2371f05c7e4ecb1",
+    "app/repositorys/role_repository.py": "02200b0119688ee6ca32ece75dd6316983685d7c663dd5d57b474d726a85bb67",
+    "app/routes.py": "596cedfae37a35252272997f0edcdff75b170e36910547d0fcf9c13a1b21399a",
+    "app/security/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "app/security/decorators.py": "cb125299c45e3cdcae8fd3374857165bc84baa11ae720d0bab5498b6411af2e5",
+    "app/security/errors.py": "a0624161c266d7b9e40530129aafef55b913f3bfb3d0445d497236c36706f19f",
+    "app/security/field_crypto.py": "1c4c80c6e8cf273c55f64f44653e6c5fd690198e2490dcdc453c458611211d04",
+    "app/security/headers.py": "b712ad45aeffadad564cbceb454e3c42160cb2b6be14ec61056781b108c3da6a",
+    "app/security/integrations.py": "c703296f669a045c5ccb5f86b6a57db5cc8cb3118d619ad013b365680f31fe5c",
+    "app/security/isolation.py": "41baf81a798bf4d2c1076516fd6d6aa2a6a6e11bdad08b6842ea3e4fcf3e9846",
+    "app/security/jwt.py": "2c6f3941ebcb8b58e46d99ef33ff679a0d3e34535750dbabbcbdf3804877f124",
+    "app/security/outbound.py": "ee03c075bc359e866b8b80265a42dc56a9ade3cf3f8319b58a1ae909d53b85eb",
+    "app/security/password.py": "a2c7734ab0414a9dd657bbfbe21860df9935345557db9367bc30d199a94fe906",
+    "app/security/permissions.py": "ee17792e0593c6616792f4a514ab5ba5ca9a8a6a0419022853e52b145a693705",
+    "app/security/proxy.py": "c69465f0b63c2ae574525253f1a97ffce2a76a3d9c4504763e8f3427d11bb90a",
+    "app/security/rate_limit.py": "be48ce93a8ef79f8432f016aae29cd176e06b2b60e6877c561aa993f4de83fa7",
+    "app/security/secrets.py": "10cd13ca2e475a28e45989718c982ddb06d84a67f6ab59d491ad92a848686694",
+    "app/security/validators.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "app/seeds/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "app/seeds/seed.py": "474e3c33ba46ad0d58b9436547928281ea0db0f1dfcec0de91d1be6e925d29fc",
+    "app/services/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "app/services/acesso_empresa_service.py": "5b9c98f92410c0c78436b55bfed883c40bf762e3ed4e960cbccec44fcf16169a",
+    "app/services/adiantamento_ciclo_service.py": "7f53038ae2419751b34096faaee4e2541501562b03a4bd4214e523c4d0802b78",
+    "app/services/adiantamento_service.py": "a3a56dd4e107d5ef059a606e51e52a0cd52a6d4a9f1d105feac34b6eceefc49b",
+    "app/services/alerta_service.py": "1e831b56cce91888a7ab32de6ad5eb85b618feeb78f05dc7667dae47859000ce",
+    "app/services/audit_service.py": "a3bc9fc9e11798ee99b1ae25c3e3ab0012adb3b1a070f2f96f7d25c8743ef218",
+    "app/services/auth_service.py": "c32f32d2e56872cc7f3378e199b76e2833edf3bf5114a232f9e8428f7aba936f",
+    "app/services/banco_emissor_service.py": "ab8062d113dcbd151eab4b55cac8a0c21ca63013d02bbb138dc9d27e70630d12",
+    "app/services/boleto_provider.py": "76c1342c901ab19187f779b6a55ca31f4f7aa16e089ae7dcf6247fab21ae1cb4",
+    "app/services/boleto_service.py": "f3eefc73f4bcc7d8b5cecc581581f044da98c84fcf7b7ca1f9a2c93d62f905c2",
+    "app/services/calculo_juros_multa_service.py": "85112d018bed70cdacdba145165b7299ab5b8f4986ff02423d8202dfc064d8bf",
+    "app/services/categoria_service.py": "5268d141644e69d4928772833ae5d2acfb493d7fb28cffded78d65d918208c2b",
+    "app/services/cliente_privacidade_service.py": "1461169920bdb222336a1a3bb7c8bda31e15a76ad6468982b09db43cfe43c941",
+    "app/services/cliente_service.py": "8a0f71740c3d67d4dc2e5d1517c3c7d47d9f61b029df7a12f9ddfb2c9a95438a",
+    "app/services/comunicacao_service.py": "f29ce1fce7c8decdd37eccac37d5b699597e64f53009adfe624052da9e6ee1d5",
+    "app/services/cupom_service.py": "1bfed573f6c72bd73420e8edbde93d071a30edcca19e0f71935a4d4de8e15ba3",
+    "app/services/estoque_service.py": "ddf51e0c6a7f90f45c130d2aa71482c047766670ca541513839a6ab60ba9b524",
+    "app/services/financeiro_ciclo_service.py": "19e9a3720039017639daa0e160fb4996e4a5d69d2c9cdac6b620aaf6d94cbed2",
+    "app/services/financeiro_service.py": "5528921194fec0cb66e67eb0f604eebc4c24af258345316fa20b9d7dc8b6bfd7",
+    "app/services/fiscal_provider.py": "62076a589fe03a7797180383b229d0fa8c7b69baf2957f1b21ff8be85bd203c3",
+    "app/services/fiscal_service.py": "d43c99f255ee0d62e7497a56219e87017aedc5ed9d55207f645f557a37b2c388",
+    "app/services/funcionario_service.py": "9bde0f4cc77c3a6c6a2f578430bdc939db3f2f01eb5d5a2f9df9ee7465e7e33f",
+    "app/services/idempotency_service.py": "4ab39ab2c93c376cdaa0cea692cb8dd017ad269329a85537f18b7d5e8184b5b8",
+    "app/services/import_export_service.py": "bff860d06d5eb3f544fc2596d319f5e41103962cae636651cc1021ae66a67f8d",
+    "app/services/mensagem_fila_service.py": "b805835097626ad3607453e0333e66747bd6bac9f4907d53b562a7097b8420fb",
+    "app/services/money_service.py": "a9be42c6b8697e5f5a94aabf6ddf60d7c329843cb458f18619803f48b9ea6a67",
+    "app/services/parcelamento_service.py": "ff758b3aa324d1e8aae5c0767d87d58e8ec145c8a760614b860747b2d97e6993",
+    "app/services/pdv_service.py": "89bee131d3ac93650b06f2f770895e58275e9fa57d69430197129b683e2e61ce",
+    "app/services/permission_service.py": "dbab737aa41f27ac97718974119c51d9103d5298b877be1c53146575a4fcadd2",
+    "app/services/platform_service.py": "52eea5aedf163976b9944f1aaeedcb91c8a120be685cc42d8a933ba48fba5eb3",
+    "app/services/produto_service.py": "0064fcce74b4afb0b8c1d8ee838bc700ab1be539771b3d55f0e2da36694fce12",
+    "app/services/role_service.py": "1d6bffdfa0ad28c72a93677c1189e8d55e690d0eb6e4c218f83c1702a5d7c1c0",
+    "app/services/saas_plan_service.py": "a4902418180c1638d6dbab95452544851b97dcf2a30543623e15096430edf800",
+    "app/services/tenant_bootstrap_service.py": "b44ad421acb0c8d6821594440b4f4d513fdc97fab887332b111d76424809b42b",
+    "app/services/tenant_entitlement_service.py": "e6f51b570276a4372b88f476687ae6c137fe66cbb4f6d33d384f163301a84eb4",
+    "app/services/time_service.py": "09b1ad2a6eb85178fadc3a5e354ebe48136c093602243cbb8a63ccc1434ffa30",
+    "app/services/transaction_service.py": "f880757acc48216920362c5f24e1c3f58ce01f8aafb7aa7e9fbd97ea6a14a36c",
+    "app/utils/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "app/utils/helpers.py": "e2993222d6b361af364da37d9c5527860e1cff707574b87e7dd1c74737c56a2b",
+    "tests/test_sprint07_audit.py": "e05ae2b0407e107cb64a1f35f8fab860d61c66a7ab930740ad535c799ddea89b",
+    "tests/test_release_candidate.py": "0e8a07a0a960080beda85c88796f357b4eb5f35c12f21419875105b6a35403d8",
+    "docs/04-modulos-e-funcionalidades/inventario-requisito-rota-servico-teste.csv": "d134b938a9665d68001d5bba1ef59ff22b19cee0372750bd1dfb0e16601f69ca",
+    "VERSION": "557b59ce11c9a82a190470e07865c10de8a1575579f791684a039511bac923ff"
+  },
+  "evidence_sha256": {
+    "docs/evidencias/producao/sprint-07-execucao/module-audit/green-empty.txt": "a42ae14f1529317cf29f2b5299ae63d43f4537afd55d062b29342014e546f1f4",
+    "docs/evidencias/producao/sprint-07-execucao/module-audit/green-empty.xml": "cdd88292e89fcdcd0e9837484759785f301bd09214966d1fdec44776d9dfee00",
+    "docs/evidencias/producao/sprint-07-execucao/module-audit/green-intermediate.txt": "093293af86aad33c113e2ad5e1c5784e880b4a885cd74cfee6185cceaf37b6ff",
+    "docs/evidencias/producao/sprint-07-execucao/module-audit/green-intermediate.xml": "bea66e6e6b675917ee338bd958c76760c1bc6ceb747f1ae1452b199e291c0e29",
+    "docs/evidencias/producao/sprint-07-execucao/module-audit/green-setup.txt": "e1ac107a82a6391083a9c7adc5ed1e9302ae33966fcb46583f9d698a9a0baeb4",
+    "docs/evidencias/producao/sprint-07-execucao/module-audit/green-setup.xml": "2d20e7306b1aa7a037d609fde4a1200a19eda66c4cd98b1035ea6465c797bbd9",
+    "docs/evidencias/producao/sprint-07-execucao/module-audit/green.txt": "45ce843ab872a1a371a0dc798500cfabbe036c95d339a16d538321827a628179",
+    "docs/evidencias/producao/sprint-07-execucao/module-audit/green.xml": "db52d11f88fe6926133fd508cc1b76c3bf5b19058eb9a340aa755bcdfbc5b5ae",
+    "docs/evidencias/producao/sprint-07-execucao/module-audit/red-initial.txt": "896476a25f3db0ff59619b58c9fe033d57b7761fab49507c20848697b2ce721b",
+    "docs/evidencias/producao/sprint-07-execucao/module-audit/red-initial.xml": "b3ed87d306f8c5e7a688ab7ff43d0cfb24ae29f0080d9d4ebc953967368ee057",
+    "docs/evidencias/producao/sprint-07-execucao/module-audit/red.txt": "e8a92c0cfc215deb00df3694faf381177d68e9dcd18672a24a16c0561c776e9a",
+    "docs/evidencias/producao/sprint-07-execucao/module-audit/red.xml": "d6d21cdf3c184c5be3b6b98310d7cf02f8d4b3ad0fe098660fc1b5bd5026b362"
+  },
+  "red_failures": [
+    {
+      "case": "test_http_identifiers_never_select_a_different_record[True-product_company]",
+      "failure": "AssertionError: {'data': {'ativo': True, 'categoria_id': 1, 'categoria_nome': 'Categoria auditada', 'codigo_barras': '2000010000012', ...}, 'success': True}\nassert 201 == 400\n +  where 201 = <WrapperTestResponse streamed [201 CREATED]>.status_code"
+    },
+    {
+      "case": "test_http_identifiers_never_select_a_different_record[True-product_category]",
+      "failure": "AssertionError: {'data': {'ativo': True, 'categoria_id': 1, 'categoria_nome': 'Categoria auditada', 'codigo_barras': '2000010000012', ...}, 'success': True}\nassert 201 == 400\n +  where 201 = <WrapperTestResponse streamed [201 CREATED]>.status_code"
+    },
+    {
+      "case": "test_http_identifiers_never_select_a_different_record[True-employee_company]",
+      "failure": "AssertionError: {'data': {'ativo': True, 'cpf': '99988877766', 'empresa_id': 1, 'empresa_nome': 'Empresa 1-1', ...}, 'message': 'Funcionario cadastrado com sucesso.', 'success': True}\nassert 201 == 400\n +  where 201 = <WrapperTestResponse streamed [201 CREATED]>.status_code"
+    },
+    {
+      "case": "test_http_identifiers_never_select_a_different_record[True-employee_role]",
+      "failure": "AssertionError: {'data': {'ativo': True, 'cpf': '99988877766', 'empresa_id': 1, 'empresa_nome': 'Empresa 1-1', ...}, 'message': 'Funcionario cadastrado com sucesso.', 'success': True}\nassert 201 == 400\n +  where 201 = <WrapperTestResponse streamed [201 CREATED]>.status_code"
+    },
+    {
+      "case": "test_http_identifiers_never_select_a_different_record[True-stock]",
+      "failure": "AssertionError: {'data': {'cancelado_em': None, 'cancelado_por_nome': None, 'data_movimento': '2026-09-07T09:26:58.079853+00:00', 'empresa_id': 1, ...}, 'message': 'Movimentacao registrada com sucesso.', 'success': True}\nassert 201 == 400\n +  where 201 = <WrapperTestResponse streamed [201 CREATED]>.status_code"
+    },
+    {
+      "case": "test_http_identifiers_never_select_a_different_record[True-role_permission]",
+      "failure": "AssertionError: {'data': {'ativo': True, 'codigo': 'auditado', 'descricao': None, 'id': 5, ...}, 'success': True}\nassert 201 == 400\n +  where 201 = <WrapperTestResponse streamed [201 CREATED]>.status_code"
+    },
+    {
+      "case": "test_http_identifiers_never_select_a_different_record[True-platform_company]",
+      "failure": "AssertionError: {'data': {'ativo': True, 'cpf': '99988877766', 'empresa_nome': 'Empresa 1-1', 'id': 3, ...}, 'success': True}\nassert 201 == 400\n +  where 201 = <WrapperTestResponse streamed [201 CREATED]>.status_code"
+    },
+    {
+      "case": "test_http_identifiers_never_select_a_different_record[1.5-product_company]",
+      "failure": "AssertionError: {'data': {'ativo': True, 'categoria_id': 1, 'categoria_nome': 'Categoria auditada', 'codigo_barras': '2000010000012', ...}, 'success': True}\nassert 201 == 400\n +  where 201 = <WrapperTestResponse streamed [201 CREATED]>.status_code"
+    },
+    {
+      "case": "test_http_identifiers_never_select_a_different_record[1.5-product_category]",
+      "failure": "AssertionError: {'data': {'ativo': True, 'categoria_id': 1, 'categoria_nome': 'Categoria auditada', 'codigo_barras': '2000010000012', ...}, 'success': True}\nassert 201 == 400\n +  where 201 = <WrapperTestResponse streamed [201 CREATED]>.status_code"
+    },
+    {
+      "case": "test_http_identifiers_never_select_a_different_record[1.5-employee_company]",
+      "failure": "AssertionError: {'data': {'ativo': True, 'cpf': '99988877766', 'empresa_id': 1, 'empresa_nome': 'Empresa 1-1', ...}, 'message': 'Funcionario cadastrado com sucesso.', 'success': True}\nassert 201 == 400\n +  where 201 = <WrapperTestResponse streamed [201 CREATED]>.status_code"
+    },
+    {
+      "case": "test_http_identifiers_never_select_a_different_record[1.5-employee_role]",
+      "failure": "AssertionError: {'data': {'ativo': True, 'cpf': '99988877766', 'empresa_id': 1, 'empresa_nome': 'Empresa 1-1', ...}, 'message': 'Funcionario cadastrado com sucesso.', 'success': True}\nassert 201 == 400\n +  where 201 = <WrapperTestResponse streamed [201 CREATED]>.status_code"
+    },
+    {
+      "case": "test_http_identifiers_never_select_a_different_record[1.5-stock]",
+      "failure": "AssertionError: {'data': {'cancelado_em': None, 'cancelado_por_nome': None, 'data_movimento': '2026-09-07T09:28:29.884809+00:00', 'empresa_id': 1, ...}, 'message': 'Movimentacao registrada com sucesso.', 'success': True}\nassert 201 == 400\n +  where 201 = <WrapperTestResponse streamed [201 CREATED]>.status_code"
+    },
+    {
+      "case": "test_http_identifiers_never_select_a_different_record[1.5-role_permission]",
+      "failure": "AssertionError: {'data': {'ativo': True, 'codigo': 'auditado', 'descricao': None, 'id': 5, ...}, 'success': True}\nassert 201 == 400\n +  where 201 = <WrapperTestResponse streamed [201 CREATED]>.status_code"
+    },
+    {
+      "case": "test_http_identifiers_never_select_a_different_record[1.5-platform_company]",
+      "failure": "AssertionError: {'data': {'ativo': True, 'cpf': '99988877766', 'empresa_nome': 'Empresa 1-1', 'id': 3, ...}, 'success': True}\nassert 201 == 400\n +  where 201 = <WrapperTestResponse streamed [201 CREATED]>.status_code"
+    },
+    {
+      "case": "test_cashback_remains_spendable_until_brazil_midnight",
+      "failure": "assert [] == [1]\n  \n  Right contains one more item: 1\n  Use -v to get more diff"
+    },
+    {
+      "case": "test_coupon_import_and_selection_share_brazil_expiry_date",
+      "failure": "AssertionError: {'atualizadas': 0, 'confirmado': False, 'criadas': 0, 'entidade': 'cupons', ...}\nassert (False)"
+    },
+    {
+      "case": "test_reports_cash_closure_and_series_use_same_brazil_day",
+      "failure": "assert {1, 2} == {2, 3}\n  \n  Extra items in the left set:\n  1\n  Extra items in the right set:\n  3\n  Use -v to get more diff"
+    },
+    {
+      "case": "test_stock_default_period_uses_brazil_today[semana]",
+      "failure": "AssertionError: assert '2026-09-03' == '2026-09-02'\n  \n  - 2026-09-02\n  ?          ^\n  + 2026-09-03\n  ?          ^"
+    },
+    {
+      "case": "test_stock_default_period_uses_brazil_today[mes]",
+      "failure": "AssertionError: assert '2026-09-03' == '2026-09-02'\n  \n  - 2026-09-02\n  ?          ^\n  + 2026-09-03\n  ?          ^"
+    },
+    {
+      "case": "test_stock_default_period_uses_brazil_today[periodo]",
+      "failure": "AssertionError: assert '2026-09-03' == '2026-09-02'\n  \n  - 2026-09-02\n  ?          ^\n  + 2026-09-03\n  ?          ^"
+    },
+    {
+      "case": "test_monthly_series_does_not_move_late_evening_to_next_month",
+      "failure": "AssertionError: assert [] == [{'competenci...do': '12.34'}]\n  \n  Right contains one more item: {'competencia': '2026-08', 'entradas': '12.34', 'saidas': '0.00', 'saldo': '12.34'}\n  Use -v to get more diff"
+    },
+    {
+      "case": "test_partial_returns_reduce_rankings_revenue_cost_and_demand",
+      "failure": "AssertionError: assert '27.00' == '18.00'\n  \n  - 18.00\n  + 27.00"
+    },
+    {
+      "case": "test_returned_item_disappears_from_rankings_while_sale_remains_active",
+      "failure": "assert [1, 2] == [2]\n  \n  At index 0 diff: 1 != 2\n  Left contains one more item: 2\n  Use -v to get more diff"
+    },
+    {
+      "case": "test_dashboard_partial_return_with_cashback_matches_reconciliation",
+      "failure": "AssertionError: assert '29.00' == '19.50'\n  \n  - 19.50\n  + 29.00"
+    },
+    {
+      "case": "test_operational_lookup_preserves_imported_deactivation[formas_pagamento-FormaPagamento-row0]",
+      "failure": "AssertionError: assert not True\n +  where True = <FormaPagamento 2>.ativo\n +    where <FormaPagamento 2> = get(<class 'app.models.db.FormaPagamento'>, 2)\n +      where get = <sqlalchemy.orm.scoping.scoped_session object at 0x7a9cc4d8b770>.get\n +        where <sqlalchemy.orm.scoping.scoped_session object at 0x7a9cc4d8b770> = <SQLAlchemy postgresql+psycopg2://oceanblue_test:***@red-db:5432/oceanblue_test>.session"
+    },
+    {
+      "case": "test_operational_lookup_preserves_imported_deactivation[categorias_financeiras-CategoriaFinanceira-row1]",
+      "failure": "AssertionError: assert not True\n +  where True = <CategoriaFinanceira 3>.ativo\n +    where <CategoriaFinanceira 3> = get(<class 'app.models.db.CategoriaFinanceira'>, 3)\n +      where get = <sqlalchemy.orm.scoping.scoped_session object at 0x7a9cc4d8b770>.get\n +        where <sqlalchemy.orm.scoping.scoped_session object at 0x7a9cc4d8b770> = <SQLAlchemy postgresql+psycopg2://oceanblue_test:***@red-db:5432/oceanblue_test>.session"
+    }
+  ],
+  "test_image": "sha256:c94607d630bae0f8b22c5cdfc6e98b1dcd200a42cf1ec3019deb1f91f2661147",
+  "source_freeze": "2026-09-07: after 35-case green, 2-case empty-dashboard green and regeneration of 165 routes",
+  "route_inventory": {
+    "routes": 165,
+    "changed_rows": 15
+  },
+  "runtime_limit": "Old test-image dependencies with current sources mounted read-only. New dependency locks and full release regression are owned by parent."
+}

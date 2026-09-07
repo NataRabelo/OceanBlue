@@ -1,0 +1,147 @@
+{
+  "status": "observed_rc3_failure",
+  "source_container": "oceanblue-s07-rc3-regression-test-1",
+  "source_case": "test_catalog_client_sale_stock_financial_audit_journey[chromium-390]",
+  "observed_browser_json": {
+    "engine": "chromium",
+    "version": "140.0.7339.16",
+    "screens": [
+      {
+        "violations": [],
+        "rules_passed": 25,
+        "overflow": false,
+        "title": "OceanBlue • Categorias",
+        "path": "/api/categorias/view",
+        "state": "create-category",
+        "width": 390
+      },
+      {
+        "violations": [],
+        "rules_passed": 26,
+        "overflow": false,
+        "title": "OceanBlue • Produtos",
+        "path": "/api/produtos/view",
+        "state": "create-product",
+        "width": 390
+      },
+      {
+        "violations": [],
+        "rules_passed": 26,
+        "overflow": false,
+        "title": "OceanBlue - Clientes",
+        "path": "/api/clientes/view",
+        "state": "create-client",
+        "width": 390
+      },
+      {
+        "violations": [],
+        "rules_passed": 26,
+        "overflow": false,
+        "title": "OceanBlue - Estoque Operacional",
+        "path": "/api/estoque/view",
+        "state": "stock-entry",
+        "width": 390
+      },
+      {
+        "violations": [],
+        "rules_passed": 21,
+        "overflow": false,
+        "title": "OceanBlue - PDV",
+        "path": "/api/pdv/view",
+        "state": "payment",
+        "width": 390
+      },
+      {
+        "violations": [
+          {
+            "id": "color-contrast",
+            "targets": [
+              [
+                "#pdv-finalizar-venda"
+              ]
+            ],
+            "summaries": [
+              "Fix any of the following:\n  Element has insufficient color contrast of 3.53 (foreground color: #0a0f20, background color: #167862, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1"
+            ]
+          }
+        ],
+        "rules_passed": 22,
+        "overflow": false,
+        "title": "OceanBlue - PDV",
+        "path": "/api/pdv/view",
+        "state": "confirm-sale",
+        "width": 390
+      },
+      {
+        "violations": [],
+        "rules_passed": 26,
+        "overflow": false,
+        "title": "OceanBlue - Estoque Operacional",
+        "path": "/api/estoque/view",
+        "state": "stock-after-sale",
+        "width": 390
+      },
+      {
+        "violations": [],
+        "rules_passed": 25,
+        "overflow": false,
+        "title": "OceanBlue - Lancamentos Financeiros",
+        "path": "/api/financeiro/lancamentos/view",
+        "state": "financial-after-sale",
+        "width": 390
+      },
+      {
+        "violations": [],
+        "rules_passed": 25,
+        "overflow": false,
+        "title": "Auditoria operacional - OceanBlue",
+        "path": "/api/auditoria/view",
+        "state": "audit-after-sale",
+        "width": 390
+      }
+    ],
+    "errors": [],
+    "external_requests": [],
+    "http_errors": [],
+    "journey": {
+      "sale_id": 1,
+      "total": "25.00",
+      "remaining_stock": 5,
+      "customer_id": 1
+    },
+    "passed": false,
+    "viewport": {
+      "width": 390,
+      "height": 900
+    }
+  },
+  "trace_timing_ms": {
+    "confirm_payment": {
+      "call_id": "call@9445",
+      "start": 341748.4,
+      "end": 341797.674
+    },
+    "finalize_click": {
+      "call_id": "call@9447",
+      "start": 341811.355,
+      "end": 341856.992
+    },
+    "axe_evaluation": {
+      "call_id": "call@9451",
+      "start": 341884.939,
+      "end": 342035.26
+    },
+    "axe_start_after_confirm_payment_return": 87.265
+  },
+  "diagnosis": {
+    "css_transition_duration_ms": 150,
+    "observed_foreground": "#0a0f20",
+    "observed_background": "#167862",
+    "axe_reported_contrast": 3.53,
+    "required_contrast": 4.5,
+    "cause": "Observed colors are intermediate disabled-to-enabled transition colors; Axe started within150ms of payment confirmation. Hover can retarget the same color transition.",
+    "source_action": "Remove only transition class from this button; assert immediate computed transitionDuration=0s while enabled in existing journey; preserve Axe.",
+    "red_provenance": "Read-only copy of existing failure and trace; no new red run generated."
+  },
+  "host_trace": "C:/Users/Rabel/AppData/Local/Temp/sprint07-rc3-sale-red-trace.zip"
+}

@@ -1,0 +1,86 @@
+{
+  "status": "rejected_focal_run",
+  "pytest_exit_code": 1,
+  "passed": 5,
+  "failed": 1,
+  "deselected": 66,
+  "pytest_duration_seconds": 224.07,
+  "junit": "toast-rejected-junit.xml",
+  "case": "test_admin_role_employee_and_restricted_login_journey[firefox-390]",
+  "browser_json": {
+    "engine": "firefox",
+    "version": "141.0",
+    "screens": [
+      {
+        "violations": [],
+        "rules_passed": 22,
+        "overflow": false,
+        "title": "OceanBlue • Roles",
+        "path": "/api/roles/view",
+        "state": "create-role",
+        "width": 390
+      },
+      {
+        "violations": [],
+        "rules_passed": 24,
+        "overflow": false,
+        "title": "OceanBlue • Funcionarios",
+        "path": "/api/funcionarios/view",
+        "state": "create-employee",
+        "width": 390
+      },
+      {
+        "violations": [],
+        "rules_passed": 25,
+        "overflow": false,
+        "title": "OceanBlue • Produtos",
+        "path": "/api/produtos/view",
+        "state": "restricted-catalog",
+        "width": 390
+      }
+    ],
+    "errors": [],
+    "external_requests": [],
+    "http_errors": [],
+    "role_before_script": {
+      "disabled": true,
+      "initialized": false,
+      "script_held": true
+    },
+    "role_after_script": {
+      "disabled": false,
+      "initialized": true
+    },
+    "passed": false,
+    "viewport": {
+      "width": 390,
+      "height": 900
+    }
+  },
+  "cause": "The unchanged intentional toast expired before the test observed it because goto waited for networkidle including a slow favicon. No role-readiness, access-control, Axe or JavaScript failure.",
+  "observed_trace_ms": {
+    "home_response_start": 31334.612,
+    "home_response_duration": 92.398,
+    "favicon_start": 31610.101,
+    "favicon_duration": 8364.687,
+    "toast_visually_present_frame": 32399.282,
+    "toast_visually_absent_frame": 38930.144,
+    "toast_assert_start": 40516.905,
+    "toast_assert_timeout": 5000
+  },
+  "source_dismiss_ms": {
+    "before_fade": 6000,
+    "fade_to_remove": 500
+  },
+  "visual_proof": "Two frames extracted directly from actual failed trace and personally inspected: visible toast before6s, absent after6.5s.",
+  "host_trace": "C:/Users/Rabel/AppData/Local/Temp/sprint07-role-focal-firefox390-failure.zip",
+  "host_frames": [
+    "C:/Users/Rabel/AppData/Local/Temp/sprint07-toast-visible.jpeg",
+    "C:/Users/Rabel/AppData/Local/Temp/sprint07-toast-expired.jpeg"
+  ],
+  "fixture_only_correction": "goto DOMContentLoaded→status200/homeURL/unchanged toast text/noRoleTable→networkidle. Preserve all assertions/timeouts and runtime auto-dismiss.",
+  "interrupted_attempt": {
+    "process_exit_code": 137,
+    "status": "Discarded; runner restarted so final fresh six-case invocation loads exact authorized assertion order. Not a test acceptance."
+  }
+}

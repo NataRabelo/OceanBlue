@@ -1,0 +1,36 @@
+{
+  "audit_wsgi": {
+    "concurrency": 8,
+    "requests": 120,
+    "rows": 20000,
+    "elapsed_seconds": 13.959203221005737,
+    "requests_per_second": 8.596479190117716,
+    "p50_seconds": 0.92720855200605,
+    "p95_seconds": 2.1589992650115164,
+    "max_seconds": 2.515415462999954,
+    "errors": 0,
+    "transport": "Flask test client; real PostgreSQL"
+  },
+  "sale_contention": {
+    "concurrency": 16,
+    "stock": 12,
+    "accepted": 12,
+    "rejected_without_stock": 4,
+    "elapsed_seconds": 1.8391159750026418,
+    "ledger": "120.00"
+  },
+  "critical_queries": {
+    "/api/pdv/vendas": {
+      "one_row": 15,
+      "twenty_five_rows": 15
+    },
+    "/api/financeiro/lancamentos": {
+      "one_row": 14,
+      "twenty_five_rows": 14
+    },
+    "/api/estoque/movimentos": {
+      "one_row": 14,
+      "twenty_five_rows": 14
+    }
+  }
+}

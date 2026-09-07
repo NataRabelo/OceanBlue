@@ -1,0 +1,19 @@
+{
+  "status": "rejected",
+  "project": "oceanblue-s07-rc3",
+  "phase": "regression",
+  "process_exit_code": 1,
+  "tests": 868,
+  "passed": 867,
+  "failures": 1,
+  "errors": 0,
+  "skipped": 0,
+  "junit_seconds": 3229.441,
+  "coverage_percent": 77.24742554967993,
+  "failed_case": "tests.test_sprint07_browser.test_catalog_client_sale_stock_financial_audit_journey[chromium-390]",
+  "reason": "Axe observed transitional button color contrast below 4.5:1 during confirm-sale; see ../pdv-correction/red.json for original browser observation and trace timings.",
+  "retest_and_operations_run": false,
+  "subsequent_source_change_invalidated_scan": true,
+  "raw_evidence": ".release-work/oceanblue-s07-rc3/regression",
+  "release_approved": false
+}

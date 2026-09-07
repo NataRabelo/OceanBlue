@@ -1,0 +1,4 @@
+{"timestamp": "2026-09-07T21:16:25.497261+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "14fb03919c7ea2b3aab6e965a5f7a6ce", "route": "/login", "method": "GET", "status": 200, "duration_ms": 12.017}
+{"timestamp": "2026-09-07T21:16:25.506310+00:00", "level": "ERROR", "event": "application_diagnostic", "error_type": "OperationalError", "request_id": "8198cf3ece9604ba01d2573f69415428"}
+{"timestamp": "2026-09-07T21:16:25.506634+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "8198cf3ece9604ba01d2573f69415428", "route": "/login", "method": "POST", "status": 500, "duration_ms": 6.103}
+{"database_down": true, "health": 200, "ready": 503, "forged_proxy_login": 403, "login_fails_closed": true}

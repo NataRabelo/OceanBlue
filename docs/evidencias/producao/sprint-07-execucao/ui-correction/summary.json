@@ -1,0 +1,85 @@
+{
+  "status": "focal_browser_tests_passed",
+  "release_acceptance": "pending fresh bound scan and both complete parent regressions",
+  "correction": {
+    "file": "app/templates/modulos/estoque/estoque_indicadores.html",
+    "change": "Add flex-wrap to the existing four-control filter row; preserve controls and overflow assertion.",
+    "original_failure": "test_all_screens_navigation_accessibility_responsive[chromium-stock-sales-768]",
+    "screen": "/api/estoque/indicadores/view",
+    "original_overflow": true,
+    "original_axe_violations": 0,
+    "original_http_js_external_errors": 0,
+    "template_working_tree_sha256": "16bb2e44f63a529f3a7e56e121e431799b27f5ccce12341a8f118e26ed4eb486"
+  },
+  "targeted_tablet": {
+    "passed": 3,
+    "failed": 0,
+    "engines": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "width": 768,
+    "duration_seconds": 149.75,
+    "corrected_screen_overflow": false
+  },
+  "full_browser_module": {
+    "file": "tests/test_sprint07_browser.py",
+    "working_tree_sha256": "98ed4b9fc4079c4a2432961c212c7e42875d0b585c6b63e00a128b08a12d14ed",
+    "passed": 72,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0,
+    "junit_duration_seconds": 2489.288,
+    "engines": [
+      {
+        "name": "chromium",
+        "version": "140.0.7339.16",
+        "passed": 24
+      },
+      {
+        "name": "firefox",
+        "version": "141.0",
+        "passed": 24
+      },
+      {
+        "name": "webkit",
+        "version": "26.0",
+        "passed": 24
+      }
+    ],
+    "navigation_cases": 54,
+    "screen_width_checks": 225,
+    "widths": [
+      320,
+      768,
+      1440
+    ],
+    "journey_cases": 18,
+    "journey_widths": [
+      390,
+      1440
+    ],
+    "pytest_exit_code": 1,
+    "coverage_percent": 45.69,
+    "unchanged_global_coverage_minimum_percent": 50,
+    "exit_reason": "Browser-only coverage below existing global threshold; no test failure.",
+    "junit": "junit.xml"
+  },
+  "environment": {
+    "project": "oceanblue-s07-ui",
+    "image": "sha256:37c7b9df62ba62550db6199c1abae3eeb7e8d3de734aef3244022d3bf5fd5431",
+    "source": "Current app and tests mounted read-only over original candidate image; not a final release binding.",
+    "origin": "http://127.0.0.1:8767",
+    "backend_network_internal": true,
+    "cleanup": "Exclusive runner, database container and network removed; parent resources untouched."
+  },
+  "evidence": {
+    "host_directory": "C:/Users/Rabel/AppData/Local/Temp/sprint07-ui-all72-final",
+    "json_files": 72,
+    "png_files": 72,
+    "total_bytes": 13261393,
+    "success_traces": 0,
+    "png_copied_to_repository": 0
+  }
+}

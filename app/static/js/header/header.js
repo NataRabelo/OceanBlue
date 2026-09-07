@@ -15,6 +15,14 @@ document.addEventListener("DOMContentLoaded", () => {
         mainContent.id ||= "main-content";
         mainContent.setAttribute("tabindex", "-1");
         skipLink.setAttribute("href", `#${mainContent.id}`);
+        const topbar = document.querySelector(".tenant-topbar");
+        if (topbar) {
+            const updateScrollMargin = () => {
+                mainContent.style.scrollMarginTop = `${Math.ceil(topbar.getBoundingClientRect().height) + 16}px`;
+            };
+            updateScrollMargin();
+            new ResizeObserver(updateScrollMargin).observe(topbar);
+        }
     }
 
     document.addEventListener("focusin", (event) => {

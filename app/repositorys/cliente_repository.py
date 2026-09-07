@@ -1,9 +1,8 @@
-from datetime import date
-
 from sqlalchemy.orm import joinedload
 
 from app.extensions import db
 from app.services.transaction_service import save
+from app.services.time_service import TimeService
 from app.models.db import (
     CarteiraCliente,
     Cliente,
@@ -171,7 +170,7 @@ class ClienteRepository:
 
     @staticmethod
     def listar_creditos_disponiveis(cliente_id, tenant_id, data_referencia=None):
-        data_ref = data_referencia or date.today()
+        data_ref = data_referencia or TimeService.today_br()
         return (
             CreditoCashbackCliente.query
             .options(
@@ -195,7 +194,7 @@ class ClienteRepository:
 
     @staticmethod
     def listar_creditos_vencidos(cliente_id, tenant_id, data_referencia=None):
-        data_ref = data_referencia or date.today()
+        data_ref = data_referencia or TimeService.today_br()
         return (
             CreditoCashbackCliente.query
             .filter(

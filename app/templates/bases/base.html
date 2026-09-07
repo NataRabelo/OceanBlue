@@ -15,6 +15,14 @@
   <script src="{{ url_for('static', filename='vendor/lucide.min.js') }}"></script>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/core/core.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/core/operational.css') }}">
+  <style>
+    body[data-theme-mode="modern"] .tenant-topbar,
+    body[data-theme-mode="modern"] .tenant-topbar #userDropdown { background-color: #0f172a; }
+    body[data-theme-mode="modern"] .tenant-topbar__eyebrow { color: #94a3b8; }
+    body[data-theme-mode="modern"] .tenant-topbar p.text-slate-500 { color: #94a3b8; }
+    body[data-theme-mode="modern"] input[type="date"],
+    body[data-theme-mode="modern"] select { color-scheme: dark; }
+  </style>
   <script>
     window.__tenantThemeConfig = {{ tenant_theme_config|tojson }};
     window.__tenantUiConfig = {

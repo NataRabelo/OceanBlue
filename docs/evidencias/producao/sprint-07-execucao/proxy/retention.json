@@ -1,0 +1,13 @@
+{
+  "retained": [
+    "cleanup-container.txt",
+    "cleanup-network.txt",
+    "cleanup-volume.txt",
+    "client.txt",
+    "proxy.txt",
+    "result.json",
+    "tls.txt"
+  ],
+  "omitted": [],
+  "reason": "Raw diagnostic files remain in ignored .release-work; successful binary traces, HTML and synthetic dumps are not duplicated in Git."
+}

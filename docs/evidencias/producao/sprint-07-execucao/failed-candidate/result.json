@@ -1,0 +1,12 @@
+{
+  "status": "rejected",
+  "tests": 868,
+  "failures": 1,
+  "errors": 0,
+  "skipped": 0,
+  "seconds": 3857.65,
+  "image_id": "sha256:37c7b9df62ba62550db6199c1abae3eeb7e8d3de734aef3244022d3bf5fd5431",
+  "root_cause": "Indicators filter row did not wrap at tablet width768 in Chromium; unchanged assertion detected document overflow.",
+  "fix": "Add flex-wrap to responsive indicators filter row; all controls and assertions preserved.",
+  "retention": "Only full JUnit, failed browser observations and tested-source hashes retained here; raw diagnostics remain ignored. Not a release approval."
+}

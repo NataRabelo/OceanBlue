@@ -1,0 +1,11 @@
+{
+  "tool": "Docker Scout",
+  "version": "1.24.0",
+  "target": "local://python:3.12.12-slim-bookworm",
+  "command": "docker scout cves --format sarif --output .release-work/os-scan/base.sarif.json local://python:3.12.12-slim-bookworm",
+  "result": "authentication_required",
+  "observed_message": "Log in with your Docker ID or email address to use docker scout.",
+  "report_generated": false,
+  "scope": "Availability probe against public local base image; no OS CVE result and no claim of zero vulnerabilities.",
+  "account_modified": false
+}

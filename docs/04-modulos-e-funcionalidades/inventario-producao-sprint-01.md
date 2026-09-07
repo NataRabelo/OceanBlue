@@ -1,6 +1,10 @@
 # Inventario requisito → rota → servico → teste
 
-O [CSV completo](inventario-requisito-rota-servico-teste.csv) lista todas as 143 regras de rota, exceto arquivos estaticos: metodo HTTP, endpoint, requisito, chamadas diretas de servico e testes que chamam o mesmo metodo. Gere com `python -m scripts.inventory`; `--check` detecta desatualizacao no CI.
+O [CSV completo](inventario-requisito-rota-servico-teste.csv) é regenerado para o código atual
+(165 regras na base da Sprint 6), exceto arquivos estáticos: método HTTP, endpoint, requisito,
+chamadas diretas de serviço e testes que chamam o mesmo método. Gere com `python -m scripts.inventory`;
+`--check` detecta desatualização no CI. A tabela abaixo preserva o diagnóstico da Sprint 1;
+o fechamento está na [Sprint 7](../evidencias/producao/sprint-07-execucao.md).
 
 Os IDs agrupam o `mapa-de-funcionalidades.md`, sem criar nova especificacao de aceite. O vinculo e extraido por AST, sem inferir cobertura HTTP: decorators, helpers e chamadas indiretas nao sao rastreados. `LACUNA` significa ausencia de teste direto localizado, nao funcionalidade quebrada. Teste de servico nao homologa automaticamente a rota.
 

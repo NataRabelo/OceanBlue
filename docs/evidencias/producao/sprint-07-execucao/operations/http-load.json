@@ -1,0 +1,735 @@
+{
+  "requests": 120,
+  "concurrency": 8,
+  "errors": 0,
+  "elapsed_seconds": 4.603239093004959,
+  "requests_per_second": 26.068600299808658,
+  "p50_seconds": 0.2914135719911428,
+  "p95_seconds": 0.37024500100233126,
+  "max_seconds": 0.4469809100119164,
+  "transport": "TLS with verified synthetic certificate -> nginx -> Gunicorn -> PostgreSQL",
+  "dataset": "3 sales, 3 ledger entries, 94 stock units; authenticated read-only business workload",
+  "scope": "Synthetic single-host regression gate p95<10s, not production SLA or capacity planning. Login/audit occurs after snapshot and is not part of recovery RPO proof.",
+  "samples": [
+    {
+      "path": "/api/pdv/vendas",
+      "seconds": 0.28568949800683185,
+      "rows": 3,
+      "request_id": "9f6cb53cf454daa0212c7f800199212c"
+    },
+    {
+      "path": "/api/financeiro/lancamentos",
+      "seconds": 0.24042370599636342,
+      "rows": 3,
+      "request_id": "d0f84151bb1ca4d9a2dfd071f7927636"
+    },
+    {
+      "path": "/api/estoque/movimentos",
+      "seconds": 0.2674534810066689,
+      "rows": 3,
+      "request_id": "70d9c303b6c342a0de141d848829bfc5"
+    },
+    {
+      "path": "/api/auditoria/",
+      "seconds": 0.10501001399825327,
+      "rows": 50,
+      "request_id": "86f3a71da7d3491d1ae9943d2ba6a63f"
+    },
+    {
+      "path": "/api/pdv/vendas",
+      "seconds": 0.3288442860066425,
+      "rows": 3,
+      "request_id": "8499467999aac08b9dd4fa5297f1b37d"
+    },
+    {
+      "path": "/api/financeiro/lancamentos",
+      "seconds": 0.34496670999214984,
+      "rows": 3,
+      "request_id": "c5684cdbb484102bdaeb0f2a673dc183"
+    },
+    {
+      "path": "/api/estoque/movimentos",
+      "seconds": 0.42501146301219705,
+      "rows": 3,
+      "request_id": "7bfb5a186380609ca1e2d8e450a2d007"
+    },
+    {
+      "path": "/api/auditoria/",
+      "seconds": 0.4226301750022685,
+      "rows": 50,
+      "request_id": "1cdcb69dd8113df4f06bb00eef6dfdf7"
+    },
+    {
+      "path": "/api/pdv/vendas",
+      "seconds": 0.34984026999154594,
+      "rows": 3,
+      "request_id": "8579032a29eb596d3a6a645a0581591a"
+    },
+    {
+      "path": "/api/financeiro/lancamentos",
+      "seconds": 0.24907471300684847,
+      "rows": 3,
+      "request_id": "eaacf33541493253ded6525e43ab0987"
+    },
+    {
+      "path": "/api/estoque/movimentos",
+      "seconds": 0.29503760900115594,
+      "rows": 3,
+      "request_id": "aa6aae3e3fcab1a0c56fb2d1aafab20a"
+    },
+    {
+      "path": "/api/auditoria/",
+      "seconds": 0.2637859219976235,
+      "rows": 50,
+      "request_id": "3ab9b7fc31bedcb91ed98d39931e14c9"
+    },
+    {
+      "path": "/api/pdv/vendas",
+      "seconds": 0.27484646199445706,
+      "rows": 3,
+      "request_id": "24f22f9d8c3a49e8892db4f2a04effb9"
+    },
+    {
+      "path": "/api/financeiro/lancamentos",
+      "seconds": 0.29570249500102364,
+      "rows": 3,
+      "request_id": "ab79b96fbb75b655800d68e3cde2403a"
+    },
+    {
+      "path": "/api/estoque/movimentos",
+      "seconds": 0.2466422470024554,
+      "rows": 3,
+      "request_id": "64953116e8786f20908b6fe320190970"
+    },
+    {
+      "path": "/api/auditoria/",
+      "seconds": 0.2777139139943756,
+      "rows": 50,
+      "request_id": "b6bddf52377cd27312a896bba4033bae"
+    },
+    {
+      "path": "/api/pdv/vendas",
+      "seconds": 0.3248096840106882,
+      "rows": 3,
+      "request_id": "b3afda8e4cc42d18b7493d466588f6e8"
+    },
+    {
+      "path": "/api/financeiro/lancamentos",
+      "seconds": 0.29334961700078566,
+      "rows": 3,
+      "request_id": "50cbbe77531bb3ed454f9bd3fba3af92"
+    },
+    {
+      "path": "/api/estoque/movimentos",
+      "seconds": 0.24885931400058325,
+      "rows": 3,
+      "request_id": "e54926b3036d9fb123502c0becf9a0c9"
+    },
+    {
+      "path": "/api/auditoria/",
+      "seconds": 0.33852519300126005,
+      "rows": 50,
+      "request_id": "a8d82936362fcc7fc29fe5ee3e4f8e77"
+    },
+    {
+      "path": "/api/pdv/vendas",
+      "seconds": 0.3189505930058658,
+      "rows": 3,
+      "request_id": "a6494024eaefd5f10cf5b8b3d926b9a1"
+    },
+    {
+      "path": "/api/financeiro/lancamentos",
+      "seconds": 0.24415823999152053,
+      "rows": 3,
+      "request_id": "54e44fd698bf54ee63504802cc9661a4"
+    },
+    {
+      "path": "/api/estoque/movimentos",
+      "seconds": 0.28029760099889245,
+      "rows": 3,
+      "request_id": "e76578690fc20739b074cc44a19dff7e"
+    },
+    {
+      "path": "/api/auditoria/",
+      "seconds": 0.2848648729996057,
+      "rows": 50,
+      "request_id": "66372fdc836e2093b9a41aa3f0971f7a"
+    },
+    {
+      "path": "/api/pdv/vendas",
+      "seconds": 0.3343292640056461,
+      "rows": 3,
+      "request_id": "b4c65cba939c048a2ff1e8605ea93cd1"
+    },
+    {
+      "path": "/api/financeiro/lancamentos",
+      "seconds": 0.3637339219858404,
+      "rows": 3,
+      "request_id": "9cbd332418fe4171bec9dac8e0aaeb0c"
+    },
+    {
+      "path": "/api/estoque/movimentos",
+      "seconds": 0.3525826379918726,
+      "rows": 3,
+      "request_id": "7acaec4031f9417c5ba14ed5b538ed1d"
+    },
+    {
+      "path": "/api/auditoria/",
+      "seconds": 0.2623478720051935,
+      "rows": 50,
+      "request_id": "df0a7a1747da068c82c1bfc57315dd43"
+    },
+    {
+      "path": "/api/pdv/vendas",
+      "seconds": 0.3626368350087432,
+      "rows": 3,
+      "request_id": "1e1adebaaea7807201de73b72f2ee6cd"
+    },
+    {
+      "path": "/api/financeiro/lancamentos",
+      "seconds": 0.37589897599536926,
+      "rows": 3,
+      "request_id": "ede878777d5031fef9f74ee2d84ab6c7"
+    },
+    {
+      "path": "/api/estoque/movimentos",
+      "seconds": 0.3408875460008858,
+      "rows": 3,
+      "request_id": "aef52393ae3aad840c318e1bde006c5f"
+    },
+    {
+      "path": "/api/auditoria/",
+      "seconds": 0.29677484100102447,
+      "rows": 50,
+      "request_id": "80568992378f843b33951f2098aa7dcd"
+    },
+    {
+      "path": "/api/pdv/vendas",
+      "seconds": 0.28779262700118124,
+      "rows": 3,
+      "request_id": "eec95c730e254f37f438bef0c551d93e"
+    },
+    {
+      "path": "/api/financeiro/lancamentos",
+      "seconds": 0.3019271749944892,
+      "rows": 3,
+      "request_id": "6d19cf7d3e4f32dc675f82b0ceab5817"
+    },
+    {
+      "path": "/api/estoque/movimentos",
+      "seconds": 0.2949729920073878,
+      "rows": 3,
+      "request_id": "9779a35370753154464de36d16806089"
+    },
+    {
+      "path": "/api/auditoria/",
+      "seconds": 0.2596762589964783,
+      "rows": 50,
+      "request_id": "19d3e82597f4c4c0a237eacf0aa928da"
+    },
+    {
+      "path": "/api/pdv/vendas",
+      "seconds": 0.28106621600454673,
+      "rows": 3,
+      "request_id": "32720f476c10d2c1ac16c5133fc756ee"
+    },
+    {
+      "path": "/api/financeiro/lancamentos",
+      "seconds": 0.26337706099729985,
+      "rows": 3,
+      "request_id": "8f731ef2c83804be6c944f8de0614292"
+    },
+    {
+      "path": "/api/estoque/movimentos",
+      "seconds": 0.2862677880038973,
+      "rows": 3,
+      "request_id": "18afb4247c66c7a696ff9b846f5a3e0a"
+    },
+    {
+      "path": "/api/auditoria/",
+      "seconds": 0.27761670701147523,
+      "rows": 50,
+      "request_id": "52599ebf5e61e81c1bc81b448a432fc7"
+    },
+    {
+      "path": "/api/pdv/vendas",
+      "seconds": 0.2780318730074214,
+      "rows": 3,
+      "request_id": "9b96c5160df59bfa40876af0a3cc2ea0"
+    },
+    {
+      "path": "/api/financeiro/lancamentos",
+      "seconds": 0.25435545400250703,
+      "rows": 3,
+      "request_id": "f61af4e3868442c02acf6818f34db4e7"
+    },
+    {
+      "path": "/api/estoque/movimentos",
+      "seconds": 0.2652496219961904,
+      "rows": 3,
+      "request_id": "29ef84dd2de2dace564146792cba2d71"
+    },
+    {
+      "path": "/api/auditoria/",
+      "seconds": 0.27107972199155483,
+      "rows": 50,
+      "request_id": "21400eb042db5bf066d9ee6d3c38f2f6"
+    },
+    {
+      "path": "/api/pdv/vendas",
+      "seconds": 0.26223736799147446,
+      "rows": 3,
+      "request_id": "20ed4d178aaa07c12b3eb2e1b22a7faf"
+    },
+    {
+      "path": "/api/financeiro/lancamentos",
+      "seconds": 0.24860842600173783,
+      "rows": 3,
+      "request_id": "b4ce859c53970ff91ea5cb8e0ba79bbf"
+    },
+    {
+      "path": "/api/estoque/movimentos",
+      "seconds": 0.27028823501314037,
+      "rows": 3,
+      "request_id": "d7c2beca30afc2c7bf76c8af77acf103"
+    },
+    {
+      "path": "/api/auditoria/",
+      "seconds": 0.24980145799054299,
+      "rows": 50,
+      "request_id": "98c88d48ef13951c733c1d9e689ba57c"
+    },
+    {
+      "path": "/api/pdv/vendas",
+      "seconds": 0.26603436199366115,
+      "rows": 3,
+      "request_id": "9639aa2364cbddc814284f83628e8f97"
+    },
+    {
+      "path": "/api/financeiro/lancamentos",
+      "seconds": 0.27537609499995597,
+      "rows": 3,
+      "request_id": "3837bd238a65d4fca289f177efa5331f"
+    },
+    {
+      "path": "/api/estoque/movimentos",
+      "seconds": 0.23403632700501475,
+      "rows": 3,
+      "request_id": "c271209ef1f9f9b4b1b8c51f0b8acfb8"
+    },
+    {
+      "path": "/api/auditoria/",
+      "seconds": 0.3164644299977226,
+      "rows": 50,
+      "request_id": "384c7f172e79e9c2ba9e98241eb709ee"
+    },
+    {
+      "path": "/api/pdv/vendas",
+      "seconds": 0.2590361570037203,
+      "rows": 3,
+      "request_id": "7a2ddc2b927583044c53924fa51a8640"
+    },
+    {
+      "path": "/api/financeiro/lancamentos",
+      "seconds": 0.2664737629966112,
+      "rows": 3,
+      "request_id": "9dd665fb788c43705e945b1907a8db82"
+    },
+    {
+      "path": "/api/estoque/movimentos",
+      "seconds": 0.260784190002596,
+      "rows": 3,
+      "request_id": "93e18a1501777e3b68576a299827abb6"
+    },
+    {
+      "path": "/api/auditoria/",
+      "seconds": 0.2983631340030115,
+      "rows": 50,
+      "request_id": "12afd34fda7e7474e13c52ed63bce28f"
+    },
+    {
+      "path": "/api/pdv/vendas",
+      "seconds": 0.2542823510011658,
+      "rows": 3,
+      "request_id": "90e300652e9c603f1a553539c2bb36c6"
+    },
+    {
+      "path": "/api/financeiro/lancamentos",
+      "seconds": 0.338078847998986,
+      "rows": 3,
+      "request_id": "4fe8935da3f65db0d12a818734a68e48"
+    },
+    {
+      "path": "/api/estoque/movimentos",
+      "seconds": 0.3268760899954941,
+      "rows": 3,
+      "request_id": "3a905b42da10370787d13d99b036a9ec"
+    },
+    {
+      "path": "/api/auditoria/",
+      "seconds": 0.2788722080003936,
+      "rows": 50,
+      "request_id": "24242eee3a48367b5b66603522acd281"
+    },
+    {
+      "path": "/api/pdv/vendas",
+      "seconds": 0.33981015799508896,
+      "rows": 3,
+      "request_id": "b73b40891e044a85cbb77add83e5c821"
+    },
+    {
+      "path": "/api/financeiro/lancamentos",
+      "seconds": 0.33354976800910663,
+      "rows": 3,
+      "request_id": "5ccdfc8ec2bcf91fdc16d39a0ed5d9a8"
+    },
+    {
+      "path": "/api/estoque/movimentos",
+      "seconds": 0.31968916200276,
+      "rows": 3,
+      "request_id": "b534622b79483c168daed352f26370ee"
+    },
+    {
+      "path": "/api/auditoria/",
+      "seconds": 0.3064563220104901,
+      "rows": 50,
+      "request_id": "24906a9fd7c21b335086b1967e3706d9"
+    },
+    {
+      "path": "/api/pdv/vendas",
+      "seconds": 0.3181996350031113,
+      "rows": 3,
+      "request_id": "11113262698d4d61651aa218b93bf8b9"
+    },
+    {
+      "path": "/api/financeiro/lancamentos",
+      "seconds": 0.2756796539906645,
+      "rows": 3,
+      "request_id": "338a73b2f1cc06329c26e9d2425ffe13"
+    },
+    {
+      "path": "/api/estoque/movimentos",
+      "seconds": 0.2835556659993017,
+      "rows": 3,
+      "request_id": "d50b967f22a56629d7cc9c6f41d0a837"
+    },
+    {
+      "path": "/api/auditoria/",
+      "seconds": 0.2692436520010233,
+      "rows": 50,
+      "request_id": "f2f31ad101276a3bd52555f07084e11c"
+    },
+    {
+      "path": "/api/pdv/vendas",
+      "seconds": 0.23859497900411952,
+      "rows": 3,
+      "request_id": "91502c8a9fbf9af9d1e90b35ee6c01a1"
+    },
+    {
+      "path": "/api/financeiro/lancamentos",
+      "seconds": 0.2917976559983799,
+      "rows": 3,
+      "request_id": "bb1cd898aadf3711508c7f2a06244a81"
+    },
+    {
+      "path": "/api/estoque/movimentos",
+      "seconds": 0.29800526300095953,
+      "rows": 3,
+      "request_id": "6a8535983ecfc4c14278a987bf85cbc8"
+    },
+    {
+      "path": "/api/auditoria/",
+      "seconds": 0.25800920999608934,
+      "rows": 50,
+      "request_id": "93cc17d12a73d1165e2aec8d1f8eb9ab"
+    },
+    {
+      "path": "/api/pdv/vendas",
+      "seconds": 0.28058466299262363,
+      "rows": 3,
+      "request_id": "d1613f6cfb346c93486a01b72841d982"
+    },
+    {
+      "path": "/api/financeiro/lancamentos",
+      "seconds": 0.28054412399069406,
+      "rows": 3,
+      "request_id": "4896bdc719968d7d3ff95c35d86706e9"
+    },
+    {
+      "path": "/api/estoque/movimentos",
+      "seconds": 0.2840325750003103,
+      "rows": 3,
+      "request_id": "fded0b035d3c621c32bef911aa6ffad7"
+    },
+    {
+      "path": "/api/auditoria/",
+      "seconds": 0.2756227580102859,
+      "rows": 50,
+      "request_id": "51f6d97d3f57254441b5eff73cfb2642"
+    },
+    {
+      "path": "/api/pdv/vendas",
+      "seconds": 0.32434608800394926,
+      "rows": 3,
+      "request_id": "a6deab4dbe7863a39ebb5b49b5125c71"
+    },
+    {
+      "path": "/api/financeiro/lancamentos",
+      "seconds": 0.2643816350027919,
+      "rows": 3,
+      "request_id": "ce727572a7f2542149429bf592c28d19"
+    },
+    {
+      "path": "/api/estoque/movimentos",
+      "seconds": 0.2914135719911428,
+      "rows": 3,
+      "request_id": "d4f43f2233347da458d52a8816f20c8a"
+    },
+    {
+      "path": "/api/auditoria/",
+      "seconds": 0.31424253700242843,
+      "rows": 50,
+      "request_id": "6a419fcedcedb064edb986aa413c704a"
+    },
+    {
+      "path": "/api/pdv/vendas",
+      "seconds": 0.3493747869943036,
+      "rows": 3,
+      "request_id": "a059bc6dc721fbccbfb00082d54b105b"
+    },
+    {
+      "path": "/api/financeiro/lancamentos",
+      "seconds": 0.28540018999774475,
+      "rows": 3,
+      "request_id": "17e25cff8d4ded941dc3cf168b4f4f66"
+    },
+    {
+      "path": "/api/estoque/movimentos",
+      "seconds": 0.3625716829992598,
+      "rows": 3,
+      "request_id": "f6886ff2dc67cdbda3a05b0b348ff5a3"
+    },
+    {
+      "path": "/api/auditoria/",
+      "seconds": 0.2870518900017487,
+      "rows": 50,
+      "request_id": "375a8fd6a12b1f9285348028275641f2"
+    },
+    {
+      "path": "/api/pdv/vendas",
+      "seconds": 0.33017773399478756,
+      "rows": 3,
+      "request_id": "cbf2571ad71b5aeccfdbe5f67bb257e4"
+    },
+    {
+      "path": "/api/financeiro/lancamentos",
+      "seconds": 0.326744823003537,
+      "rows": 3,
+      "request_id": "4b867f4dfc5ec81a7d32a1b312348097"
+    },
+    {
+      "path": "/api/estoque/movimentos",
+      "seconds": 0.2936403259955114,
+      "rows": 3,
+      "request_id": "a4965c8b8151672c5fea2e5e36548618"
+    },
+    {
+      "path": "/api/auditoria/",
+      "seconds": 0.38017269400006626,
+      "rows": 50,
+      "request_id": "a3138b1baa42e429d5ea880355cecc59"
+    },
+    {
+      "path": "/api/pdv/vendas",
+      "seconds": 0.42198566198931076,
+      "rows": 3,
+      "request_id": "2dfaaf5c422c8a20efa6aaa2921ba2b3"
+    },
+    {
+      "path": "/api/financeiro/lancamentos",
+      "seconds": 0.34594523000123445,
+      "rows": 3,
+      "request_id": "b369b5af5d555151c7713e0b8cc81c8c"
+    },
+    {
+      "path": "/api/estoque/movimentos",
+      "seconds": 0.36879237000539433,
+      "rows": 3,
+      "request_id": "2be99db561a4af3d19c2c6f6ffbeae26"
+    },
+    {
+      "path": "/api/auditoria/",
+      "seconds": 0.3370113900018623,
+      "rows": 50,
+      "request_id": "bd0c7756909fc71bedfeaeae1a920420"
+    },
+    {
+      "path": "/api/pdv/vendas",
+      "seconds": 0.3232497360004345,
+      "rows": 3,
+      "request_id": "8e7fde8cbd1d1e985f45602903081506"
+    },
+    {
+      "path": "/api/financeiro/lancamentos",
+      "seconds": 0.37024500100233126,
+      "rows": 3,
+      "request_id": "2b9f39ad95a41953357a70466d842c98"
+    },
+    {
+      "path": "/api/estoque/movimentos",
+      "seconds": 0.4469809100119164,
+      "rows": 3,
+      "request_id": "f89d3973f20bf67b7503c20b1377f617"
+    },
+    {
+      "path": "/api/auditoria/",
+      "seconds": 0.25730467098765075,
+      "rows": 50,
+      "request_id": "deff9c2b1d2b1ec758b3b643eb07360a"
+    },
+    {
+      "path": "/api/pdv/vendas",
+      "seconds": 0.27505307100364007,
+      "rows": 3,
+      "request_id": "0914089f0b5cd992ebcb19eaf24602b2"
+    },
+    {
+      "path": "/api/financeiro/lancamentos",
+      "seconds": 0.285926502008806,
+      "rows": 3,
+      "request_id": "a9630b65c839b5da0d2355216b2d342b"
+    },
+    {
+      "path": "/api/estoque/movimentos",
+      "seconds": 0.30023660899314564,
+      "rows": 3,
+      "request_id": "ae538b5a2a81cf03b0b0db32dee07bdb"
+    },
+    {
+      "path": "/api/auditoria/",
+      "seconds": 0.29872091799916234,
+      "rows": 50,
+      "request_id": "209683180e1fca5a6c480976df2635ff"
+    },
+    {
+      "path": "/api/pdv/vendas",
+      "seconds": 0.2954230210016249,
+      "rows": 3,
+      "request_id": "7b764d3875a16427e0167a2febc0705d"
+    },
+    {
+      "path": "/api/financeiro/lancamentos",
+      "seconds": 0.32067982100124937,
+      "rows": 3,
+      "request_id": "3eb3eb257c7833cb8cc9492f9f384cbd"
+    },
+    {
+      "path": "/api/estoque/movimentos",
+      "seconds": 0.3206630579952616,
+      "rows": 3,
+      "request_id": "4b97c17f237d383dcc70c0f11c08b1f3"
+    },
+    {
+      "path": "/api/auditoria/",
+      "seconds": 0.24014873200212605,
+      "rows": 50,
+      "request_id": "061bae46ce655413378599d730d9c902"
+    },
+    {
+      "path": "/api/pdv/vendas",
+      "seconds": 0.3314494759979425,
+      "rows": 3,
+      "request_id": "96ba9752a895233a3c1422f2e8c78953"
+    },
+    {
+      "path": "/api/financeiro/lancamentos",
+      "seconds": 0.2908773629897041,
+      "rows": 3,
+      "request_id": "80fa93091fad57ee247384d2a1788727"
+    },
+    {
+      "path": "/api/estoque/movimentos",
+      "seconds": 0.3215615410008468,
+      "rows": 3,
+      "request_id": "5f22a08f09e0846c5b4325de96f0878b"
+    },
+    {
+      "path": "/api/auditoria/",
+      "seconds": 0.2806785689899698,
+      "rows": 50,
+      "request_id": "1d8f6c32756f63edf4bdd5ef05a129d4"
+    },
+    {
+      "path": "/api/pdv/vendas",
+      "seconds": 0.33519710499967914,
+      "rows": 3,
+      "request_id": "27cf4bc2285d7406578d406b40b9fe0f"
+    },
+    {
+      "path": "/api/financeiro/lancamentos",
+      "seconds": 0.266758222001954,
+      "rows": 3,
+      "request_id": "0fe7a453008cb3d54e5042df2175a23c"
+    },
+    {
+      "path": "/api/estoque/movimentos",
+      "seconds": 0.3099756029987475,
+      "rows": 3,
+      "request_id": "15433383e7a305d9bc984c7f2a17dc67"
+    },
+    {
+      "path": "/api/auditoria/",
+      "seconds": 0.2834328080061823,
+      "rows": 50,
+      "request_id": "2ef8199b9295330f1249b46c044ada6f"
+    },
+    {
+      "path": "/api/pdv/vendas",
+      "seconds": 0.324387234999449,
+      "rows": 3,
+      "request_id": "2438554f704f83716c59fb42111af497"
+    },
+    {
+      "path": "/api/financeiro/lancamentos",
+      "seconds": 0.2742971200059401,
+      "rows": 3,
+      "request_id": "e1c8bc7be4cacdae092027f90f6b48d9"
+    },
+    {
+      "path": "/api/estoque/movimentos",
+      "seconds": 0.289016990995151,
+      "rows": 3,
+      "request_id": "f1081c905c9499ff97ab60e6c566475a"
+    },
+    {
+      "path": "/api/auditoria/",
+      "seconds": 0.2573511549999239,
+      "rows": 50,
+      "request_id": "6a589923e54f2f90a8d10adb5d0ff86d"
+    },
+    {
+      "path": "/api/pdv/vendas",
+      "seconds": 0.3336183549981797,
+      "rows": 3,
+      "request_id": "940324ee3dd550d7504319e9bb75e6e9"
+    },
+    {
+      "path": "/api/financeiro/lancamentos",
+      "seconds": 0.29497630600235425,
+      "rows": 3,
+      "request_id": "266cf9a4069f61b699d8153784bc8729"
+    },
+    {
+      "path": "/api/estoque/movimentos",
+      "seconds": 0.3317946720053442,
+      "rows": 3,
+      "request_id": "75b123f57165b4f23e4a0f4d348203e9"
+    },
+    {
+      "path": "/api/auditoria/",
+      "seconds": 0.3051800309913233,
+      "rows": 50,
+      "request_id": "425c953a3b93ea1b8c7826c668cb6823"
+    }
+  ]
+}

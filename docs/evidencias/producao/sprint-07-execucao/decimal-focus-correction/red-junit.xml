@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="1" time="26.741" timestamp="2026-09-07T17:44:47.120629+00:00" hostname="02ebdb35236a"><testcase classname="tests.test_sprint07_browser" name="test_catalog_client_sale_stock_financial_audit_journey[firefox-1440]" time="26.086"><failure message="AssertionError: assert {'first': 'ca...alor_atacado'} == {'first': 'ca...nima_atacado'}&#10;  &#10;  Omitting 2 identical items, use -vv to show&#10;  Differing items:&#10;  {'next_frame': 'cadastro-valor_atacado'} != {'next_frame': 'cadastro-quantidade_minima_atacado'}&#10;  Use -v to get more diff">tests/test_sprint07_browser.py:396: in test_catalog_client_sale_stock_financial_audit_journey
+    assert decimal_focus == {
+E   AssertionError: assert {'first': 'ca...alor_atacado'} == {'first': 'ca...nima_atacado'}
+E     
+E     Omitting 2 identical items, use -vv to show
+E     Differing items:
+E     {'next_frame': 'cadastro-valor_atacado'} != {'next_frame': 'cadastro-quantidade_minima_atacado'}
+E     Use -v to get more diff</failure></testcase></testsuite></testsuites>

@@ -1,0 +1,157 @@
+{
+  "status": "focal_process_passed",
+  "release_acceptance": "Not a global release gate. Pending new rc4 source-bound scan and BOTH full868 regressions with coverage enabled and process exit0, plus parent operational acceptance.",
+  "change": {
+    "template": "Remove only transition class from#pdv-finalizar-venda; preserve disabled/hover palette and behavior.",
+    "test": "Same existing journey immediately asserts disabled=false and computed transitionDuration=0s after payment confirmation. No animation wait, Axe exclusion or added test case.",
+    "test_total_unchanged": 868,
+    "source_sha256": {
+      "app/templates/modulos/pdv/pdv.html": "84919453697f9b2530ef089cc504d07550a3b637c0fd72283c670ce30802ffa0",
+      "tests/test_sprint07_browser.py": "adb92f1c3d183a91f18aa15bf464e9e4c540daa3ddab445a416b1bb28d15be0f"
+    }
+  },
+  "command": "docker exec oceanblue-s07-ui-pdv python -m pytest tests/test_sprint07_browser.py -k test_catalog_client_sale_stock_financial_audit_journey --no-cov --tb=short -q --junitxml=/tmp/sprint07-pdv-focal6.xml",
+  "pytest_exit_code": 0,
+  "passed": 6,
+  "failed": 0,
+  "errors": 0,
+  "skipped": 0,
+  "deselected": 66,
+  "duration_seconds": 264.01,
+  "coverage": "Disabled ONLY for this user-authorized focal invocation with --no-cov; global coverage configuration and50% threshold unchanged.",
+  "red": "red.json",
+  "junit": "green-junit.xml",
+  "cases": [
+    {
+      "engine": "chromium",
+      "version": "140.0.7339.16",
+      "width": 1440,
+      "passed": true,
+      "finalize_enabled_state": {
+        "disabled": false,
+        "transition_duration": "0s"
+      },
+      "journey": {
+        "sale_id": 1,
+        "total": "25.00",
+        "remaining_stock": 5,
+        "customer_id": 1
+      },
+      "axe_violations": 0,
+      "overflow": false,
+      "http_js_external_errors": 0
+    },
+    {
+      "engine": "chromium",
+      "version": "140.0.7339.16",
+      "width": 390,
+      "passed": true,
+      "finalize_enabled_state": {
+        "disabled": false,
+        "transition_duration": "0s"
+      },
+      "journey": {
+        "sale_id": 1,
+        "total": "25.00",
+        "remaining_stock": 5,
+        "customer_id": 1
+      },
+      "axe_violations": 0,
+      "overflow": false,
+      "http_js_external_errors": 0
+    },
+    {
+      "engine": "firefox",
+      "version": "141.0",
+      "width": 1440,
+      "passed": true,
+      "finalize_enabled_state": {
+        "disabled": false,
+        "transition_duration": "0s"
+      },
+      "journey": {
+        "sale_id": 1,
+        "total": "25.00",
+        "remaining_stock": 5,
+        "customer_id": 1
+      },
+      "axe_violations": 0,
+      "overflow": false,
+      "http_js_external_errors": 0
+    },
+    {
+      "engine": "firefox",
+      "version": "141.0",
+      "width": 390,
+      "passed": true,
+      "finalize_enabled_state": {
+        "disabled": false,
+        "transition_duration": "0s"
+      },
+      "journey": {
+        "sale_id": 1,
+        "total": "25.00",
+        "remaining_stock": 5,
+        "customer_id": 1
+      },
+      "axe_violations": 0,
+      "overflow": false,
+      "http_js_external_errors": 0
+    },
+    {
+      "engine": "webkit",
+      "version": "26.0",
+      "width": 1440,
+      "passed": true,
+      "finalize_enabled_state": {
+        "disabled": false,
+        "transition_duration": "0s"
+      },
+      "journey": {
+        "sale_id": 1,
+        "total": "25.00",
+        "remaining_stock": 5,
+        "customer_id": 1
+      },
+      "axe_violations": 0,
+      "overflow": false,
+      "http_js_external_errors": 0
+    },
+    {
+      "engine": "webkit",
+      "version": "26.0",
+      "width": 390,
+      "passed": true,
+      "finalize_enabled_state": {
+        "disabled": false,
+        "transition_duration": "0s"
+      },
+      "journey": {
+        "sale_id": 1,
+        "total": "25.00",
+        "remaining_stock": 5,
+        "customer_id": 1
+      },
+      "axe_violations": 0,
+      "overflow": false,
+      "http_js_external_errors": 0
+    }
+  ],
+  "environment": {
+    "image": "sha256:be642b330a51b14bf73e8fd1735964d3d2c973acfe470764ca1e7f1615da6ee2",
+    "source": "Current app/tests mounted read-only; focal proof, not final release binding.",
+    "project": "oceanblue-s07-ui",
+    "origin": "http://127.0.0.1:8767",
+    "backend_network_internal": true,
+    "published_ports": 0,
+    "started_only_after_rc3_finished": true,
+    "cleanup": "Own pdv runner, database and network removed; parent resources untouched."
+  },
+  "evidence": {
+    "host_directory": "C:/Users/Rabel/AppData/Local/Temp/sprint07-pdv-focal6-final",
+    "browser_json": 6,
+    "png": 6,
+    "success_traces": 0,
+    "png_copied_to_repository": 0
+  }
+}

@@ -42,7 +42,7 @@ min-h-screen flex flex-col bg-slate-950 text-white
             </div>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-4 p-5">
-            <select id="boleto-status"
+            <select id="boleto-status" aria-label="Status dos boletos"
                 class="w-full bg-slate-950 border border-slate-800 focus:border-sky-500 focus:ring-2 focus:ring-sky-500/20 rounded-xl px-4 py-3 text-white outline-none transition">
                 <option value="">Todos os status</option>
                 <option value="PENDENTE">Pendente</option>
@@ -58,7 +58,7 @@ min-h-screen flex flex-col bg-slate-950 text-white
             <input id="boleto-cliente" type="search" placeholder="Cliente"
                 class="w-full bg-slate-950 border border-slate-800 focus:border-sky-500 focus:ring-2 focus:ring-sky-500/20 rounded-xl px-4 py-3 text-white outline-none transition">
 
-            <input id="boleto-vencimento" type="date"
+            <input id="boleto-vencimento" type="date" aria-label="Vencimento dos boletos"
                 class="w-full bg-slate-950 border border-slate-800 focus:border-sky-500 focus:ring-2 focus:ring-sky-500/20 rounded-xl px-4 py-3 text-white outline-none transition">
 
             <input id="boleto-venda" type="search" placeholder="Venda"
@@ -79,7 +79,7 @@ min-h-screen flex flex-col bg-slate-950 text-white
                 <p id="boleto-resumo" class="text-sm text-slate-400">Carregando registros...</p>
             </div>
         </div>
-        <div class="overflow-x-auto">
+        <div class="overflow-x-auto" tabindex="0" role="region" aria-label="Lista de boletos">
             <table class="w-full min-w-[68rem] text-sm">
                 <thead class="bg-slate-950/80 border-b border-slate-800">
                     <tr>

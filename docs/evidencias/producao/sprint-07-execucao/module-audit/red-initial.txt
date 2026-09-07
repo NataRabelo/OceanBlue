@@ -1,0 +1,319 @@
+FFFFFFFFFFFFFF.FFFFFFFFF                                                 [100%]
+=================================== FAILURES ===================================
+_ test_http_identifiers_never_select_a_different_record[True-product_company] __
+tests/test_sprint07_audit.py:57: in test_http_identifiers_never_select_a_different_record
+    assert response.status_code == 400, response.json
+E   AssertionError: {'data': {'ativo': True, 'categoria_id': 1, 'categoria_nome': 'Categoria auditada', 'codigo_barras': '2000010000012', ...}, 'success': True}
+E   assert 201 == 400
+E    +  where 201 = <WrapperTestResponse streamed [201 CREATED]>.status_code
+---------------------------- Captured stderr setup -----------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade  -> 1150177c20ca, initial
+INFO  [alembic.runtime.migration] Running upgrade 1150177c20ca -> 7f3c1a2b9d4e, add roles and permissions
+INFO  [alembic.runtime.migration] Running upgrade 7f3c1a2b9d4e -> 9d1dca4d2bc5, v2
+INFO  [alembic.runtime.migration] Running upgrade 9d1dca4d2bc5 -> c3a1f9d4e8b2, convert quantities to integer
+INFO  [alembic.runtime.migration] Running upgrade c3a1f9d4e8b2 -> 4b2d8b0f6c11, add platform owners
+INFO  [alembic.runtime.migration] Running upgrade 4b2d8b0f6c11 -> 8f6e4c2a1b9d, add pdv financeiro permissions and defaults
+INFO  [alembic.runtime.migration] Running upgrade 8f6e4c2a1b9d -> b7c9d1e2f3a4, add cupons adiantamentos validade salario
+INFO  [alembic.runtime.migration] Running upgrade b7c9d1e2f3a4 -> d4e5f6a7b8c9, add empresa visual mode
+INFO  [alembic.runtime.migration] Running upgrade d4e5f6a7b8c9 -> e6f7a8b9c0d1, add stock alert settings
+INFO  [alembic.runtime.migration] Running upgrade e6f7a8b9c0d1 -> f2b4c6d8e9f1, add client wallet messaging and reversal controls
+INFO  [alembic.runtime.migration] Running upgrade 8f6e4c2a1b9d -> f9d0e1a2b3c4, add boleto financeiro models
+INFO  [alembic.runtime.migration] Running upgrade f2b4c6d8e9f1 -> a1b2c3d4e5f6, add stock alert dispatch tracking
+INFO  [alembic.runtime.migration] Running upgrade a1b2c3d4e5f6 -> b3c4d5e6f7a8, add cashback sale controls
+INFO  [alembic.runtime.migration] Running upgrade f2b4c6d8e9f1 -> a4f1c8d2e7b9, add wholesale pricing and fiscal foundation
+INFO  [alembic.runtime.migration] Running upgrade a4f1c8d2e7b9, b3c4d5e6f7a8 -> c9d8e7f6a5b4, merge cashback and fiscal heads
+INFO  [alembic.runtime.migration] Running upgrade c9d8e7f6a5b4 -> 0f6a8c2d4e9b, add audit and saas limits
+INFO  [alembic.runtime.migration] Running upgrade 0f6a8c2d4e9b, f9d0e1a2b3c4 -> ea3d60221646, merge migration heads
+INFO  [alembic.runtime.migration] Running upgrade ea3d60221646 -> 1a2b3c4d5e6f, add sprint3 boleto and fiscal external status
+INFO  [alembic.runtime.migration] Running upgrade 1a2b3c4d5e6f -> 2b3c4d5e6f7a, add sprint4 asaas and focus real configs
+INFO  [alembic.runtime.migration] Running upgrade 2b3c4d5e6f7a -> 3c4d5e6f7a8b, Align migrated types, tenant indexes and installment foreign key with models.
+INFO  [alembic.runtime.migration] Running upgrade 3c4d5e6f7a8b -> 4d5e6f7a8b9c, Shared authentication state, tenant integrity, SaaS quotas and access audit.
+INFO  [alembic.runtime.migration] Running upgrade 4d5e6f7a8b9c -> 5e6f7a8b9c0d
+INFO  [alembic.runtime.migration] Running upgrade 5e6f7a8b9c0d -> 6f7a8b9c0d1e
+INFO  [alembic.runtime.migration] Running upgrade 6f7a8b9c0d1e -> 7a8b9c0d1e2f
+INFO  [alembic.runtime.migration] Running upgrade 7a8b9c0d1e2f -> 8b9c0d1e2f3a
+INFO  [alembic.runtime.migration] Running upgrade 8b9c0d1e2f3a -> 9c0d1e2f3a4b
+INFO  [alembic.runtime.migration] Running upgrade 9c0d1e2f3a4b -> a0d1e2f3a4b5
+_ test_http_identifiers_never_select_a_different_record[True-product_category] _
+tests/test_sprint07_audit.py:57: in test_http_identifiers_never_select_a_different_record
+    assert response.status_code == 400, response.json
+E   AssertionError: {'data': {'ativo': True, 'categoria_id': 1, 'categoria_nome': 'Categoria auditada', 'codigo_barras': '2000010000012', ...}, 'success': True}
+E   assert 201 == 400
+E    +  where 201 = <WrapperTestResponse streamed [201 CREATED]>.status_code
+_ test_http_identifiers_never_select_a_different_record[True-employee_company] _
+tests/test_sprint07_audit.py:57: in test_http_identifiers_never_select_a_different_record
+    assert response.status_code == 400, response.json
+E   AssertionError: {'data': {'ativo': True, 'cpf': '99988877766', 'empresa_id': 1, 'empresa_nome': 'Empresa 1-1', ...}, 'message': 'Funcionario cadastrado com sucesso.', 'success': True}
+E   assert 201 == 400
+E    +  where 201 = <WrapperTestResponse streamed [201 CREATED]>.status_code
+__ test_http_identifiers_never_select_a_different_record[True-employee_role] ___
+tests/test_sprint07_audit.py:57: in test_http_identifiers_never_select_a_different_record
+    assert response.status_code == 400, response.json
+E   AssertionError: {'data': {'ativo': True, 'cpf': '99988877766', 'empresa_id': 1, 'empresa_nome': 'Empresa 1-1', ...}, 'message': 'Funcionario cadastrado com sucesso.', 'success': True}
+E   assert 201 == 400
+E    +  where 201 = <WrapperTestResponse streamed [201 CREATED]>.status_code
+______ test_http_identifiers_never_select_a_different_record[True-stock] _______
+tests/test_sprint07_audit.py:57: in test_http_identifiers_never_select_a_different_record
+    assert response.status_code == 400, response.json
+E   AssertionError: {'data': {'cancelado_em': None, 'cancelado_por_nome': None, 'data_movimento': '2026-09-07T09:18:05.880926+00:00', 'empresa_id': 1, ...}, 'message': 'Movimentacao registrada com sucesso.', 'success': True}
+E   assert 201 == 400
+E    +  where 201 = <WrapperTestResponse streamed [201 CREATED]>.status_code
+_ test_http_identifiers_never_select_a_different_record[True-role_permission] __
+tests/test_sprint07_audit.py:57: in test_http_identifiers_never_select_a_different_record
+    assert response.status_code == 400, response.json
+E   AssertionError: {'data': {'ativo': True, 'codigo': 'auditado', 'descricao': None, 'id': 5, ...}, 'success': True}
+E   assert 201 == 400
+E    +  where 201 = <WrapperTestResponse streamed [201 CREATED]>.status_code
+_ test_http_identifiers_never_select_a_different_record[True-platform_company] _
+tests/test_sprint07_audit.py:57: in test_http_identifiers_never_select_a_different_record
+    assert response.status_code == 400, response.json
+E   AssertionError: {'data': {'ativo': True, 'cpf': '99988877766', 'empresa_nome': 'Empresa 1-1', 'id': 3, ...}, 'success': True}
+E   assert 201 == 400
+E    +  where 201 = <WrapperTestResponse streamed [201 CREATED]>.status_code
+__ test_http_identifiers_never_select_a_different_record[1.5-product_company] __
+tests/test_sprint07_audit.py:57: in test_http_identifiers_never_select_a_different_record
+    assert response.status_code == 400, response.json
+E   AssertionError: {'data': {'ativo': True, 'categoria_id': 1, 'categoria_nome': 'Categoria auditada', 'codigo_barras': '2000010000012', ...}, 'success': True}
+E   assert 201 == 400
+E    +  where 201 = <WrapperTestResponse streamed [201 CREATED]>.status_code
+_ test_http_identifiers_never_select_a_different_record[1.5-product_category] __
+tests/test_sprint07_audit.py:57: in test_http_identifiers_never_select_a_different_record
+    assert response.status_code == 400, response.json
+E   AssertionError: {'data': {'ativo': True, 'categoria_id': 1, 'categoria_nome': 'Categoria auditada', 'codigo_barras': '2000010000012', ...}, 'success': True}
+E   assert 201 == 400
+E    +  where 201 = <WrapperTestResponse streamed [201 CREATED]>.status_code
+_ test_http_identifiers_never_select_a_different_record[1.5-employee_company] __
+tests/test_sprint07_audit.py:57: in test_http_identifiers_never_select_a_different_record
+    assert response.status_code == 400, response.json
+E   AssertionError: {'data': {'ativo': True, 'cpf': '99988877766', 'empresa_id': 1, 'empresa_nome': 'Empresa 1-1', ...}, 'message': 'Funcionario cadastrado com sucesso.', 'success': True}
+E   assert 201 == 400
+E    +  where 201 = <WrapperTestResponse streamed [201 CREATED]>.status_code
+___ test_http_identifiers_never_select_a_different_record[1.5-employee_role] ___
+tests/test_sprint07_audit.py:57: in test_http_identifiers_never_select_a_different_record
+    assert response.status_code == 400, response.json
+E   AssertionError: {'data': {'ativo': True, 'cpf': '99988877766', 'empresa_id': 1, 'empresa_nome': 'Empresa 1-1', ...}, 'message': 'Funcionario cadastrado com sucesso.', 'success': True}
+E   assert 201 == 400
+E    +  where 201 = <WrapperTestResponse streamed [201 CREATED]>.status_code
+_______ test_http_identifiers_never_select_a_different_record[1.5-stock] _______
+tests/test_sprint07_audit.py:57: in test_http_identifiers_never_select_a_different_record
+    assert response.status_code == 400, response.json
+E   AssertionError: {'data': {'cancelado_em': None, 'cancelado_por_nome': None, 'data_movimento': '2026-09-07T09:18:30.466065+00:00', 'empresa_id': 1, ...}, 'message': 'Movimentacao registrada com sucesso.', 'success': True}
+E   assert 201 == 400
+E    +  where 201 = <WrapperTestResponse streamed [201 CREATED]>.status_code
+__ test_http_identifiers_never_select_a_different_record[1.5-role_permission] __
+tests/test_sprint07_audit.py:57: in test_http_identifiers_never_select_a_different_record
+    assert response.status_code == 400, response.json
+E   AssertionError: {'data': {'ativo': True, 'codigo': 'auditado', 'descricao': None, 'id': 5, ...}, 'success': True}
+E   assert 201 == 400
+E    +  where 201 = <WrapperTestResponse streamed [201 CREATED]>.status_code
+_ test_http_identifiers_never_select_a_different_record[1.5-platform_company] __
+tests/test_sprint07_audit.py:57: in test_http_identifiers_never_select_a_different_record
+    assert response.status_code == 400, response.json
+E   AssertionError: {'data': {'ativo': True, 'cpf': '99988877766', 'empresa_nome': 'Empresa 1-1', 'id': 3, ...}, 'success': True}
+E   assert 201 == 400
+E    +  where 201 = <WrapperTestResponse streamed [201 CREATED]>.status_code
+____________ test_cashback_remains_spendable_until_brazil_midnight _____________
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   psycopg2.errors.CheckViolation: Data da venda fora do mes corrente
+E   CONTEXT:  PL/pgSQL function ocean_quota() line 18 at RAISE
+
+The above exception was the direct cause of the following exception:
+tests/test_sprint07_audit.py:101: in test_cashback_remains_spendable_until_brazil_midnight
+    source = PdvService.criar_venda({**sale_payload(product_id), "cliente_id": customer_id}, 1, scope(), 1)
+app/services/transaction_service.py:49: in execute
+    result = function(*args, **kwargs)
+app/services/idempotency_service.py:37: in execute
+    result = function(*args, **kwargs)
+app/services/pdv_service.py:241: in criar_venda
+    PdvRepository.flush()
+app/repositorys/pdv_repository.py:275: in flush
+    db.session.flush()
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/scoping.py:923: in flush
+    return self._proxied.flush(objects=objects)
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/session.py:4353: in flush
+    self._flush(objects)
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/session.py:4488: in _flush
+    with util.safe_reraise():
+/usr/local/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py:122: in __exit__
+    raise exc_value.with_traceback(exc_tb)
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/session.py:4449: in _flush
+    flush_context.execute()
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/unitofwork.py:465: in execute
+    rec.execute(self)
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/unitofwork.py:641: in execute
+    util.preloaded.orm_persistence.save_obj(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/persistence.py:94: in save_obj
+    _emit_insert_statements(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/persistence.py:1234: in _emit_insert_statements
+    result = connection.execute(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1421: in execute
+    return meth(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/sql/elements.py:526: in _execute_on_connection
+    return connection._execute_clauseelement(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1643: in _execute_clauseelement
+    ret = self._execute_context(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1848: in _execute_context
+    return self._exec_single_context(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1988: in _exec_single_context
+    self._handle_dbapi_exception(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2365: in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   sqlalchemy.exc.IntegrityError: (psycopg2.errors.CheckViolation) Data da venda fora do mes corrente
+E   CONTEXT:  PL/pgSQL function ocean_quota() line 18 at RAISE
+E   
+E   [SQL: INSERT INTO vendas (cashback_processado, cashback_payload, empresa_id, funcionario_id, cliente_id, tipo_operacao_id, cupom_id, cancelado_por_funcionario_id, numero_unico, status, modalidade_preco, subtotal, desconto, cashback_ativado, cashback_utilizado, cashback_gerado, cashback_percentual_aplicado, valor_cancelado, total, cancelado_em, data_venda, observacao, criado_em, atualizado_em, tenant_id) VALUES (%(cashback_processado)s, %(cashback_payload)s, %(empresa_id)s, %(funcionario_id)s, %(cliente_id)s, %(tipo_operacao_id)s, %(cupom_id)s, %(cancelado_por_funcionario_id)s, %(numero_unico)s, %(status)s, %(modalidade_preco)s, %(subtotal)s, %(desconto)s, %(cashback_ativado)s, %(cashback_utilizado)s, %(cashback_gerado)s, %(cashback_percentual_aplicado)s, %(valor_cancelado)s, %(total)s, %(cancelado_em)s, %(data_venda)s, %(observacao)s, %(criado_em)s, %(atualizado_em)s, %(tenant_id)s) RETURNING vendas.id]
+E   [parameters: {'cashback_processado': False, 'cashback_payload': None, 'empresa_id': 1, 'funcionario_id': 1, 'cliente_id': None, 'tipo_operacao_id': 1, 'cupom_id': None, 'cancelado_por_funcionario_id': None, 'numero_unico': 'VEN-1-20260901010000-FAB515', 'status': 'FINALIZADA', 'modalidade_preco': 'VAREJO', 'subtotal': Decimal('10.00'), 'desconto': Decimal('0.00'), 'cashback_ativado': True, 'cashback_utilizado': Decimal('0.00'), 'cashback_gerado': Decimal('0.00'), 'cashback_percentual_aplicado': 0, 'valor_cancelado': 0, 'total': Decimal('10.00'), 'cancelado_em': None, 'data_venda': datetime.datetime(2026, 9, 1, 1, 0), 'observacao': None, 'criado_em': datetime.datetime(2026, 9, 1, 1, 0), 'atualizado_em': datetime.datetime(2026, 9, 1, 1, 0), 'tenant_id': 1}]
+E   (Background on this error at: https://sqlalche.me/e/20/gkpj)
+__________ test_coupon_import_and_selection_share_brazil_expiry_date ___________
+tests/test_sprint07_audit.py:126: in test_coupon_import_and_selection_share_brazil_expiry_date
+    assert result["confirmado"] and result["sucesso"] == 1, result
+E   AssertionError: {'atualizadas': 0, 'confirmado': False, 'criadas': 0, 'entidade': 'cupons', ...}
+E   assert (False)
+___________ test_reports_cash_closure_and_series_use_same_brazil_day ___________
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   psycopg2.errors.CheckViolation: Data da venda fora do mes corrente
+E   CONTEXT:  PL/pgSQL function ocean_quota() line 18 at RAISE
+
+The above exception was the direct cause of the following exception:
+tests/test_sprint07_audit.py:146: in test_reports_cash_closure_and_series_use_same_brazil_day
+    sales.append(PdvService.criar_venda(sale_payload(product_id, key=f"boundary-{index}"), 1, scope(), 1))
+app/services/transaction_service.py:49: in execute
+    result = function(*args, **kwargs)
+app/services/idempotency_service.py:37: in execute
+    result = function(*args, **kwargs)
+app/services/pdv_service.py:241: in criar_venda
+    PdvRepository.flush()
+app/repositorys/pdv_repository.py:275: in flush
+    db.session.flush()
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/scoping.py:923: in flush
+    return self._proxied.flush(objects=objects)
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/session.py:4353: in flush
+    self._flush(objects)
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/session.py:4488: in _flush
+    with util.safe_reraise():
+/usr/local/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py:122: in __exit__
+    raise exc_value.with_traceback(exc_tb)
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/session.py:4449: in _flush
+    flush_context.execute()
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/unitofwork.py:465: in execute
+    rec.execute(self)
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/unitofwork.py:641: in execute
+    util.preloaded.orm_persistence.save_obj(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/persistence.py:94: in save_obj
+    _emit_insert_statements(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/persistence.py:1234: in _emit_insert_statements
+    result = connection.execute(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1421: in execute
+    return meth(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/sql/elements.py:526: in _execute_on_connection
+    return connection._execute_clauseelement(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1643: in _execute_clauseelement
+    ret = self._execute_context(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1848: in _execute_context
+    return self._exec_single_context(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1988: in _exec_single_context
+    self._handle_dbapi_exception(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2365: in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   sqlalchemy.exc.IntegrityError: (psycopg2.errors.CheckViolation) Data da venda fora do mes corrente
+E   CONTEXT:  PL/pgSQL function ocean_quota() line 18 at RAISE
+E   
+E   [SQL: INSERT INTO vendas (cashback_processado, cashback_payload, empresa_id, funcionario_id, cliente_id, tipo_operacao_id, cupom_id, cancelado_por_funcionario_id, numero_unico, status, modalidade_preco, subtotal, desconto, cashback_ativado, cashback_utilizado, cashback_gerado, cashback_percentual_aplicado, valor_cancelado, total, cancelado_em, data_venda, observacao, criado_em, atualizado_em, tenant_id) VALUES (%(cashback_processado)s, %(cashback_payload)s, %(empresa_id)s, %(funcionario_id)s, %(cliente_id)s, %(tipo_operacao_id)s, %(cupom_id)s, %(cancelado_por_funcionario_id)s, %(numero_unico)s, %(status)s, %(modalidade_preco)s, %(subtotal)s, %(desconto)s, %(cashback_ativado)s, %(cashback_utilizado)s, %(cashback_gerado)s, %(cashback_percentual_aplicado)s, %(valor_cancelado)s, %(total)s, %(cancelado_em)s, %(data_venda)s, %(observacao)s, %(criado_em)s, %(atualizado_em)s, %(tenant_id)s) RETURNING vendas.id]
+E   [parameters: {'cashback_processado': False, 'cashback_payload': None, 'empresa_id': 1, 'funcionario_id': 1, 'cliente_id': None, 'tipo_operacao_id': 1, 'cupom_id': None, 'cancelado_por_funcionario_id': None, 'numero_unico': 'VEN-1-20260831025959-A00444', 'status': 'FINALIZADA', 'modalidade_preco': 'VAREJO', 'subtotal': Decimal('10.00'), 'desconto': Decimal('0.00'), 'cashback_ativado': True, 'cashback_utilizado': Decimal('0.00'), 'cashback_gerado': Decimal('0.00'), 'cashback_percentual_aplicado': 0, 'valor_cancelado': 0, 'total': Decimal('10.00'), 'cancelado_em': None, 'data_venda': datetime.datetime(2026, 8, 31, 2, 59, 59), 'observacao': None, 'criado_em': datetime.datetime(2026, 8, 31, 2, 59, 59), 'atualizado_em': datetime.datetime(2026, 8, 31, 2, 59, 59), 'tenant_id': 1}]
+E   (Background on this error at: https://sqlalche.me/e/20/gkpj)
+_____________ test_stock_default_period_uses_brazil_today[semana] ______________
+tests/test_sprint07_audit.py:170: in test_stock_default_period_uses_brazil_today
+    assert result["periodo"]["data_fim"] == "2026-08-31"
+E   AssertionError: assert '2026-09-01' == '2026-08-31'
+E     
+E     - 2026-08-31
+E     ?       ^ ^
+E     + 2026-09-01
+E     ?       ^ ^
+_______________ test_stock_default_period_uses_brazil_today[mes] _______________
+tests/test_sprint07_audit.py:170: in test_stock_default_period_uses_brazil_today
+    assert result["periodo"]["data_fim"] == "2026-08-31"
+E   AssertionError: assert '2026-09-01' == '2026-08-31'
+E     
+E     - 2026-08-31
+E     ?       ^ ^
+E     + 2026-09-01
+E     ?       ^ ^
+_____________ test_stock_default_period_uses_brazil_today[periodo] _____________
+tests/test_sprint07_audit.py:170: in test_stock_default_period_uses_brazil_today
+    assert result["periodo"]["data_fim"] == "2026-08-31"
+E   AssertionError: assert '2026-09-01' == '2026-08-31'
+E     
+E     - 2026-08-31
+E     ?       ^ ^
+E     + 2026-09-01
+E     ?       ^ ^
+_________ test_partial_returns_reduce_rankings_revenue_cost_and_demand _________
+tests/test_sprint07_audit.py:185: in test_partial_returns_reduce_rankings_revenue_cost_and_demand
+    assert dashboard["kpis"]["faturamento"] == dashboard["kpis"]["saldo"] == "18.00"
+E   AssertionError: assert '27.00' == '18.00'
+E     
+E     - 18.00
+E     + 27.00
+____ test_returned_item_disappears_from_rankings_while_sale_remains_active _____
+tests/test_sprint07_audit.py:218: in test_returned_item_disappears_from_rankings_while_sale_remains_active
+    assert [item["produto_id"] for item in report["itens"]] == [other_id]
+E   assert [1, 2] == [2]
+E     
+E     At index 0 diff: 1 != 2
+E     Left contains one more item: 2
+E     Use -v to get more diff
+______ test_dashboard_partial_return_with_cashback_matches_reconciliation ______
+tests/test_sprint07_audit.py:229: in test_dashboard_partial_return_with_cashback_matches_reconciliation
+    sale = PdvService.criar_venda(payload, 1, scope(), 1)
+app/services/transaction_service.py:49: in execute
+    result = function(*args, **kwargs)
+app/services/idempotency_service.py:37: in execute
+    result = function(*args, **kwargs)
+app/services/pdv_service.py:216: in criar_venda
+    pagamentos_compilados = PdvService._validar_pagamentos(
+app/services/pdv_service.py:696: in _validar_pagamentos
+    raise ValueError("A soma dos pagamentos deve ser igual ao total da venda.")
+E   ValueError: A soma dos pagamentos deve ser igual ao total da venda.
+--------------- generated xml file: /tmp/sprint07-audit-red.xml ----------------
+=========================== short test summary info ============================
+FAILED tests/test_sprint07_audit.py::test_http_identifiers_never_select_a_different_record[True-product_company]
+FAILED tests/test_sprint07_audit.py::test_http_identifiers_never_select_a_different_record[True-product_category]
+FAILED tests/test_sprint07_audit.py::test_http_identifiers_never_select_a_different_record[True-employee_company]
+FAILED tests/test_sprint07_audit.py::test_http_identifiers_never_select_a_different_record[True-employee_role]
+FAILED tests/test_sprint07_audit.py::test_http_identifiers_never_select_a_different_record[True-stock]
+FAILED tests/test_sprint07_audit.py::test_http_identifiers_never_select_a_different_record[True-role_permission]
+FAILED tests/test_sprint07_audit.py::test_http_identifiers_never_select_a_different_record[True-platform_company]
+FAILED tests/test_sprint07_audit.py::test_http_identifiers_never_select_a_different_record[1.5-product_company]
+FAILED tests/test_sprint07_audit.py::test_http_identifiers_never_select_a_different_record[1.5-product_category]
+FAILED tests/test_sprint07_audit.py::test_http_identifiers_never_select_a_different_record[1.5-employee_company]
+FAILED tests/test_sprint07_audit.py::test_http_identifiers_never_select_a_different_record[1.5-employee_role]
+FAILED tests/test_sprint07_audit.py::test_http_identifiers_never_select_a_different_record[1.5-stock]
+FAILED tests/test_sprint07_audit.py::test_http_identifiers_never_select_a_different_record[1.5-role_permission]
+FAILED tests/test_sprint07_audit.py::test_http_identifiers_never_select_a_different_record[1.5-platform_company]
+FAILED tests/test_sprint07_audit.py::test_cashback_remains_spendable_until_brazil_midnight
+FAILED tests/test_sprint07_audit.py::test_coupon_import_and_selection_share_brazil_expiry_date
+FAILED tests/test_sprint07_audit.py::test_reports_cash_closure_and_series_use_same_brazil_day
+FAILED tests/test_sprint07_audit.py::test_stock_default_period_uses_brazil_today[semana]
+FAILED tests/test_sprint07_audit.py::test_stock_default_period_uses_brazil_today[mes]
+FAILED tests/test_sprint07_audit.py::test_stock_default_period_uses_brazil_today[periodo]
+FAILED tests/test_sprint07_audit.py::test_partial_returns_reduce_rankings_revenue_cost_and_demand
+FAILED tests/test_sprint07_audit.py::test_returned_item_disappears_from_rankings_while_sale_remains_active
+FAILED tests/test_sprint07_audit.py::test_dashboard_partial_return_with_cashback_matches_reconciliation
+23 failed, 1 passed in 128.43s (0:02:08)

@@ -1,0 +1,3697 @@
+{
+  "route_count": 165,
+  "files": [
+    {
+      "path": "app/__init__.py",
+      "sha256": "3be8f8925e39545b3bb6facf465d52d6182ec324887d33be70906eebd0cf2f10",
+      "definitions": [
+        "register_extensions",
+        "register_context_processors",
+        "register_commands",
+        "configure_logging",
+        "create_app",
+        "_to_theme_skin",
+        "_build_tenant_theme_config",
+        "_get_permission_codes",
+        "_build_navigation",
+        "_build_navigation_groups",
+        "_build_template_flags",
+        "inject_user",
+        "seed_command"
+      ]
+    },
+    {
+      "path": "app/audit/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "definitions": []
+    },
+    {
+      "path": "app/cli/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "definitions": []
+    },
+    {
+      "path": "app/cli/alertas.py",
+      "sha256": "6803c83d7748c7f45ff96a18bac56694ef0e0ed5bc58f0217c68daa254e2c360",
+      "definitions": [
+        "register_alert_commands",
+        "processar_alertas"
+      ]
+    },
+    {
+      "path": "app/cli/ciclos.py",
+      "sha256": "a67befc680c3fcc62b92d89960cab99389593a17e717af223a9a81d12b4e13e8",
+      "definitions": [
+        "register_cycle_commands",
+        "processar"
+      ]
+    },
+    {
+      "path": "app/cli/security.py",
+      "sha256": "d238e5c5452d7a829825f2735bd2da6d2d45f6a1fed103c39a2952fbf211fd9b",
+      "definitions": [
+        "register_security_commands",
+        "rotate_fields",
+        "reset_platform_password",
+        "cleanup_auth_state"
+      ]
+    },
+    {
+      "path": "app/config.py",
+      "sha256": "a65346be559632e045a1eff56247b669a78e808d19f88c39e321c886b92bf697",
+      "definitions": [
+        "Config",
+        "DevelopmentConfig",
+        "TestingConfig",
+        "ProductionConfig",
+        "get_config",
+        "validate_runtime",
+        "validate_runtime",
+        "validate_runtime"
+      ]
+    },
+    {
+      "path": "app/controllers/adiantamento_controller.py",
+      "sha256": "f98dbccb5b6cb21dedfb09c257422bf3d8fb11deb75fcaf970e95b2b7f2abcd9",
+      "definitions": [
+        "pagina",
+        "auxiliares",
+        "listar",
+        "resumo",
+        "criar"
+      ]
+    },
+    {
+      "path": "app/controllers/auditoria_controller.py",
+      "sha256": "aeb2ef3bc8d17d8012204b904fc636bbbe1f556896a7e91af26b40d8e9d4b526",
+      "definitions": [
+        "_positive_integer_argument",
+        "pagina",
+        "listar"
+      ]
+    },
+    {
+      "path": "app/controllers/auth_controller.py",
+      "sha256": "376785a184ee6bc123e87cd3bd5874e8dcd9ff47cb944af5e493a59e6091bb33",
+      "definitions": [
+        "_rate_limit",
+        "_valid_login_csrf",
+        "_audit",
+        "login",
+        "logout",
+        "alterar_senha",
+        "emitir_redefinicao",
+        "redefinir_senha",
+        "_password_success"
+      ]
+    },
+    {
+      "path": "app/controllers/boleto_controller.py",
+      "sha256": "a848e70850dbb195efc0295a3d39aa1e62b9db54606f6b887b3cf9f3d0a5947f",
+      "definitions": [
+        "pagina",
+        "listar_bancos_emissores",
+        "listar_configuracoes_parcelamento",
+        "listar_regras_juros_multa",
+        "listar_boletos",
+        "criar_boleto",
+        "buscar_boleto",
+        "baixar_boleto",
+        "obter_configuracao_asaas",
+        "atualizar_configuracao_asaas",
+        "registrar_boleto",
+        "consultar_status_boleto",
+        "processar_retorno_boleto",
+        "webhook_asaas",
+        "recalcular_juros",
+        "criar_banco_emissor",
+        "criar_configuracao_parcelamento",
+        "criar_regra_juros_multa"
+      ]
+    },
+    {
+      "path": "app/controllers/categoria_controller.py",
+      "sha256": "14c20e4cf242158cc799bd04e827762291b48074533ab9c4f6518ba903161ce4",
+      "definitions": [
+        "pagina",
+        "listar",
+        "criar",
+        "atualizar",
+        "deletar"
+      ]
+    },
+    {
+      "path": "app/controllers/ciclos_controller.py",
+      "sha256": "12fc9ee6bc0439607f3c790252e01c74e57a06e3913275829fb7258c5b5ffe4d",
+      "definitions": [
+        "context",
+        "respond",
+        "pagina",
+        "estornar",
+        "ajustar",
+        "conciliar",
+        "solicitar",
+        "transicionar",
+        "consentir",
+        "exportar",
+        "anonimizar",
+        "processar",
+        "expirar",
+        "operation",
+        "operation"
+      ]
+    },
+    {
+      "path": "app/controllers/cliente_controller.py",
+      "sha256": "9fbd3d7101b45793e680ccd4614642842bfa86255b01752ba104a43ac42a44f3",
+      "definitions": [
+        "pagina",
+        "auxiliares",
+        "listar",
+        "criar",
+        "atualizar",
+        "deletar",
+        "obter_carteira",
+        "historico_vendas",
+        "listar_mensagens",
+        "enviar_mensagem",
+        "enviar_mensagem_coletiva",
+        "listar_configuracoes",
+        "obter_configuracao",
+        "atualizar_configuracao",
+        "testar_configuracao"
+      ]
+    },
+    {
+      "path": "app/controllers/cupom_controller.py",
+      "sha256": "0b72aa49717d821c39c394c5041ed3b737469a0351b0bda0eda29affeea3b08e",
+      "definitions": [
+        "pagina",
+        "listar",
+        "criar",
+        "atualizar",
+        "deletar"
+      ]
+    },
+    {
+      "path": "app/controllers/estoque_controller.py",
+      "sha256": "0ae2a1470e5a47d045e87de21108a5a1acfbcdfe6a02166927617943a2ede3cf",
+      "definitions": [
+        "historico_alertas",
+        "processar_alertas",
+        "retentar_alerta",
+        "_serializar_movimento",
+        "pagina",
+        "pagina_alertas",
+        "pagina_indicadores",
+        "listar_saldos",
+        "listar_movimentos",
+        "auxiliares",
+        "listar_notificacoes",
+        "popup_notificacoes",
+        "obter_configuracao_alerta",
+        "atualizar_configuracao_alerta",
+        "listar_produtos_mais_vendidos",
+        "criar_movimento_manual",
+        "cancelar_movimento"
+      ]
+    },
+    {
+      "path": "app/controllers/financeiro_controller.py",
+      "sha256": "d44cb84325d259104c671bcb9c52d090f40cd78b90a24c2c7838611a69b82f29",
+      "definitions": [
+        "pagina",
+        "pagina_lancamentos",
+        "pagina_relatorios",
+        "auxiliares",
+        "dashboard",
+        "listar_lancamentos",
+        "criar_lancamento",
+        "listar_fechamentos",
+        "criar_fechamento",
+        "relatorio_fluxo_caixa_impressao",
+        "relatorio_adiantamentos_impressao",
+        "relatorio_produtos_mais_vendidos_impressao"
+      ]
+    },
+    {
+      "path": "app/controllers/fiscal_controller.py",
+      "sha256": "92bf027bebd1678491aae3be4836c984822f8a6c5382b56f9158442c0dcac526",
+      "definitions": [
+        "pagina",
+        "auxiliares",
+        "obter_configuracao",
+        "atualizar_configuracao",
+        "listar_notas",
+        "prevalidar_venda",
+        "emitir_nota_venda",
+        "baixar_xml_nota",
+        "consultar_nota",
+        "cancelar_nota",
+        "baixar_danfe_nota"
+      ]
+    },
+    {
+      "path": "app/controllers/funcionario_controller.py",
+      "sha256": "ff53eeecd1bc191e0f8096c5cb12d99a5b0764b01e8a5d8ec46face4be1fd081",
+      "definitions": [
+        "pagina",
+        "listar_empresas_disponiveis",
+        "listar_roles_disponiveis",
+        "listar",
+        "criar",
+        "atualizar",
+        "deletar"
+      ]
+    },
+    {
+      "path": "app/controllers/import_export_controller.py",
+      "sha256": "e7f5777ed048fd6e80d271771dbd2cc3eca04ec7746741dfc7ea18a63805eafb",
+      "definitions": [
+        "_resolver_contexto",
+        "pagina",
+        "contexto",
+        "baixar_template",
+        "exportar",
+        "importar"
+      ]
+    },
+    {
+      "path": "app/controllers/main_controller.py",
+      "sha256": "ef8f7c4184655ab08972bace0b7de854ee37eabaad2813d37975cdb99750cfd2",
+      "definitions": [
+        "_obter_diretorio_favicon",
+        "_servir_arquivo_favicon",
+        "_redirecionar_platform_owner",
+        "_obter_escopo_tenant",
+        "index",
+        "favicon",
+        "site_webmanifest",
+        "browserconfig",
+        "home",
+        "settings_home",
+        "pdv_home",
+        "estoque_home",
+        "financeiro_home"
+      ]
+    },
+    {
+      "path": "app/controllers/pdv_controller.py",
+      "sha256": "28c77c70eb277688d541ce5360b3205a02061a3c4895ddb5919cf9a71cdc1896",
+      "definitions": [
+        "pagina",
+        "auxiliares",
+        "listar_produtos",
+        "buscar_produto_por_codigo_barras",
+        "listar_vendas",
+        "criar_venda",
+        "cancelar_venda",
+        "cancelar_item_venda",
+        "comprovante_venda"
+      ]
+    },
+    {
+      "path": "app/controllers/permission_controller.py",
+      "sha256": "d20b63bdaef478a1d9ba274908fd44378ee6ce0470cd9a3dcd89ab6aedb000eb",
+      "definitions": [
+        "pagina",
+        "listar",
+        "criar",
+        "atualizar",
+        "deletar"
+      ]
+    },
+    {
+      "path": "app/controllers/platform_controller.py",
+      "sha256": "397ef0c2a9aa0c9997a7913898958c17279d344e981287b56bdfdd70ba291faa",
+      "definitions": [
+        "home",
+        "listar_tenants",
+        "listar_planos",
+        "criar_tenant",
+        "criar_empresa",
+        "atualizar_visual_empresa",
+        "criar_admin",
+        "atualizar_assinatura"
+      ]
+    },
+    {
+      "path": "app/controllers/produto_controller.py",
+      "sha256": "3691d3528c8ac4c823d672fe0a087b151e5f301fe153b2d0fcaa8d9e467bedb9",
+      "definitions": [
+        "pagina",
+        "listar",
+        "auxiliares",
+        "criar",
+        "atualizar",
+        "deletar"
+      ]
+    },
+    {
+      "path": "app/controllers/role_controller.py",
+      "sha256": "7b4bd0e0311145bbbec7d2b81904a0f0cbfb4ce2f37abc9c93c7d6b99491bac6",
+      "definitions": [
+        "pagina",
+        "listar",
+        "listar_permissions_disponiveis",
+        "criar",
+        "atualizar",
+        "deletar",
+        "_serializar_permissions"
+      ]
+    },
+    {
+      "path": "app/errors/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "definitions": []
+    },
+    {
+      "path": "app/extensions.py",
+      "sha256": "a116c428639780002dd61b87e3e656eee26aabfbb3591ab45aee83334a0e1759",
+      "definitions": []
+    },
+    {
+      "path": "app/health.py",
+      "sha256": "2e6b4c2070adc7a79de2befb1c0f3d1f84b1f472b85a4ee44377633aa291ba10",
+      "definitions": [
+        "healthcheck",
+        "readiness"
+      ]
+    },
+    {
+      "path": "app/models/__init__.py",
+      "sha256": "53553ff769885c0d5ed1fb9d99772564b573312b4a3c7dc39008cdbf1dfe2e56",
+      "definitions": []
+    },
+    {
+      "path": "app/models/db.py",
+      "sha256": "1b05f677ba6d34675daf86f196bd92cf13667a9c7df8763aa40b55dfb16157e1",
+      "definitions": [
+        "TipoEmpresa",
+        "ModoVisualEmpresa",
+        "TipoFinanceiro",
+        "TipoCategoriaFinanceira",
+        "TipoMovimentoEstoque",
+        "MotivoMovimentoEstoque",
+        "TipoOperacaoEnum",
+        "TipoDesconto",
+        "ModalidadePrecoVenda",
+        "StatusVenda",
+        "TipoAdiantamentoFuncionario",
+        "TipoPessoa",
+        "CanalMensagemCliente",
+        "AmbienteFiscal",
+        "RegimeTributarioFiscal",
+        "StatusMensagemCliente",
+        "StatusNotaFiscal",
+        "StatusOficialNotaFiscal",
+        "LayoutArquivoBoleto",
+        "AmbienteBoleto",
+        "RegraDistribuicaoParcelamento",
+        "TipoMultaBoleto",
+        "TipoJurosBoleto",
+        "BaseCalculoJurosMulta",
+        "StatusBoleto",
+        "StatusBancarioBoleto",
+        "TipoEventoBoleto",
+        "TipoMovimentoCarteiraCliente",
+        "ModeloBase",
+        "Tenant",
+        "AuditLog",
+        "PlatformOwner",
+        "Empresa",
+        "Role",
+        "Permission",
+        "RolePermission",
+        "Funcionario",
+        "FuncionarioEmpresa",
+        "Cliente",
+        "CarteiraCliente",
+        "CreditoCashbackCliente",
+        "MovimentoCarteiraCliente",
+        "OperacaoIdempotente",
+        "CategoriaProduto",
+        "Produto",
+        "ProdutoEmpresa",
+        "FormaPagamento",
+        "CategoriaFinanceira",
+        "TipoOperacao",
+        "Cupom",
+        "AdiantamentoFuncionario",
+        "MovimentoEstoque",
+        "Venda",
+        "ItemVenda",
+        "PagamentoVenda",
+        "LancamentoFinanceiro",
+        "BancoEmissor",
+        "ConfiguracaoParcelamento",
+        "RegraJurosMulta",
+        "ConfiguracaoAsaasEmpresa",
+        "Boleto",
+        "ParcelaBoleto",
+        "EventoBoleto",
+        "ArquivoBoleto",
+        "RetornoBancarioBoleto",
+        "FechamentoCaixa",
+        "ConfiguracaoClienteEmpresa",
+        "ConfiguracaoFiscalEmpresa",
+        "NotaFiscalVenda",
+        "EventoFiscalNota",
+        "MensagemCliente",
+        "ConfiguracaoNotificacaoEstoque",
+        "EntregaAlerta",
+        "validar_ncm"
+      ]
+    },
+    {
+      "path": "app/models/security.py",
+      "sha256": "d69408648f99964e3dff6f195f7beeaa4eb0483aeac5c1c6bf2a0c8200c2133a",
+      "definitions": [
+        "LoginAttempt",
+        "RevokedToken",
+        "PasswordReset"
+      ]
+    },
+    {
+      "path": "app/operations.py",
+      "sha256": "4ac66b70148851655f7e43ad719d0ebb5a1363da0ae2a381093e29a873437612",
+      "definitions": [
+        "OperationalFormatter",
+        "storage_probe",
+        "register_operations",
+        "format",
+        "begin_request",
+        "finish_request",
+        "metrics"
+      ]
+    },
+    {
+      "path": "app/repositorys/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "definitions": []
+    },
+    {
+      "path": "app/repositorys/adiantamento_repository.py",
+      "sha256": "e1ec7d7ff68d7c43f89d64d48ad6a71f9a9c820b9d9b6e1dfc919c48d5c6047c",
+      "definitions": [
+        "AdiantamentoRepository",
+        "listar_empresas",
+        "listar_funcionarios_vinculados",
+        "buscar_vinculo_funcionario",
+        "listar_produtos_empresa",
+        "buscar_produto_empresa",
+        "listar_formas_pagamento",
+        "buscar_forma_pagamento_por_id",
+        "buscar_forma_pagamento_por_nome",
+        "buscar_categoria_por_nome",
+        "listar_adiantamentos",
+        "buscar_por_id",
+        "adicionar",
+        "flush",
+        "salvar",
+        "rollback"
+      ]
+    },
+    {
+      "path": "app/repositorys/boleto_repository.py",
+      "sha256": "c4103cf4f53b9681ad08e475a0affd09798f67d7746d4b4582ce10873c64d2f0",
+      "definitions": [
+        "BoletoRepository",
+        "listar_bancos_emissores",
+        "buscar_banco_emissor",
+        "buscar_banco_padrao",
+        "listar_configuracoes_parcelamento",
+        "buscar_configuracao_parcelamento",
+        "listar_regras_juros_multa",
+        "buscar_regra_vigente_atual",
+        "buscar_regra_vigente_em",
+        "listar_boletos",
+        "buscar_boleto",
+        "existe_numero_boleto",
+        "listar_boletos_vencidos",
+        "listar_parcelas_vencidas",
+        "buscar_lancamento_boleto",
+        "buscar_evento_recalculo_na_data",
+        "adicionar",
+        "flush",
+        "salvar",
+        "rollback"
+      ]
+    },
+    {
+      "path": "app/repositorys/categoria_repository.py",
+      "sha256": "f316fa7f0d4f88dd4a58e64c40e3b78470e9df2c26abafbc4b2661e28fa6805b",
+      "definitions": [
+        "CategoriaRepository",
+        "listar_por_tenant",
+        "buscar_por_id",
+        "criar",
+        "atualizar",
+        "deletar"
+      ]
+    },
+    {
+      "path": "app/repositorys/cliente_repository.py",
+      "sha256": "004949025db15f44cc5eb554bced2f723e2547f068349a2fea0a6865a2240a93",
+      "definitions": [
+        "_digits_only_expression",
+        "ClienteRepository",
+        "listar_empresas",
+        "buscar_empresa_por_id",
+        "listar_clientes",
+        "listar_clientes_para_pdv",
+        "listar_clientes_para_mensagem",
+        "buscar_cliente_por_id",
+        "buscar_cliente_por_documento",
+        "obter_carteira_por_cliente",
+        "listar_creditos_disponiveis",
+        "listar_creditos_vencidos",
+        "buscar_credito_por_venda_origem",
+        "listar_movimentos_carteira",
+        "listar_movimentos_carteira_por_venda",
+        "listar_vendas_cliente",
+        "listar_configuracoes",
+        "buscar_configuracao_empresa",
+        "listar_mensagens_cliente",
+        "listar_vendas_por_cliente_ids",
+        "listar_movimentos_estoque_reversiveis",
+        "adicionar",
+        "flush",
+        "salvar",
+        "rollback"
+      ]
+    },
+    {
+      "path": "app/repositorys/cupom_repository.py",
+      "sha256": "79eccdecc86d2a5514384c887a19bff381fd5f410f5698ef082bd45691dcb643",
+      "definitions": [
+        "CupomRepository",
+        "listar",
+        "buscar_por_id",
+        "buscar_por_codigo",
+        "adicionar",
+        "deletar",
+        "salvar",
+        "rollback"
+      ]
+    },
+    {
+      "path": "app/repositorys/estoque_repository.py",
+      "sha256": "58b5f2f235d1c7727cb4baeabf3e4ad47377a8e0a35b438b774cd1855b5e2638",
+      "definitions": [
+        "EstoqueRepository",
+        "listar_saldos",
+        "listar_movimentos",
+        "buscar_movimento_por_id",
+        "buscar_movimento_venda_por_item",
+        "listar_empresas",
+        "listar_produtos_empresa_disponiveis",
+        "buscar_produto_empresa_por_id",
+        "buscar_produto_empresa",
+        "obter_configuracao_notificacao",
+        "listar_produtos_mais_vendidos",
+        "adicionar",
+        "salvar",
+        "rollback"
+      ]
+    },
+    {
+      "path": "app/repositorys/financeiro_repository.py",
+      "sha256": "53540b23efc189454b2c5a46500f68091c08ced63939d2e1efb5ab6014788161",
+      "definitions": [
+        "_local_date_range_to_utc_naive",
+        "FinanceiroRepository",
+        "listar_empresas",
+        "listar_formas_pagamento",
+        "listar_categorias",
+        "buscar_categoria_por_id",
+        "buscar_categoria_por_nome",
+        "buscar_forma_pagamento_por_id",
+        "buscar_forma_pagamento_por_nome",
+        "listar_lancamentos",
+        "query_lancamentos",
+        "listar_fechamentos",
+        "buscar_fechamento_existente",
+        "query_vendas",
+        "listar_vendas",
+        "adicionar",
+        "flush",
+        "salvar",
+        "rollback"
+      ]
+    },
+    {
+      "path": "app/repositorys/fiscal_repository.py",
+      "sha256": "04711cade67abfcba37be0495ef5e06a73fede89c3a6771a7cd0a222fef5e580",
+      "definitions": [
+        "FiscalRepository",
+        "listar_empresas",
+        "buscar_empresa",
+        "buscar_configuracao_por_empresa",
+        "buscar_venda",
+        "buscar_produtos_empresa",
+        "buscar_nota_por_venda",
+        "buscar_nota_por_id",
+        "listar_notas",
+        "adicionar",
+        "flush",
+        "salvar",
+        "rollback"
+      ]
+    },
+    {
+      "path": "app/repositorys/funcionario_repository.py",
+      "sha256": "e22c04db34fb8aa03cc23c8c1014cd1e8a3d1205615a2e4a86106ad000600219",
+      "definitions": [
+        "_digits_only_expression",
+        "FuncionarioRepository",
+        "listar_por_tenant",
+        "listar_empresas_por_tenant",
+        "listar_roles_por_tenant",
+        "listar_ids_empresas_por_funcionario",
+        "buscar_funcionario_empresa_por_id",
+        "buscar_empresa_por_id",
+        "buscar_role_por_id",
+        "buscar_role_por_codigo",
+        "buscar_permission_por_codigo",
+        "buscar_cpf_duplicado",
+        "buscar_funcionario_duplicado",
+        "contar_vinculos_funcionario",
+        "busca_funcionario_por_id",
+        "busca_funcionario_por_usuario",
+        "adicionar",
+        "deletar",
+        "salvar",
+        "rollback"
+      ]
+    },
+    {
+      "path": "app/repositorys/import_export_repository.py",
+      "sha256": "0d5a303d38d58294752fda2dccd21de0187065a793e4beae556d5cb341925f66",
+      "definitions": [
+        "ImportExportRepository",
+        "listar_empresas",
+        "buscar_empresa_por_identificador",
+        "listar_categorias_produto",
+        "buscar_categoria_produto_por_nome",
+        "listar_roles",
+        "buscar_role_por_identificador",
+        "listar_produtos_empresa",
+        "buscar_produto_por_nome",
+        "buscar_produto_por_codigo_barras",
+        "buscar_produto_empresa",
+        "listar_funcionarios_empresa",
+        "buscar_funcionario_por_cpf",
+        "buscar_funcionario_por_usuario",
+        "buscar_funcionario_empresa",
+        "listar_cupons",
+        "buscar_cupom_por_codigo",
+        "listar_formas_pagamento",
+        "buscar_forma_pagamento_por_nome",
+        "listar_categorias_financeiras",
+        "buscar_categoria_financeira_por_nome_tipo",
+        "adicionar",
+        "flush",
+        "salvar",
+        "rollback"
+      ]
+    },
+    {
+      "path": "app/repositorys/pdv_repository.py",
+      "sha256": "6f1c1ca76ea91bf3eb2529ec5945de03d6d41ad082f12efd47083d6f3b073391",
+      "definitions": [
+        "PdvRepository",
+        "listar_empresas",
+        "listar_formas_pagamento",
+        "listar_cupons_ativos",
+        "listar_produtos_para_pdv",
+        "buscar_produto_empresa",
+        "buscar_produto_empresa_por_codigo_barras",
+        "buscar_formas_pagamento_por_ids",
+        "buscar_cupom_por_codigo",
+        "buscar_tipo_operacao_por_codigo",
+        "buscar_categoria_financeira_por_nome",
+        "listar_vendas",
+        "buscar_venda_por_id",
+        "contar_vendas_do_dia",
+        "buscar_item_venda",
+        "adicionar",
+        "flush",
+        "salvar",
+        "rollback"
+      ]
+    },
+    {
+      "path": "app/repositorys/permission_repository.py",
+      "sha256": "c863d2072fefeb0d5b086e6f5770c9db98d47dc0447c37a0db550ac9edb4234a",
+      "definitions": [
+        "PermissionRepository",
+        "listar",
+        "buscar_por_id",
+        "buscar_por_codigo",
+        "contar_roles_por_permission",
+        "adicionar",
+        "deletar",
+        "salvar",
+        "rollback"
+      ]
+    },
+    {
+      "path": "app/repositorys/platform_repository.py",
+      "sha256": "b3a25e51e9d7f3bf5c20487e4828e850414fa6879322b8459f2cae95f8a43fb8",
+      "definitions": [
+        "_digits_only_expression",
+        "PlatformRepository",
+        "buscar_owner_por_usuario",
+        "buscar_owner_por_id",
+        "listar_tenants",
+        "buscar_tenant_por_id",
+        "buscar_tenant_por_nome",
+        "buscar_empresa_por_id",
+        "buscar_empresa_por_cnpj",
+        "buscar_funcionario_por_usuario",
+        "buscar_funcionario_por_cpf",
+        "buscar_role_por_codigo",
+        "listar_empresas_por_tenant",
+        "listar_admins_por_tenant",
+        "buscar_vinculo_funcionario_empresa",
+        "adicionar",
+        "salvar",
+        "rollback",
+        "flush"
+      ]
+    },
+    {
+      "path": "app/repositorys/produto_repository.py",
+      "sha256": "ebe22404e67051b85495ff299760c574c578de4ae9a4878cc2371f05c7e4ecb1",
+      "definitions": [
+        "ProdutoRepository",
+        "listar",
+        "buscar_produto_empresa_por_id",
+        "buscar_categoria_por_id",
+        "buscar_empresa_por_id",
+        "listar_categorias",
+        "listar_empresas",
+        "buscar_produto_por_nome",
+        "buscar_produto_por_codigo_barras",
+        "existe_produto_empresa",
+        "salvar",
+        "adicionar",
+        "deletar",
+        "contar_vinculos_produto",
+        "contar_produtos"
+      ]
+    },
+    {
+      "path": "app/repositorys/role_repository.py",
+      "sha256": "02200b0119688ee6ca32ece75dd6316983685d7c663dd5d57b474d726a85bb67",
+      "definitions": [
+        "RoleRepository",
+        "listar",
+        "buscar_por_id",
+        "buscar_por_codigo",
+        "buscar_por_nome",
+        "listar_permissions_por_ids",
+        "contar_funcionarios_por_role",
+        "adicionar",
+        "deletar",
+        "salvar",
+        "rollback"
+      ]
+    },
+    {
+      "path": "app/routes.py",
+      "sha256": "596cedfae37a35252272997f0edcdff75b170e36910547d0fcf9c13a1b21399a",
+      "definitions": [
+        "register_blueprints"
+      ]
+    },
+    {
+      "path": "app/security/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "definitions": []
+    },
+    {
+      "path": "app/security/decorators.py",
+      "sha256": "cb125299c45e3cdcae8fd3374857165bc84baa11ae720d0bab5498b6411af2e5",
+      "definitions": [
+        "permission_required",
+        "ui_permission_required",
+        "platform_owner_required",
+        "decorator",
+        "decorator",
+        "decorator",
+        "wrapper",
+        "wrapper",
+        "wrapper"
+      ]
+    },
+    {
+      "path": "app/security/errors.py",
+      "sha256": "a0624161c266d7b9e40530129aafef55b913f3bfb3d0445d497236c36706f19f",
+      "definitions": [
+        "public_error",
+        "register_errors",
+        "handle_error"
+      ]
+    },
+    {
+      "path": "app/security/field_crypto.py",
+      "sha256": "1c4c80c6e8cf273c55f64f44653e6c5fd690198e2490dcdc453c458611211d04",
+      "definitions": [
+        "FieldCrypto",
+        "encrypt",
+        "decrypt",
+        "is_encrypted",
+        "_fernet",
+        "_keys"
+      ]
+    },
+    {
+      "path": "app/security/headers.py",
+      "sha256": "b712ad45aeffadad564cbceb454e3c42160cb2b6be14ec61056781b108c3da6a",
+      "definitions": [
+        "register_security_headers",
+        "enforce_https",
+        "add_security_headers"
+      ]
+    },
+    {
+      "path": "app/security/integrations.py",
+      "sha256": "c703296f669a045c5ccb5f86b6a57db5cc8cb3118d619ad013b365680f31fe5c",
+      "definitions": [
+        "require_real_integration"
+      ]
+    },
+    {
+      "path": "app/security/isolation.py",
+      "sha256": "41baf81a798bf4d2c1076516fd6d6aa2a6a6e11bdad08b6842ea3e4fcf3e9846",
+      "definitions": [
+        "current_scope",
+        "criteria",
+        "restrict_queries",
+        "restrict_writes",
+        "identify_audit_actor"
+      ]
+    },
+    {
+      "path": "app/security/jwt.py",
+      "sha256": "2c6f3941ebcb8b58e46d99ef33ff679a0d3e34535750dbabbcbdf3804877f124",
+      "definitions": [
+        "gerar_token",
+        "get_auth_scope",
+        "get_tenant_id",
+        "token_revoked",
+        "revoked_response"
+      ]
+    },
+    {
+      "path": "app/security/outbound.py",
+      "sha256": "ee03c075bc359e866b8b80265a42dc56a9ade3cf3f8319b58a1ae909d53b85eb",
+      "definitions": [
+        "validate_host",
+        "validate_webhook",
+        "NoRedirect",
+        "redirect_request"
+      ]
+    },
+    {
+      "path": "app/security/password.py",
+      "sha256": "a2c7734ab0414a9dd657bbfbe21860df9935345557db9367bc30d199a94fe906",
+      "definitions": [
+        "validate_password",
+        "hash_password",
+        "verify_password"
+      ]
+    },
+    {
+      "path": "app/security/permissions.py",
+      "sha256": "ee17792e0593c6616792f4a514ab5ba5ca9a8a6a0419022853e52b145a693705",
+      "definitions": [
+        "get_permission_metadata",
+        "get_permission_dependency_codes",
+        "get_permission_name",
+        "normalize_permission_codes",
+        "build_permission_groups",
+        "_is_effective"
+      ]
+    },
+    {
+      "path": "app/security/proxy.py",
+      "sha256": "c69465f0b63c2ae574525253f1a97ffce2a76a3d9c4504763e8f3427d11bb90a",
+      "definitions": [
+        "TrustedProxy",
+        "__init__",
+        "__call__"
+      ]
+    },
+    {
+      "path": "app/security/rate_limit.py",
+      "sha256": "be48ce93a8ef79f8432f016aae29cd176e06b2b60e6877c561aa993f4de83fa7",
+      "definitions": [
+        "LoginRateLimiter",
+        "hit",
+        "clear"
+      ]
+    },
+    {
+      "path": "app/security/secrets.py",
+      "sha256": "10cd13ca2e475a28e45989718c982ddb06d84a67f6ab59d491ad92a848686694",
+      "definitions": [
+        "validate_secret",
+        "load_field_keys"
+      ]
+    },
+    {
+      "path": "app/security/validators.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "definitions": []
+    },
+    {
+      "path": "app/seeds/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "definitions": []
+    },
+    {
+      "path": "app/seeds/seed.py",
+      "sha256": "474e3c33ba46ad0d58b9436547928281ea0db0f1dfcec0de91d1be6e925d29fc",
+      "definitions": [
+        "_garantir_platform_owner",
+        "run_seed"
+      ]
+    },
+    {
+      "path": "app/services/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "definitions": []
+    },
+    {
+      "path": "app/services/acesso_empresa_service.py",
+      "sha256": "5b9c98f92410c0c78436b55bfed883c40bf762e3ed4e960cbccec44fcf16169a",
+      "definitions": [
+        "AcessoEmpresaService",
+        "extrair_codigos_permissao",
+        "obter_escopo",
+        "filtrar_empresa_ids",
+        "validar_empresa",
+        "possui_permissao",
+        "possui_acesso_configuracoes",
+        "eh_admin"
+      ]
+    },
+    {
+      "path": "app/services/adiantamento_ciclo_service.py",
+      "sha256": "7f53038ae2419751b34096faaee4e2541501562b03a4bd4214e523c4d0802b78",
+      "definitions": [
+        "AdiantamentoCicloService",
+        "solicitar",
+        "transicionar"
+      ]
+    },
+    {
+      "path": "app/services/adiantamento_service.py",
+      "sha256": "a3a56dd4e107d5ef059a606e51e52a0cd52a6d4a9f1d105feac34b6eceefc49b",
+      "definitions": [
+        "AdiantamentoService",
+        "listar_auxiliares",
+        "listar",
+        "obter_resumo_folha",
+        "criar",
+        "serializar",
+        "_garantir_base_operacional",
+        "_resolver_forma_pagamento",
+        "_competencia_atual",
+        "_to_tipo_adiantamento",
+        "_to_int",
+        "_to_optional_int",
+        "_to_positive_int",
+        "_to_decimal",
+        "_to_optional_date",
+        "_to_optional_competencia",
+        "_to_decimal_value"
+      ]
+    },
+    {
+      "path": "app/services/alerta_service.py",
+      "sha256": "1e831b56cce91888a7ab32de6ad5eb85b618feeb78f05dc7667dae47859000ce",
+      "definitions": [
+        "AlertaService",
+        "enfileirar",
+        "produtos",
+        "entregar",
+        "historico",
+        "retentar",
+        "rotina",
+        "serializar"
+      ]
+    },
+    {
+      "path": "app/services/audit_service.py",
+      "sha256": "a3bc9fc9e11798ee99b1ae25c3e3ab0012adb3b1a070f2f96f7d25c8743ef218",
+      "definitions": [
+        "AuditService",
+        "registrar"
+      ]
+    },
+    {
+      "path": "app/services/auth_service.py",
+      "sha256": "c32f32d2e56872cc7f3378e199b76e2833edf3bf5114a232f9e8428f7aba936f",
+      "definitions": [
+        "AuthService",
+        "logar",
+        "alterar_senha",
+        "emitir_redefinicao",
+        "redefinir_senha"
+      ]
+    },
+    {
+      "path": "app/services/banco_emissor_service.py",
+      "sha256": "ab8062d113dcbd151eab4b55cac8a0c21ca63013d02bbb138dc9d27e70630d12",
+      "definitions": [
+        "BancoEmissorService",
+        "criar_banco_emissor",
+        "criar_configuracao_parcelamento",
+        "criar_regra_juros_multa",
+        "serializar_banco_emissor",
+        "serializar_configuracao_parcelamento",
+        "serializar_regra_juros_multa",
+        "_to_int",
+        "_to_decimal"
+      ]
+    },
+    {
+      "path": "app/services/boleto_provider.py",
+      "sha256": "76c1342c901ab19187f779b6a55ca31f4f7aa16e089ae7dcf6247fab21ae1cb4",
+      "definitions": [
+        "BoletoProviderResult",
+        "BoletoProvider",
+        "ProviderCommunicationError",
+        "AsaasProvider",
+        "MockApiBancariaProvider",
+        "get_boleto_provider",
+        "_storage_base",
+        "_only_digits",
+        "_to_decimal",
+        "_safe_json",
+        "_extract_error_message",
+        "registrar",
+        "processar_retorno",
+        "consultar",
+        "__init__",
+        "registrar",
+        "consultar",
+        "processar_retorno",
+        "_criar_cliente",
+        "_request",
+        "registrar",
+        "processar_retorno",
+        "_salvar_comprovantes"
+      ]
+    },
+    {
+      "path": "app/services/boleto_service.py",
+      "sha256": "f3eefc73f4bcc7d8b5cecc581581f044da98c84fcf7b7ca1f9a2c93d62f905c2",
+      "definitions": [
+        "BoletoService",
+        "obter_configuracao_asaas",
+        "atualizar_configuracao_asaas",
+        "_serializar_configuracao_asaas",
+        "listar_bancos_emissores",
+        "listar_configuracoes_parcelamento",
+        "listar_regras_juros_multa",
+        "listar_boletos",
+        "buscar_boleto",
+        "criar_boleto",
+        "registrar_boleto",
+        "consultar_status_bancario",
+        "processar_retorno_bancario",
+        "_criar_parcelas",
+        "baixar_boleto",
+        "recalcular_juros_multa",
+        "calcular_juros_multa",
+        "_registrar_evento",
+        "_registrar_arquivo_boleto",
+        "_aplicar_baixa",
+        "_gerar_numero_boleto",
+        "serializar_boleto",
+        "_to_int",
+        "_to_decimal",
+        "_to_decimal_value",
+        "_to_optional_date",
+        "_to_bool"
+      ]
+    },
+    {
+      "path": "app/services/calculo_juros_multa_service.py",
+      "sha256": "85112d018bed70cdacdba145165b7299ab5b8f4986ff02423d8202dfc064d8bf",
+      "definitions": [
+        "CalculoJurosMultaService",
+        "calcular",
+        "_to_decimal",
+        "_to_date"
+      ]
+    },
+    {
+      "path": "app/services/categoria_service.py",
+      "sha256": "5268d141644e69d4928772833ae5d2acfb493d7fb28cffded78d65d918208c2b",
+      "definitions": [
+        "CategoriaService",
+        "listar",
+        "criar",
+        "atualizar",
+        "deletar",
+        "_validar"
+      ]
+    },
+    {
+      "path": "app/services/cliente_privacidade_service.py",
+      "sha256": "1461169920bdb222336a1a3bb7c8bda31e15a76ad6468982b09db43cfe43c941",
+      "definitions": [
+        "ClientePrivacidadeService",
+        "obter",
+        "consentir",
+        "auditar",
+        "exportar",
+        "anonimizar",
+        "expirar"
+      ]
+    },
+    {
+      "path": "app/services/cliente_service.py",
+      "sha256": "8a0f71740c3d67d4dc2e5d1517c3c7d47d9f61b029df7a12f9ddfb2c9a95438a",
+      "definitions": [
+        "ClienteService",
+        "listar",
+        "listar_para_pdv",
+        "listar_auxiliares",
+        "criar",
+        "atualizar",
+        "deletar",
+        "obter",
+        "obter_carteira",
+        "obter_historico_vendas",
+        "listar_mensagens",
+        "listar_configuracoes_empresa",
+        "obter_configuracao_empresa",
+        "obter_modelo_configuracao_empresa",
+        "atualizar_configuracao_empresa",
+        "testar_configuracao_empresa",
+        "enviar_mensagem",
+        "enviar_mensagem_coletiva",
+        "enviar_email_venda_automatica",
+        "_registrar_envio_mensagem_cliente",
+        "_montar_email_venda",
+        "_montar_resumo_financeiro_email",
+        "_montar_itens_email",
+        "_montar_pagamentos_email",
+        "_aplicar_expiracoes_cliente",
+        "preparar_uso_cashback",
+        "processar_cashback_da_venda",
+        "reverter_cashback_venda",
+        "calcular_limite_resgate_cashback",
+        "restaurar_cashback_parcial_da_venda",
+        "_credito_tem_consumo",
+        "ajustar_cashback_gerado_por_cancelamento_item",
+        "calcular_saldo_disponivel",
+        "_formatar_moeda",
+        "_to_bool",
+        "_to_tipo_pessoa",
+        "_to_canal",
+        "_to_int",
+        "_to_positive_int",
+        "_to_non_negative_int",
+        "_to_non_negative_decimal",
+        "_to_decimal_value",
+        "_to_optional_date",
+        "_normalizar_documento",
+        "_normalizar_telefone",
+        "_normalizar_email",
+        "_normalizar_url",
+        "_obter_ou_criar_carteira",
+        "_obter_ou_criar_configuracao_empresa",
+        "_clonar_configuracao_empresa",
+        "_aplicar_payload_configuracao",
+        "_obter_destinatario_cliente",
+        "_validar_canal_habilitado",
+        "_validar_opt_in",
+        "_validar_consistencia_configuracao",
+        "_auditar_consentimento",
+        "serializar_cliente",
+        "serializar_credito",
+        "serializar_movimento_carteira",
+        "serializar_venda_cliente",
+        "serializar_configuracao_empresa",
+        "serializar_mensagem"
+      ]
+    },
+    {
+      "path": "app/services/comunicacao_service.py",
+      "sha256": "f29ce1fce7c8decdd37eccac37d5b699597e64f53009adfe624052da9e6ee1d5",
+      "definitions": [
+        "PreDeliveryError",
+        "ComunicacaoService",
+        "enviar",
+        "_enviar_email",
+        "_autenticar_smtp",
+        "_normalizar_senha_smtp",
+        "_formatar_erro_autenticacao_smtp",
+        "_renderizar_email_generico_html",
+        "_enviar_webhook",
+        "_to_canal"
+      ]
+    },
+    {
+      "path": "app/services/cupom_service.py",
+      "sha256": "1bfed573f6c72bd73420e8edbde93d071a30edcca19e0f71935a4d4de8e15ba3",
+      "definitions": [
+        "CupomService",
+        "listar",
+        "criar",
+        "atualizar",
+        "deletar",
+        "serializar",
+        "_validar_dados",
+        "_to_tipo_desconto",
+        "_to_date",
+        "_to_decimal",
+        "_aplicar_regras",
+        "validar_uso",
+        "contar_usos",
+        "_to_bool",
+        "_to_decimal_value"
+      ]
+    },
+    {
+      "path": "app/services/estoque_service.py",
+      "sha256": "ddf51e0c6a7f90f45c130d2aa71482c047766670ca541513839a6ab60ba9b524",
+      "definitions": [
+        "EstoqueService",
+        "listar_saldos",
+        "listar_movimentos",
+        "listar_auxiliares",
+        "listar_notificacoes",
+        "obter_configuracao_alerta",
+        "atualizar_configuracao_alerta",
+        "obter_popup_alertas",
+        "listar_produtos_mais_vendidos",
+        "serializar_configuracao_alerta",
+        "processar_alertas_por_produtos",
+        "_determinar_status_alerta_email",
+        "_pode_disparar_alerta_email",
+        "_listar_destinatarios",
+        "_configuracao_email_operacional_valida",
+        "_montar_email_alerta_estoque",
+        "registrar_movimentacao_manual",
+        "registrar_saida_por_venda",
+        "registrar_entrada_por_cancelamento_venda",
+        "registrar_entrada_por_cancelamento_item_venda",
+        "cancelar_movimento",
+        "registrar_saida_por_adiantamento",
+        "_registrar_movimento",
+        "_validar_motivo_manual",
+        "_to_tipo_movimento",
+        "_to_motivo",
+        "_to_decimal",
+        "_to_optional_decimal",
+        "_to_positive_int",
+        "_to_int",
+        "_to_optional_date",
+        "_to_bool",
+        "_normalizar_destinatarios",
+        "_to_optional_int",
+        "_esta_dentro_janela_cancelamento",
+        "_validar_janela_cancelamento",
+        "_obter_ou_criar_configuracao",
+        "_garantir_base_operacional"
+      ]
+    },
+    {
+      "path": "app/services/financeiro_ciclo_service.py",
+      "sha256": "19e9a3720039017639daa0e160fb4996e4a5d69d2c9cdac6b620aaf6d94cbed2",
+      "definitions": [
+        "motivo",
+        "audit",
+        "FinanceiroCicloService",
+        "reverter_origem",
+        "estornar",
+        "conciliar",
+        "ajustar_fechamento"
+      ]
+    },
+    {
+      "path": "app/services/financeiro_service.py",
+      "sha256": "5528921194fec0cb66e67eb0f604eebc4c24af258345316fa20b9d7dc8b6bfd7",
+      "definitions": [
+        "FinanceiroService",
+        "listar_auxiliares",
+        "listar_lancamentos",
+        "listar_fechamentos",
+        "obter_dashboard",
+        "criar_lancamento_manual",
+        "registrar_entradas_da_venda",
+        "registrar_estorno_da_venda",
+        "registrar_estorno_parcial_da_venda",
+        "registrar_saida_adiantamento",
+        "criar_fechamento",
+        "calcular_resumo_caixa",
+        "serializar_lancamento",
+        "serializar_fechamento",
+        "obter_relatorio_fluxo_caixa",
+        "obter_relatorio_produtos_vendidos",
+        "_garantir_base_operacional",
+        "_to_tipo_financeiro",
+        "_to_optional_tipo_financeiro",
+        "_to_int",
+        "_to_decimal",
+        "_to_non_negative_decimal",
+        "_to_optional_date",
+        "_to_decimal_value",
+        "_resolver_periodo_relatorio"
+      ]
+    },
+    {
+      "path": "app/services/fiscal_provider.py",
+      "sha256": "62076a589fe03a7797180383b229d0fa8c7b69baf2957f1b21ff8be85bd203c3",
+      "definitions": [
+        "FiscalProviderResult",
+        "FiscalProvider",
+        "FiscalCommunicationError",
+        "FocusNFeProvider",
+        "MockIntegradorFiscalProvider",
+        "get_fiscal_provider",
+        "_storage_base",
+        "_only_digits",
+        "_to_decimal",
+        "_safe_json",
+        "_extract_error_message",
+        "transmitir_nfce",
+        "consultar_nfce",
+        "cancelar_nfce",
+        "__init__",
+        "transmitir_nfce",
+        "consultar_nfce",
+        "cancelar_nfce",
+        "_result_from_response",
+        "_montar_payload_nfce",
+        "_request",
+        "_token",
+        "_salvar_url",
+        "transmitir_nfce"
+      ]
+    },
+    {
+      "path": "app/services/fiscal_service.py",
+      "sha256": "d43c99f255ee0d62e7497a56219e87017aedc5ed9d55207f645f557a37b2c388",
+      "definitions": [
+        "FiscalService",
+        "listar_auxiliares",
+        "obter_configuracao",
+        "atualizar_configuracao",
+        "listar_notas",
+        "prevalidar_venda",
+        "emitir_nota_venda",
+        "consultar_nota_venda",
+        "cancelar_nota_venda",
+        "obter_xml_nota",
+        "obter_danfe_nota",
+        "_validar_prontidao_venda",
+        "_serializar_configuracao",
+        "_serializar_nota",
+        "_aplicar_resultado_provider",
+        "_registrar_evento_fiscal",
+        "_build_default_config",
+        "_validar_prontidao_configuracao",
+        "_atualizar_status_certificado",
+        "_validar_certificado",
+        "_salvar_xml_nota",
+        "_montar_xml_nota",
+        "_gerar_chave_acesso",
+        "_calcular_dv_chave",
+        "_gerar_recibo",
+        "_gerar_protocolo",
+        "_codigo_uf",
+        "_xml_text",
+        "_money",
+        "_to_decimal",
+        "_to_ambiente",
+        "_to_regime",
+        "_to_positive_int",
+        "_optional_text",
+        "_only_digits",
+        "_to_bool"
+      ]
+    },
+    {
+      "path": "app/services/funcionario_service.py",
+      "sha256": "9bde0f4cc77c3a6c6a2f578430bdc939db3f2f01eb5d5a2f9df9ee7465e7e33f",
+      "definitions": [
+        "FuncionarioService",
+        "listar",
+        "listar_empresas",
+        "listar_roles",
+        "criar",
+        "atualizar",
+        "deletar",
+        "_validar_exclusao_vinculo",
+        "_sincronizar_empresas",
+        "_to_bool",
+        "_to_int",
+        "_normalizar_cpf",
+        "_to_non_negative_decimal",
+        "_to_decimal_value"
+      ]
+    },
+    {
+      "path": "app/services/idempotency_service.py",
+      "sha256": "4ab39ab2c93c376cdaa0cea692cb8dd017ad269329a85537f18b7d5e8184b5b8",
+      "definitions": [
+        "idempotent",
+        "execute"
+      ]
+    },
+    {
+      "path": "app/services/import_export_service.py",
+      "sha256": "bff860d06d5eb3f544fc2596d319f5e41103962cae636651cc1021ae66a67f8d",
+      "definitions": [
+        "ImportExportService",
+        "obter_contexto_painel",
+        "gerar_template",
+        "exportar_entidade",
+        "importar_entidade",
+        "_dispatch_import",
+        "_import_categoria",
+        "_import_produto",
+        "_import_funcionario",
+        "_import_cupom",
+        "_import_forma_pagamento",
+        "_import_categoria_financeira",
+        "_build_export_rows",
+        "_export_categorias",
+        "_export_produtos",
+        "_export_funcionarios",
+        "_export_cupons",
+        "_export_formas_pagamento",
+        "_export_categorias_financeiras",
+        "_fill_instructions_sheet",
+        "_fill_reference_sheet",
+        "_build_reference_blocks",
+        "_get_data_sheet",
+        "_build_header_map",
+        "_extract_row",
+        "_row_is_empty",
+        "_resolve_empresa",
+        "_resolve_role",
+        "_validate_operation",
+        "_pode_operar_entidade",
+        "_get_entity_config",
+        "_normalize_header",
+        "_required_text",
+        "_optional_text",
+        "_parse_bool",
+        "_parse_int",
+        "_parse_decimal",
+        "_parse_optional_date",
+        "_parse_required_date",
+        "_parse_tipo_desconto",
+        "_parse_tipo_categoria",
+        "_excel_bool",
+        "_decimal_to_excel",
+        "_style_header_row",
+        "_auto_fit_sheet",
+        "_workbook_to_bytes"
+      ]
+    },
+    {
+      "path": "app/services/mensagem_fila_service.py",
+      "sha256": "b805835097626ad3607453e0333e66747bd6bac9f4907d53b562a7097b8420fb",
+      "definitions": [
+        "GatewayRecusado",
+        "GatewayBloqueado",
+        "GatewaySimulado",
+        "MensagemFilaService",
+        "enviar",
+        "__init__",
+        "enviar",
+        "enfileirar",
+        "processar",
+        "entregar"
+      ]
+    },
+    {
+      "path": "app/services/money_service.py",
+      "sha256": "a9be42c6b8697e5f5a94aabf6ddf60d7c329843cb458f18619803f48b9ea6a67",
+      "definitions": [
+        "money",
+        "positive_integer",
+        "allocate_money"
+      ]
+    },
+    {
+      "path": "app/services/parcelamento_service.py",
+      "sha256": "ff758b3aa324d1e8aae5c0767d87d58e8ec145c8a760614b860747b2d97e6993",
+      "definitions": [
+        "ParcelamentoService",
+        "gerar_parcelas",
+        "_proximo_vencimento",
+        "_to_decimal",
+        "_to_int",
+        "_to_date"
+      ]
+    },
+    {
+      "path": "app/services/pdv_service.py",
+      "sha256": "89bee131d3ac93650b06f2f770895e58275e9fa57d69430197129b683e2e61ce",
+      "definitions": [
+        "PdvService",
+        "listar_auxiliares",
+        "listar_produtos",
+        "buscar_produto_por_codigo_barras",
+        "listar_vendas",
+        "obter_venda",
+        "criar_venda",
+        "cancelar_venda",
+        "cancelar_item_venda",
+        "serializar_produto",
+        "serializar_venda",
+        "_garantir_base_operacional",
+        "_validar_cupom",
+        "_calcular_desconto_cupom",
+        "limite_desconto",
+        "_validar_pagamentos",
+        "_mesclar_observacao",
+        "_gerar_numero_unico",
+        "_resolver_precificacao_item",
+        "_obter_valor_varejo_produto",
+        "_obter_valor_atacado_produto",
+        "_to_optional_status",
+        "_to_modalidade_preco",
+        "_to_int",
+        "_to_positive_int",
+        "_to_decimal",
+        "_to_optional_decimal",
+        "_to_decimal_value",
+        "_to_optional_int",
+        "_to_bool",
+        "_esta_dentro_janela_cancelamento",
+        "_validar_janela_cancelamento",
+        "_timedelta_hours"
+      ]
+    },
+    {
+      "path": "app/services/permission_service.py",
+      "sha256": "dbab737aa41f27ac97718974119c51d9103d5298b877be1c53146575a4fcadd2",
+      "definitions": [
+        "PermissionService",
+        "listar",
+        "listar_agrupadas",
+        "criar",
+        "atualizar",
+        "deletar",
+        "_to_bool"
+      ]
+    },
+    {
+      "path": "app/services/platform_service.py",
+      "sha256": "52eea5aedf163976b9944f1aaeedcb91c8a120be685cc42d8a933ba48fba5eb3",
+      "definitions": [
+        "PlatformService",
+        "listar_tenants",
+        "criar_tenant",
+        "criar_empresa",
+        "atualizar_visual_empresa",
+        "criar_admin",
+        "atualizar_assinatura",
+        "_criar_empresa_obj",
+        "_criar_admin_obj",
+        "_serializar_tenant",
+        "_serializar_assinatura",
+        "_serializar_empresa",
+        "_sincronizar_admins_do_tenant",
+        "_garantir_vinculo_funcionario_empresa",
+        "_validar_limite_empresas",
+        "_validar_limite_funcionarios",
+        "_to_tipo_empresa",
+        "_to_visual_mode",
+        "_to_int",
+        "_to_date",
+        "_to_positive_int",
+        "_normalizar_cpf",
+        "_normalizar_cnpj"
+      ]
+    },
+    {
+      "path": "app/services/produto_service.py",
+      "sha256": "0064fcce74b4afb0b8c1d8ee838bc700ab1be539771b3d55f0e2da36694fce12",
+      "definitions": [
+        "ProdutoService",
+        "listar",
+        "listar_categorias",
+        "listar_empresas",
+        "criar",
+        "atualizar",
+        "deletar",
+        "_vincular",
+        "_to_decimal",
+        "_to_non_negative_int",
+        "_to_positive_int",
+        "_to_bool",
+        "_to_int",
+        "_to_optional_date",
+        "_normalize_ncm",
+        "_normalize_barcode",
+        "_gerar_codigo_barras",
+        "_calcular_digito_ean13"
+      ]
+    },
+    {
+      "path": "app/services/role_service.py",
+      "sha256": "1d6bffdfa0ad28c72a93677c1189e8d55e690d0eb6e4c218f83c1702a5d7c1c0",
+      "definitions": [
+        "RoleService",
+        "listar",
+        "criar",
+        "atualizar",
+        "deletar",
+        "_normalizar_ids",
+        "_to_bool",
+        "_resolver_permissions_validas"
+      ]
+    },
+    {
+      "path": "app/services/saas_plan_service.py",
+      "sha256": "a4902418180c1638d6dbab95452544851b97dcf2a30543623e15096430edf800",
+      "definitions": [
+        "SaasPlanService",
+        "get_plan",
+        "apply_plan",
+        "serializar_plano"
+      ]
+    },
+    {
+      "path": "app/services/tenant_bootstrap_service.py",
+      "sha256": "b44ad421acb0c8d6821594440b4f4d513fdc97fab887332b111d76424809b42b",
+      "definitions": [
+        "TenantBootstrapService",
+        "garantir_permissoes_e_roles",
+        "garantir_cadastros_operacionais"
+      ]
+    },
+    {
+      "path": "app/services/tenant_entitlement_service.py",
+      "sha256": "e6f51b570276a4372b88f476687ae6c137fe66cbb4f6d33d384f163301a84eb4",
+      "definitions": [
+        "TenantEntitlementService",
+        "obter_tenant",
+        "validar_assinatura",
+        "validar_limite_produtos",
+        "validar_limite_vendas_mes"
+      ]
+    },
+    {
+      "path": "app/services/time_service.py",
+      "sha256": "09b1ad2a6eb85178fadc3a5e354ebe48136c093602243cbb8a63ccc1434ffa30",
+      "definitions": [
+        "TimeService",
+        "now_utc",
+        "now_utc_naive",
+        "today_br",
+        "local_date_start_to_utc_naive",
+        "to_utc",
+        "to_brasilia",
+        "serialize_utc_iso",
+        "format_br"
+      ]
+    },
+    {
+      "path": "app/services/transaction_service.py",
+      "sha256": "f880757acc48216920362c5f24e1c3f58ce01f8aafb7aa7e9fbd97ea6a14a36c",
+      "definitions": [
+        "save",
+        "after_commit",
+        "atomic_operation",
+        "execute"
+      ]
+    },
+    {
+      "path": "app/static/css/core/core.css",
+      "sha256": "e3cd45f1518bd6aed26c00f22e7c658d872795667a0e0cac00f68489e8026fa8",
+      "definitions": []
+    },
+    {
+      "path": "app/static/css/core/operational.css",
+      "sha256": "32abe54ddf42445b85448c1227d05442841d72ae2bd4c19887e25b613448df42",
+      "definitions": []
+    },
+    {
+      "path": "app/static/css/forms/login-form.css",
+      "sha256": "9a5f2f5c6604700637c45de8d14607405edbfaa3c3f0af65244410c04f25861d",
+      "definitions": []
+    },
+    {
+      "path": "app/static/css/modulos/adiantamento.css",
+      "sha256": "d2e363d99bcb8f7a60239117338109cdfcd244c04d8ed24301a1cadb496d36fb",
+      "definitions": []
+    },
+    {
+      "path": "app/static/css/modulos/categoria.css",
+      "sha256": "1050db8fdbb2b4a787a84a5885613d0045f5b0912c868ecc656340c280a81067",
+      "definitions": []
+    },
+    {
+      "path": "app/static/css/modulos/ciclos.css",
+      "sha256": "8a0a680f3e65c822a250d187a8802145b3602f27aa654bec8a3a08bf7db8834e",
+      "definitions": []
+    },
+    {
+      "path": "app/static/css/modulos/cliente.css",
+      "sha256": "66ad7585e312e2fecfad81eec5db1b3ddb10185aa720c5e7c6985934fdc42d5b",
+      "definitions": []
+    },
+    {
+      "path": "app/static/css/modulos/estoque.css",
+      "sha256": "50c66b8b779c338ab11ebe4bd553dcb94fb46fbdbc239eb286dbaf7e86239de4",
+      "definitions": []
+    },
+    {
+      "path": "app/static/css/modulos/financeiro.css",
+      "sha256": "274db03137a097d07e73a2a0610042686d54ddb52844eba8e5c62e77cc9c6430",
+      "definitions": []
+    },
+    {
+      "path": "app/static/css/modulos/import_export.css",
+      "sha256": "7105b5a34199c52d6e267ccaec24f72c7b0ddcdb3dccfad3669261ff34117e94",
+      "definitions": []
+    },
+    {
+      "path": "app/static/css/modulos/pdv.css",
+      "sha256": "025f1bec622b01fd7a5fccd149973a0276b8f91bcfed46ce1128917093a47085",
+      "definitions": []
+    },
+    {
+      "path": "app/static/css/modulos/platform.css",
+      "sha256": "508fec6e962206dad98336f9fcebd8f1628e34e0f9ce9baa23f1e454bef7fd84",
+      "definitions": []
+    },
+    {
+      "path": "app/static/css/modulos/produto.css",
+      "sha256": "8431ed21d7394dbd8994ba7c8e87055ad9d45abe0ba3dbc7da634618d0eaef2c",
+      "definitions": []
+    },
+    {
+      "path": "app/static/css/tailwind.input.css",
+      "sha256": "7a8b07838661bed82405f51991a10179ba7782d7c2acaff54777b49f020bae77",
+      "definitions": []
+    },
+    {
+      "path": "app/static/favicon/README.md",
+      "sha256": "cc9240b879a52d510de81f1938f8ccb51980bbe1b59de9ea2ce89e8410853be8",
+      "definitions": []
+    },
+    {
+      "path": "app/static/favicon/browserconfig.xml",
+      "sha256": "97a6efc19c8c35f947f3067e2dfe79e718ad543a52e96afdfbfe38b10221f3ac",
+      "definitions": []
+    },
+    {
+      "path": "app/static/favicon/favicon.svg",
+      "sha256": "3df3b3b649ea61bd9e02d497fabe48d2de98f3151e6053637e2073826cc348d1",
+      "definitions": []
+    },
+    {
+      "path": "app/static/favicon/site.webmanifest",
+      "sha256": "6fb99cb0485b8f645109bfa810f952b348b922d9fb3dfc606e3dfe10065ee8ad",
+      "definitions": []
+    },
+    {
+      "path": "app/static/js/auditoria.js",
+      "sha256": "e2b3af63c4c4f9d9f23ceee35a740ead67972e01bd694cfd9c80b43adeb78839",
+      "definitions": []
+    },
+    {
+      "path": "app/static/js/core/crud.js",
+      "sha256": "23e3837b1ab771b57335af7fe12df5f85b820ad77ded84cabc77133406ab624d",
+      "definitions": []
+    },
+    {
+      "path": "app/static/js/core/decimal-input.js",
+      "sha256": "0ee377cdc2a9d7bf6f6f30776687dc9ba67efe09f2eee94dbdecdb4f9a7fca16",
+      "definitions": []
+    },
+    {
+      "path": "app/static/js/core/input-mask.js",
+      "sha256": "ae325d3258422aa850f809044b1a4f29feea8b2a1313d0b75bbfe5245682b09c",
+      "definitions": []
+    },
+    {
+      "path": "app/static/js/core/security.js",
+      "sha256": "01434f164524bca94f53e3ce8d09166dde17de75ff5a10be20afa1e684e0c3d7",
+      "definitions": []
+    },
+    {
+      "path": "app/static/js/core/theme.js",
+      "sha256": "95d2cf81918974b2755ce624f64768d3931157038ef6ad028672a48deac016c7",
+      "definitions": []
+    },
+    {
+      "path": "app/static/js/header/header.js",
+      "sha256": "819f649dfa60276b2aba51c718e3b88e7d7a3cfabcfdb4835acf610d4d4d9952",
+      "definitions": []
+    },
+    {
+      "path": "app/static/js/modulos/adiantamento.js",
+      "sha256": "4ad100dd3a73d40ef33f9f525fa9e431d80b439f30b8d552b9f291f82edff5cf",
+      "definitions": []
+    },
+    {
+      "path": "app/static/js/modulos/boletos.js",
+      "sha256": "8034744cf9a40fae97548c55a0e6b54602e0676fcfe63a6a353cd65509e2c676",
+      "definitions": []
+    },
+    {
+      "path": "app/static/js/modulos/categoria.js",
+      "sha256": "16bd509d73f9788cce1266450c8dd4c3df4615c0230c9ea1d6440a8a9a67e60a",
+      "definitions": []
+    },
+    {
+      "path": "app/static/js/modulos/ciclos.js",
+      "sha256": "9004071050f3e14539af2c79983d879f000502b57ec3cca8b3949b6b8ac01793",
+      "definitions": []
+    },
+    {
+      "path": "app/static/js/modulos/cliente.js",
+      "sha256": "f55dacbfa4583bc842ec101eb4b23cff3e3f719b64e144239dfb60ac877620cf",
+      "definitions": []
+    },
+    {
+      "path": "app/static/js/modulos/cupom.js",
+      "sha256": "d5a548f1c7b6f0f76a8d67887850e5c401b7f96a7232807133ccc0c361dbc0a5",
+      "definitions": []
+    },
+    {
+      "path": "app/static/js/modulos/estoque.js",
+      "sha256": "c2dc663722a02fb6e22e67c874dbfe1c7063e0f8282157f7bca5b9940c248b0d",
+      "definitions": []
+    },
+    {
+      "path": "app/static/js/modulos/financeiro.js",
+      "sha256": "5bf4db0af57d26f32d38e53ed590c7e10ba69487433849f4f17e25a53bd3a345",
+      "definitions": []
+    },
+    {
+      "path": "app/static/js/modulos/fiscal.js",
+      "sha256": "16f24edbaa338af10e2f3fa8a4bca251d5e5a32622e52aff7df67377c3ddc3e0",
+      "definitions": []
+    },
+    {
+      "path": "app/static/js/modulos/funcionario.js",
+      "sha256": "0297d94f8fd75f6c6f9b0dbdfa836ce17e2e86e6dee1f0682faea68942da135f",
+      "definitions": []
+    },
+    {
+      "path": "app/static/js/modulos/import_export.js",
+      "sha256": "f264c4425f4fe4d6bc4b823a36d4b58700d2987e4855a7ab21b91a7b3a05e9ca",
+      "definitions": []
+    },
+    {
+      "path": "app/static/js/modulos/pdv.js",
+      "sha256": "47120104cf549c15d22f8ed7e3ec95e1373c656fe49834b6205349fb38927ac8",
+      "definitions": []
+    },
+    {
+      "path": "app/static/js/modulos/permission.js",
+      "sha256": "45953e9eb64672d3386a5168da30fc961f9044ea6bede28e6d655c57b9f8d9f2",
+      "definitions": []
+    },
+    {
+      "path": "app/static/js/modulos/platform.js",
+      "sha256": "f4ee0eeac1464954a8a94c2bfe33709b74c272d6099f89df769693bcb8c400c2",
+      "definitions": []
+    },
+    {
+      "path": "app/static/js/modulos/produto.js",
+      "sha256": "4db03468c9b554c6c8a7c7853580f929d9b5c00b634e3c278cb0892508597c36",
+      "definitions": []
+    },
+    {
+      "path": "app/static/js/modulos/role.js",
+      "sha256": "b3911ace38a36374d9e24a87986d63c24c5d64d7a13ba4e35cc4851d6d5595c4",
+      "definitions": []
+    },
+    {
+      "path": "app/static/vendor/lucide.LICENSE",
+      "sha256": "1e7290b35280a048667bbf0ebabac1c7fd52a75300e8b2946ac165715997f2bc",
+      "definitions": []
+    },
+    {
+      "path": "app/static/vendor/lucide.min.js",
+      "sha256": "3411692820cb8d47543f69496aa25fd603a358f4498046f41c508a5a3342210e",
+      "definitions": []
+    },
+    {
+      "path": "app/static/vendor/tailwind.LICENSE",
+      "sha256": "60e0b68c0f35c078eef3a5d29419d0b03ff84ec1df9c3f9d6e39a519a5ae7985",
+      "definitions": []
+    },
+    {
+      "path": "app/static/vendor/tailwind.css",
+      "sha256": "ef3c7eec9eaba3b4de299bcb482829135b0deff13402e6620ed84a42a9308f14",
+      "definitions": []
+    },
+    {
+      "path": "app/templates/bases/base.html",
+      "sha256": "fc09752e7ae040efb7adda5494ff9825855cd54b6e69cf1f5a7bf056e22ca9ad",
+      "definitions": []
+    },
+    {
+      "path": "app/templates/bases/base_public.html",
+      "sha256": "2d16a233dbaaa62cd7d9063d20ff73fd10bd0722a4ca57dec3ae9d02ccff4ccc",
+      "definitions": []
+    },
+    {
+      "path": "app/templates/componentes/flash_mensagem.html",
+      "sha256": "35afe69feaea4d7d01964840742e928308ee6e4cfd0442b5e51bd71e620a6d3e",
+      "definitions": []
+    },
+    {
+      "path": "app/templates/componentes/footer.html",
+      "sha256": "9804d65b2862c8cfceeceec4c6d549768983d69afbda65c0e35a01e89d2017d3",
+      "definitions": []
+    },
+    {
+      "path": "app/templates/componentes/header_home.html",
+      "sha256": "54fb3dc629d99a0dc928db467e0aa4a74d4c1c9b01538eac54d09e2015ff5368",
+      "definitions": []
+    },
+    {
+      "path": "app/templates/componentes/header_subpages.html",
+      "sha256": "ee872739fb2e7861ca867b9a242389d50d9ea46f4f6816cf0add2bbd57d1295e",
+      "definitions": []
+    },
+    {
+      "path": "app/templates/componentes/tenant_sidebar.html",
+      "sha256": "ef1daf7a243f79b8f7c89e1be8d57433e2b9659a4d87101e00335da1a93cb2f3",
+      "definitions": []
+    },
+    {
+      "path": "app/templates/emails/alerta_estoque.html",
+      "sha256": "4e6229759f6c0c4450ea50e7b9169ba57e50f704e41e70602bcbfed6d07776c3",
+      "definitions": []
+    },
+    {
+      "path": "app/templates/emails/base_oceanblue.html",
+      "sha256": "5ee767f4d8cfb558ac0d8c57d7a28a314042a93766648334177b6cc31478d722",
+      "definitions": []
+    },
+    {
+      "path": "app/templates/emails/mensagem_cliente.html",
+      "sha256": "72d7ce4c040472bf13c71020eb96a216599765f11d373cb5d7d76dcb7d788087",
+      "definitions": []
+    },
+    {
+      "path": "app/templates/emails/venda_cliente.html",
+      "sha256": "f8000ed6f9bfd8bc953053a9ed504b81a846b4e22ad7910f71697f5b547f7d78",
+      "definitions": []
+    },
+    {
+      "path": "app/templates/modulos/adiantamento/adiantamento.html",
+      "sha256": "ae64377f8bf8499e84920954db045a6a30dbc89f8286e28fa504a7b807dcf769",
+      "definitions": []
+    },
+    {
+      "path": "app/templates/modulos/auditoria.html",
+      "sha256": "4d4ff3f3925979806489146788e60763f60a11b82c8c3e976c6bb0f452a7a754",
+      "definitions": []
+    },
+    {
+      "path": "app/templates/modulos/categoria/categoria.html",
+      "sha256": "efa200237b00ba7d74f27541edcd82bc96ccee1ffbae9fbd481cd9b70c6a3fb1",
+      "definitions": []
+    },
+    {
+      "path": "app/templates/modulos/cliente/cliente.html",
+      "sha256": "98d7b6586e59ade28afab7200fdf1683cbca48afec0085c5b7f349b8a68fdca5",
+      "definitions": []
+    },
+    {
+      "path": "app/templates/modulos/cliente/partials/cliente_form_fields.html",
+      "sha256": "f7d00de28b053f593e6058ffe5a4a30851f783f9315c9e63edfecbb7e4b188b9",
+      "definitions": []
+    },
+    {
+      "path": "app/templates/modulos/cupom/cupom.html",
+      "sha256": "e5e36f256677bf80d65027156a43df175eaa101ff2d78a92c2889e974a4222ef",
+      "definitions": []
+    },
+    {
+      "path": "app/templates/modulos/cupom/regras.html",
+      "sha256": "71ccc7050b905681fcf355e2e5e48c402e710bbd0cf030380c3fec762013db37",
+      "definitions": []
+    },
+    {
+      "path": "app/templates/modulos/estoque/estoque.html",
+      "sha256": "d865530ad6eb2d0b0b49726eb261d5c9bc253bd6b5dab48c57153a7ea33e209e",
+      "definitions": []
+    },
+    {
+      "path": "app/templates/modulos/estoque/estoque_alertas.html",
+      "sha256": "4c1f476e330eb446920a281a54109cd8532ef124f50dc11dbc569cb43d671a04",
+      "definitions": []
+    },
+    {
+      "path": "app/templates/modulos/estoque/estoque_indicadores.html",
+      "sha256": "16bb2e44f63a529f3a7e56e121e431799b27f5ccce12341a8f118e26ed4eb486",
+      "definitions": []
+    },
+    {
+      "path": "app/templates/modulos/financeiro/boletos.html",
+      "sha256": "3aaaef143c77974f4cc9a1a1daab87a5423854ac96325dee52f64543e21d9c81",
+      "definitions": []
+    },
+    {
+      "path": "app/templates/modulos/financeiro/ciclos.html",
+      "sha256": "e15f7adc23662e12d8271771a59f1e94fe09be489c4dc4cf80de671d22c5b2a4",
+      "definitions": []
+    },
+    {
+      "path": "app/templates/modulos/financeiro/financeiro.html",
+      "sha256": "90c78eeaa673a978fb826517bda7f2702254b0ce25cda1b6d33d561296f83f72",
+      "definitions": []
+    },
+    {
+      "path": "app/templates/modulos/financeiro/financeiro_lancamentos.html",
+      "sha256": "48bf489556202929ff19f231dace9f5c261afc6a872ad9f6dd8c75718d9db754",
+      "definitions": []
+    },
+    {
+      "path": "app/templates/modulos/financeiro/financeiro_relatorios.html",
+      "sha256": "b75b8ec19ac006f4ebe59577676ef7cdd4638c4c7e5c1b122b4057fa32a80c7c",
+      "definitions": []
+    },
+    {
+      "path": "app/templates/modulos/fiscal/fiscal.html",
+      "sha256": "f69974b446acfbb68094fa7b1fa5b1b388939b78ae878ec0c8c86831e90bb050",
+      "definitions": []
+    },
+    {
+      "path": "app/templates/modulos/funcionario/funcionario.html",
+      "sha256": "09f0b4073f053622d7b65e4597785001d33c6842b8c86ed39d0e9ef86833d67a",
+      "definitions": []
+    },
+    {
+      "path": "app/templates/modulos/import_export/import_export.html",
+      "sha256": "f74059433e9bf4c0042258a8913b738995d43db07232f62b471db9d47e8ebd4f",
+      "definitions": []
+    },
+    {
+      "path": "app/templates/modulos/pdv/pdv.html",
+      "sha256": "84919453697f9b2530ef089cc504d07550a3b637c0fd72283c670ce30802ffa0",
+      "definitions": []
+    },
+    {
+      "path": "app/templates/modulos/permission/permission.html",
+      "sha256": "fd07c16c2f99508e2f22ca892394ba00c612a8b9f03967fecf600e64a40dc5ba",
+      "definitions": []
+    },
+    {
+      "path": "app/templates/modulos/produto/produto.html",
+      "sha256": "b4c94b938f49a4d30f27fe5e5082d1f5efbcd8f55f192352b01ecf06b1def7a9",
+      "definitions": []
+    },
+    {
+      "path": "app/templates/modulos/role/role.html",
+      "sha256": "5050f23780cf479279d8e6e68440bbb62908aa656e4cfa013e8a392d688c55e1",
+      "definitions": []
+    },
+    {
+      "path": "app/templates/pages/home.html",
+      "sha256": "3926ef89ad6329625bb63bffc708db4ca51c888f184b5bddfb422fd75088b63f",
+      "definitions": []
+    },
+    {
+      "path": "app/templates/pages/home_configuracoes.html",
+      "sha256": "fe7146dd8b8f6785d4b814d4131283e1b13239f2a15bb36d5fc80555be698788",
+      "definitions": []
+    },
+    {
+      "path": "app/templates/pages/home_estoque.html",
+      "sha256": "55be7a423ba789fc9a3d210fe49024c28cbc4637bfd6a164fb0f5093fa461e1d",
+      "definitions": []
+    },
+    {
+      "path": "app/templates/pages/home_financeiro.html",
+      "sha256": "4a8c7332a0174a3fcf8c156913438e63297587b4907cdd3dc140519fcd10178f",
+      "definitions": []
+    },
+    {
+      "path": "app/templates/pages/home_pdv.html",
+      "sha256": "8844fc34d0ee0bdbc789826b8e5e2dd19841392a0facc88d787a2fc4f3bd5227",
+      "definitions": []
+    },
+    {
+      "path": "app/templates/pages/login.html",
+      "sha256": "97908a76431b649da62ec9f6ee7b60ff020cab8c58b5b4239d68b5a299f328f7",
+      "definitions": []
+    },
+    {
+      "path": "app/templates/pages/password.html",
+      "sha256": "4157027f11bc09d52e325d3f9862fced5235b8420ffcbb9e799950584cf259b8",
+      "definitions": []
+    },
+    {
+      "path": "app/templates/pages/platform_home.html",
+      "sha256": "d72509661acbbf963432efc988e4eea5622c19d959724ea30cf55adc0c6e9505",
+      "definitions": []
+    },
+    {
+      "path": "app/templates/relatorios/adiantamentos.html",
+      "sha256": "7b71676304703a2953c1efb4876a8014a143031f86ee5ca0d048100ba5b78605",
+      "definitions": []
+    },
+    {
+      "path": "app/templates/relatorios/base_print.html",
+      "sha256": "8cb26f7121e93470ce0bff6953f3e034bc7dc5e1ac733e21d41a360bd7139a9d",
+      "definitions": []
+    },
+    {
+      "path": "app/templates/relatorios/comprovante_venda.html",
+      "sha256": "a3d6182e5c00bff11818bda89bcf4191c8510bd49df4a3dfa18e717996111cd9",
+      "definitions": []
+    },
+    {
+      "path": "app/templates/relatorios/fluxo_caixa.html",
+      "sha256": "558c7ad1dde77a05a385fc4b9d8963c119f7a6a23263ce677c1652ace3e00c3d",
+      "definitions": []
+    },
+    {
+      "path": "app/templates/relatorios/produtos_mais_vendidos.html",
+      "sha256": "81f0561f0abdc017e2a1d26de2d9f955737157fdd006a22123b000c4c8bbdb9f",
+      "definitions": []
+    },
+    {
+      "path": "app/utils/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "definitions": []
+    },
+    {
+      "path": "app/utils/helpers.py",
+      "sha256": "e2993222d6b361af364da37d9c5527860e1cff707574b87e7dd1c74737c56a2b",
+      "definitions": [
+        "parse_float",
+        "_to_int_or_none"
+      ]
+    },
+    {
+      "path": "migrations/README",
+      "sha256": "cfbdcfa6c8ca412e6ae93cace904babdefc3465ed9b4384ba5f92dfe5bd37ca6",
+      "definitions": []
+    },
+    {
+      "path": "migrations/alembic.ini",
+      "sha256": "aba9e18a46baa85be7991f0095c3fdfa5d2ba8afbc20f29a5bcca92b2ce2cb4c",
+      "definitions": []
+    },
+    {
+      "path": "migrations/env.py",
+      "sha256": "75f56634a98c53e48aaac06fd060327d89071a4f8606aef75d7cd4955690abda",
+      "definitions": [
+        "get_engine",
+        "get_engine_url",
+        "get_metadata",
+        "run_migrations_offline",
+        "run_migrations_online",
+        "process_revision_directives"
+      ]
+    },
+    {
+      "path": "migrations/script.py.mako",
+      "sha256": "89ef11643db6e9bdbe323390882399939e0c0ac603a26e9d705f3951a8ba4963",
+      "definitions": []
+    },
+    {
+      "path": "migrations/versions/0f6a8c2d4e9b_add_audit_and_saas_limits.py",
+      "sha256": "0a6acabb66c24747eb1c254a820f3d0820008eda6e5ef69e42700ce6d4f4a94b",
+      "definitions": [
+        "upgrade",
+        "downgrade"
+      ]
+    },
+    {
+      "path": "migrations/versions/1150177c20ca_initial.py",
+      "sha256": "11c5ce39f99778f3bd24559cbd344fb13c26db40ad1cf6f8076803c5fdfccfe7",
+      "definitions": [
+        "upgrade",
+        "downgrade"
+      ]
+    },
+    {
+      "path": "migrations/versions/1a2b3c4d5e6f_add_sprint3_boleto_fiscal_external_status.py",
+      "sha256": "046436ae229ab817afda0a28aaf43311fb10d71b675fc232a1e2052f02139bdc",
+      "definitions": [
+        "upgrade",
+        "downgrade"
+      ]
+    },
+    {
+      "path": "migrations/versions/2b3c4d5e6f7a_add_sprint4_asaas_focus_real_configs.py",
+      "sha256": "d0a4a0be009ce551b4db6c8e71de7a875c51a232fb7568464653abe0e3066bc3",
+      "definitions": [
+        "upgrade",
+        "downgrade"
+      ]
+    },
+    {
+      "path": "migrations/versions/3c4d5e6f7a8b_align_runtime_schema.py",
+      "sha256": "4c536eb91b17d7c5ca27836bfafb51a95165850509d4827cc82f47ca408b854c",
+      "definitions": [
+        "upgrade",
+        "downgrade"
+      ]
+    },
+    {
+      "path": "migrations/versions/4b2d8b0f6c11_add_platform_owners.py",
+      "sha256": "9cd44fbf8da2adb11ac44eec04f655f35f3d48a613bd526425331c2010db6fe8",
+      "definitions": [
+        "upgrade",
+        "downgrade"
+      ]
+    },
+    {
+      "path": "migrations/versions/4d5e6f7a8b9c_sprint02_security.py",
+      "sha256": "29d2a74bf61314663bcad90348fc07c9d8dbb400579456f665a4df0afa593e25",
+      "definitions": [
+        "upgrade",
+        "downgrade"
+      ]
+    },
+    {
+      "path": "migrations/versions/5e6f7a8b9c0d_sprint03_transactions.py",
+      "sha256": "2ed393be6b2b38fdc1cdb39dd5fd59d59bf57221404c5afa87b6f295d8545cee",
+      "definitions": [
+        "upgrade",
+        "downgrade"
+      ]
+    },
+    {
+      "path": "migrations/versions/6f7a8b9c0d1e_finite_money.py",
+      "sha256": "a9c11873a4d27e6c789a16d5e0fb41b744e1e6f82550fae042f3235963c4ce4f",
+      "definitions": [
+        "upgrade",
+        "downgrade"
+      ]
+    },
+    {
+      "path": "migrations/versions/7a8b9c0d1e2f_sprint04_operations.py",
+      "sha256": "4c3b186a121edfbac20c445e14038fa81b1fb2fcfdb9bd430570777368fd6da9",
+      "definitions": [
+        "upgrade",
+        "downgrade"
+      ]
+    },
+    {
+      "path": "migrations/versions/7f3c1a2b9d4e_add_roles_and_permissions.py",
+      "sha256": "730e12a2469213d77c58041febe1061a285f0ee463021d57e39327b02ec7c05f",
+      "definitions": [
+        "upgrade",
+        "downgrade"
+      ]
+    },
+    {
+      "path": "migrations/versions/8b9c0d1e2f3a_sprint05_lifecycles.py",
+      "sha256": "9a1cbe0f1b807e3e6364f43e59ec620221fccb7153b510a4621f0b913718705d",
+      "definitions": [
+        "upgrade",
+        "downgrade"
+      ]
+    },
+    {
+      "path": "migrations/versions/8f6e4c2a1b9d_add_pdv_financeiro_permissions_and_defaults.py",
+      "sha256": "8fcca582be2c37719dc601993074644c06cca70ce4a8f61da60be4ff2012dea7",
+      "definitions": [
+        "_scalar",
+        "upgrade",
+        "downgrade"
+      ]
+    },
+    {
+      "path": "migrations/versions/9c0d1e2f3a4b_sprint05_validation.py",
+      "sha256": "2adc619cf2519344f057ffc3e7edf79b0672608f71fe7da92e47073c27474913",
+      "definitions": [
+        "upgrade",
+        "downgrade"
+      ]
+    },
+    {
+      "path": "migrations/versions/9d1dca4d2bc5_v2.py",
+      "sha256": "73c5436142a9536d6fa841f9ef06c4014c443d7bbd69058b01a63b70f4139135",
+      "definitions": [
+        "upgrade",
+        "downgrade"
+      ]
+    },
+    {
+      "path": "migrations/versions/a0d1e2f3a4b5_sprint06_operations.py",
+      "sha256": "a848cb24c9ca9714bcc3d31d49d62e08a79628f644233abe55b906e0aa5292c0",
+      "definitions": [
+        "upgrade",
+        "downgrade"
+      ]
+    },
+    {
+      "path": "migrations/versions/a1b2c3d4e5f6_add_stock_alert_dispatch_tracking.py",
+      "sha256": "e7c2dc0a838642e4d5b6dc85266b81b157663123d63e2d6a86f565409a01e359",
+      "definitions": [
+        "_get_existing_columns",
+        "upgrade",
+        "downgrade"
+      ]
+    },
+    {
+      "path": "migrations/versions/a4f1c8d2e7b9_add_wholesale_and_fiscal_foundation.py",
+      "sha256": "2d8bcf70c593ef27ff1329df44050d138a69515ad0ee31383a56fb37c06d85ac",
+      "definitions": [
+        "_scalar",
+        "upgrade",
+        "downgrade"
+      ]
+    },
+    {
+      "path": "migrations/versions/b3c4d5e6f7a8_add_cashback_sale_controls.py",
+      "sha256": "ceabc13a0b3e7b0bdab3633684c3486ee8b4fbb137d8800409d23f35dcabefd7",
+      "definitions": [
+        "_get_existing_columns",
+        "upgrade",
+        "downgrade"
+      ]
+    },
+    {
+      "path": "migrations/versions/b7c9d1e2f3a4_add_cupons_adiantamentos_validade_salario.py",
+      "sha256": "5aff09fd37c9145091a017df981b3a8dc3067a63d0c78ca439b705908bcc5d15",
+      "definitions": [
+        "upgrade",
+        "downgrade"
+      ]
+    },
+    {
+      "path": "migrations/versions/c3a1f9d4e8b2_convert_quantities_to_integer.py",
+      "sha256": "b89aaf2ad653a86d6ed03c81cc5b5fa56f7d2fa729d120fd6837c3810a37d12a",
+      "definitions": [
+        "upgrade",
+        "downgrade"
+      ]
+    },
+    {
+      "path": "migrations/versions/c9d8e7f6a5b4_merge_cashback_and_fiscal_heads.py",
+      "sha256": "3e48bf7e28187f78632859899a5a46945d1602dd04e5f7175e1cd7c89b1afae6",
+      "definitions": [
+        "upgrade",
+        "downgrade"
+      ]
+    },
+    {
+      "path": "migrations/versions/d4e5f6a7b8c9_add_empresa_visual_mode.py",
+      "sha256": "e9f44102a9de9fd61b036b0252e6bf8e967c6d2e537dfdc079caeed12f35e9d4",
+      "definitions": [
+        "upgrade",
+        "downgrade"
+      ]
+    },
+    {
+      "path": "migrations/versions/e6f7a8b9c0d1_add_stock_alert_settings.py",
+      "sha256": "182b9faf44c987e9809a1f5e7cd1be747b87f5590e68fd28d979b32d4f450637",
+      "definitions": [
+        "_scalar",
+        "upgrade",
+        "downgrade"
+      ]
+    },
+    {
+      "path": "migrations/versions/ea3d60221646_merge_migration_heads.py",
+      "sha256": "73980523d04a83314b9dd5f82d753b07daf718f86f7cb23a9761ef9f8612c055",
+      "definitions": [
+        "upgrade",
+        "downgrade"
+      ]
+    },
+    {
+      "path": "migrations/versions/f2b4c6d8e9f1_add_client_wallet_messaging_and_reversal_controls.py",
+      "sha256": "3f160d20ecf72be57999d1702fd67feea8bcd1d2cd846b55dd0007481787aa32",
+      "definitions": [
+        "_scalar",
+        "upgrade",
+        "downgrade"
+      ]
+    },
+    {
+      "path": "migrations/versions/f9d0e1a2b3c4_add_boleto_financeiro_models.py",
+      "sha256": "326dae95a49b7e29b2adbdccef37411b66a93bb9f8b4192d235488cdd91fc826",
+      "definitions": [
+        "upgrade",
+        "downgrade"
+      ]
+    },
+    {
+      "path": "scripts/copy_accessibility.cjs",
+      "sha256": "174960bb6bafe4b9a2ae6f47d850afaecb0d9999bfece19f04e45c683e45900a",
+      "definitions": []
+    },
+    {
+      "path": "scripts/copy_icons.cjs",
+      "sha256": "d81a555866767a966bee95c88fac4f067d77f46b0e63fbcd6a7c68650428c180",
+      "definitions": []
+    },
+    {
+      "path": "scripts/deploy-api.sh",
+      "sha256": "0bc825c97b071747ad0a649e412084399b93564061b382e7c7d2193451e9492c",
+      "definitions": []
+    },
+    {
+      "path": "scripts/init-infra.sh",
+      "sha256": "1ad11cd87b63a6ea6404c8e886a93b69509d16e06469ad6f1d66d8f849109eaa",
+      "definitions": []
+    },
+    {
+      "path": "scripts/inventory.py",
+      "sha256": "1566d6e31032d681a4656870780c29d5757bceadf8d2f38c3fed741c64e7d51c",
+      "definitions": [
+        "service_calls",
+        "render_inventory",
+        "main"
+      ]
+    },
+    {
+      "path": "scripts/operational_snapshot.ps1",
+      "sha256": "56d0e575cc62f71594148287838094aa638eb8ee3254c82f9f5c0e9ace2cc41a",
+      "definitions": []
+    },
+    {
+      "path": "scripts/release_candidate.py",
+      "sha256": "fd88f57fa75a80feb01ac0b8f5a7436f131e73c8277f56e97885ae7861add0e6",
+      "definitions": [
+        "digest",
+        "write_json",
+        "cases",
+        "coverage",
+        "summarize",
+        "curate",
+        "traceability",
+        "source_files",
+        "package",
+        "verify",
+        "main"
+      ]
+    },
+    {
+      "path": "scripts/release_supply_chain.py",
+      "sha256": "f3b57622607e5eab1f79763a9de42f4ac23b3e3680946b6793fe81b447084b7c",
+      "definitions": [
+        "write_json",
+        "read_json",
+        "digest_inputs",
+        "candidate_paths",
+        "source_hashes",
+        "stage_candidate",
+        "execute",
+        "inventory",
+        "npm_sbom",
+        "npm_sbom_only",
+        "python_worker",
+        "compact_gitleaks",
+        "host_audit",
+        "main"
+      ]
+    },
+    {
+      "path": "scripts/seed_operational_proof.py",
+      "sha256": "a6129594a81146b40bb334d198fff60ed77554e2a338c37ad006bfcf4909e37d",
+      "definitions": [
+        "main"
+      ]
+    },
+    {
+      "path": "scripts/source_manifest.py",
+      "sha256": "a2c482cd409be6c69cc49bcbc847317b532f022bb6ec07efee68593a613a88d5",
+      "definitions": [
+        "main"
+      ]
+    },
+    {
+      "path": "scripts/test_environment.py",
+      "sha256": "5a7df7dbfb0b2f82c0bcfce08369b8b1204e2974d65b01c8ca3a70f65f2eba42",
+      "definitions": [
+        "configure_test_environment"
+      ]
+    },
+    {
+      "path": "scripts/validate_https_proof.py",
+      "sha256": "0554fe97cd83d275c01f7808c81436fda22a448ed10d0d90111bc0979de0f373",
+      "definitions": [
+        "main"
+      ]
+    },
+    {
+      "path": "scripts/validate_image.sh",
+      "sha256": "d28d095b3844cfcd8aa6e1dd60b7e8240b01709b38018be3ffc869b08d5c5661",
+      "definitions": []
+    },
+    {
+      "path": "scripts/validate_migrations.py",
+      "sha256": "fa2decceab103ceda3a1ed3b427ce7852bfd94c2eef510151c95fb7225d4730f",
+      "definitions": [
+        "main"
+      ]
+    },
+    {
+      "path": "scripts/validate_operational_proof.ps1",
+      "sha256": "680890bde897320c318d1a42452e167635d1ea5124038684e1699c212085fa0c",
+      "definitions": []
+    },
+    {
+      "path": "scripts/validate_proxy_logs.ps1",
+      "sha256": "dcc111ed115ac080987809bc2b7e4e249451d41977b25b5dd84bb578a9a5d302",
+      "definitions": []
+    },
+    {
+      "path": "scripts/validate_release_candidate.ps1",
+      "sha256": "017e66e736710aa02f9481fc45e5170738b5716b267e667ded39bc11c1eff78c",
+      "definitions": []
+    },
+    {
+      "path": "scripts/validate_release_config.cjs",
+      "sha256": "4c9dc0b8b7bfad1c055df460a115cb53e0c9fe9ea04919f6e8bc3bc9ff896c51",
+      "definitions": []
+    },
+    {
+      "path": "scripts/validate_release_http_load.py",
+      "sha256": "d80a16e6659c7c75097bf3438a7a0c79bfca83f6a1bf0b917d158972d01f23ac",
+      "definitions": [
+        "LoginForm",
+        "main",
+        "handle_starttag",
+        "read"
+      ]
+    },
+    {
+      "path": "scripts/validate_runtime_faults.py",
+      "sha256": "1a8f806271108e170e796db7ef053ba9fe7e8d78ea7efdc3193f26a4adff8483",
+      "definitions": [
+        "wait_ready",
+        "main"
+      ]
+    },
+    {
+      "path": "scripts/validate_security_smoke.py",
+      "sha256": "93190b5f038c67be6cc4a4d46f9cd8f1c80d97e660553605ffeaba9264639054",
+      "definitions": [
+        "request_status",
+        "main"
+      ]
+    },
+    {
+      "path": "scripts/validate_smoke.py",
+      "sha256": "55859be43b541ed9b92b08bbb80373c7727933fd43a7a31e0717f548cd5aeef0",
+      "definitions": [
+        "main"
+      ]
+    },
+    {
+      "path": "scripts/validate_snapshot_adversarial.ps1",
+      "sha256": "c66547f4afca337f159129ab1e092477ce2bc505157139f2d3e1924c1082bf66",
+      "definitions": []
+    },
+    {
+      "path": "scripts/validate_sprint02.ps1",
+      "sha256": "340a01e5363ad89313e095f776003cf4af481cb0f7a4fd0884f284dda5d223eb",
+      "definitions": []
+    },
+    {
+      "path": "scripts/validate_sprint03.ps1",
+      "sha256": "5eb611f92599e2e48703d3241fa7f93aa8efb0717f1bc06f0a21036675e76973",
+      "definitions": []
+    },
+    {
+      "path": "scripts/validate_sprint03_adversarial.ps1",
+      "sha256": "c0f77b789e6b11d31d6441288527040d5a77caa3c997be4052e9a8ece74ff0d5",
+      "definitions": []
+    },
+    {
+      "path": "scripts/validate_sprint04.ps1",
+      "sha256": "d8a1f2164aa59235163cfbb92f7c793fb9f9e7c7bbe5ffe32cd2e36d005207a4",
+      "definitions": []
+    },
+    {
+      "path": "scripts/validate_sprint05.ps1",
+      "sha256": "00b6bb6158604344d0a4a39c2e17d4bb1739544bff2fc7bd8d11f7d38cc707d2",
+      "definitions": []
+    },
+    {
+      "path": "scripts/validate_sprint05_adversarial.ps1",
+      "sha256": "c3650ce6135f3a937ef8b7a1e11b269221ad27bdcb7d510c5cd23cb68572664b",
+      "definitions": []
+    },
+    {
+      "path": "scripts/validate_sprint06.ps1",
+      "sha256": "7ee87421c43f53cb6f792636e77c07d43606ae61a118bfb518af6d6c1a8d590a",
+      "definitions": []
+    },
+    {
+      "path": "scripts/validate_storage_outage.py",
+      "sha256": "da988d2f095d875841f68e30258554ce3926f30ca50921f7e9e11352724726d5",
+      "definitions": [
+        "main"
+      ]
+    },
+    {
+      "path": "scripts/validate_workflow.cjs",
+      "sha256": "ec5d47eea84dea9789719c47c9a4a9da6922ae34af4e2a0bc1dfc7fef20b83b3",
+      "definitions": []
+    },
+    {
+      "path": "tests/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "definitions": []
+    },
+    {
+      "path": "tests/alert_worker_probe.py",
+      "sha256": "49691170c40d4d76d6d1bbcdb11d6b3550376912a02d4b75acc2dd83584204f1",
+      "definitions": [
+        "main",
+        "claim",
+        "transport"
+      ]
+    },
+    {
+      "path": "tests/conftest.py",
+      "sha256": "7aafba8e4eb6fae5900acc29a3057a05772edd414e6c839af66fa576143b192b",
+      "definitions": [
+        "migrated_database",
+        "isolated_process_state",
+        "observed_http_routes",
+        "record_http_routes",
+        "deny_network",
+        "dispatch"
+      ]
+    },
+    {
+      "path": "tests/database.py",
+      "sha256": "cff3f1c7887974fdb909defcfbd9635edaed0171684d349f4e68e6cd6d8c1daa",
+      "definitions": [
+        "reset_test_database"
+      ]
+    },
+    {
+      "path": "tests/test_boleto_service.py",
+      "sha256": "9eb675a960798e2a2a843bb5ab1bbf57c01ba22649c8e73a7327fd78ba3ce6c4",
+      "definitions": [
+        "test_calcular_juros_multa_aplica_regra_basica",
+        "test_recalcular_juros_multa_nao_reaplica_total_de_forma_cumulativa",
+        "test_registrar_boleto_atualiza_status_bancario_e_preserva_status_interno",
+        "Provider",
+        "registrar"
+      ]
+    },
+    {
+      "path": "tests/test_fluxo_pdv_financeiro.py",
+      "sha256": "68f52213255983ebb2cdc2142831291d457abe89c810daf6e850fd97888a8057",
+      "definitions": [
+        "FluxoPdvFinanceiroTestCase",
+        "setUpClass",
+        "tearDownClass",
+        "setUp",
+        "test_venda_baixa_estoque_e_gera_financeiro",
+        "test_venda_automatica_aplica_preco_atacado_ao_atingir_quantidade_minima",
+        "test_venda_em_atacado_exige_quantidade_minima_configurada",
+        "test_prevalidacao_fiscal_aponta_pendencias_sem_configuracao",
+        "test_prevalidacao_fiscal_fica_pronta_com_base_minima_preenchida",
+        "test_emissao_fiscal_gera_numero_chave_xml_e_incrementa_numeracao",
+        "test_cancelamento_reverte_estoque_e_financeiro",
+        "test_lancamento_manual_e_fechamento",
+        "test_listagem_de_fechamentos_retorna_operador_e_diferenca",
+        "test_busca_produto_por_codigo_barras_no_pdv",
+        "test_adiantamento_em_produto_baixa_estoque_e_gera_financeiro",
+        "test_resumo_folha_considera_adiantamento_em_dinheiro",
+        "test_relatorio_produtos_mais_vendidos_consolida_itens_do_pdv",
+        "test_venda_com_cliente_gera_cashback_e_historico",
+        "test_cashback_respeita_limite_percentual_de_resgate_por_venda",
+        "test_venda_pode_desativar_cashback_sem_afetar_carteira_existente",
+        "test_cliente_sem_vendas_serializa_total_zero",
+        "test_configuracao_cliente_preserva_senha_existente_quando_campo_nao_e_enviado",
+        "test_normalizacao_de_senha_app_do_gmail_remove_espacos",
+        "test_teste_configuracao_empresa_usa_payload_informado_sem_persistir",
+        "test_venda_com_cliente_envia_email_automatico_e_registra_cashback",
+        "test_template_html_do_email_de_venda_usa_identidade_oceanblue",
+        "test_venda_permanece_finalizada_quando_email_automatico_falha",
+        "test_disparo_coletivo_envia_apenas_para_clientes_elegiveis",
+        "test_alerta_email_estoque_dispara_ao_atingir_minimo",
+        "test_alerta_email_estoque_respeita_cooldown_e_reenvia_em_novo_status",
+        "test_cancelamento_parcial_de_item_reverte_estoque_e_ajusta_cashback",
+        "test_cancelamento_de_movimento_manual_reverte_saldo"
+      ]
+    },
+    {
+      "path": "tests/test_import_export.py",
+      "sha256": "f548cfbbc2e0b096f036e3cdd19c2710f2c89581c04489e7958de0b475107ba3",
+      "definitions": [
+        "ImportExportServiceTestCase",
+        "setUpClass",
+        "tearDownClass",
+        "setUp",
+        "test_template_produtos_contem_abas_e_headers_esperados",
+        "test_importacao_de_produto_cria_categoria_e_vinculo_por_empresa",
+        "test_exportacao_de_produtos_retorna_linha_com_empresa_e_valores",
+        "_importar_produto_teste"
+      ]
+    },
+    {
+      "path": "tests/test_integracoes_sprint4.py",
+      "sha256": "3e260c36a4bc6e47476f22a2d2fa81839e62612ac2c7cbfc9740f179c3225fe9",
+      "definitions": [
+        "FakeResponse",
+        "test_asaas_provider_cria_cliente_e_cobranca_boleto",
+        "test_focus_provider_emite_nfce_com_ref_idempotente",
+        "__init__",
+        "__enter__",
+        "__exit__",
+        "read",
+        "fake_urlopen",
+        "fake_urlopen"
+      ]
+    },
+    {
+      "path": "tests/test_permission_hierarchy.py",
+      "sha256": "d8637c4802f8ede5ec6febeddf02cbfa9352dca2f5d23f0c3611fbd41b775329",
+      "definitions": [
+        "_PermissionStub",
+        "PermissionHierarchyTestCase",
+        "__init__",
+        "test_financeiro_relatorio_depende_do_geral",
+        "test_dependencia_em_cadeia_remove_filhos_orfaos",
+        "test_todas_as_permissions_padrao_estao_cobertas_no_catalogo"
+      ]
+    },
+    {
+      "path": "tests/test_permissions_security.py",
+      "sha256": "66a1d280969ef619aa4a998edbaee4250a21af7e4dac224d38f243414284728d",
+      "definitions": [
+        "PermissionsSecurityTestCase",
+        "setUpClass",
+        "tearDownClass",
+        "setUp",
+        "_remover_permissoes_financeiras_do_operador",
+        "_login_operador",
+        "test_bootstrap_nao_reaplica_permissoes_removidas_da_role_existente",
+        "test_authenticated_write_requires_csrf_token",
+        "test_login_nao_renderiza_financeiro_e_bloqueia_url_direta",
+        "test_login_nao_renderiza_configuracoes_e_bloqueia_url_direta",
+        "test_admin_recebe_novas_permissoes_por_padrao",
+        "test_login_registra_auditoria_e_headers_de_seguranca",
+        "test_rate_limit_bloqueia_excesso_de_tentativas_de_login",
+        "test_trial_expirado_bloqueia_modulos_do_tenant"
+      ]
+    },
+    {
+      "path": "tests/test_produto_service.py",
+      "sha256": "00293d4e5207bf3ea2cb701b7c76f4cf5220f7fa8bac269cf84b02af6616a3ce",
+      "definitions": [
+        "ProdutoServiceTestCase",
+        "setUpClass",
+        "tearDownClass",
+        "setUp",
+        "test_listar_categorias_retorna_categoria_sem_produto_vinculado",
+        "test_criar_produto_gera_codigo_barras_ean13_quando_vazio",
+        "test_limite_de_produtos_do_plano_bloqueia_novo_cadastro"
+      ]
+    },
+    {
+      "path": "tests/test_release_candidate.py",
+      "sha256": "743ecafca185d6b0afc309ea21e98a175f20c64beef6e8e33f8b7cef4c7e5b96",
+      "definitions": [
+        "test_release_contains_runtime_entrypoint_and_locked_configuration",
+        "test_health_reports_packaged_release_version",
+        "test_release_rejects_incomplete_or_ambiguous_junit",
+        "test_release_archive_is_reproducible_and_contains_only_expected_sources",
+        "test_release_retains_structured_evidence_without_success_trace_duplication"
+      ]
+    },
+    {
+      "path": "tests/test_runtime.py",
+      "sha256": "15783c299f7d0f7442132cb4780cc2acebf067e35ed1087ac65fede404284432",
+      "definitions": [
+        "test_test_environment_rejects_non_test_database",
+        "test_testing_config_rejects_production_database",
+        "test_production_requires_secrets",
+        "test_production_rejects_short_secrets",
+        "test_test_app_preserves_csrf_and_disables_debug",
+        "test_external_network_is_blocked",
+        "test_health_and_readiness_on_migrated_postgresql",
+        "test_readiness_fails_without_leaking_database_details",
+        "unavailable"
+      ]
+    },
+    {
+      "path": "tests/test_schema.py",
+      "sha256": "51c94458256882da5ff55c8bdcdb5fd743f9c4cf7059284ba108ea9d3a980d0e",
+      "definitions": [
+        "test_migrated_schema_matches_model_types_indexes_and_foreign_keys",
+        "test_schema_upgrade_preserves_rows_and_rolls_back_invalid_legacy_data",
+        "snapshot"
+      ]
+    },
+    {
+      "path": "tests/test_security_headers.py",
+      "sha256": "2336bfd6381110283d5e473ea63f0cc42f0f59d1094e951675aca579231655b6",
+      "definitions": [
+        "SecurityHeadersHttpsTestCase",
+        "setUp",
+        "test_loopback_http_request_bypasses_https_enforcement_for_internal_healthcheck",
+        "test_external_http_request_still_requires_https",
+        "test_forwarded_for_loopback_does_not_bypass_https_enforcement",
+        "test_forwarded_proto_is_not_trusted_without_proxyfix",
+        "test_loopback_cannot_bypass_https_on_login",
+        "healthcheck"
+      ]
+    },
+    {
+      "path": "tests/test_sprint02_adversarial.py",
+      "sha256": "00ad6f4b83c27ea7f1557b8bf11ba19e654d3d4ab98923ba342fecba2b2da246",
+      "definitions": [
+        "test_platform_account_limit_ignores_supplied_tenant",
+        "test_case_sensitive_accounts_do_not_share_lockout",
+        "test_platform_limit_survives_concurrent_ips_and_tenant_variations",
+        "test_homonymous_tenant_lockouts_are_independent",
+        "test_unicode_csrf_is_invalid_input_not_server_error",
+        "test_authenticated_html_is_never_cached",
+        "test_successful_provider_response_cannot_disclose_credentials",
+        "test_fiscal_mock_does_not_probe_server_files_or_environment",
+        "test_database_failure_is_redacted_in_readiness_logs",
+        "test_database_failures_deny_auth_and_leave_session_recoverable",
+        "test_permission_and_company_revocation_apply_to_existing_cookie",
+        "test_modified_unsigned_claims_cannot_authenticate",
+        "test_every_api_method_enforces_auth_scope_and_csrf",
+        "test_company_configuration_idor_read_write_and_test",
+        "test_foreign_resource_ids_cannot_read_modify_or_delete",
+        "attempt",
+        "fail",
+        "fail"
+      ]
+    },
+    {
+      "path": "tests/test_sprint02_security.py",
+      "sha256": "2949068c0497aeed1a4448d38d706c74dcce04f1cf7d370cd4137f485010b242",
+      "definitions": [
+        "security_app",
+        "login",
+        "csrf_headers",
+        "test_login_requires_tenant_and_never_falls_back_to_platform",
+        "test_csrf_login_logout_and_replay_revocation",
+        "test_password_change_revokes_every_session_and_rejects_wrong_password",
+        "test_deactivation_revokes_existing_cookie",
+        "test_reset_token_is_hashed_tenant_bound_expiring_and_single_use",
+        "test_concurrent_reset_accepts_one_consumer",
+        "test_rate_limit_shared_across_apps_and_concurrent_requests",
+        "test_forwarded_header_does_not_evade_limit_and_retry_is_present",
+        "test_cross_tenant_foreign_keys_and_company_admin_scope",
+        "test_queries_filter_tenant_and_company_including_bulk_mutations",
+        "test_concurrent_quota_cannot_be_exceeded",
+        "test_trial_missing_expired_and_last_day_consistent",
+        "test_field_rotation_tampering_and_unknown_key",
+        "test_role_changes_are_audited_without_password_hash",
+        "test_import_quota_partial_rows_updates_and_password_policy",
+        "test_all_tenant_tables_and_foreign_keys_have_database_integrity_guard",
+        "test_sales_quota_is_concurrent_and_cross_tenant_child_is_rejected",
+        "test_company_isolation_of_financial_links_within_same_tenant",
+        "test_http_cross_tenant_crud_reset_and_platform_boundary",
+        "test_nonadmin_cannot_grant_roles_or_import_staff_even_with_permission",
+        "test_http_errors_hide_database_and_exception_details",
+        "test_every_api_requires_auth_except_health_and_disabled_webhook",
+        "test_seed_requires_explicit_password_and_never_creates_demo_in_production",
+        "test_rotation_cli_handles_legacy_and_rolls_back_corrupt_fields",
+        "test_real_integrations_and_webhook_stay_disabled",
+        "test_jwt_key_version_rotation_rejects_previous_tokens",
+        "test_rate_limit_shared_between_distinct_processes",
+        "test_http_password_reset_revokes_cookie_and_rejects_reuse",
+        "test_admin_without_all_companies_cannot_change_shared_accounts",
+        "test_outbound_allowlist_blocks_ssrf",
+        "test_webhook_redirects_and_smtp_provider_details_are_blocked",
+        "test_security_migration_rejects_legacy_cross_tenant_data_atomically",
+        "test_role_creation_and_audit_roll_back_together",
+        "consume",
+        "attempt",
+        "create",
+        "create",
+        "fail",
+        "upload",
+        "fail_on_link"
+      ]
+    },
+    {
+      "path": "tests/test_sprint03_adversarial.py",
+      "sha256": "292ccbf74d775709c21b6907e89f237cab5e690be7eb4fd581b9ccee8aae8601",
+      "definitions": [
+        "snapshot",
+        "test_sale_rollback_at_each_persisted_stage",
+        "test_cancel_rollback_at_each_persisted_stage",
+        "test_cashback_without_customer_cannot_reduce_payment",
+        "test_partial_refunds_conserve_every_cent",
+        "test_two_sales_for_last_unit_with_distinct_keys",
+        "test_concurrent_same_key_different_payload",
+        "test_simultaneous_full_and_partial_cancellation",
+        "test_each_layout_invalid_middle_row_preserves_existing_data",
+        "test_duplicate_concurrent_batches_are_updates_without_duplicate_effects",
+        "test_money_boundary_is_client_error_and_atomic",
+        "test_product_update_preserves_barcode_when_omitted",
+        "test_employee_history_cannot_be_detached_by_delete",
+        "customer_setup",
+        "test_refunds_do_not_overpay_individual_payment_sources",
+        "test_partial_refunds_revoke_all_generated_cashback",
+        "test_partial_refunds_restore_each_consumed_credit_exactly",
+        "test_cashback_insert_failure_rolls_back_sale_and_wallet",
+        "test_import_foreign_company_rolls_back_every_row",
+        "test_idempotency_replay_rechecks_company_access",
+        "cancel",
+        "fail",
+        "cancel",
+        "fail",
+        "fail"
+      ]
+    },
+    {
+      "path": "tests/test_sprint03_database.py",
+      "sha256": "7ffcb5775c6b7380d638638cd38f6edc4f1b41cfba968d9b81df906d35754fdb",
+      "definitions": [
+        "test_postgresql_rejects_nan_in_persisted_money",
+        "test_finite_migration_refuses_inconsistent_legacy_without_data_loss",
+        "test_all_numeric_columns_have_database_finite_guards"
+      ]
+    },
+    {
+      "path": "tests/test_sprint03_faults.py",
+      "sha256": "69b0ec40ebc0c5141b9349153c28c8a0479a69f3c23a22c6cb128520a77a031c",
+      "definitions": [
+        "test_each_import_layout_rollback_after_actual_insert",
+        "test_registration_parent_insert_failure_preserves_all_tables",
+        "test_last_quota_between_registration_and_batch",
+        "test_concurrent_barcode_updates_preserve_loser",
+        "test_postgresql_orphan_and_ledger_audit_after_mixed_operations",
+        "create",
+        "update",
+        "fail",
+        "fail"
+      ]
+    },
+    {
+      "path": "tests/test_sprint03_transactions.py",
+      "sha256": "406bdcc2cac56e61c8bf618f2b7efdd873c9595e0200b2d8932d74277c5a65d4",
+      "definitions": [
+        "transaction_app",
+        "scope",
+        "product",
+        "employee",
+        "upload",
+        "import_rows",
+        "parallel",
+        "stock_setup",
+        "sale_payload",
+        "test_parent_and_links_rollback_after_child_insert_failure",
+        "test_final_parent_delete_failure_restores_link",
+        "test_employee_company_set_and_role_changes_are_atomic",
+        "test_product_multiple_companies_preserves_balances_and_quota",
+        "test_invalid_product_never_leaves_parent",
+        "test_category_validation_and_in_use_delete",
+        "test_concurrent_generated_and_duplicate_barcodes",
+        "test_concurrent_stock_exhaustion_has_one_winner",
+        "test_sale_and_partial_cancellation_replay_concurrently",
+        "test_full_cancellation_and_stock_callback_replays",
+        "test_sale_failure_after_stock_restores_every_table",
+        "test_all_six_layouts_preview_import_export_reimport",
+        "test_all_layouts_reject_entire_batch_when_last_row_invalid",
+        "test_import_stock_update_and_conflicting_barcode_rollback",
+        "test_concurrent_import_last_quota_and_no_orphans",
+        "test_http_preview_and_multicompany_employee",
+        "test_role_replacement_failure_preserves_permissions_and_name",
+        "test_cancel_failure_restores_sale_stock_finance_and_idempotency",
+        "test_commit_failure_does_not_send_notification_or_leave_sale",
+        "test_uncancelled_sale_cannot_restore_stock",
+        "test_manual_cancellation_concurrent_replay",
+        "test_deactivation_is_local_to_product_company",
+        "test_import_invalid_values_rollback",
+        "test_export_formula_like_text_is_literal",
+        "test_http_sale_requires_key_and_replays_same_business_response",
+        "test_migration_rejects_duplicate_legacy_sale_debits_atomically",
+        "run",
+        "remove",
+        "fail",
+        "fail",
+        "fail",
+        "fail",
+        "fail",
+        "fail"
+      ]
+    },
+    {
+      "path": "tests/test_sprint04_adversarial.py",
+      "sha256": "8b81a924d29e55fbe603165be185d48207b7a32ad635d04b8647a2bf8483c2e3",
+      "definitions": [
+        "pending_alert",
+        "test_pretransport_security_rejection_is_retryable",
+        "test_worker_crash_boundaries_preserve_durable_delivery_state",
+        "test_transport_rejection_and_ambiguity_do_not_leak_or_duplicate",
+        "test_coupon_cashback_sale_rollback_at_each_boundary",
+        "test_duplicate_lines_last_stock_concurrency_and_reconciliation",
+        "test_coupon_expiry_at_brazil_day_boundary",
+        "test_sale_replay_divergent_payload_leaves_all_tables_unchanged",
+        "test_coupon_mutations_require_csrf_and_permission",
+        "test_alert_retry_enforces_live_company_and_permission",
+        "test_sale_identifiers_cannot_be_truncated_into_another_record",
+        "test_real_worker_process_exit_releases_locks_without_duplicate_delivery",
+        "test_daily_summary_counts_beyond_visual_limit_and_rolls_over_day",
+        "WorkerCrash",
+        "sell",
+        "crash_commit",
+        "send",
+        "send",
+        "fail"
+      ]
+    },
+    {
+      "path": "tests/test_sprint04_browser.py",
+      "sha256": "db4347d98ee9fb16128e64c393eefc059db0b5ba34b2405648548bf5abc8966a",
+      "definitions": [
+        "browser_page",
+        "test_browser_sale_split_retry_partial_full_reprint",
+        "test_browser_coupon_create_and_alert_history_retry",
+        "lose_first_response",
+        "local_only"
+      ]
+    },
+    {
+      "path": "tests/test_sprint04_browser_adversarial.py",
+      "sha256": "18aa63ac54f719b0daea314a0bf3de97288b895b551cea641e35aa870e4eb4b9",
+      "definitions": [
+        "test_browser_coupon_minimum_exact_cents_and_split_payment"
+      ]
+    },
+    {
+      "path": "tests/test_sprint04_operations.py",
+      "sha256": "1b3112c63d8e5b760eca20360a686ee5e9d7943ba1a7254025bf9c7a8123b6a3",
+      "definitions": [
+        "coupon",
+        "customer",
+        "alert_setup",
+        "test_pricing_contract_and_exact_payments",
+        "test_invalid_quantities_leave_no_effects",
+        "test_manual_discount_permissions_and_limits",
+        "test_coupon_invalid_money_is_atomic",
+        "test_coupon_invalid_rules_do_not_persist",
+        "test_sale_enforces_coupon_period_company_minimum_identity",
+        "test_coupon_rounding_cap_customer_and_historical_usage",
+        "test_coupon_last_use_is_serialized_in_postgresql",
+        "test_coupon_use_rollback_then_retry",
+        "test_split_payments_reject_loss_creation_or_zero",
+        "test_zero_total_cannot_silently_discard_payments",
+        "test_receipt_reprints_have_no_business_side_effects",
+        "test_alerts_concurrent_queue_no_duplicate_recipients_or_daily_summary",
+        "test_alert_partial_recipient_failure_only_retries_failed_delivery",
+        "test_alert_transport_timeout_is_uncertain_and_not_resent",
+        "test_sale_and_alert_outbox_rollback_together",
+        "test_alert_history_http_scope_csrf_and_whatsapp_disabled",
+        "test_coupon_database_guards",
+        "test_migration_invalid_legacy_coupon_aborts_without_data_loss",
+        "test_coupon_half_up_rounding_in_cents",
+        "test_pending_alert_survives_worker_loss_and_cli_retries",
+        "test_successful_delivery_ack_failure_does_not_duplicate",
+        "test_customer_coupon_limit_concurrent_sales",
+        "test_automatic_wholesale_uses_combined_quantity_across_lines",
+        "test_full_cancel_after_partial_is_atomic_idempotent_and_conserves_money",
+        "test_global_coupon_usage_cannot_be_hidden_by_company_scope",
+        "test_expiry_alert_boundaries_use_brazil_calendar",
+        "test_simultaneous_retries_send_each_delivery_once",
+        "sell",
+        "send",
+        "send",
+        "sell",
+        "fail",
+        "fail",
+        "fail_ack",
+        "fail"
+      ]
+    },
+    {
+      "path": "tests/test_sprint05_adversarial.py",
+      "sha256": "a1f2794f5f17ebd6fcc4ec9deffa33d3d686c78c3d2e418c3344f04eb3c5b768",
+      "definitions": [
+        "test_rounded_money_cannot_overflow_storage",
+        "test_ledger_reversal_marker_cannot_be_forged",
+        "test_advance_approval_rechecks_employee_company_link",
+        "test_privacy_committed_after_claim_prevents_transport",
+        "test_message_worker_crash_boundaries",
+        "test_advance_failure_at_every_persisted_boundary",
+        "test_formal_reversal_failure_is_atomic",
+        "test_all_invalid_advance_transitions",
+        "test_closure_conflicting_revision_race_and_replay",
+        "test_reconciliation_over_1000_and_local_midnight",
+        "test_message_history_respects_company_scope_http",
+        "test_send_revalidates_permission_after_claim",
+        "test_cashback_use_expire_cancel_race",
+        "test_daily_limit_concurrency_and_due_backoff",
+        "test_ledger_direct_identity_and_value_edits_are_rejected",
+        "test_privacy_failure_rolls_back_all_operational_copies",
+        "test_queue_creation_failure_is_atomic",
+        "test_closure_adjustment_failure_is_atomic",
+        "test_advance_api_rejects_extremes_without_effects",
+        "test_reconciliation_detects_extra_entry_and_refuses_close",
+        "test_partial_batch_transport_never_duplicates_confirmed_or_uncertain",
+        "Crash",
+        "Transport",
+        "reopen",
+        "action",
+        "Transport",
+        "privacy",
+        "interleave_commit",
+        "enviar",
+        "crash_commit",
+        "fail",
+        "fail",
+        "revoke",
+        "interleave_commit",
+        "fail",
+        "fail",
+        "fail",
+        "enviar"
+      ]
+    },
+    {
+      "path": "tests/test_sprint05_browser.py",
+      "sha256": "644c05c55fde7d0f497830de8973dd01ae8adf9abb0ccb0f9743234b3c5ccb3b",
+      "definitions": [
+        "test_browser_advance_reversal_closure_and_privacy"
+      ]
+    },
+    {
+      "path": "tests/test_sprint05_browser_adversarial.py",
+      "sha256": "efb29ea3bdf097c44465ebb3a5f57e0a22a8f327ea8d19d5ca0a2d5a482630cb",
+      "definitions": [
+        "test_browser_lost_advance_ack_replays_without_duplicate",
+        "lose_response"
+      ]
+    },
+    {
+      "path": "tests/test_sprint05_cycles.py",
+      "sha256": "4c59fd652247a8dfcd332232389fcd7d1ede980d7d1297ddd1d501331d0d6f91",
+      "definitions": [
+        "client_setup",
+        "enqueue",
+        "advance_payload",
+        "transition",
+        "test_strict_identifiers",
+        "test_advance_full_cycle_preserves_ledger_and_stock",
+        "test_advance_cancel_and_concurrent_approval",
+        "test_advance_failure_after_ledger_insert_rolls_back",
+        "manual_entry",
+        "test_financial_reversal_and_audited_closure",
+        "test_ledger_rejects_destructive_changes",
+        "test_cashback_queue_and_sale_are_one_transaction",
+        "test_queue_gateway_outcomes_concurrency_and_replay",
+        "test_queue_backoff_exhaustion_and_default_block",
+        "test_consent_export_anonymization_preserves_obligations",
+        "test_cashback_expiration_concurrency_and_consumption",
+        "test_new_mutations_require_csrf",
+        "test_http_tenant_privacy_and_finance_isolation",
+        "test_advance_refuses_invalid_money_without_effects",
+        "test_expired_unused_credit_does_not_prevent_sale_cancellation",
+        "test_cashback_spend_partial_full_cancel_reconciles",
+        "test_cashback_processing_is_idempotent_and_checks_payload",
+        "test_queue_lost_confirmation_never_retries_uncertain",
+        "test_anonymized_idempotent_sale_cannot_reveal_customer_again",
+        "test_reports_do_not_silently_drop_records_above_1000",
+        "test_new_permissions_revalidated_in_existing_session",
+        "fail",
+        "fail",
+        "fail_confirmation"
+      ]
+    },
+    {
+      "path": "tests/test_sprint06_browser.py",
+      "sha256": "f4a549eb8ec9299afd7b1417cd60740c92cb3b4f71858431c29245d24af006e8",
+      "definitions": [
+        "test_mobile_accessibility_and_local_assets",
+        "test_mobile_sale_retry_and_reversal"
+      ]
+    },
+    {
+      "path": "tests/test_sprint06_browser_adversarial.py",
+      "sha256": "930cc014fd31307d57fee296ed41f9665ce383e1928901ae857b11db1a8ca7ea",
+      "definitions": [
+        "operational_page",
+        "open_sidebar",
+        "assert_visible_focus",
+        "test_mobile_sidebar_keyboard_round_trip",
+        "test_mobile_sidebar_focus_fits_viewport",
+        "test_sidebar_focus_survives_breakpoint_changes",
+        "test_persisted_mobile_sidebar_receives_focus",
+        "test_user_disclosure_escape_and_tab_dismissal",
+        "test_keyboard_skip_link_reaches_operational_controls",
+        "test_cold_assets_local_and_loaded_page_offline_recovery",
+        "record_response",
+        "record_request"
+      ]
+    },
+    {
+      "path": "tests/test_sprint06_data_adversarial.py",
+      "sha256": "f9b427aeb557f42e3c19e41a9e6724147cab69a8d42015b609ab7116d379ce70",
+      "definitions": [
+        "audit_client",
+        "restrict_companies",
+        "test_audit_tenant_cursor_and_header_tampering",
+        "test_audit_cookie_claim_tampering",
+        "test_audit_requires_permission_and_tenant_scope",
+        "test_audit_live_company_revocation_and_empty_scope",
+        "test_audit_inactive_company_denied",
+        "test_audit_rejects_ambiguous_or_out_of_range_parameters",
+        "test_audit_pagination_survives_insert_and_reaches_end",
+        "test_audit_first_page_includes_maximum_integer_id",
+        "test_audit_http_tampering_is_read_only",
+        "test_audit_runtime_role_rejects_update_delete_and_truncate",
+        "storage_app",
+        "test_storage_rejects_unsafe_roots",
+        "test_storage_probe_never_overwrites_existing_link",
+        "test_storage_io_errors_fail_closed_and_cleanup",
+        "test_storage_read_only_directory_real_permissions",
+        "test_storage_probe_detects_incomplete_or_corrupt_write",
+        "test_storage_failure_http_readiness_and_mutation",
+        "restore_marker",
+        "remove_restore_marker",
+        "test_storage_restore_marker_blocks_probe_before_write_and_recovers",
+        "test_storage_restore_marker_blocks_http_and_removal_recovers",
+        "test_production_feature_flags_reject_noncanonical_values",
+        "test_disabled_production_provider_factory_fails_closed",
+        "test_mock_provider_requires_explicit_testing_flag",
+        "test_real_provider_request_denied_before_network_or_secret",
+        "test_real_provider_selection_and_download_denied",
+        "damaged_write",
+        "mutation"
+      ]
+    },
+    {
+      "path": "tests/test_sprint06_load_adversarial.py",
+      "sha256": "87709e7838f8cc56b630559f5263fbf2465889e3bf1ec9079efd2a3ee8bde7a4",
+      "definitions": [
+        "record_measurement",
+        "test_concurrent_audit_reads_bounded_and_tenant_safe",
+        "test_sixteen_writers_cannot_oversell_twelve_units",
+        "test_critical_list_query_count_does_not_grow_per_sale",
+        "test_migration_lock_failure_preserves_revision_and_sales",
+        "read_pages",
+        "count_query"
+      ]
+    },
+    {
+      "path": "tests/test_sprint06_operations.py",
+      "sha256": "b7d3323a8497228b862aefe21eaa1dbb00a19a264a8a8013109523abc381075a",
+      "definitions": [
+        "test_production_flags_fail_closed",
+        "test_unsafe_transport_configuration_rejected",
+        "test_proxy_trusts_only_transport_peer",
+        "test_storage_readiness_and_write_failure_closed",
+        "test_readiness_refuses_stale_schema",
+        "test_production_ui_and_payment_lookup_hide_blocked_modules",
+        "test_storage_probe_private_atomic_and_no_symlinks",
+        "test_request_id_redaction_and_metrics",
+        "test_production_routes_block_even_authenticated",
+        "test_audit_permission_scope_pagination_and_private_projection",
+        "test_audit_request_trace_and_lossy_downgrade_refused",
+        "test_company_restricted_audit_excludes_global_and_other_company",
+        "test_runtime_database_role_cannot_ddl_truncate_or_erase_audit",
+        "test_audit_benchmark_bounded_queries_and_index",
+        "count_queries"
+      ]
+    },
+    {
+      "path": "tests/test_sprint06_security_adversarial.py",
+      "sha256": "22298b64204793b83769ed560cd6fcae269e215c5e1787772a785efda466cca1",
+      "definitions": [
+        "operational_app",
+        "operational_logs",
+        "test_forwarded_loopback_cannot_unlock_http_health",
+        "test_direct_loopback_health_stays_available",
+        "test_untrusted_peer_cannot_promote_scheme_or_host",
+        "test_trusted_proxy_uses_last_hop_without_forwarded_host",
+        "test_metrics_invalid_authorization_fails_closed",
+        "test_metrics_unusable_token_fails_closed",
+        "test_metrics_first_scrape_includes_zero_counters",
+        "test_structured_log_fields_cannot_smuggle_secrets",
+        "test_structured_log_invalid_values_do_not_break_json",
+        "test_http_log_method_and_request_id_injection",
+        "test_http_logs_only_route_template_and_preserves_correlation",
+        "test_exception_text_and_traceback_are_not_logged",
+        "test_correlation_survives_earlier_request_gate",
+        "test_health_responses_are_not_cacheable",
+        "test_dependency_failures_keep_health_alive_and_hide_details",
+        "test_storage_short_write_fails_readiness_and_cleans_probe",
+        "test_storage_failure_blocks_mutation_but_not_health"
+      ]
+    },
+    {
+      "path": "tests/test_sprint07_audit.py",
+      "sha256": "e05ae2b0407e107cb64a1f35f8fab860d61c66a7ab930740ad535c799ddea89b",
+      "definitions": [
+        "test_http_identifiers_never_select_a_different_record",
+        "test_string_identifiers_preserve_valid_employee_product_and_stock_flow",
+        "brazil_clock",
+        "test_cashback_remains_spendable_until_brazil_midnight",
+        "test_coupon_import_and_selection_share_brazil_expiry_date",
+        "test_reports_cash_closure_and_series_use_same_brazil_day",
+        "test_stock_default_period_uses_brazil_today",
+        "test_monthly_series_does_not_move_late_evening_to_next_month",
+        "test_partial_returns_reduce_rankings_revenue_cost_and_demand",
+        "test_returned_item_disappears_from_rankings_while_sale_remains_active",
+        "test_dashboard_partial_return_with_cashback_matches_reconciliation",
+        "test_operational_lookup_preserves_imported_deactivation",
+        "test_empty_dashboard_http_is_valid_with_and_without_company",
+        "ServerDate",
+        "today"
+      ]
+    },
+    {
+      "path": "tests/test_sprint07_browser.py",
+      "sha256": "de8e553d18b595a60ce08152f5d1144c111d6a5ca59daf32a85e5b683a328969",
+      "definitions": [
+        "sprint07_reports",
+        "sprint07_server",
+        "sprint07_engine",
+        "sprint07_browser",
+        "login_browser",
+        "logout_browser",
+        "navigate",
+        "audit_screen",
+        "scroll_page_for_header_audit",
+        "audit_navigation_geometry",
+        "assert_audits",
+        "submit_form",
+        "test_all_screens_navigation_accessibility_responsive",
+        "test_catalog_client_sale_stock_financial_audit_journey",
+        "test_admin_role_employee_and_restricted_login_journey",
+        "test_public_password_and_platform_provisioning_journey",
+        "Reports",
+        "local_only",
+        "deny_websocket",
+        "record_response",
+        "hold_role_script",
+        "pytest_runtest_logreport"
+      ]
+    },
+    {
+      "path": "tests/test_startup.py",
+      "sha256": "4cfb48800fa6d8d823d0c284df37b5c17be17bfd2e57851a773854992784de47",
+      "definitions": [
+        "run_startup",
+        "test_production_startup_uses_secure_configuration",
+        "test_production_startup_rejects_missing_variables",
+        "test_production_startup_rejects_each_weak_secret",
+        "test_startup_rejects_unknown_environment",
+        "test_production_startup_rejects_invalid_database_without_leaking_url",
+        "test_production_rejects_unsafe_secret_and_attempt_configuration"
+      ]
+    },
+    {
+      "path": "tests/vendor/axe.LICENSE",
+      "sha256": "af175b9d96ee93c21a036152e1b905b0b95304d4ae8c2c921c7609100ba8df7e",
+      "definitions": []
+    },
+    {
+      "path": "tests/vendor/axe.min.js",
+      "sha256": "880970c081707360e64f34cea25ff91892f5bc95675b0776925b9709dd8a68bb",
+      "definitions": []
+    },
+    {
+      "path": "docs/00-visao-geral/visao-geral-do-sistema.md",
+      "sha256": "401d4048ecba460d3081e427c935408b868a56fdbfcc1208164fe1a6eb61d64f",
+      "definitions": []
+    },
+    {
+      "path": "docs/01-arquitetura/arquitetura-atual.md",
+      "sha256": "61c76e7f5eec4e538d52713ca2b42803d977b704c5169820878cc08857dc64ff",
+      "definitions": []
+    },
+    {
+      "path": "docs/02-instalacao-e-ambiente/como-rodar-o-projeto.md",
+      "sha256": "08ab61c462b4eb87e10ddf1bbf4450bbca455e8188d3c73e770855819fd2ac47",
+      "definitions": []
+    },
+    {
+      "path": "docs/02-instalacao-e-ambiente/integridade-sprint-03.md",
+      "sha256": "70ffcec86ddf910cf681c47d6b9cab8aada00ae5dd1f24f9b92f61b66f229d50",
+      "definitions": []
+    },
+    {
+      "path": "docs/02-instalacao-e-ambiente/operacao-sprint-04.md",
+      "sha256": "46e506b3e554e6a3db01597313ee9e53ef0d13cf7b6ee36894ffbac2fdb1a799",
+      "definitions": []
+    },
+    {
+      "path": "docs/02-instalacao-e-ambiente/operacao-sprint-05.md",
+      "sha256": "1efb6936d260c15937bb5c3fff0035e5661ac96c0d7822a8299334816be46dda",
+      "definitions": []
+    },
+    {
+      "path": "docs/02-instalacao-e-ambiente/producao-sprint-06.md",
+      "sha256": "8362e41eba3d2469168d58753a5f74cd01ca77979e32bec1cb1eef2170409d07",
+      "definitions": []
+    },
+    {
+      "path": "docs/02-instalacao-e-ambiente/seguranca-sprint-02.md",
+      "sha256": "98ab0d5eacf6a992eeee683389861cf3f7b529f2582a15057a5bcb948cb666be",
+      "definitions": []
+    },
+    {
+      "path": "docs/02-instalacao-e-ambiente/validacao-ambiente-sprint-2.md",
+      "sha256": "598459b8067466a86ab704242e11c473beb9fbeb9b989b3f1e92704fd3b2c79f",
+      "definitions": []
+    },
+    {
+      "path": "docs/02-instalacao-e-ambiente/variaveis-ambiente-producao.md",
+      "sha256": "cb0da35872b873a23007646cbf771ffc69080dd563fab3dc97e6233233fe4d69",
+      "definitions": []
+    },
+    {
+      "path": "docs/03-banco-de-dados/modelo-de-dados.md",
+      "sha256": "6fb8696da7dd71c6a12f7f79bcb6cf739847867792178876efdf13ab463a4472",
+      "definitions": []
+    },
+    {
+      "path": "docs/04-modulos-e-funcionalidades/ciclos-financeiros-relacionamento.md",
+      "sha256": "57cecd9e89077d90164d24984a5a21185cdb1f2f08023527a50a2f17d8331cc9",
+      "definitions": []
+    },
+    {
+      "path": "docs/04-modulos-e-funcionalidades/inventario-producao-sprint-01.md",
+      "sha256": "fbd0ffeadc9c99ed6568750fa31b224e08a2414b21f392265624d01c9107f0b0",
+      "definitions": []
+    },
+    {
+      "path": "docs/04-modulos-e-funcionalidades/inventario-requisito-rota-servico-teste.csv",
+      "sha256": "d134b938a9665d68001d5bba1ef59ff22b19cee0372750bd1dfb0e16601f69ca",
+      "definitions": []
+    },
+    {
+      "path": "docs/04-modulos-e-funcionalidades/mapa-de-funcionalidades.md",
+      "sha256": "ff09706fd969c04b3b8483298f87eaa8eda5efba53eff3f321798137b54a9af0",
+      "definitions": []
+    },
+    {
+      "path": "docs/04-modulos-e-funcionalidades/prontidao-operacional-sprint-06.md",
+      "sha256": "95c0a3e00ccdbc4f80142bdde7611bca3654c7426086c4efaeebff7e50501a4e",
+      "definitions": []
+    },
+    {
+      "path": "docs/05-fluxos-operacionais/fluxos-operacionais-encontrados.md",
+      "sha256": "48271d8bc2c6f4ef2761b19254e7ced19a10436a1ad5f9d34c7ad72e6e2039c2",
+      "definitions": []
+    },
+    {
+      "path": "docs/05-fluxos-operacionais/operacao-boletos.md",
+      "sha256": "e979e2eec7f39897ec40808042d781c8894e6ea1d589e2b407bea2891b88a8b8",
+      "definitions": []
+    },
+    {
+      "path": "docs/05-fluxos-operacionais/operacao-nfce.md",
+      "sha256": "48b76ce6e74ba8130cfe4b50b326c6fbcd48113345f60784dd96e7c652dc528c",
+      "definitions": []
+    },
+    {
+      "path": "docs/06-financeiro-boletos/diagnostico-boletos.md",
+      "sha256": "ace6052af816e488230907d62fffd3c837ac87ee90c922599e96b9b66f7554b3",
+      "definitions": []
+    },
+    {
+      "path": "docs/06-financeiro-boletos/especificacao-tecnica-boletos.md",
+      "sha256": "7711b4d227079d555fa7d209f125cfa5e6c00f07af7de10d44ff136d73f901ee",
+      "definitions": []
+    },
+    {
+      "path": "docs/06-financeiro-boletos/implementacao-boletos-sprint-3.md",
+      "sha256": "1870822c24ec10e12d31b07ff06fd4e820e77ef0e59ecd9d998ad1da08246ca5",
+      "definitions": []
+    },
+    {
+      "path": "docs/06-financeiro-boletos/integracao-asaas.md",
+      "sha256": "e4671a0b503d563e3e32da2521e18f6d14fa0bea6853217c08be296bbf39b213",
+      "definitions": []
+    },
+    {
+      "path": "docs/07-nota-fiscal/diagnostico-nota-fiscal.md",
+      "sha256": "56365e0c20aa1e0d1520b7e7b6f64e58fe795c12a071ac79efe93825b1f774df",
+      "definitions": []
+    },
+    {
+      "path": "docs/07-nota-fiscal/especificacao-tecnica-nota-fiscal.md",
+      "sha256": "3ef5c02a6482dbad3893fcd3559725fd49a7facd732ced912ea421f5cd53627d",
+      "definitions": []
+    },
+    {
+      "path": "docs/07-nota-fiscal/implementacao-nota-fiscal-sprint-3.md",
+      "sha256": "b0a232d10c8f40fdcbcbb1249d533b1c18cb152f8aff2fee5c567008e9dff4a2",
+      "definitions": []
+    },
+    {
+      "path": "docs/07-nota-fiscal/integracao-focus-nfe.md",
+      "sha256": "0e52067139a5a853a97347b739e6330506b4f9e8b78d530eab7048e3ebc4715d",
+      "definitions": []
+    },
+    {
+      "path": "docs/08-telas-e-ux/plano-melhoria-telas.md",
+      "sha256": "a7cb350e40bde4727e1729279c77e5be16fa7b6db6f669d52d7bfc5780562c60",
+      "definitions": []
+    },
+    {
+      "path": "docs/08-telas-e-ux/revisao-de-telas-e-templates.md",
+      "sha256": "f13162e6f57600497b008705a28037d2b10098e4e00ebc018637b4da63a4335d",
+      "definitions": []
+    },
+    {
+      "path": "docs/09-bugs-riscos-e-divida-tecnica/bugs-corrigidos-sprint-2.md",
+      "sha256": "ddc8efb9e0e958b27372de8f644768a8d922f17b990169ae3efbe2b9078e9cfc",
+      "definitions": []
+    },
+    {
+      "path": "docs/09-bugs-riscos-e-divida-tecnica/bugs-riscos-divida-tecnica.md",
+      "sha256": "8421874a75a42cb7610809922f598953206d6dcaf97781ade61739b341f44c66",
+      "definitions": []
+    },
+    {
+      "path": "docs/09-bugs-riscos-e-divida-tecnica/riscos-remanescentes-producao.md",
+      "sha256": "652b5aceb5190ea4336f6950df1b0e7ae7936ca7df3f34831e2863d73c15848b",
+      "definitions": []
+    },
+    {
+      "path": "docs/09-bugs-riscos-e-divida-tecnica/riscos-remanescentes-sprint-3.md",
+      "sha256": "5eea5f7e824686daccfde655469874233061a23b918c3b510d3df624ba6c0b52",
+      "definitions": []
+    },
+    {
+      "path": "docs/10-planejamento-sprints/checklist-producao.md",
+      "sha256": "7d83992b4d2117da60d3b7faa4afa52b57de24fd92dc13f1c7361a64806d7890",
+      "definitions": []
+    },
+    {
+      "path": "docs/10-planejamento-sprints/plano-pos-sprint-3.md",
+      "sha256": "559088a117cdc9ce8e563ef3d020112f48fc356c74bd9b28affad403ef9908d2",
+      "definitions": []
+    },
+    {
+      "path": "docs/10-planejamento-sprints/plano-sprint-2.md",
+      "sha256": "dcfe8d34d7fb71e09a3e2d1202f8ca82536beb8bb34543e6c59070c0c91ace30",
+      "definitions": []
+    },
+    {
+      "path": "docs/10-planejamento-sprints/plano-sprint-3.md",
+      "sha256": "ee81da31029bf7e734ab4c477abb7078e7993b264b2bf8b196fa684767270309",
+      "definitions": []
+    },
+    {
+      "path": "docs/10-planejamento-sprints/relatorio-sprint-1.md",
+      "sha256": "6dac34d5186d72d64d76ba478706697a34d6b2f0fa095e05038efb2294a0646a",
+      "definitions": []
+    },
+    {
+      "path": "docs/10-planejamento-sprints/relatorio-sprint-2.md",
+      "sha256": "4a0aafc6b33c50151cfe4ac177d35a9e01f5584cdff6b98b5cb7ca764a0e9110",
+      "definitions": []
+    },
+    {
+      "path": "docs/10-planejamento-sprints/relatorio-sprint-3.md",
+      "sha256": "62ac8661e12dc2ff31b7cc6a9a6a54a0a65c6abcfe563fcac3ffde46fba86167",
+      "definitions": []
+    },
+    {
+      "path": "docs/10-planejamento-sprints/relatorio-sprint-4.md",
+      "sha256": "52d57336c322a480a8327d88855d07265c8740f28c5a4935d3a426f034e370b6",
+      "definitions": []
+    },
+    {
+      "path": "docs/99-legado-ou-backup/analise_modulo_financeiro_boletos.md",
+      "sha256": "3b2d76271dccda7515f78220120e8fc7f6064ad53f8a210d2983b38f1665fe4f",
+      "definitions": []
+    },
+    {
+      "path": "docs/99-legado-ou-backup/arquitetura_deploy_vps.md",
+      "sha256": "96caae7605debe4a3108c2404ab5c7713e95bb3465f08ae8f21736a51fc00cd1",
+      "definitions": []
+    },
+    {
+      "path": "docs/99-legado-ou-backup/documentacao_tecnica.md",
+      "sha256": "f22fa5b34ea9ffc7f01b1661255261143294c50c6c8d0113ff9884d6771b1ed8",
+      "definitions": []
+    },
+    {
+      "path": "docs/99-legado-ou-backup/inventario-documentacao-legada.md",
+      "sha256": "ab894f05c9f31a1a1ed903672d14b80a2f839ca05b46640184fd211a5c4019ec",
+      "definitions": []
+    },
+    {
+      "path": "docs/99-legado-ou-backup/manual_clientes_cashback_mensageria.md",
+      "sha256": "6c6a4a2694693e62c96f39307cf2a087adfbdbca0f8720202969dba1b84e1ffd",
+      "definitions": []
+    },
+    {
+      "path": "docs/99-legado-ou-backup/manual_uso.md",
+      "sha256": "443d3342c78b996a895261a06987ee045f8f2f5351481ffc19cdf6d397fab75f",
+      "definitions": []
+    },
+    {
+      "path": "docs/99-legado-ou-backup/plano_saas_comercial.md",
+      "sha256": "510ee6c355e0ed25f0c9bdf429a49a78506ee49fbfa271a8eb22b44fe595e456",
+      "definitions": []
+    },
+    {
+      "path": "docs/analise_modulo_financeiro_boletos.md",
+      "sha256": "3b2d76271dccda7515f78220120e8fc7f6064ad53f8a210d2983b38f1665fe4f",
+      "definitions": []
+    },
+    {
+      "path": "docs/arquitetura_deploy_vps.md",
+      "sha256": "96caae7605debe4a3108c2404ab5c7713e95bb3465f08ae8f21736a51fc00cd1",
+      "definitions": []
+    },
+    {
+      "path": "docs/documentacao_tecnica.md",
+      "sha256": "f22fa5b34ea9ffc7f01b1661255261143294c50c6c8d0113ff9884d6771b1ed8",
+      "definitions": []
+    },
+    {
+      "path": "docs/manual_clientes_cashback_mensageria.md",
+      "sha256": "6c6a4a2694693e62c96f39307cf2a087adfbdbca0f8720202969dba1b84e1ffd",
+      "definitions": []
+    },
+    {
+      "path": "docs/manual_uso.md",
+      "sha256": "443d3342c78b996a895261a06987ee045f8f2f5351481ffc19cdf6d397fab75f",
+      "definitions": []
+    },
+    {
+      "path": "docs/plano_saas_comercial.md",
+      "sha256": "510ee6c355e0ed25f0c9bdf429a49a78506ee49fbfa271a8eb22b44fe595e456",
+      "definitions": []
+    }
+  ],
+  "method": "Complete file/AST inventory, not proof that each function or template is exercised."
+}

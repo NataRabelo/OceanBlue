@@ -1,0 +1,256 @@
+{
+  "status": "focal_process_passed",
+  "release_acceptance": "Not a global release gate. Pending new rc5 source-bound scan, BOTH full868 regressions with coverage and actual process exit0, and parent operational acceptance.",
+  "change": {
+    "runtime": "One guard inside DecimalInput focus RAF callback: if(document.activeElement !== input)return; no other masking or pricing change.",
+    "test": "Same journey asserts synchronous wholesale focus→minimum focus→next-frame minimum focus, exact form prices12,50/10,00/min3 and persisted response12.50/10.00/min3 before PDV. No sleeps, retries or relaxed assertions.",
+    "total_tests_unchanged": 868,
+    "source_sha256": {
+      "app/static/js/core/decimal-input.js": "0ee377cdc2a9d7bf6f6f30776687dc9ba67efe09f2eee94dbdecdb4f9a7fca16",
+      "tests/test_sprint07_browser.py": "c26807322e4a4a66e076963ba3490891d1b6b1866031e32b10b042fe1136c864"
+    }
+  },
+  "red": {
+    "observed_and_deterministic": "red.json",
+    "junit": "red-junit.xml",
+    "deterministic_tests": 1,
+    "failed": 1,
+    "pytest_exit_code": 1,
+    "junit_seconds": 26.741
+  },
+  "command": "docker exec oceanblue-s07-ui-decimal python -m pytest tests/test_sprint07_browser.py -k test_catalog_client_sale_stock_financial_audit_journey --no-cov --tb=short -q --junitxml=/tmp/sprint07-decimal-focal6.xml",
+  "pytest_exit_code": 0,
+  "passed": 6,
+  "failed": 0,
+  "errors": 0,
+  "skipped": 0,
+  "deselected": 66,
+  "junit_duration_seconds": 290.802,
+  "pytest_duration_seconds": 290.81,
+  "coverage": "--no-cov only in this authorized focal invocation. Global coverage configuration and50% gate unchanged.",
+  "junit": "green-junit.xml",
+  "cases": [
+    {
+      "engine": "chromium",
+      "version": "140.0.7339.16",
+      "width": 1440,
+      "passed": true,
+      "decimal_focus": {
+        "first": "cadastro-valor_atacado",
+        "immediate": "cadastro-quantidade_minima_atacado",
+        "next_frame": "cadastro-quantidade_minima_atacado"
+      },
+      "product_form_prices": {
+        "retail": "12,50",
+        "wholesale": "10,00",
+        "minimum": "3"
+      },
+      "product_saved_prices": {
+        "valor_varejo": "12.50",
+        "valor_atacado": "10.00",
+        "quantidade_minima_atacado": 3
+      },
+      "finalize_enabled_state": {
+        "disabled": false,
+        "transition_duration": "0s"
+      },
+      "journey": {
+        "sale_id": 1,
+        "total": "25.00",
+        "remaining_stock": 5,
+        "customer_id": 1
+      },
+      "axe_violations": 0,
+      "overflow": false,
+      "http_js_external_errors": 0
+    },
+    {
+      "engine": "chromium",
+      "version": "140.0.7339.16",
+      "width": 390,
+      "passed": true,
+      "decimal_focus": {
+        "first": "cadastro-valor_atacado",
+        "immediate": "cadastro-quantidade_minima_atacado",
+        "next_frame": "cadastro-quantidade_minima_atacado"
+      },
+      "product_form_prices": {
+        "retail": "12,50",
+        "wholesale": "10,00",
+        "minimum": "3"
+      },
+      "product_saved_prices": {
+        "valor_varejo": "12.50",
+        "valor_atacado": "10.00",
+        "quantidade_minima_atacado": 3
+      },
+      "finalize_enabled_state": {
+        "disabled": false,
+        "transition_duration": "0s"
+      },
+      "journey": {
+        "sale_id": 1,
+        "total": "25.00",
+        "remaining_stock": 5,
+        "customer_id": 1
+      },
+      "axe_violations": 0,
+      "overflow": false,
+      "http_js_external_errors": 0
+    },
+    {
+      "engine": "firefox",
+      "version": "141.0",
+      "width": 1440,
+      "passed": true,
+      "decimal_focus": {
+        "first": "cadastro-valor_atacado",
+        "immediate": "cadastro-quantidade_minima_atacado",
+        "next_frame": "cadastro-quantidade_minima_atacado"
+      },
+      "product_form_prices": {
+        "retail": "12,50",
+        "wholesale": "10,00",
+        "minimum": "3"
+      },
+      "product_saved_prices": {
+        "valor_varejo": "12.50",
+        "valor_atacado": "10.00",
+        "quantidade_minima_atacado": 3
+      },
+      "finalize_enabled_state": {
+        "disabled": false,
+        "transition_duration": "0s"
+      },
+      "journey": {
+        "sale_id": 1,
+        "total": "25.00",
+        "remaining_stock": 5,
+        "customer_id": 1
+      },
+      "axe_violations": 0,
+      "overflow": false,
+      "http_js_external_errors": 0
+    },
+    {
+      "engine": "firefox",
+      "version": "141.0",
+      "width": 390,
+      "passed": true,
+      "decimal_focus": {
+        "first": "cadastro-valor_atacado",
+        "immediate": "cadastro-quantidade_minima_atacado",
+        "next_frame": "cadastro-quantidade_minima_atacado"
+      },
+      "product_form_prices": {
+        "retail": "12,50",
+        "wholesale": "10,00",
+        "minimum": "3"
+      },
+      "product_saved_prices": {
+        "valor_varejo": "12.50",
+        "valor_atacado": "10.00",
+        "quantidade_minima_atacado": 3
+      },
+      "finalize_enabled_state": {
+        "disabled": false,
+        "transition_duration": "0s"
+      },
+      "journey": {
+        "sale_id": 1,
+        "total": "25.00",
+        "remaining_stock": 5,
+        "customer_id": 1
+      },
+      "axe_violations": 0,
+      "overflow": false,
+      "http_js_external_errors": 0
+    },
+    {
+      "engine": "webkit",
+      "version": "26.0",
+      "width": 1440,
+      "passed": true,
+      "decimal_focus": {
+        "first": "cadastro-valor_atacado",
+        "immediate": "cadastro-quantidade_minima_atacado",
+        "next_frame": "cadastro-quantidade_minima_atacado"
+      },
+      "product_form_prices": {
+        "retail": "12,50",
+        "wholesale": "10,00",
+        "minimum": "3"
+      },
+      "product_saved_prices": {
+        "valor_varejo": "12.50",
+        "valor_atacado": "10.00",
+        "quantidade_minima_atacado": 3
+      },
+      "finalize_enabled_state": {
+        "disabled": false,
+        "transition_duration": "0s"
+      },
+      "journey": {
+        "sale_id": 1,
+        "total": "25.00",
+        "remaining_stock": 5,
+        "customer_id": 1
+      },
+      "axe_violations": 0,
+      "overflow": false,
+      "http_js_external_errors": 0
+    },
+    {
+      "engine": "webkit",
+      "version": "26.0",
+      "width": 390,
+      "passed": true,
+      "decimal_focus": {
+        "first": "cadastro-valor_atacado",
+        "immediate": "cadastro-quantidade_minima_atacado",
+        "next_frame": "cadastro-quantidade_minima_atacado"
+      },
+      "product_form_prices": {
+        "retail": "12,50",
+        "wholesale": "10,00",
+        "minimum": "3"
+      },
+      "product_saved_prices": {
+        "valor_varejo": "12.50",
+        "valor_atacado": "10.00",
+        "quantidade_minima_atacado": 3
+      },
+      "finalize_enabled_state": {
+        "disabled": false,
+        "transition_duration": "0s"
+      },
+      "journey": {
+        "sale_id": 1,
+        "total": "25.00",
+        "remaining_stock": 5,
+        "customer_id": 1
+      },
+      "axe_violations": 0,
+      "overflow": false,
+      "http_js_external_errors": 0
+    }
+  ],
+  "environment": {
+    "project": "oceanblue-s07-ui",
+    "image": "sha256:ca0e1e6bb4cfa13d42c89188b5da660bde4ffa4e41181e73f6739e2d180d71ac",
+    "source": "Current app/tests read-only mounts; focal proof, not a final release binding.",
+    "origin": "http://127.0.0.1:8767",
+    "backend_network_internal": true,
+    "published_ports": 0,
+    "started_after_parent_full_finished": true,
+    "cleanup": "Own decimal runner, database and network removed; parent resources untouched."
+  },
+  "evidence": {
+    "green_host_directory": "C:/Users/Rabel/AppData/Local/Temp/sprint07-decimal-focal6-final",
+    "red_host_directory": "C:/Users/Rabel/AppData/Local/Temp/sprint07-decimal-deterministic-red",
+    "green_json": 6,
+    "green_png": 6,
+    "success_traces": 0,
+    "repository_png_copies": 0
+  }
+}
