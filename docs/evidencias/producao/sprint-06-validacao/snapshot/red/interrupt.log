@@ -1,0 +1,6 @@
+OperationStopped: C:\Users\Rabel\.codex\worktrees\944e\OceanBlue\docs\evidencias\producao\sprint-06-validacao\snapshot\red\driver.ps1:9
+Line |
+   9 |  … terrupt') { throw [OperationCanceledException]::new('Injected interru …
+     |                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | Injected interruption before storage copy
+

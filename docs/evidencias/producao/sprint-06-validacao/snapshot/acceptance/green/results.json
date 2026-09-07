@@ -1,0 +1,10 @@
+{
+  "case": "backup-valid",
+  "passed": false,
+  "observed": {
+    "exit_code": 1,
+    "seconds": 12.282,
+    "log": "backup.log",
+    "script_sha256": "E484612E0FE36204946B70918641F043156C362EFF094F66454083AD9CA8B6B7"
+  }
+}

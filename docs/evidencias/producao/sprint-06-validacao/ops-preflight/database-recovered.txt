@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/app/scripts/validate_security_smoke.py", line 43, in <module>
+    main()
+  File "/app/scripts/validate_security_smoke.py", line 22, in main
+    assert ready == (503 if arguments.database_down else 200)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

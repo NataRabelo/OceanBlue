@@ -9,8 +9,9 @@ def register_security_headers(app):
         if not app.config.get("FORCE_HTTPS"):
             return None
 
-        # Docker healthcheck interno usa HTTP puro via loopback, sem liberar bypass para trafego externo.
-        if request.remote_addr in {"127.0.0.1", "::1"} and request.path in {"/api/health", "/api/ready", "/health", "/readiness"}:
+        peer = request.environ.get("oceanblue.transport_peer", request.remote_addr)
+        forwarded = any(name in request.headers for name in ("Forwarded", "X-Forwarded-For", "X-Forwarded-Proto"))
+        if peer in {"127.0.0.1", "::1"} and not forwarded and request.method in {"GET", "HEAD"} and request.path in {"/api/health", "/api/ready", "/health", "/readiness"}:
             return None
 
         if request.is_secure:
@@ -20,7 +21,7 @@ def register_security_headers(app):
 
     @app.after_request
     def add_security_headers(response):
-        if getattr(g, "auth_user", None) or request.path in {"/login", "/senha", "/redefinir-senha"} or request.path.startswith("/api/"):
+        if getattr(g, "auth_user", None) or request.path in {"/login", "/senha", "/redefinir-senha", "/health", "/readiness", "/metrics"} or request.path.startswith("/api/"):
             response.headers["Cache-Control"] = "no-store"
         response.headers.setdefault("X-Content-Type-Options", "nosniff")
         response.headers.setdefault("X-Frame-Options", "DENY")

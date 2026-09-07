@@ -1,0 +1,6 @@
+Exception: C:\Users\Rabel\.codex\worktrees\944e\OceanBlue\scripts\operational_snapshot.ps1:245
+Line |
+ 245 |  … 9]{64}$') { throw 'Invalid snapshot path or hash; traversal is forbid …
+     |                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | Invalid snapshot path or hash; traversal is forbidden.
+

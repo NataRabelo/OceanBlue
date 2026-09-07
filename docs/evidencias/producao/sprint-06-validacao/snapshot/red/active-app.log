@@ -1,0 +1,6 @@
+Exception: C:\Users\Rabel\.codex\worktrees\944e\OceanBlue\scripts\operational_snapshot.ps1:28
+Line |
+  28 |  … .Running) { throw "Stop application and all writers before taking or  …
+     |                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | Stop application and all writers before taking or restoring a snapshot.
+

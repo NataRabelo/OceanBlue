@@ -1,0 +1,12 @@
+{
+  "phase": "green",
+  "project": "oceanblue-s06-snapshot-6c1ccb6fc5",
+  "utc": "2026-09-07T07:39:16.0228111Z",
+  "script_sha256": "E80D502585164D81C642616A6EDDCB9CE7EB528AA36C1A4211B5052539673154",
+  "cases": 8,
+  "passed": 7,
+  "failed": 1,
+  "postgres": "16 real, network none",
+  "external_integrations": false,
+  "resources_removed": true
+}

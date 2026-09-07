@@ -1,0 +1,2 @@
+ oceanblue-s06-audit-accept1-test-1 Copying oceanblue-s06-audit-accept1-test-1:/app/coverage.xml to C:\Users\Rabel\.codex\worktrees\944e\OceanBlue\docs\evidencias\producao\sprint-06-validacao\accept1\coverage.xml
+Error response from daemon: Could not find the file /app/coverage.xml in container 07187bf1dfb9442e3a7535611516e2c93e87b8629d12a81eb07437fcc28a8242

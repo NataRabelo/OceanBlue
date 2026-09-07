@@ -1,0 +1,6 @@
+Exception: C:\Users\Rabel\.codex\worktrees\944e\OceanBlue\scripts\operational_snapshot.ps1:107
+Line |
+ 107 |  … nFiles.Count) { throw "Restore requires empty application storage." }
+     |                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | Restore requires empty application storage.
+

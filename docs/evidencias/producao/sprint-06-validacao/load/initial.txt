@@ -1,0 +1,49 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.12, pytest-8.3.5, pluggy-1.6.0
+rootdir: /app
+configfile: pytest.ini
+plugins: cov-6.1.1
+collected 3 items
+
+tests/test_sprint06_load_adversarial.py ..F                              [100%]
+
+=================================== FAILURES ===================================
+____________ test_critical_list_query_count_does_not_grow_per_sale _____________
+
+transaction_app = <Flask 'app'>
+
+    def test_critical_list_query_count_does_not_grow_per_sale(transaction_app):
+        with transaction_app.app_context():
+            record_id, product_id = stock_setup(30)
+            for number in range(25):
+                PdvService.criar_venda(sale_payload(product_id, key=f'query-sale-{number}'), 1, scope(), 1)
+        client = transaction_app.test_client()
+        assert login(client).status_code == 302
+        measurements = {}
+        for route in ('/api/pdv/vendas', '/api/financeiro/lancamentos', '/api/estoque/movimentos'):
+            counts = []
+            for limit in (1, 25):
+                statements = []
+    
+                def count_query(connection, cursor, statement, parameters, context, many):
+                    statements.append(statement)
+    
+                with transaction_app.app_context():
+                    event.listen(db.engine, 'before_cursor_execute', count_query)
+                    try:
+                        response = client.get(f'{route}?empresa_id=1&limite={limit}')
+                    finally:
+                        event.remove(db.engine, 'before_cursor_execute', count_query)
+                assert response.status_code == 200, response.json
+                assert len(response.json['data']) == limit
+                counts.append(len(statements))
+            measurements[route] = dict(zip(('one_row', 'twenty_five_rows'), counts))
+>           assert counts[1] <= counts[0] + 2, measurements
+E           AssertionError: {'/api/pdv/vendas': {'one_row': 15, 'twenty_five_rows': 39}}
+E           assert 39 <= (15 + 2)
+
+tests/test_sprint06_load_adversarial.py:114: AssertionError
+---------------------- generated xml file: /tmp/load.xml -----------------------
+=========================== short test summary info ============================
+FAILED tests/test_sprint06_load_adversarial.py::test_critical_list_query_count_does_not_grow_per_sale
+========================= 1 failed, 2 passed in 19.69s =========================

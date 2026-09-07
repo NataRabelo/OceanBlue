@@ -1,0 +1,7 @@
+ROLLBACK VERIFIED: database empty; copied files removed.
+Exception: C:\Users\Rabel\.codex\worktrees\944e\OceanBlue\docs\evidencias\producao\sprint-06-validacao\snapshot\accepted\green\driver.ps1:16
+Line |
+  16 |          throw 'Injected storage-copy failure AFTER real copy'
+     |          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | Injected storage-copy failure AFTER real copy
+

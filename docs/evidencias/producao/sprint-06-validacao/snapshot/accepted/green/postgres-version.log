@@ -1,0 +1,6 @@
+Exception: C:\Users\Rabel\.codex\worktrees\944e\OceanBlue\scripts\operational_snapshot.ps1:241
+Line |
+ 241 |  … ostgresMajor) { throw 'Snapshot PostgreSQL major version mismatch.' }
+     |                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | Snapshot PostgreSQL major version mismatch.
+

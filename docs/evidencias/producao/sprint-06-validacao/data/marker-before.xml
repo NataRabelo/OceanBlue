@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="8" skipped="0" tests="8" time="15.919" timestamp="2026-09-07T07:37:49.448861+00:00" hostname="05b569b9218e"><testcase classname="tests.test_sprint06_data_adversarial" name="test_storage_restore_marker_blocks_probe_before_write_and_recovers[file]" time="2.556"><failure message="Failed: DID NOT RAISE &lt;class 'OSError'&gt;">storage_app = (&lt;Flask 'tests.test_sprint06_data_adversarial'&gt;, PosixPath('/tmp/pytest-of-tester/pytest-0/test_storage_restore_marker_bl0/storage'))
+restore_marker = PosixPath('/tmp/pytest-of-tester/pytest-0/test_storage_restore_marker_bl0/.oceanblue-restore-incomplete')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7beaf0e21f10&gt;
+
+    def test_storage_restore_marker_blocks_probe_before_write_and_recovers(storage_app, restore_marker, monkeypatch):
+        _, root = storage_app
+        opened = Mock(wraps=os.open)
+        with monkeypatch.context() as injection:
+            injection.setattr("app.operations.os.open", opened)
+&gt;           with pytest.raises(OSError):
+E           Failed: DID NOT RAISE &lt;class 'OSError'&gt;
+
+tests/test_sprint06_data_adversarial.py:328: Failed</failure></testcase><testcase classname="tests.test_sprint06_data_adversarial" name="test_storage_restore_marker_blocks_probe_before_write_and_recovers[directory]" time="0.022"><failure message="Failed: DID NOT RAISE &lt;class 'OSError'&gt;">storage_app = (&lt;Flask 'tests.test_sprint06_data_adversarial'&gt;, PosixPath('/tmp/pytest-of-tester/pytest-0/test_storage_restore_marker_bl1/storage'))
+restore_marker = PosixPath('/tmp/pytest-of-tester/pytest-0/test_storage_restore_marker_bl1/.oceanblue-restore-incomplete')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7beaf0e21be0&gt;
+
+    def test_storage_restore_marker_blocks_probe_before_write_and_recovers(storage_app, restore_marker, monkeypatch):
+        _, root = storage_app
+        opened = Mock(wraps=os.open)
+        with monkeypatch.context() as injection:
+            injection.setattr("app.operations.os.open", opened)
+&gt;           with pytest.raises(OSError):
+E           Failed: DID NOT RAISE &lt;class 'OSError'&gt;
+
+tests/test_sprint06_data_adversarial.py:328: Failed</failure></testcase><testcase classname="tests.test_sprint06_data_adversarial" name="test_storage_restore_marker_blocks_probe_before_write_and_recovers[symlink]" time="0.028"><failure message="Failed: DID NOT RAISE &lt;class 'OSError'&gt;">storage_app = (&lt;Flask 'tests.test_sprint06_data_adversarial'&gt;, PosixPath('/tmp/pytest-of-tester/pytest-0/test_storage_restore_marker_bl2/storage'))
+restore_marker = PosixPath('/tmp/pytest-of-tester/pytest-0/test_storage_restore_marker_bl2/.oceanblue-restore-incomplete')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7beaf0e998b0&gt;
+
+    def test_storage_restore_marker_blocks_probe_before_write_and_recovers(storage_app, restore_marker, monkeypatch):
+        _, root = storage_app
+        opened = Mock(wraps=os.open)
+        with monkeypatch.context() as injection:
+            injection.setattr("app.operations.os.open", opened)
+&gt;           with pytest.raises(OSError):
+E           Failed: DID NOT RAISE &lt;class 'OSError'&gt;
+
+tests/test_sprint06_data_adversarial.py:328: Failed</failure></testcase><testcase classname="tests.test_sprint06_data_adversarial" name="test_storage_restore_marker_blocks_probe_before_write_and_recovers[dangling_symlink]" time="0.026"><failure message="Failed: DID NOT RAISE &lt;class 'OSError'&gt;">storage_app = (&lt;Flask 'tests.test_sprint06_data_adversarial'&gt;, PosixPath('/tmp/pytest-of-tester/pytest-0/test_storage_restore_marker_bl3/storage'))
+restore_marker = PosixPath('/tmp/pytest-of-tester/pytest-0/test_storage_restore_marker_bl3/.oceanblue-restore-incomplete')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7beaf0e98110&gt;
+
+    def test_storage_restore_marker_blocks_probe_before_write_and_recovers(storage_app, restore_marker, monkeypatch):
+        _, root = storage_app
+        opened = Mock(wraps=os.open)
+        with monkeypatch.context() as injection:
+            injection.setattr("app.operations.os.open", opened)
+&gt;           with pytest.raises(OSError):
+E           Failed: DID NOT RAISE &lt;class 'OSError'&gt;
+
+tests/test_sprint06_data_adversarial.py:328: Failed</failure></testcase><testcase classname="tests.test_sprint06_data_adversarial" name="test_storage_restore_marker_blocks_http_and_removal_recovers[file]" time="3.555"><failure message="AssertionError: assert 200 == 503&#10; +  where 200 = &lt;WrapperTestResponse streamed [200 OK]&gt;.status_code&#10; +    where &lt;WrapperTestResponse streamed [200 OK]&gt; = get('/readiness')&#10; +      where get = &lt;FlaskClient &lt;Flask 'app'&gt;&gt;.get">security_app = &lt;Flask 'app'&gt;
+storage_app = (&lt;Flask 'tests.test_sprint06_data_adversarial'&gt;, PosixPath('/tmp/pytest-of-tester/pytest-0/test_storage_restore_marker_bl4/storage'))
+restore_marker = PosixPath('/tmp/pytest-of-tester/pytest-0/test_storage_restore_marker_bl4/.oceanblue-restore-incomplete')
+
+    def test_storage_restore_marker_blocks_http_and_removal_recovers(security_app, storage_app, restore_marker):
+        _, root = storage_app
+        security_app.testing = False
+        security_app.config["STORAGE_ROOT"] = str(root)
+        mutations = []
+    
+        def mutation():
+            mutations.append("executed")
+            return "ok"
+    
+        methods = ["POST", "PUT", "PATCH", "DELETE"]
+        security_app.add_url_rule("/data-restore-mutation", "data_restore_mutation", mutation, methods=methods)
+        client = security_app.test_client()
+&gt;       assert client.get("/readiness").status_code == 503
+E       AssertionError: assert 200 == 503
+E        +  where 200 = &lt;WrapperTestResponse streamed [200 OK]&gt;.status_code
+E        +    where &lt;WrapperTestResponse streamed [200 OK]&gt; = get('/readiness')
+E        +      where get = &lt;FlaskClient &lt;Flask 'app'&gt;&gt;.get
+
+tests/test_sprint06_data_adversarial.py:350: AssertionError</failure></testcase><testcase classname="tests.test_sprint06_data_adversarial" name="test_storage_restore_marker_blocks_http_and_removal_recovers[directory]" time="2.434"><failure message="AssertionError: assert 200 == 503&#10; +  where 200 = &lt;WrapperTestResponse streamed [200 OK]&gt;.status_code&#10; +    where &lt;WrapperTestResponse streamed [200 OK]&gt; = get('/readiness')&#10; +      where get = &lt;FlaskClient &lt;Flask 'app'&gt;&gt;.get">security_app = &lt;Flask 'app'&gt;
+storage_app = (&lt;Flask 'tests.test_sprint06_data_adversarial'&gt;, PosixPath('/tmp/pytest-of-tester/pytest-0/test_storage_restore_marker_bl5/storage'))
+restore_marker = PosixPath('/tmp/pytest-of-tester/pytest-0/test_storage_restore_marker_bl5/.oceanblue-restore-incomplete')
+
+    def test_storage_restore_marker_blocks_http_and_removal_recovers(security_app, storage_app, restore_marker):
+        _, root = storage_app
+        security_app.testing = False
+        security_app.config["STORAGE_ROOT"] = str(root)
+        mutations = []
+    
+        def mutation():
+            mutations.append("executed")
+            return "ok"
+    
+        methods = ["POST", "PUT", "PATCH", "DELETE"]
+        security_app.add_url_rule("/data-restore-mutation", "data_restore_mutation", mutation, methods=methods)
+        client = security_app.test_client()
+&gt;       assert client.get("/readiness").status_code == 503
+E       AssertionError: assert 200 == 503
+E        +  where 200 = &lt;WrapperTestResponse streamed [200 OK]&gt;.status_code
+E        +    where &lt;WrapperTestResponse streamed [200 OK]&gt; = get('/readiness')
+E        +      where get = &lt;FlaskClient &lt;Flask 'app'&gt;&gt;.get
+
+tests/test_sprint06_data_adversarial.py:350: AssertionError</failure></testcase><testcase classname="tests.test_sprint06_data_adversarial" name="test_storage_restore_marker_blocks_http_and_removal_recovers[symlink]" time="2.732"><failure message="AssertionError: assert 200 == 503&#10; +  where 200 = &lt;WrapperTestResponse streamed [200 OK]&gt;.status_code&#10; +    where &lt;WrapperTestResponse streamed [200 OK]&gt; = get('/readiness')&#10; +      where get = &lt;FlaskClient &lt;Flask 'app'&gt;&gt;.get">security_app = &lt;Flask 'app'&gt;
+storage_app = (&lt;Flask 'tests.test_sprint06_data_adversarial'&gt;, PosixPath('/tmp/pytest-of-tester/pytest-0/test_storage_restore_marker_bl6/storage'))
+restore_marker = PosixPath('/tmp/pytest-of-tester/pytest-0/test_storage_restore_marker_bl6/.oceanblue-restore-incomplete')
+
+    def test_storage_restore_marker_blocks_http_and_removal_recovers(security_app, storage_app, restore_marker):
+        _, root = storage_app
+        security_app.testing = False
+        security_app.config["STORAGE_ROOT"] = str(root)
+        mutations = []
+    
+        def mutation():
+            mutations.append("executed")
+            return "ok"
+    
+        methods = ["POST", "PUT", "PATCH", "DELETE"]
+        security_app.add_url_rule("/data-restore-mutation", "data_restore_mutation", mutation, methods=methods)
+        client = security_app.test_client()
+&gt;       assert client.get("/readiness").status_code == 503
+E       AssertionError: assert 200 == 503
+E        +  where 200 = &lt;WrapperTestResponse streamed [200 OK]&gt;.status_code
+E        +    where &lt;WrapperTestResponse streamed [200 OK]&gt; = get('/readiness')
+E        +      where get = &lt;FlaskClient &lt;Flask 'app'&gt;&gt;.get
+
+tests/test_sprint06_data_adversarial.py:350: AssertionError</failure></testcase><testcase classname="tests.test_sprint06_data_adversarial" name="test_storage_restore_marker_blocks_http_and_removal_recovers[dangling_symlink]" time="3.522"><failure message="AssertionError: assert 200 == 503&#10; +  where 200 = &lt;WrapperTestResponse streamed [200 OK]&gt;.status_code&#10; +    where &lt;WrapperTestResponse streamed [200 OK]&gt; = get('/readiness')&#10; +      where get = &lt;FlaskClient &lt;Flask 'app'&gt;&gt;.get">security_app = &lt;Flask 'app'&gt;
+storage_app = (&lt;Flask 'tests.test_sprint06_data_adversarial'&gt;, PosixPath('/tmp/pytest-of-tester/pytest-0/test_storage_restore_marker_bl7/storage'))
+restore_marker = PosixPath('/tmp/pytest-of-tester/pytest-0/test_storage_restore_marker_bl7/.oceanblue-restore-incomplete')
+
+    def test_storage_restore_marker_blocks_http_and_removal_recovers(security_app, storage_app, restore_marker):
+        _, root = storage_app
+        security_app.testing = False
+        security_app.config["STORAGE_ROOT"] = str(root)
+        mutations = []
+    
+        def mutation():
+            mutations.append("executed")
+            return "ok"
+    
+        methods = ["POST", "PUT", "PATCH", "DELETE"]
+        security_app.add_url_rule("/data-restore-mutation", "data_restore_mutation", mutation, methods=methods)
+        client = security_app.test_client()
+&gt;       assert client.get("/readiness").status_code == 503
+E       AssertionError: assert 200 == 503
+E        +  where 200 = &lt;WrapperTestResponse streamed [200 OK]&gt;.status_code
+E        +    where &lt;WrapperTestResponse streamed [200 OK]&gt; = get('/readiness')
+E        +      where get = &lt;FlaskClient &lt;Flask 'app'&gt;&gt;.get
+
+tests/test_sprint06_data_adversarial.py:350: AssertionError</failure></testcase></testsuite></testsuites>

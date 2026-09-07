@@ -1,0 +1,32 @@
+[
+  {
+    "storage": "[\"storage\"]",
+    "exit_code": 1,
+    "seconds": 26.2760416,
+    "case": "dump-wrong-revision",
+    "passed": true,
+    "expected_failure": "Database schema revision does not match",
+    "trusted_manifest_sha256": "3C4E579C7DA4988546F631F2486C12EB416D9844121830D766921551BB81DE1F",
+    "database_empty": true
+  },
+  {
+    "storage": "[\"storage\"]",
+    "exit_code": 1,
+    "seconds": 16.2306796,
+    "case": "forged-custody",
+    "passed": true,
+    "expected_failure": "Manifest custody SHA-256 mismatch",
+    "trusted_manifest_sha256": "361402E845F46208D15BFECE37496BA1F19DF2F52AB23E1FCA4A894D6DE09EEB",
+    "database_empty": true
+  },
+  {
+    "storage": "[\"storage\"]",
+    "exit_code": 1,
+    "seconds": 22.8600757,
+    "case": "invalid-archive",
+    "passed": true,
+    "expected_failure": "Docker operation failed",
+    "trusted_manifest_sha256": "581FF0EFD2B0A996150EC88DC8C6C29F9BBAAB2C18F72378B8770D3423F9923E",
+    "database_empty": true
+  }
+]

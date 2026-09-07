@@ -1,0 +1,89 @@
+[
+  {
+    "case": "backup-valid",
+    "passed": true,
+    "observed": {
+      "exit_code": 0,
+      "seconds": 18.893,
+      "log": "backup.log",
+      "script_sha256": "43179B47843F42FE58038DB8A862EA58A709411FEB1E5D37773C48821059475D"
+    }
+  },
+  {
+    "case": "roundtrip",
+    "passed": true,
+    "observed": {
+      "exit_code": 0,
+      "seconds": 23.766,
+      "log": "roundtrip.log",
+      "script_sha256": "43179B47843F42FE58038DB8A862EA58A709411FEB1E5D37773C48821059475D"
+    }
+  },
+  {
+    "case": "independent-recovery",
+    "passed": true,
+    "observed": {
+      "rows": "2",
+      "restore_seconds": 23.766,
+      "sequence": "2",
+      "backup_seconds": 18.893,
+      "lost_captured_records": 0,
+      "receipt": "synthetic-only: two records"
+    }
+  },
+  {
+    "case": "db-rollback-failure",
+    "passed": true,
+    "observed": {
+      "database_empty": true,
+      "run": {
+        "exit_code": 1,
+        "seconds": 25.37,
+        "log": "db-rollback-failure.log",
+        "script_sha256": "43179B47843F42FE58038DB8A862EA58A709411FEB1E5D37773C48821059475D"
+      },
+      "incomplete_marker": "True"
+    }
+  },
+  {
+    "case": "retry-incomplete",
+    "passed": true,
+    "observed": {
+      "exit_code": 1,
+      "seconds": 13.557,
+      "log": "retry-incomplete.log",
+      "script_sha256": "43179B47843F42FE58038DB8A862EA58A709411FEB1E5D37773C48821059475D"
+    }
+  },
+  {
+    "case": "late-db-writer",
+    "passed": false,
+    "observed": {
+      "exit_code": 0,
+      "seconds": 20.784,
+      "log": "late-db-writer.log",
+      "script_sha256": "43179B47843F42FE58038DB8A862EA58A709411FEB1E5D37773C48821059475D"
+    }
+  },
+  {
+    "case": "source-link",
+    "passed": true,
+    "observed": {
+      "exit_code": 1,
+      "seconds": 11.327,
+      "log": "source-link.log",
+      "script_sha256": "43179B47843F42FE58038DB8A862EA58A709411FEB1E5D37773C48821059475D"
+    }
+  },
+  {
+    "case": "hard-kill",
+    "passed": true,
+    "observed": {
+      "database_empty": true,
+      "reached_after_copy": true,
+      "marker": "True",
+      "rollback_observed_seconds": 2.676,
+      "sql_sessions": "0"
+    }
+  }
+]

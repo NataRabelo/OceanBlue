@@ -1,0 +1,4 @@
+services:
+  test:
+    volumes:
+      - ${OCEANBLUE_UI_WORKSPACE:?workspace required}/docs/evidencias/producao/sprint-06-validacao/ui/header.skip-red.js.txt:/app/app/static/js/header/header.js:ro

@@ -1,0 +1,7 @@
+WARNING: No external manifest digest supplied: hashes detect corruption, not malicious replacement of snapshot and manifest.
+Exception: C:\Users\Rabel\.codex\worktrees\944e\OceanBlue\scripts\operational_snapshot.ps1:250
+Line |
+ 250 |  … }).Count) { throw 'Restore requires empty application storage (only a …
+     |                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | Restore requires empty application storage (only an empty storage directory is allowed).
+

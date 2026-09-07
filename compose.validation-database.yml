@@ -1,0 +1,6 @@
+services:
+  db-test:
+    tmpfs: !reset []
+    volumes: [validation-database:/var/lib/postgresql/data]
+volumes:
+  validation-database: {}

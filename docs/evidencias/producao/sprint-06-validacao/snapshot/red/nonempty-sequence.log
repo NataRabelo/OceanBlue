@@ -1,0 +1,6 @@
+Exception: C:\Users\Rabel\.codex\worktrees\944e\OceanBlue\scripts\operational_snapshot.ps1:111
+Line |
+ 111 |  … ompress)) { throw "Restored database invariant mismatch; do not start …
+     |                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | Restored database invariant mismatch; do not start application.
+

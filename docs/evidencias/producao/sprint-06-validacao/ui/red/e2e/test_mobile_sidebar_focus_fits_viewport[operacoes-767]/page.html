@@ -1,0 +1,664 @@
+<!DOCTYPE html><html lang="pt-BR"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>OceanBlue - Ciclos e conciliacao</title>
+  <link rel="icon" type="image/svg+xml" href="/static/favicon/favicon.svg">
+  <link rel="alternate icon" href="/favicon.ico">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#0f172a">
+  <meta name="msapplication-TileColor" content="#0f172a">
+
+  <link rel="stylesheet" href="/static/vendor/tailwind.css">
+  <script src="/static/vendor/lucide.min.js"></script>
+  <link rel="stylesheet" href="/static/css/core/core.css">
+  <link rel="stylesheet" href="/static/css/core/operational.css">
+  <script>
+    window.__tenantThemeConfig = {"companyModes": {"1": "modern"}, "defaultMode": "modern", "storageKey": "oceanblue:empresa-visual-selecionada"};
+    window.__tenantUiConfig = {
+      hasTenantSidebar: [{"items": [{"active_prefixes": ["/api/auditoria/"], "group": "Configuracoes", "href": "/api/auditoria/view", "icon": "list-checks", "label": "Auditoria", "permission": "visualizar_auditoria"}, {"active_prefixes": ["/configuracoes/home"], "endpoint": "main.settings_home", "flag": "can_view_settings", "group": "Configuracoes", "icon": "sliders-horizontal", "label": "Configuracoes", "permission": null}, {"active_prefixes": ["/api/fiscal/"], "group": "Configuracoes", "href": "/api/fiscal/view", "icon": "receipt", "label": "Fiscal", "permission": "visualizar_fiscal"}, {"active_prefixes": ["/api/estoque/alertas/view"], "group": "Configuracoes", "href": "/api/estoque/alertas/view", "icon": "shield-alert", "label": "Alertas", "permission": "visualizar_notificacao"}, {"active_prefixes": ["/api/funcionarios/view"], "group": "Configuracoes", "href": "/api/funcionarios/view", "icon": "users", "label": "Funcionarios", "permission": "visualizar_funcionario"}, {"active_prefixes": ["/api/roles/view"], "group": "Configuracoes", "href": "/api/roles/view", "icon": "shield-check", "label": "Roles", "permission": "visualizar_role"}, {"active_prefixes": ["/api/permissions/view"], "group": "Configuracoes", "href": "/api/permissions/view", "icon": "key-round", "label": "Permissions", "permission": "visualizar_permission"}], "label": "Configuracoes"}, {"items": [{"active_prefixes": ["/home"], "endpoint": "main.home", "group": "Painel", "icon": "layout-grid", "label": "Home Operacional", "permission": null}], "label": "Painel"}, {"items": [{"active_prefixes": ["/pdv/home", "/api/pdv/view"], "endpoint": "main.pdv_home", "group": "Operacao", "icon": "shopping-cart", "label": "PDV", "permission": "visualizar_pdv"}, {"active_prefixes": ["/estoque/home", "/api/estoque/view", "/api/estoque/indicadores/view"], "endpoint": "main.estoque_home", "group": "Operacao", "icon": "boxes", "label": "Estoque", "permission": "visualizar_produto"}, {"active_prefixes": ["/financeiro/home", "/api/financeiro/view", "/api/financeiro/lancamentos/view", "/api/financeiro/relatorios/view"], "endpoint": "main.financeiro_home", "group": "Operacao", "icon": "landmark", "label": "Financeiro", "permission": "visualizar_financeiro"}], "label": "Operacao"}, {"items": [{"active_prefixes": ["/api/clientes/view"], "group": "Relacionamento", "href": "/api/clientes/view", "icon": "contact-round", "label": "Clientes", "permission": "visualizar_cliente"}], "label": "Relacionamento"}, {"items": [{"active_prefixes": ["/api/produtos/view"], "group": "Cadastros", "href": "/api/produtos/view", "icon": "package-plus", "label": "Produtos", "permission": "visualizar_produto"}, {"active_prefixes": ["/api/categorias/view"], "group": "Cadastros", "href": "/api/categorias/view", "icon": "layers", "label": "Categorias", "permission": "visualizar_categoria"}, {"active_prefixes": ["/api/cupons/view"], "group": "Cadastros", "href": "/api/cupons/view", "icon": "ticket-percent", "label": "Cupons", "permission": "visualizar_cupom"}, {"active_prefixes": ["/api/adiantamentos/view"], "group": "Cadastros", "href": "/api/adiantamentos/view", "icon": "wallet-cards", "label": "Vales", "permission": "visualizar_adiantamento"}, {"active_prefixes": ["/api/importacao-exportacao/view"], "group": "Cadastros", "href": "/api/importacao-exportacao/view", "icon": "sheet", "label": "Importacao em Lote", "permission": "visualizar_importacao_exportacao"}], "label": "Cadastros"}],
+      sidebarStateStorageKey: "oceanblue:tenant-sidebar-state"
+    };
+    window.__uiFlags = {"can_cancel_sale_items": true, "can_cancel_sales": true, "can_cancel_stock_movements": true, "can_close_cashier": true, "can_manage_categories": true, "can_manage_customer_settings": true, "can_manage_customers": true, "can_manage_finance_entries": true, "can_manage_fiscal": true, "can_manage_products": true, "can_manage_sales": true, "can_manage_stock_alerts": true, "can_send_customer_messages": true, "can_view_advance": true, "can_view_categories": true, "can_view_coupons": true, "can_view_customers": true, "can_view_finance": true, "can_view_finance_reports": true, "can_view_fiscal": true, "can_view_import_export": true, "can_view_notifications": true, "can_view_pdv": true, "can_view_permissions": true, "can_view_roles": true, "can_view_settings": true, "can_view_staff": true, "can_view_stock": true};
+    window.__permissionCodes = ["aplicar_desconto", "autorizar_adiantamento", "autorizar_desconto", "cancelar_item_venda", "cancelar_movimentacao_estoque", "cancelar_venda", "criar_adiantamento", "criar_categoria", "criar_cliente", "criar_cupom", "criar_funcionario", "criar_lancamento_financeiro", "criar_permission", "criar_produto", "criar_role", "editar_categoria", "editar_cliente", "editar_cupom", "editar_funcionario", "editar_permission", "editar_produto", "editar_role", "enviar_mensagem_cliente", "estornar_financeiro", "excluir_categoria", "excluir_cliente", "excluir_cupom", "excluir_funcionario", "excluir_permission", "excluir_produto", "excluir_role", "exportar_dados_cadastrais", "fechar_caixa", "gerenciar_alerta_estoque", "gerenciar_configuracao_cliente", "gerenciar_fiscal", "gerenciar_privacidade_cliente", "importar_dados_cadastrais", "reabrir_caixa", "registrar_venda", "visualizar_adiantamento", "visualizar_auditoria", "visualizar_categoria", "visualizar_cliente", "visualizar_cupom", "visualizar_financeiro", "visualizar_fiscal", "visualizar_funcionario", "visualizar_importacao_exportacao", "visualizar_notificacao", "visualizar_pdv", "visualizar_permission", "visualizar_produto", "visualizar_relatorio_financeiro", "visualizar_role", "visualizar_todas_empresas"];
+    window.userHasPermission = function (code) {
+      return Array.isArray(window.__permissionCodes) && window.__permissionCodes.includes(code);
+    };
+  </script>
+
+  <link rel="stylesheet" href="/static/css/modulos/ciclos.css">
+</head>
+
+<body data-theme-mode="modern" class="min-h-screen has-tenant-sidebar" data-sidebar-state="collapsed">
+  <a class="skip-link" href="#page-content">Ir para o conteúdo</a>
+  <script>
+    (function () {
+      const body = document.body;
+      const themeConfig = window.__tenantThemeConfig || {};
+      const uiConfig = window.__tenantUiConfig || {};
+      const defaultMode = themeConfig.defaultMode === "classic" ? "classic" : "modern";
+      const companyModes = themeConfig.companyModes || {};
+      const themeStorageKey = themeConfig.storageKey || "oceanblue:empresa-visual-selecionada";
+
+      body.classList.add("ui-booting");
+
+      const storedCompanyId = window.localStorage.getItem(themeStorageKey);
+      const initialMode = storedCompanyId && companyModes[String(storedCompanyId)]
+        ? companyModes[String(storedCompanyId)]
+        : defaultMode;
+      body.setAttribute("data-theme-mode", initialMode);
+
+      if (uiConfig.hasTenantSidebar) {
+        const sidebarStateStorageKey = uiConfig.sidebarStateStorageKey || "oceanblue:tenant-sidebar-state";
+        const storedSidebarState = window.localStorage.getItem(sidebarStateStorageKey);
+        const defaultSidebarState = window.innerWidth <= 1440 ? "collapsed" : "expanded";
+        const initialSidebarState = storedSidebarState === "collapsed" || storedSidebarState === "expanded"
+          ? storedSidebarState
+          : defaultSidebarState;
+
+        body.classList.add("has-tenant-sidebar");
+        body.dataset.sidebarState = initialSidebarState;
+      }
+    })();
+  </script>
+
+  <div id="toast-container" class="fixed top-6 right-6 z-[9999] flex flex-col gap-4 pointer-events-none">
+    
+        
+    
+</div>
+
+<script>
+    if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+    }
+
+    setTimeout(() => {
+        const toasts = document.querySelectorAll('.flash-toast');
+        toasts.forEach(toast => {
+            toast.style.opacity = '0';
+            toast.style.transform = 'translateX(20px)';
+            toast.style.transition = 'all 0.5s ease';
+            setTimeout(() => toast.remove(), 500);
+        });
+    }, 6000);
+</script>
+
+  <div id="screen-size-lock" class="hidden fixed inset-0 z-[10000] items-center justify-center p-6 bg-slate-950/95">
+    <div class="w-full max-w-lg rounded-2xl border border-slate-800 bg-slate-900 p-8 text-center shadow-2xl">
+      <div class="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-amber-500/10 border border-amber-500/20 text-amber-300 mb-4">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="monitor-smartphone" class="lucide lucide-monitor-smartphone w-7 h-7"><path d="M18 8V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h8"></path><path d="M10 19v-3.96 3.15"></path><path d="M7 19h5"></path><rect width="6" height="10" x="16" y="12" rx="2"></rect></svg>
+      </div>
+      <h2 class="text-2xl font-bold text-white">Tela nao suportada</h2>
+      <p class="text-slate-400 mt-3">
+        Este sistema foi otimizado para notebooks e monitores. Use uma largura minima de 768px para continuar.
+      </p>
+    </div>
+  </div>
+
+  <div id="page-content" tabindex="-1">
+
+
+
+
+
+
+
+
+
+
+<aside id="tenantSidebar" class="tenant-sidebar">
+    <button type="button" data-sidebar-toggle="" class="sidebar-mobile-close" aria-expanded="false" aria-label="Expandir menu lateral">Fechar menu</button>
+    <div class="tenant-sidebar__brand">
+        <div class="tenant-sidebar__brand-mark">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="waves" class="lucide lucide-waves w-5 h-5"><path d="M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"></path><path d="M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"></path><path d="M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"></path></svg>
+        </div>
+        <div class="tenant-sidebar__brand-copy">
+            <strong>OceanBlue</strong>
+            <span>Operacao do tenant</span>
+        </div>
+    </div>
+
+    <nav class="tenant-sidebar__nav" aria-label="Navegacao principal">
+        
+        <section class="tenant-sidebar__group">
+            <p class="tenant-sidebar__group-label">Configuracoes</p>
+
+            <div class="tenant-sidebar__links">
+                
+                
+                
+                
+                    
+                
+                
+
+                <a href="/api/auditoria/view" class="tenant-sidebar__link " title="Auditoria" aria-current="false">
+                    <span class="tenant-sidebar__link-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="list-checks" class="lucide lucide-list-checks w-4 h-4"><path d="m3 17 2 2 4-4"></path><path d="m3 7 2 2 4-4"></path><path d="M13 6h8"></path><path d="M13 12h8"></path><path d="M13 18h8"></path></svg>
+                    </span>
+                    <span class="tenant-sidebar__link-label">Auditoria</span>
+                </a>
+                
+                
+                
+                
+                    
+                
+                
+
+                <a href="/configuracoes/home" class="tenant-sidebar__link " title="Configuracoes" aria-current="false">
+                    <span class="tenant-sidebar__link-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="sliders-horizontal" class="lucide lucide-sliders-horizontal w-4 h-4"><line x1="21" x2="14" y1="4" y2="4"></line><line x1="10" x2="3" y1="4" y2="4"></line><line x1="21" x2="12" y1="12" y2="12"></line><line x1="8" x2="3" y1="12" y2="12"></line><line x1="21" x2="16" y1="20" y2="20"></line><line x1="12" x2="3" y1="20" y2="20"></line><line x1="14" x2="14" y1="2" y2="6"></line><line x1="8" x2="8" y1="10" y2="14"></line><line x1="16" x2="16" y1="18" y2="22"></line></svg>
+                    </span>
+                    <span class="tenant-sidebar__link-label">Configuracoes</span>
+                </a>
+                
+                
+                
+                
+                    
+                
+                
+
+                <a href="/api/fiscal/view" class="tenant-sidebar__link " title="Fiscal" aria-current="false">
+                    <span class="tenant-sidebar__link-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="receipt" class="lucide lucide-receipt w-4 h-4"><path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z"></path><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"></path><path d="M12 17.5v-11"></path></svg>
+                    </span>
+                    <span class="tenant-sidebar__link-label">Fiscal</span>
+                </a>
+                
+                
+                
+                
+                    
+                
+                
+
+                <a href="/api/estoque/alertas/view" class="tenant-sidebar__link " title="Alertas" aria-current="false">
+                    <span class="tenant-sidebar__link-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="shield-alert" class="lucide lucide-shield-alert w-4 h-4"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path><path d="M12 8v4"></path><path d="M12 16h.01"></path></svg>
+                    </span>
+                    <span class="tenant-sidebar__link-label">Alertas</span>
+                </a>
+                
+                
+                
+                
+                    
+                
+                
+
+                <a href="/api/funcionarios/view" class="tenant-sidebar__link " title="Funcionarios" aria-current="false">
+                    <span class="tenant-sidebar__link-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="users" class="lucide lucide-users w-4 h-4"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                    </span>
+                    <span class="tenant-sidebar__link-label">Funcionarios</span>
+                </a>
+                
+                
+                
+                
+                    
+                
+                
+
+                <a href="/api/roles/view" class="tenant-sidebar__link " title="Roles" aria-current="false">
+                    <span class="tenant-sidebar__link-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="shield-check" class="lucide lucide-shield-check w-4 h-4"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path><path d="m9 12 2 2 4-4"></path></svg>
+                    </span>
+                    <span class="tenant-sidebar__link-label">Roles</span>
+                </a>
+                
+                
+                
+                
+                    
+                
+                
+
+                <a href="/api/permissions/view" class="tenant-sidebar__link " title="Permissions" aria-current="false">
+                    <span class="tenant-sidebar__link-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="key-round" class="lucide lucide-key-round w-4 h-4"><path d="M2.586 17.414A2 2 0 0 0 2 18.828V21a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h1a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h.172a2 2 0 0 0 1.414-.586l.814-.814a6.5 6.5 0 1 0-4-4z"></path><circle cx="16.5" cy="7.5" r=".5" fill="currentColor"></circle></svg>
+                    </span>
+                    <span class="tenant-sidebar__link-label">Permissions</span>
+                </a>
+                
+            </div>
+        </section>
+        
+        <section class="tenant-sidebar__group">
+            <p class="tenant-sidebar__group-label">Painel</p>
+
+            <div class="tenant-sidebar__links">
+                
+                
+                
+                
+                    
+                
+                
+
+                <a href="/home" class="tenant-sidebar__link " title="Home Operacional" aria-current="false">
+                    <span class="tenant-sidebar__link-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="layout-grid" class="lucide lucide-layout-grid w-4 h-4"><rect width="7" height="7" x="3" y="3" rx="1"></rect><rect width="7" height="7" x="14" y="3" rx="1"></rect><rect width="7" height="7" x="14" y="14" rx="1"></rect><rect width="7" height="7" x="3" y="14" rx="1"></rect></svg>
+                    </span>
+                    <span class="tenant-sidebar__link-label">Home Operacional</span>
+                </a>
+                
+            </div>
+        </section>
+        
+        <section class="tenant-sidebar__group">
+            <p class="tenant-sidebar__group-label">Operacao</p>
+
+            <div class="tenant-sidebar__links">
+                
+                
+                
+                
+                    
+                
+                    
+                
+                
+
+                <a href="/pdv/home" class="tenant-sidebar__link " title="PDV" aria-current="false">
+                    <span class="tenant-sidebar__link-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="shopping-cart" class="lucide lucide-shopping-cart w-4 h-4"><circle cx="8" cy="21" r="1"></circle><circle cx="19" cy="21" r="1"></circle><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path></svg>
+                    </span>
+                    <span class="tenant-sidebar__link-label">PDV</span>
+                </a>
+                
+                
+                
+                
+                    
+                
+                    
+                
+                    
+                
+                
+
+                <a href="/estoque/home" class="tenant-sidebar__link " title="Estoque" aria-current="false">
+                    <span class="tenant-sidebar__link-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="boxes" class="lucide lucide-boxes w-4 h-4"><path d="M2.97 12.92A2 2 0 0 0 2 14.63v3.24a2 2 0 0 0 .97 1.71l3 1.8a2 2 0 0 0 2.06 0L12 19v-5.5l-5-3-4.03 2.42Z"></path><path d="m7 16.5-4.74-2.85"></path><path d="m7 16.5 5-3"></path><path d="M7 16.5v5.17"></path><path d="M12 13.5V19l3.97 2.38a2 2 0 0 0 2.06 0l3-1.8a2 2 0 0 0 .97-1.71v-3.24a2 2 0 0 0-.97-1.71L17 10.5l-5 3Z"></path><path d="m17 16.5-5-3"></path><path d="m17 16.5 4.74-2.85"></path><path d="M17 16.5v5.17"></path><path d="M7.97 4.42A2 2 0 0 0 7 6.13v4.37l5 3 5-3V6.13a2 2 0 0 0-.97-1.71l-3-1.8a2 2 0 0 0-2.06 0l-3 1.8Z"></path><path d="M12 8 7.26 5.15"></path><path d="m12 8 4.74-2.85"></path><path d="M12 13.5V8"></path></svg>
+                    </span>
+                    <span class="tenant-sidebar__link-label">Estoque</span>
+                </a>
+                
+                
+                
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                
+
+                <a href="/financeiro/home" class="tenant-sidebar__link " title="Financeiro" aria-current="false">
+                    <span class="tenant-sidebar__link-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="landmark" class="lucide lucide-landmark w-4 h-4"><line x1="3" x2="21" y1="22" y2="22"></line><line x1="6" x2="6" y1="18" y2="11"></line><line x1="10" x2="10" y1="18" y2="11"></line><line x1="14" x2="14" y1="18" y2="11"></line><line x1="18" x2="18" y1="18" y2="11"></line><polygon points="12 2 20 7 4 7"></polygon></svg>
+                    </span>
+                    <span class="tenant-sidebar__link-label">Financeiro</span>
+                </a>
+                
+            </div>
+        </section>
+        
+        <section class="tenant-sidebar__group">
+            <p class="tenant-sidebar__group-label">Relacionamento</p>
+
+            <div class="tenant-sidebar__links">
+                
+                
+                
+                
+                    
+                
+                
+
+                <a href="/api/clientes/view" class="tenant-sidebar__link " title="Clientes" aria-current="false">
+                    <span class="tenant-sidebar__link-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="contact-round" class="lucide lucide-contact-round w-4 h-4"><path d="M16 2v2"></path><path d="M17.915 22a6 6 0 0 0-12 0"></path><path d="M8 2v2"></path><circle cx="12" cy="12" r="4"></circle><rect x="3" y="4" width="18" height="18" rx="2"></rect></svg>
+                    </span>
+                    <span class="tenant-sidebar__link-label">Clientes</span>
+                </a>
+                
+            </div>
+        </section>
+        
+        <section class="tenant-sidebar__group">
+            <p class="tenant-sidebar__group-label">Cadastros</p>
+
+            <div class="tenant-sidebar__links">
+                
+                
+                
+                
+                    
+                
+                
+
+                <a href="/api/produtos/view" class="tenant-sidebar__link " title="Produtos" aria-current="false">
+                    <span class="tenant-sidebar__link-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="package-plus" class="lucide lucide-package-plus w-4 h-4"><path d="M16 16h6"></path><path d="M19 13v6"></path><path d="M21 10V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l2-1.14"></path><path d="m7.5 4.27 9 5.15"></path><polyline points="3.29 7 12 12 20.71 7"></polyline><line x1="12" x2="12" y1="22" y2="12"></line></svg>
+                    </span>
+                    <span class="tenant-sidebar__link-label">Produtos</span>
+                </a>
+                
+                
+                
+                
+                    
+                
+                
+
+                <a href="/api/categorias/view" class="tenant-sidebar__link " title="Categorias" aria-current="false">
+                    <span class="tenant-sidebar__link-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="layers" class="lucide lucide-layers w-4 h-4"><path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z"></path><path d="M2 12a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 12"></path><path d="M2 17a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 17"></path></svg>
+                    </span>
+                    <span class="tenant-sidebar__link-label">Categorias</span>
+                </a>
+                
+                
+                
+                
+                    
+                
+                
+
+                <a href="/api/cupons/view" class="tenant-sidebar__link " title="Cupons" aria-current="false">
+                    <span class="tenant-sidebar__link-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="ticket-percent" class="lucide lucide-ticket-percent w-4 h-4"><path d="M2 9a3 3 0 1 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 1 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"></path><path d="M9 9h.01"></path><path d="m15 9-6 6"></path><path d="M15 15h.01"></path></svg>
+                    </span>
+                    <span class="tenant-sidebar__link-label">Cupons</span>
+                </a>
+                
+                
+                
+                
+                    
+                
+                
+
+                <a href="/api/adiantamentos/view" class="tenant-sidebar__link " title="Vales" aria-current="false">
+                    <span class="tenant-sidebar__link-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="wallet-cards" class="lucide lucide-wallet-cards w-4 h-4"><rect width="18" height="18" x="3" y="3" rx="2"></rect><path d="M3 9a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2"></path><path d="M3 11h3c.8 0 1.6.3 2.1.9l1.1.9c1.6 1.6 4.1 1.6 5.7 0l1.1-.9c.5-.5 1.3-.9 2.1-.9H21"></path></svg>
+                    </span>
+                    <span class="tenant-sidebar__link-label">Vales</span>
+                </a>
+                
+                
+                
+                
+                    
+                
+                
+
+                <a href="/api/importacao-exportacao/view" class="tenant-sidebar__link " title="Importacao em Lote" aria-current="false">
+                    <span class="tenant-sidebar__link-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="sheet" class="lucide lucide-sheet w-4 h-4"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"></rect><line x1="3" x2="21" y1="9" y2="9"></line><line x1="3" x2="21" y1="15" y2="15"></line><line x1="9" x2="9" y1="9" y2="21"></line><line x1="15" x2="15" y1="9" y2="21"></line></svg>
+                    </span>
+                    <span class="tenant-sidebar__link-label">Importacao em Lote</span>
+                </a>
+                
+            </div>
+        </section>
+        
+    </nav>
+</aside>
+
+
+
+<header class="tenant-topbar p-4 md:px-6 md:py-5 flex justify-between items-center border-b border-white/5 bg-black/10 backdrop-blur-md sticky top-0 z-50">
+    <div class="flex items-center gap-3 min-w-0">
+        
+        <button type="button" data-sidebar-toggle="" class="tenant-topbar__toggle" aria-label="Expandir menu lateral" aria-expanded="false">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="panel-left-close" class="lucide lucide-panel-left-close w-5 h-5 sidebar-toggle-expanded hidden"><rect width="18" height="18" x="3" y="3" rx="2"></rect><path d="M9 3v18"></path><path d="m16 15-3-3 3-3"></path></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="panel-left-open" class="lucide lucide-panel-left-open w-5 h-5 sidebar-toggle-collapsed"><rect width="18" height="18" x="3" y="3" rx="2"></rect><path d="M9 3v18"></path><path d="m14 9 3 3-3 3"></path></svg>
+        </button>
+        
+
+        <button type="button" data-back-button="" class="tenant-topbar__back" title="Voltar">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="arrow-left" class="lucide lucide-arrow-left w-5 h-5"><path d="m12 19-7-7 7-7"></path><path d="M19 12H5"></path></svg>
+        </button>
+
+        <div class="min-w-0">
+            <p class="tenant-topbar__eyebrow">Modulo ativo</p>
+            <h1 class="tenant-topbar__title flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="package" class="lucide lucide-package w-5 h-5 text-sky-400 shrink-0"><path d="M11 21.73a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73z"></path><path d="M12 22V12"></path><path d="m3.3 7 7.703 4.734a2 2 0 0 0 1.994 0L20.7 7"></path><path d="m7.5 4.27 9 5.15"></path></svg>
+                <span class="tracking-tight truncate">Ciclos e conciliacao</span>
+            </h1>
+        </div>
+    </div>
+
+    <div class="relative inline-block text-left">
+        <button id="userMenuBtn" class="flex items-center gap-3 p-1.5 rounded-xl hover:bg-white/5 transition-all group">
+            <div class="text-right hidden sm:block">
+                <p class="text-xs font-medium text-slate-200">Admin</p>
+                <p class="text-[9px] uppercase tracking-[0.15em] text-emerald-500 font-bold">Administrador</p>
+            </div>
+
+            <div class="relative">
+                <div class="w-9 h-9 rounded-lg bg-slate-800 border border-white/10 flex items-center justify-center text-xs font-bold text-sky-400 group-hover:border-sky-500/50 transition-all">
+                    AD
+                </div>
+                <div class="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-emerald-500 border-2 border-[#0f172a] rounded-full animate-pulse"></div>
+            </div>
+
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="chevron-down" class="lucide lucide-chevron-down w-4 h-4 text-slate-500 group-hover:text-white transition-colors"><path d="m6 9 6 6 6-6"></path></svg>
+        </button>
+
+        <div id="userDropdown" class="hidden absolute right-0 mt-3 w-60 glass rounded-2xl py-2 shadow-2xl animate-slide-in-top border border-white/10 z-[100]">
+            <div class="px-4 py-3 border-b border-white/5 mb-2">
+                <p class="text-[10px] uppercase tracking-widest text-slate-500 font-bold">Painel de Acesso</p>
+            </div>
+
+            
+            <a href="/home" class="flex items-center gap-3 px-4 py-2.5 text-sm text-slate-300 hover:bg-sky-500/10 hover:text-sky-400 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="layout-grid" class="lucide lucide-layout-grid w-4 h-4"><rect width="7" height="7" x="3" y="3" rx="1"></rect><rect width="7" height="7" x="14" y="3" rx="1"></rect><rect width="7" height="7" x="14" y="14" rx="1"></rect><rect width="7" height="7" x="3" y="14" rx="1"></rect></svg> Home operacional
+            </a>
+
+            <div class="h-[1px] bg-white/5 my-2"></div>
+
+            
+            <a href="/configuracoes/home" class="flex items-center gap-3 px-4 py-2.5 text-sm text-slate-300 hover:bg-sky-500/10 hover:text-sky-400 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="sliders-horizontal" class="lucide lucide-sliders-horizontal w-4 h-4"><line x1="21" x2="14" y1="4" y2="4"></line><line x1="10" x2="3" y1="4" y2="4"></line><line x1="21" x2="12" y1="12" y2="12"></line><line x1="8" x2="3" y1="12" y2="12"></line><line x1="21" x2="16" y1="20" y2="20"></line><line x1="12" x2="3" y1="20" y2="20"></line><line x1="14" x2="14" y1="2" y2="6"></line><line x1="8" x2="8" y1="10" y2="14"></line><line x1="16" x2="16" y1="18" y2="22"></line></svg> Configuracoes
+            </a>
+            
+
+            <a href="/home" class="flex items-center gap-3 px-4 py-2.5 text-sm text-slate-300 hover:bg-white/5 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="panel-left" class="lucide lucide-panel-left w-4 h-4"><rect width="18" height="18" x="3" y="3" rx="2"></rect><path d="M9 3v18"></path></svg> Módulos na lateral
+            </a>
+            
+
+            <a href="/senha" class="block px-4 py-3">Alterar senha</a>
+            <form action="/logout" method="POST">
+                <input type="hidden" name="csrf_token" value="e5ec2a33-fe68-4036-8c4a-7179b518bc7b" style="">
+                <button type="submit" class="flex items-center gap-3 px-4 py-2.5 text-sm text-rose-400 hover:bg-rose-500/10 transition-colors mt-1 font-medium">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="log-out" class="lucide lucide-log-out w-4 h-4"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" x2="9" y1="12" y2="12"></line></svg> Sair do Sistema
+            </button>
+            </form>
+        </div>
+    </div>
+</header>
+<main class="page-shell cycle-page space-y-6">
+    <h1 class="text-3xl font-bold">Ciclos e conciliacao</h1>
+    <p>Reversoes preservam o historico. Escolha a empresa e informe o motivo de cada ajuste.</p>
+    <label>Empresa <select id="ciclo-empresa" class="form-input"><option value="1">Empresa 1-1</option><option value="2">Empresa 1-2</option></select></label>
+    <button id="ciclo-atualizar" class="btn-primary">Atualizar registros</button>
+    <label>Motivo <input id="ciclo-motivo" minlength="5" maxlength="500" class="form-input" placeholder="Motivo do ajuste ou solicitacao do cliente" style=""></label>
+    <p id="ciclo-status" role="status" aria-live="polite">Operacao concluida.</p>
+    <section class="space-y-3">
+        <h2 class="text-xl font-bold">Financeiro e fechamento</h2>
+        <button id="ciclo-conciliar" class="btn-primary">Conciliar PDV e financeiro</button>
+        <div id="ciclo-conciliacao"></div>
+        <div id="ciclo-lancamentos">Nenhum registro.</div>
+        <label>Valor inicial para novo fechamento <input id="ciclo-inicial" inputmode="decimal" value="0.00" class="form-input" style=""></label>
+        <label>Valor final contado <input id="ciclo-final" inputmode="decimal" value="0.00" class="form-input" style=""></label>
+        <div id="ciclo-fechamentos">Nenhum registro.</div>
+    </section>
+    <section class="space-y-3">
+        <h2 class="text-xl font-bold">Adiantamentos e folha</h2>
+        <form id="ciclo-solicitacao" class="space-y-2">
+            <label>Funcionario <select id="ciclo-funcionario" class="form-input"><option value="1">Admin</option></select></label>
+            <label>Valor em dinheiro <input id="ciclo-valor" inputmode="decimal" required="" class="form-input" style=""></label>
+            <button type="submit" class="btn-primary">Solicitar adiantamento</button>
+        </form>
+        <div id="ciclo-adiantamentos">Nenhum registro.</div>
+        <button id="ciclo-folha" class="btn-primary">Relatorio de folha</button>
+        <div id="ciclo-resumo"></div>
+    </section>
+    <section class="space-y-3">
+        <h2 class="text-xl font-bold">Clientes e comunicacoes</h2>
+        <p>Adaptadores externos bloqueados. Mensagens sem confirmacao exigem conciliacao; nao sao reenviadas.</p>
+        <button id="ciclo-processar" class="btn-primary">Processar pendencias</button>
+        <button id="ciclo-expirar" class="btn-primary">Aplicar expiracoes de cashback</button>
+        <div id="ciclo-clientes">Nenhum registro.</div>
+        <div id="ciclo-mensagens"></div>
+    </section>
+</main>
+</div>
+
+  <div id="global-stock-alert-modal" class="modal-overlay hidden fixed inset-0 z-[9998] bg-slate-950/75 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="w-full max-w-2xl bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl overflow-hidden">
+      <div class="flex items-center justify-between px-6 py-5 border-b border-slate-800">
+        <div>
+          <h3 class="text-xl font-bold text-white">Alertas operacionais</h3>
+          <p class="text-sm text-slate-400 mt-1">Resumo automatico de estoque baixo, ruptura e validade.</p>
+        </div>
+        <button type="button" id="global-stock-alert-close" aria-label="Fechar alertas" class="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 transition">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-lucide="x" class="lucide lucide-x w-5 h-5"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
+        </button>
+      </div>
+
+      <div class="px-6 py-6 space-y-5">
+        <div id="global-stock-alert-summary" class="grid grid-cols-2 md:grid-cols-4 gap-3"></div>
+        <div id="global-stock-alert-items" class="space-y-3"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    lucide.createIcons();
+  </script>
+
+  <script src="/static/js/core/decimal-input.js"></script>
+  <script src="/static/js/core/security.js"></script>
+  <script src="/static/js/core/input-mask.js"></script>
+  <script src="/static/js/core/theme.js"></script>
+  <script src="/static/js/header/header.js"></script>
+  <script>
+    (function () {
+      function toggleScreenLock() {
+        const lock = document.getElementById("screen-size-lock");
+        if (!lock) return;
+        lock.classList.add("hidden");
+        lock.classList.remove("flex");
+      }
+
+      function formatInteger(value) {
+        return new Intl.NumberFormat("pt-BR", {
+          minimumFractionDigits: 0,
+          maximumFractionDigits: 0
+        }).format(Number.parseInt(String(value || 0), 10) || 0);
+      }
+
+      function escapeHtml(value) {
+        return String(value ?? "")
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#039;");
+      }
+
+      function closeStockAlertModal() {
+        document.getElementById("global-stock-alert-modal")?.classList.add("hidden");
+      }
+
+      function renderStockAlertPopup(payload) {
+        const summary = document.getElementById("global-stock-alert-summary");
+        const items = document.getElementById("global-stock-alert-items");
+        if (!summary || !items) return;
+
+        const resumo = payload.resumo || {};
+        const cards = [
+          { label: "Baixo estoque", value: resumo.estoque_baixo || 0 },
+          { label: "Sem estoque", value: resumo.sem_estoque || 0 },
+          { label: "Vencidos", value: resumo.vencidos || 0 },
+          { label: "A vencer", value: resumo.proximos_vencimento || 0 }
+        ];
+
+        summary.innerHTML = cards.map((card) => `
+          <article class="rounded-2xl border border-slate-800 bg-slate-950/60 p-4">
+            <p class="text-xs uppercase tracking-[0.14em] text-slate-500">${card.label}</p>
+            <strong class="block text-2xl text-white mt-2">${formatInteger(card.value)}</strong>
+          </article>
+        `).join("");
+
+        const alertItems = Array.isArray(payload.itens) ? payload.itens : [];
+        items.innerHTML = alertItems.length
+          ? alertItems.map((item) => `
+            <article class="rounded-2xl border border-slate-800 bg-slate-950/60 p-4">
+              <div class="flex items-start justify-between gap-4">
+                <div>
+                  <p class="font-semibold text-white">${escapeHtml(item.nome || "-")}</p>
+                  <p class="text-sm text-slate-400">${escapeHtml(item.empresa_nome || "-")}</p>
+                </div>
+                <span class="text-xs uppercase tracking-[0.14em] text-sky-300">${escapeHtml(item.tipo || "Alerta")}</span>
+              </div>
+              <div class="mt-3 text-sm text-slate-300">
+                Estoque atual ${formatInteger(item.estoque_atual || 0)} / minimo ${formatInteger(item.estoque_minimo || 0)}
+              </div>
+            </article>
+          `).join("")
+          : `<p class="text-slate-400">Nenhum alerta prioritario encontrado.</p>`;
+
+        document.getElementById("global-stock-alert-modal")?.classList.remove("hidden");
+        if (window.lucide) {
+          lucide.createIcons();
+        }
+      }
+
+      async function loadStockAlertPopup() {
+        if (!window.__uiFlags?.can_view_notifications) return;
+        if (window.sessionStorage.getItem("oceanblue:stock-popup-shown") === "1") return;
+
+        try {
+          const response = await fetch("/api/estoque/notificacoes/popup", {
+            credentials: "same-origin"
+          });
+          if (!response.ok) return;
+          const result = await response.json();
+          if (!result.success || !result.data?.deve_exibir) return;
+
+          renderStockAlertPopup(result.data);
+          window.sessionStorage.setItem("oceanblue:stock-popup-shown", "1");
+        } catch (_error) {
+          return;
+        }
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        toggleScreenLock();
+        loadStockAlertPopup();
+
+        document.getElementById("global-stock-alert-close")?.addEventListener("click", closeStockAlertModal);
+        window.addEventListener("resize", toggleScreenLock);
+        requestAnimationFrame(() => {
+          document.body.classList.remove("ui-booting");
+        });
+      });
+    })();
+  </script>
+
+  <script src="/static/js/modulos/ciclos.js"></script>
+
+</body></html>

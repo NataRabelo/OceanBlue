@@ -1,0 +1,32 @@
+[
+  {
+    "round": "verify1",
+    "tests": 758,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "seconds": 1755.395,
+    "lines_covered": 9017,
+    "lines_valid": 11700,
+    "line_percent": 77.06837606837607,
+    "branches_covered": 1609,
+    "branches_valid": 2672,
+    "branch_percent": 60.217065868263475,
+    "combined_percent": 73.93543000278319
+  },
+  {
+    "round": "verify2",
+    "tests": 758,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "seconds": 1756.676,
+    "lines_covered": 9017,
+    "lines_valid": 11700,
+    "line_percent": 77.06837606837607,
+    "branches_covered": 1609,
+    "branches_valid": 2672,
+    "branch_percent": 60.217065868263475,
+    "combined_percent": 73.93543000278319
+  }
+]

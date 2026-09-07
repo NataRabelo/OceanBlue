@@ -1,0 +1,6 @@
+Exception: C:\Users\Rabel\.codex\worktrees\944e\OceanBlue\scripts\operational_snapshot.ps1:37
+Line |
+  37 |  … rsePoint) { throw 'Links are forbidden in snapshots and their ancesto …
+     |                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | Links are forbidden in snapshots and their ancestors.
+

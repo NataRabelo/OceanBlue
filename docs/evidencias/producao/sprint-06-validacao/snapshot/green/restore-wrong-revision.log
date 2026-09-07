@@ -1,0 +1,7 @@
+WARNING: No external manifest digest supplied: hashes detect corruption, not malicious replacement of snapshot and manifest.
+Exception: C:\Users\Rabel\.codex\worktrees\944e\OceanBlue\scripts\operational_snapshot.ps1:231
+Line |
+ 231 |  … Revision) { throw 'Snapshot schema revision does not match applicatio …
+     |                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | Snapshot schema revision does not match application image.
+

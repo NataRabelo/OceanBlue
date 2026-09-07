@@ -28,6 +28,7 @@ try {
         & docker @compose cp test:/app/coverage.xml (Join-Path $evidence "coverage.xml") 2>&1 | Out-File (Join-Path $evidence "copy-coverage.txt")
         & docker @compose cp test:/tmp/e2e (Join-Path $evidence "e2e") 2>&1 | Out-File (Join-Path $evidence "copy-e2e.txt")
         & docker @compose cp test:/tmp/benchmark-s06.json (Join-Path $evidence "benchmark.json") 2>&1 | Out-File (Join-Path $evidence "copy-benchmark.txt")
+        & docker @compose cp test:/tmp/load-s06.json (Join-Path $evidence "load.json") 2>&1 | Out-File (Join-Path $evidence "copy-load.txt")
     }
     [xml]$junit = Get-Content -Raw (Join-Path $evidence "junit.xml")
     foreach ($suite in $junit.testsuites.testsuite) {

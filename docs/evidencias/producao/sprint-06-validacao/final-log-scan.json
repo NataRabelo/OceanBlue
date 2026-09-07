@@ -1,0 +1,12 @@
+{
+  "files": [
+    "docs/evidencias/producao/sprint-06-validacao/ops-final/proof-logs.txt",
+    "docs/evidencias/producao/sprint-06-validacao/ops-final/final-source-logs.txt",
+    "docs/evidencias/producao/sprint-06-validacao/proxy/green/proxy.txt",
+    "docs/evidencias/producao/sprint-06-validacao/verify1/logs.txt",
+    "docs/evidencias/producao/sprint-06-validacao/verify2/logs.txt"
+  ],
+  "scope": "Final operational and both full-regression app/proxy logs, corrected upstream failure; excludes red evidence and intentional pytest tracebacks",
+  "synthetic_marker_regex": "S06_PROXY_PASSWORD|52998224725|4111111111111111|isolated-test-only|isolated-smoke-(?:session|jwt|field)-secret|S06_(?:PASSWORD|SECRET|TOKEN)|s06-secret",
+  "synthetic_secret_matches": 0
+}

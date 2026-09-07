@@ -15,6 +15,7 @@ services:
       retries: 30
     networks: [test]
   test:
+    init: true
     build:
       context: .
       dockerfile: Dockerfile.test

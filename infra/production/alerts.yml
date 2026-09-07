@@ -1,6 +1,16 @@
 groups:
   - name: oceanblue
     rules:
+      - alert: OceanBlueReadinessUnavailable
+        expr: absent_over_time(probe_success{job="oceanblue-readiness"}[2m]) == 1
+        for: 1m
+        labels: {severity: critical}
+        annotations: {summary: "Sonda de readiness ausente; verificar proxy e coletor"}
+      - alert: OceanBlueMetricsUnavailable
+        expr: absent_over_time(oceanblue_requests_total[2m]) == 1
+        for: 1m
+        labels: {severity: high}
+        annotations: {summary: "Metricas ausentes; verificar aplicacao, proxy e coletor"}
       - alert: OceanBlueStorageLow
         expr: oceanblue_storage_free_bytes < 1073741824
         for: 5m

@@ -32,7 +32,7 @@ def test_mobile_accessibility_and_local_assets(browser_page, path):
     page.keyboard.press("Control+Home")
     page.locator(".skip-link").focus()
     page.keyboard.press("Enter")
-    expect(page.locator("#page-content")).to_be_focused()
+    expect(page.locator("main")).to_be_focused()
 
 
 def test_mobile_sale_retry_and_reversal(browser_page, transaction_app):

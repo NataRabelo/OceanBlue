@@ -1,0 +1,207 @@
+FFFFFFFF                                                                 [100%]
+=================================== FAILURES ===================================
+___ test_storage_restore_marker_blocks_probe_before_write_and_recovers[file] ___
+
+storage_app = (<Flask 'tests.test_sprint06_data_adversarial'>, PosixPath('/tmp/pytest-of-tester/pytest-0/test_storage_restore_marker_bl0/storage'))
+restore_marker = PosixPath('/tmp/pytest-of-tester/pytest-0/test_storage_restore_marker_bl0/.oceanblue-restore-incomplete')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7beaf0e21f10>
+
+    def test_storage_restore_marker_blocks_probe_before_write_and_recovers(storage_app, restore_marker, monkeypatch):
+        _, root = storage_app
+        opened = Mock(wraps=os.open)
+        with monkeypatch.context() as injection:
+            injection.setattr("app.operations.os.open", opened)
+>           with pytest.raises(OSError):
+E           Failed: DID NOT RAISE <class 'OSError'>
+
+tests/test_sprint06_data_adversarial.py:328: Failed
+---------------------------- Captured stderr setup -----------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade  -> 1150177c20ca, initial
+INFO  [alembic.runtime.migration] Running upgrade 1150177c20ca -> 7f3c1a2b9d4e, add roles and permissions
+INFO  [alembic.runtime.migration] Running upgrade 7f3c1a2b9d4e -> 9d1dca4d2bc5, v2
+INFO  [alembic.runtime.migration] Running upgrade 9d1dca4d2bc5 -> c3a1f9d4e8b2, convert quantities to integer
+INFO  [alembic.runtime.migration] Running upgrade c3a1f9d4e8b2 -> 4b2d8b0f6c11, add platform owners
+INFO  [alembic.runtime.migration] Running upgrade 4b2d8b0f6c11 -> 8f6e4c2a1b9d, add pdv financeiro permissions and defaults
+INFO  [alembic.runtime.migration] Running upgrade 8f6e4c2a1b9d -> b7c9d1e2f3a4, add cupons adiantamentos validade salario
+INFO  [alembic.runtime.migration] Running upgrade b7c9d1e2f3a4 -> d4e5f6a7b8c9, add empresa visual mode
+INFO  [alembic.runtime.migration] Running upgrade d4e5f6a7b8c9 -> e6f7a8b9c0d1, add stock alert settings
+INFO  [alembic.runtime.migration] Running upgrade e6f7a8b9c0d1 -> f2b4c6d8e9f1, add client wallet messaging and reversal controls
+INFO  [alembic.runtime.migration] Running upgrade 8f6e4c2a1b9d -> f9d0e1a2b3c4, add boleto financeiro models
+INFO  [alembic.runtime.migration] Running upgrade f2b4c6d8e9f1 -> a1b2c3d4e5f6, add stock alert dispatch tracking
+INFO  [alembic.runtime.migration] Running upgrade a1b2c3d4e5f6 -> b3c4d5e6f7a8, add cashback sale controls
+INFO  [alembic.runtime.migration] Running upgrade f2b4c6d8e9f1 -> a4f1c8d2e7b9, add wholesale pricing and fiscal foundation
+INFO  [alembic.runtime.migration] Running upgrade a4f1c8d2e7b9, b3c4d5e6f7a8 -> c9d8e7f6a5b4, merge cashback and fiscal heads
+INFO  [alembic.runtime.migration] Running upgrade c9d8e7f6a5b4 -> 0f6a8c2d4e9b, add audit and saas limits
+INFO  [alembic.runtime.migration] Running upgrade 0f6a8c2d4e9b, f9d0e1a2b3c4 -> ea3d60221646, merge migration heads
+INFO  [alembic.runtime.migration] Running upgrade ea3d60221646 -> 1a2b3c4d5e6f, add sprint3 boleto and fiscal external status
+INFO  [alembic.runtime.migration] Running upgrade 1a2b3c4d5e6f -> 2b3c4d5e6f7a, add sprint4 asaas and focus real configs
+INFO  [alembic.runtime.migration] Running upgrade 2b3c4d5e6f7a -> 3c4d5e6f7a8b, Align migrated types, tenant indexes and installment foreign key with models.
+INFO  [alembic.runtime.migration] Running upgrade 3c4d5e6f7a8b -> 4d5e6f7a8b9c, Shared authentication state, tenant integrity, SaaS quotas and access audit.
+INFO  [alembic.runtime.migration] Running upgrade 4d5e6f7a8b9c -> 5e6f7a8b9c0d
+INFO  [alembic.runtime.migration] Running upgrade 5e6f7a8b9c0d -> 6f7a8b9c0d1e
+INFO  [alembic.runtime.migration] Running upgrade 6f7a8b9c0d1e -> 7a8b9c0d1e2f
+INFO  [alembic.runtime.migration] Running upgrade 7a8b9c0d1e2f -> 8b9c0d1e2f3a
+INFO  [alembic.runtime.migration] Running upgrade 8b9c0d1e2f3a -> 9c0d1e2f3a4b
+INFO  [alembic.runtime.migration] Running upgrade 9c0d1e2f3a4b -> a0d1e2f3a4b5
+_ test_storage_restore_marker_blocks_probe_before_write_and_recovers[directory] _
+
+storage_app = (<Flask 'tests.test_sprint06_data_adversarial'>, PosixPath('/tmp/pytest-of-tester/pytest-0/test_storage_restore_marker_bl1/storage'))
+restore_marker = PosixPath('/tmp/pytest-of-tester/pytest-0/test_storage_restore_marker_bl1/.oceanblue-restore-incomplete')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7beaf0e21be0>
+
+    def test_storage_restore_marker_blocks_probe_before_write_and_recovers(storage_app, restore_marker, monkeypatch):
+        _, root = storage_app
+        opened = Mock(wraps=os.open)
+        with monkeypatch.context() as injection:
+            injection.setattr("app.operations.os.open", opened)
+>           with pytest.raises(OSError):
+E           Failed: DID NOT RAISE <class 'OSError'>
+
+tests/test_sprint06_data_adversarial.py:328: Failed
+_ test_storage_restore_marker_blocks_probe_before_write_and_recovers[symlink] __
+
+storage_app = (<Flask 'tests.test_sprint06_data_adversarial'>, PosixPath('/tmp/pytest-of-tester/pytest-0/test_storage_restore_marker_bl2/storage'))
+restore_marker = PosixPath('/tmp/pytest-of-tester/pytest-0/test_storage_restore_marker_bl2/.oceanblue-restore-incomplete')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7beaf0e998b0>
+
+    def test_storage_restore_marker_blocks_probe_before_write_and_recovers(storage_app, restore_marker, monkeypatch):
+        _, root = storage_app
+        opened = Mock(wraps=os.open)
+        with monkeypatch.context() as injection:
+            injection.setattr("app.operations.os.open", opened)
+>           with pytest.raises(OSError):
+E           Failed: DID NOT RAISE <class 'OSError'>
+
+tests/test_sprint06_data_adversarial.py:328: Failed
+_ test_storage_restore_marker_blocks_probe_before_write_and_recovers[dangling_symlink] _
+
+storage_app = (<Flask 'tests.test_sprint06_data_adversarial'>, PosixPath('/tmp/pytest-of-tester/pytest-0/test_storage_restore_marker_bl3/storage'))
+restore_marker = PosixPath('/tmp/pytest-of-tester/pytest-0/test_storage_restore_marker_bl3/.oceanblue-restore-incomplete')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7beaf0e98110>
+
+    def test_storage_restore_marker_blocks_probe_before_write_and_recovers(storage_app, restore_marker, monkeypatch):
+        _, root = storage_app
+        opened = Mock(wraps=os.open)
+        with monkeypatch.context() as injection:
+            injection.setattr("app.operations.os.open", opened)
+>           with pytest.raises(OSError):
+E           Failed: DID NOT RAISE <class 'OSError'>
+
+tests/test_sprint06_data_adversarial.py:328: Failed
+______ test_storage_restore_marker_blocks_http_and_removal_recovers[file] ______
+
+security_app = <Flask 'app'>
+storage_app = (<Flask 'tests.test_sprint06_data_adversarial'>, PosixPath('/tmp/pytest-of-tester/pytest-0/test_storage_restore_marker_bl4/storage'))
+restore_marker = PosixPath('/tmp/pytest-of-tester/pytest-0/test_storage_restore_marker_bl4/.oceanblue-restore-incomplete')
+
+    def test_storage_restore_marker_blocks_http_and_removal_recovers(security_app, storage_app, restore_marker):
+        _, root = storage_app
+        security_app.testing = False
+        security_app.config["STORAGE_ROOT"] = str(root)
+        mutations = []
+    
+        def mutation():
+            mutations.append("executed")
+            return "ok"
+    
+        methods = ["POST", "PUT", "PATCH", "DELETE"]
+        security_app.add_url_rule("/data-restore-mutation", "data_restore_mutation", mutation, methods=methods)
+        client = security_app.test_client()
+>       assert client.get("/readiness").status_code == 503
+E       AssertionError: assert 200 == 503
+E        +  where 200 = <WrapperTestResponse streamed [200 OK]>.status_code
+E        +    where <WrapperTestResponse streamed [200 OK]> = get('/readiness')
+E        +      where get = <FlaskClient <Flask 'app'>>.get
+
+tests/test_sprint06_data_adversarial.py:350: AssertionError
+___ test_storage_restore_marker_blocks_http_and_removal_recovers[directory] ____
+
+security_app = <Flask 'app'>
+storage_app = (<Flask 'tests.test_sprint06_data_adversarial'>, PosixPath('/tmp/pytest-of-tester/pytest-0/test_storage_restore_marker_bl5/storage'))
+restore_marker = PosixPath('/tmp/pytest-of-tester/pytest-0/test_storage_restore_marker_bl5/.oceanblue-restore-incomplete')
+
+    def test_storage_restore_marker_blocks_http_and_removal_recovers(security_app, storage_app, restore_marker):
+        _, root = storage_app
+        security_app.testing = False
+        security_app.config["STORAGE_ROOT"] = str(root)
+        mutations = []
+    
+        def mutation():
+            mutations.append("executed")
+            return "ok"
+    
+        methods = ["POST", "PUT", "PATCH", "DELETE"]
+        security_app.add_url_rule("/data-restore-mutation", "data_restore_mutation", mutation, methods=methods)
+        client = security_app.test_client()
+>       assert client.get("/readiness").status_code == 503
+E       AssertionError: assert 200 == 503
+E        +  where 200 = <WrapperTestResponse streamed [200 OK]>.status_code
+E        +    where <WrapperTestResponse streamed [200 OK]> = get('/readiness')
+E        +      where get = <FlaskClient <Flask 'app'>>.get
+
+tests/test_sprint06_data_adversarial.py:350: AssertionError
+____ test_storage_restore_marker_blocks_http_and_removal_recovers[symlink] _____
+
+security_app = <Flask 'app'>
+storage_app = (<Flask 'tests.test_sprint06_data_adversarial'>, PosixPath('/tmp/pytest-of-tester/pytest-0/test_storage_restore_marker_bl6/storage'))
+restore_marker = PosixPath('/tmp/pytest-of-tester/pytest-0/test_storage_restore_marker_bl6/.oceanblue-restore-incomplete')
+
+    def test_storage_restore_marker_blocks_http_and_removal_recovers(security_app, storage_app, restore_marker):
+        _, root = storage_app
+        security_app.testing = False
+        security_app.config["STORAGE_ROOT"] = str(root)
+        mutations = []
+    
+        def mutation():
+            mutations.append("executed")
+            return "ok"
+    
+        methods = ["POST", "PUT", "PATCH", "DELETE"]
+        security_app.add_url_rule("/data-restore-mutation", "data_restore_mutation", mutation, methods=methods)
+        client = security_app.test_client()
+>       assert client.get("/readiness").status_code == 503
+E       AssertionError: assert 200 == 503
+E        +  where 200 = <WrapperTestResponse streamed [200 OK]>.status_code
+E        +    where <WrapperTestResponse streamed [200 OK]> = get('/readiness')
+E        +      where get = <FlaskClient <Flask 'app'>>.get
+
+tests/test_sprint06_data_adversarial.py:350: AssertionError
+_ test_storage_restore_marker_blocks_http_and_removal_recovers[dangling_symlink] _
+
+security_app = <Flask 'app'>
+storage_app = (<Flask 'tests.test_sprint06_data_adversarial'>, PosixPath('/tmp/pytest-of-tester/pytest-0/test_storage_restore_marker_bl7/storage'))
+restore_marker = PosixPath('/tmp/pytest-of-tester/pytest-0/test_storage_restore_marker_bl7/.oceanblue-restore-incomplete')
+
+    def test_storage_restore_marker_blocks_http_and_removal_recovers(security_app, storage_app, restore_marker):
+        _, root = storage_app
+        security_app.testing = False
+        security_app.config["STORAGE_ROOT"] = str(root)
+        mutations = []
+    
+        def mutation():
+            mutations.append("executed")
+            return "ok"
+    
+        methods = ["POST", "PUT", "PATCH", "DELETE"]
+        security_app.add_url_rule("/data-restore-mutation", "data_restore_mutation", mutation, methods=methods)
+        client = security_app.test_client()
+>       assert client.get("/readiness").status_code == 503
+E       AssertionError: assert 200 == 503
+E        +  where 200 = <WrapperTestResponse streamed [200 OK]>.status_code
+E        +    where <WrapperTestResponse streamed [200 OK]> = get('/readiness')
+E        +      where get = <FlaskClient <Flask 'app'>>.get
+
+tests/test_sprint06_data_adversarial.py:350: AssertionError
+--------------- generated xml file: /evidence/marker-before.xml ----------------
+=========================== short test summary info ============================
+FAILED tests/test_sprint06_data_adversarial.py::test_storage_restore_marker_blocks_probe_before_write_and_recovers[file]
+FAILED tests/test_sprint06_data_adversarial.py::test_storage_restore_marker_blocks_probe_before_write_and_recovers[directory]
+FAILED tests/test_sprint06_data_adversarial.py::test_storage_restore_marker_blocks_probe_before_write_and_recovers[symlink]
+FAILED tests/test_sprint06_data_adversarial.py::test_storage_restore_marker_blocks_probe_before_write_and_recovers[dangling_symlink]
+FAILED tests/test_sprint06_data_adversarial.py::test_storage_restore_marker_blocks_http_and_removal_recovers[file]
+FAILED tests/test_sprint06_data_adversarial.py::test_storage_restore_marker_blocks_http_and_removal_recovers[directory]
+FAILED tests/test_sprint06_data_adversarial.py::test_storage_restore_marker_blocks_http_and_removal_recovers[symlink]
+FAILED tests/test_sprint06_data_adversarial.py::test_storage_restore_marker_blocks_http_and_removal_recovers[dangling_symlink]
+8 failed, 98 deselected in 15.96s

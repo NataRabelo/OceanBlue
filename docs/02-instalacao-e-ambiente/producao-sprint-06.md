@@ -60,7 +60,7 @@ docker build -t oceanblue-approved .
    Libere o proxy somente depois desses gates. Se falharem, execute o rollback descrito abaixo.
 
 `/health` e `/api/health` verificam apenas o processo. `/readiness` e `/api/ready` verificam
-conexão PostgreSQL, revision esperada e criação/fsync/remoção de arquivo sentinela no storage.
+conexão PostgreSQL, revision esperada e criação/fsync/leitura/remoção de arquivo sentinela no storage.
 Banco indisponível, schema atrasado ou storage sem escrita retornam 503 no readiness. Falha de
 storage bloqueia POST/PUT/PATCH/DELETE antes do controlador. A sonda não prova durabilidade
 do equipamento, replicação, espaço futuro, todos os registros nem restauração de um backup.
@@ -108,14 +108,27 @@ e custódia de chaves. A ferramenta não instala criptografia, imutabilidade nem
 Para restaurar, crie outro projeto com PostgreSQL vazio e aplicação parada com volume vazio:
 
 ```powershell
-pwsh -File scripts/operational_snapshot.ps1 -Mode restore -Project oceanblue-recovery -DatabaseContainer oceanblue-recovery-db-1 -ApplicationContainer oceanblue-recovery-app-1 -Database oceanblue -DatabaseUser oceanblue_owner -Directory D:/Backups/OceanBlue/2026-09-07
+pwsh -File scripts/operational_snapshot.ps1 -Mode restore -Project oceanblue-recovery -DatabaseContainer oceanblue-recovery-db-1 -ApplicationContainer oceanblue-recovery-app-1 -Database oceanblue -DatabaseUser oceanblue_owner -Directory D:/Backups/OceanBlue/2026-09-07 -ExpectedManifestSha256 $hashObtidoDoRegistroConfiavel
 ```
 
-O script verifica todos os hashes antes de gravar, rejeita links, arquivos extras, banco preenchido
-e storage preenchido. Restaura banco em uma transação, compara novamente todas as tabelas e
-sequências e confere cada arquivo. Reaplica UID/GID do volume, mas não inicia a aplicação.
-As pastas auxiliares `-destination-check` e `-restored-check` contêm cópias de verificação e devem
-ficar na mesma área privada dos backups. Não altere nem remova essas pastas durante uma execução.
+O hash esperado do manifesto deve vir do registro confiável preservado durante o backup,
+e é obrigatório no restore; calculá-lo de novo a partir do arquivo recebido não autentica o backup.
+O formato do manifesto, major do PostgreSQL e revision devem coincidir com a imagem de destino.
+O formato aceito é v2; snapshots v1 antigos não são restaurados por este script. Gere e
+verifique um snapshot v2 antes da próxima alteração de versão ou use um procedimento isolado
+especificamente auditado para o acervo antigo, preservando a origem e a custódia desses backups.
+O script verifica os hashes antes de gravar e rejeita links inclusive nos diretórios ancestrais,
+arquivos extras, objetos de banco preexistentes e storage preenchido. A transação do banco
+só é confirmada após comparar tabelas, sequências e todos os arquivos restaurados. Reaplica
+UID/GID e permissões privadas do volume, mas não inicia a aplicação.
+Backups são publicados a partir de diretório `.partial-<operação>` somente após validação.
+Cópias auxiliares `.verify-<operação>` ficam privadas e são removidas ao concluir.
+Falha anterior ao commit tenta rollback e limpeza exclusivamente do destino inicialmente vazio.
+Interrupção abrupta ou resultado incerto do commit pode deixar `.oceanblue-restore-incomplete`
+no volume: readiness e escritas ficam bloqueados até reconciliação pelo operador. Não remova
+esse marcador para forçar disponibilidade. Preserve o destino para diagnóstico e prefira outro
+volume e banco vazios. Escritores de banco e containers com o volume gravável devem permanecer
+parados; locks e verificações não substituem o bloqueio operacional de novos escritores.
 Execute smoke e validações de negócio antes de qualquer troca de tráfego. Uma falha mantém o
 destino fora de serviço; preserve-o para análise e use outro destino vazio para nova tentativa.
 
@@ -143,6 +156,10 @@ Logs de requisição são JSON com UTC, método, template da rota, status, dura�
 Não incluem querystring, corpo, cookies, Authorization, URL do banco ou texto da exceção.
 O proxy produz JSON equivalente sem caminho bruto. Logs de startup de Gunicorn/Alembic ainda
 têm formato próprio. Retenção local do Docker é limitada a cinco arquivos de 10 MB por serviço.
+O error_log HTTP do nginx é descartado porque seu formato nativo inclui URI e querystring
+em falhas de upstream; status, duração e request ID continuam no access_log JSON. Erros
+globais de configuração/startup permanecem em stderr. Use os contadores de 5xx e a sonda
+externa para detectar indisponibilidade sem coletar caminhos privados de requisições.
 No coletor, classifique logs de startup separadamente e restrinja acesso. Nenhum coletor remoto
 foi instalado nesta tarefa.
 
@@ -152,7 +169,11 @@ São locais ao processo e reiniciam com ele. Não aumente workers sem implementa
 O listener TLS 9443 do proxy, sem porta publicada, oferece `/metrics` com Bearer token; o listener
 público retorna 404. O coletor interno deve validar o certificado e obter o token do cofre.
 `infra/production/alerts.yml` define: readiness falhando por 1 min, erro acima de 1% por 5 min,
-lentidão acima de 5% por 5 min e menos de 1 GiB livre por 5 min. Configure também ausência de
+lentidão acima de 5% por 5 min e menos de 1 GiB livre por 5 min. A ausência de amostras de
+readiness ou métricas por uma janela de 2 min, sustentada por 1 min, também dispara alerta;
+o retorno das séries resolve esses alertas. Essas regras pressupõem uma instalação monitorada
+por conjunto de séries: ambientes com várias instâncias devem preservar seus rótulos no PromQL.
+O monitor externo do próprio coletor continua necessário. Configure também ausência de
 backup diário e teste mensal de restore no sistema de monitoramento do operador.
 
 Em incidente, registre horário UTC e request ID, confirme health/readiness e espaço do volume,
@@ -187,8 +208,10 @@ Exige Docker Linux, PowerShell 7, Node 20 ou superior, imagens base/locks resolv
 runner de rollback. As redes são internas e não publicam portas. Evidências contêm somente
 dados e credenciais sintéticos. O segundo runner exige subrede 172.30.62.0/24 livre.
 
-O workflow remoto chama-se `OceanBlue verification` e dispõe de 30 minutos: a regressão local
-mediu 17m29s, excedendo o limite anterior de 15 minutos. A margem adicional acomoda build,
+O workflow remoto chama-se `OceanBlue verification` e dispõe de 45 minutos: a validação
+independente com 758 casos mediu até 29m17s só no pytest, em duas execuções concorrentes.
+O limite de 30 minutos deixava menos de um minuto para preparar e encerrar o job.
+A margem adicional acomoda build,
 migrations e coleta sem reduzir a suíte ou o gate de cobertura. O validador YAML roda tanto no
 workflow quanto no runner local; verifica timeout, suíte integral, migrations, cobertura e coleta
 e limpeza incondicionais. O workflow remoto não foi disparado nesta entrega sem push/deploy.

@@ -1,0 +1,31 @@
+{
+  "checked": 285,
+  "mismatches": [
+    {
+      "path": "app/operations.py",
+      "matches": false
+    },
+    {
+      "path": "app/services/pdv_service.py",
+      "matches": false
+    },
+    {
+      "path": "app/security/proxy.py",
+      "matches": false
+    },
+    {
+      "path": "app/security/headers.py",
+      "matches": false
+    },
+    {
+      "path": "scripts/validate_sprint06.ps1",
+      "matches": false
+    },
+    {
+      "path": "scripts/validate_operational_proof.ps1",
+      "matches": false
+    }
+  ],
+  "normalization": "CRLF to LF",
+  "baseline": "804256ae6edafb4a2db99dcdb39ddacb987f9148"
+}

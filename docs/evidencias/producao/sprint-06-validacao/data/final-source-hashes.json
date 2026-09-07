@@ -1,0 +1,34 @@
+[
+  {
+    "Path": "C:\\Users\\Rabel\\.codex\\worktrees\\944e\\OceanBlue\\app\\controllers\\auditoria_controller.py",
+    "Hash": "06D67B2A5E97AF28BACB8459B0B032FDA05D45EA41970420825B8E833C053DB6"
+  },
+  {
+    "Path": "C:\\Users\\Rabel\\.codex\\worktrees\\944e\\OceanBlue\\app\\services\\boleto_provider.py",
+    "Hash": "4340A6569777625D6BC9D91C3D705B6B58C8272DC218826B52CCAD769CB4587D"
+  },
+  {
+    "Path": "C:\\Users\\Rabel\\.codex\\worktrees\\944e\\OceanBlue\\app\\services\\fiscal_provider.py",
+    "Hash": "E25818FC230E54860D418F3F36B106C82BC32B4D47277523F9FAD5ADE93083F7"
+  },
+  {
+    "Path": "C:\\Users\\Rabel\\.codex\\worktrees\\944e\\OceanBlue\\app\\operations.py",
+    "Hash": "4BC5075E04D4014038E82C1E7AF3D6E91EC89BA7D5AABF1AD03F5B8E2E700D3C"
+  },
+  {
+    "Path": "C:\\Users\\Rabel\\.codex\\worktrees\\944e\\OceanBlue\\app\\security\\headers.py",
+    "Hash": "A9DB8FAABF964FE762F4883867EF71970EA10070EE325A80CF821D365FA176C2"
+  },
+  {
+    "Path": "C:\\Users\\Rabel\\.codex\\worktrees\\944e\\OceanBlue\\app\\security\\proxy.py",
+    "Hash": "D05D75A35E12223B39C7F16FBD8F6D83D0C4254BE8A878542EB13841E407F2B8"
+  },
+  {
+    "Path": "C:\\Users\\Rabel\\.codex\\worktrees\\944e\\OceanBlue\\tests\\test_sprint06_data_adversarial.py",
+    "Hash": "A35F5B5344EF502919B4FBE517DC022447B2325105AC37C9680D0D54CF654A89"
+  },
+  {
+    "Path": "C:\\Users\\Rabel\\.codex\\worktrees\\944e\\OceanBlue\\tests\\test_sprint06_security_adversarial.py",
+    "Hash": "D90AE2CDCE0EDC2F7DC1FB76470A467B898269814B4DFCA9FA455937DB1D5760"
+  }
+]

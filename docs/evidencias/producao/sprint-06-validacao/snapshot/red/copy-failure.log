@@ -1,0 +1,6 @@
+Exception: C:\Users\Rabel\.codex\worktrees\944e\OceanBlue\docs\evidencias\producao\sprint-06-validacao\snapshot\red\driver.ps1:11
+Line |
+  11 |          throw 'Injected storage-copy failure AFTER real copy'
+     |          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | Injected storage-copy failure AFTER real copy
+

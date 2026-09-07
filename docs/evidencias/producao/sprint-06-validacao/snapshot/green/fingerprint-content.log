@@ -1,0 +1,8 @@
+WARNING: No external manifest digest supplied: hashes detect corruption, not malicious replacement of snapshot and manifest.
+ROLLBACK VERIFIED: database empty; copied files removed.
+Exception: C:\Users\Rabel\.codex\worktrees\944e\OceanBlue\scripts\operational_snapshot.ps1:251
+Line |
+ 251 |  … rprint))) { throw 'Restored database invariant mismatch; transaction  …
+     |                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | Restored database invariant mismatch; transaction will roll back.
+

@@ -15,7 +15,7 @@
   body.has-tenant-sidebar .page-shell, body.has-tenant-sidebar .page-shell-home {
     width: calc(100% - 2rem) !important; margin: 1rem !important; padding: 0;
   }
-  .tenant-sidebar { position: fixed; z-index: 100; }
+  .tenant-sidebar { position: fixed; z-index: 100; max-width: 100vw; }
   .sidebar-mobile-close { display: inline-flex; align-items: center; padding: .5rem; }
   body[data-sidebar-state="collapsed"] .tenant-sidebar { display: none; }
   .modal-overlay > div { max-height: 90dvh; overflow-y: auto; max-width: 100%; }

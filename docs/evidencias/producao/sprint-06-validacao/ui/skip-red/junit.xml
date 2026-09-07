@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="2" skipped="0" tests="2" time="31.083" timestamp="2026-09-07T07:35:54.683923+00:00" hostname="e30aa102776e"><testcase classname="tests.test_sprint06_browser_adversarial" name="test_keyboard_skip_link_reaches_operational_controls[auditoria]" time="18.063"><failure message="AssertionError: Locator expected to be focused&#10;Actual value: inactive &#10;Call log:&#10;  - Expect &quot;to_be_focused&quot; with timeout 5000ms&#10;  - waiting for locator(&quot;main&quot;)&#10;    9 × locator resolved to &lt;main id=&quot;main-content&quot; class=&quot;page-shell&quot;&gt;…&lt;/main&gt;&#10;      - unexpected value &quot;inactive&quot;">operational_page = &lt;Page url='http://127.0.0.1:8765/api/auditoria/view#page-content'&gt;
+
+    def test_keyboard_skip_link_reaches_operational_controls(operational_page):
+        page = operational_page
+        page.keyboard.press("Tab")
+        assert_visible_focus(page.locator(".skip-link"))
+        page.keyboard.press("Enter")
+&gt;       expect(page.locator("main")).to_be_focused()
+E       AssertionError: Locator expected to be focused
+E       Actual value: inactive 
+E       Call log:
+E         - Expect "to_be_focused" with timeout 5000ms
+E         - waiting for locator("main")
+E           9 × locator resolved to &lt;main id="main-content" class="page-shell"&gt;…&lt;/main&gt;
+E             - unexpected value "inactive"
+
+tests/test_sprint06_browser_adversarial.py:142: AssertionError</failure></testcase><testcase classname="tests.test_sprint06_browser_adversarial" name="test_keyboard_skip_link_reaches_operational_controls[operacoes]" time="12.036"><failure message="AssertionError: Locator expected to be focused&#10;Actual value: inactive &#10;Call log:&#10;  - Expect &quot;to_be_focused&quot; with timeout 5000ms&#10;  - waiting for locator(&quot;main&quot;)&#10;    9 × locator resolved to &lt;main class=&quot;page-shell cycle-page space-y-6&quot;&gt;…&lt;/main&gt;&#10;      - unexpected value &quot;inactive&quot;">operational_page = &lt;Page url='http://127.0.0.1:8765/api/operacoes/view#page-content'&gt;
+
+    def test_keyboard_skip_link_reaches_operational_controls(operational_page):
+        page = operational_page
+        page.keyboard.press("Tab")
+        assert_visible_focus(page.locator(".skip-link"))
+        page.keyboard.press("Enter")
+&gt;       expect(page.locator("main")).to_be_focused()
+E       AssertionError: Locator expected to be focused
+E       Actual value: inactive 
+E       Call log:
+E         - Expect "to_be_focused" with timeout 5000ms
+E         - waiting for locator("main")
+E           9 × locator resolved to &lt;main class="page-shell cycle-page space-y-6"&gt;…&lt;/main&gt;
+E             - unexpected value "inactive"
+
+tests/test_sprint06_browser_adversarial.py:142: AssertionError</failure></testcase></testsuite></testsuites>

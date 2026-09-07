@@ -1,0 +1,20 @@
+[
+  {
+    "round": "verify1",
+    "comparison": "case-sensitive classname::name",
+    "baseline": 578,
+    "actual": 758,
+    "added": 180,
+    "missing": [],
+    "duplicated_ids": 0
+  },
+  {
+    "round": "verify2",
+    "comparison": "case-sensitive classname::name",
+    "baseline": 578,
+    "actual": 758,
+    "added": 180,
+    "missing": [],
+    "duplicated_ids": 0
+  }
+]

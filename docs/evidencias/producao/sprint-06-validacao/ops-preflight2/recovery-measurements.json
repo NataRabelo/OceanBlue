@@ -1,0 +1,9 @@
+{
+  "captured_ledger_entries": 3,
+  "rpo_lost_committed_sales": 0,
+  "restore_to_smoke_seconds": 50.9852864,
+  "scope": "Synthetic local dataset; no post-snapshot business writes; not a production SLA",
+  "writers_quiesced": true,
+  "captured_sales": 3,
+  "backup_seconds": 30.2127979
+}

@@ -1,0 +1,361 @@
+............F....FFFFFFFF.F..................FFF........................ [ 82%]
+......FFFFFF...                                                          [100%]
+=================================== FAILURES ===================================
+______ test_audit_rejects_ambiguous_or_out_of_range_parameters[limit=1_0] ______
+
+audit_client = <FlaskClient <Flask 'app'>>, query = 'limit=1_0'
+
+    @pytest.mark.parametrize("query", [
+        "limit=0", "limit=101", "limit=-1", "limit=", "limit=1.0", "limit=1e2", "limit=1_0",
+        "before=0", "before=2147483648", "before=", "before=1%20OR%201=1",
+        "empresa_id=", "empresa_id=-1", "empresa_id=0", "empresa_id=2147483648",
+        "empresa_id=99999999999999999999999999999999999999999999999999",
+        "empresa_id=1&empresa_id=3", "limit=1&limit=100", "before=20&before=1",
+    ])
+    def test_audit_rejects_ambiguous_or_out_of_range_parameters(audit_client, query):
+>       assert audit_client.get("/api/auditoria/?" + query).status_code == 400
+E       AssertionError: assert 200 == 400
+E        +  where 200 = <WrapperTestResponse streamed [200 OK]>.status_code
+E        +    where <WrapperTestResponse streamed [200 OK]> = get(('/api/auditoria/?' + 'limit=1_0'))
+E        +      where get = <FlaskClient <Flask 'app'>>.get
+
+tests/test_sprint06_data_adversarial.py:115: AssertionError
+_____ test_audit_rejects_ambiguous_or_out_of_range_parameters[empresa_id=] _____
+
+audit_client = <FlaskClient <Flask 'app'>>, query = 'empresa_id='
+
+    @pytest.mark.parametrize("query", [
+        "limit=0", "limit=101", "limit=-1", "limit=", "limit=1.0", "limit=1e2", "limit=1_0",
+        "before=0", "before=2147483648", "before=", "before=1%20OR%201=1",
+        "empresa_id=", "empresa_id=-1", "empresa_id=0", "empresa_id=2147483648",
+        "empresa_id=99999999999999999999999999999999999999999999999999",
+        "empresa_id=1&empresa_id=3", "limit=1&limit=100", "before=20&before=1",
+    ])
+    def test_audit_rejects_ambiguous_or_out_of_range_parameters(audit_client, query):
+>       assert audit_client.get("/api/auditoria/?" + query).status_code == 400
+E       AssertionError: assert 200 == 400
+E        +  where 200 = <WrapperTestResponse streamed [200 OK]>.status_code
+E        +    where <WrapperTestResponse streamed [200 OK]> = get(('/api/auditoria/?' + 'empresa_id='))
+E        +      where get = <FlaskClient <Flask 'app'>>.get
+
+tests/test_sprint06_data_adversarial.py:115: AssertionError
+____ test_audit_rejects_ambiguous_or_out_of_range_parameters[empresa_id=-1] ____
+
+audit_client = <FlaskClient <Flask 'app'>>, query = 'empresa_id=-1'
+
+    @pytest.mark.parametrize("query", [
+        "limit=0", "limit=101", "limit=-1", "limit=", "limit=1.0", "limit=1e2", "limit=1_0",
+        "before=0", "before=2147483648", "before=", "before=1%20OR%201=1",
+        "empresa_id=", "empresa_id=-1", "empresa_id=0", "empresa_id=2147483648",
+        "empresa_id=99999999999999999999999999999999999999999999999999",
+        "empresa_id=1&empresa_id=3", "limit=1&limit=100", "before=20&before=1",
+    ])
+    def test_audit_rejects_ambiguous_or_out_of_range_parameters(audit_client, query):
+>       assert audit_client.get("/api/auditoria/?" + query).status_code == 400
+E       AssertionError: assert 403 == 400
+E        +  where 403 = <WrapperTestResponse streamed [403 FORBIDDEN]>.status_code
+E        +    where <WrapperTestResponse streamed [403 FORBIDDEN]> = get(('/api/auditoria/?' + 'empresa_id=-1'))
+E        +      where get = <FlaskClient <Flask 'app'>>.get
+
+tests/test_sprint06_data_adversarial.py:115: AssertionError
+____ test_audit_rejects_ambiguous_or_out_of_range_parameters[empresa_id=0] _____
+
+audit_client = <FlaskClient <Flask 'app'>>, query = 'empresa_id=0'
+
+    @pytest.mark.parametrize("query", [
+        "limit=0", "limit=101", "limit=-1", "limit=", "limit=1.0", "limit=1e2", "limit=1_0",
+        "before=0", "before=2147483648", "before=", "before=1%20OR%201=1",
+        "empresa_id=", "empresa_id=-1", "empresa_id=0", "empresa_id=2147483648",
+        "empresa_id=99999999999999999999999999999999999999999999999999",
+        "empresa_id=1&empresa_id=3", "limit=1&limit=100", "before=20&before=1",
+    ])
+    def test_audit_rejects_ambiguous_or_out_of_range_parameters(audit_client, query):
+>       assert audit_client.get("/api/auditoria/?" + query).status_code == 400
+E       AssertionError: assert 403 == 400
+E        +  where 403 = <WrapperTestResponse streamed [403 FORBIDDEN]>.status_code
+E        +    where <WrapperTestResponse streamed [403 FORBIDDEN]> = get(('/api/auditoria/?' + 'empresa_id=0'))
+E        +      where get = <FlaskClient <Flask 'app'>>.get
+
+tests/test_sprint06_data_adversarial.py:115: AssertionError
+_ test_audit_rejects_ambiguous_or_out_of_range_parameters[empresa_id=2147483648] _
+
+audit_client = <FlaskClient <Flask 'app'>>, query = 'empresa_id=2147483648'
+
+    @pytest.mark.parametrize("query", [
+        "limit=0", "limit=101", "limit=-1", "limit=", "limit=1.0", "limit=1e2", "limit=1_0",
+        "before=0", "before=2147483648", "before=", "before=1%20OR%201=1",
+        "empresa_id=", "empresa_id=-1", "empresa_id=0", "empresa_id=2147483648",
+        "empresa_id=99999999999999999999999999999999999999999999999999",
+        "empresa_id=1&empresa_id=3", "limit=1&limit=100", "before=20&before=1",
+    ])
+    def test_audit_rejects_ambiguous_or_out_of_range_parameters(audit_client, query):
+>       assert audit_client.get("/api/auditoria/?" + query).status_code == 400
+E       AssertionError: assert 403 == 400
+E        +  where 403 = <WrapperTestResponse streamed [403 FORBIDDEN]>.status_code
+E        +    where <WrapperTestResponse streamed [403 FORBIDDEN]> = get(('/api/auditoria/?' + 'empresa_id=2147483648'))
+E        +      where get = <FlaskClient <Flask 'app'>>.get
+
+tests/test_sprint06_data_adversarial.py:115: AssertionError
+_ test_audit_rejects_ambiguous_or_out_of_range_parameters[empresa_id=99999999999999999999999999999999999999999999999999] _
+
+audit_client = <FlaskClient <Flask 'app'>>
+query = 'empresa_id=99999999999999999999999999999999999999999999999999'
+
+    @pytest.mark.parametrize("query", [
+        "limit=0", "limit=101", "limit=-1", "limit=", "limit=1.0", "limit=1e2", "limit=1_0",
+        "before=0", "before=2147483648", "before=", "before=1%20OR%201=1",
+        "empresa_id=", "empresa_id=-1", "empresa_id=0", "empresa_id=2147483648",
+        "empresa_id=99999999999999999999999999999999999999999999999999",
+        "empresa_id=1&empresa_id=3", "limit=1&limit=100", "before=20&before=1",
+    ])
+    def test_audit_rejects_ambiguous_or_out_of_range_parameters(audit_client, query):
+>       assert audit_client.get("/api/auditoria/?" + query).status_code == 400
+E       AssertionError: assert 403 == 400
+E        +  where 403 = <WrapperTestResponse streamed [403 FORBIDDEN]>.status_code
+E        +    where <WrapperTestResponse streamed [403 FORBIDDEN]> = get(('/api/auditoria/?' + 'empresa_id=99999999999999999999999999999999999999999999999999'))
+E        +      where get = <FlaskClient <Flask 'app'>>.get
+
+tests/test_sprint06_data_adversarial.py:115: AssertionError
+_ test_audit_rejects_ambiguous_or_out_of_range_parameters[empresa_id=1&empresa_id=3] _
+
+audit_client = <FlaskClient <Flask 'app'>>, query = 'empresa_id=1&empresa_id=3'
+
+    @pytest.mark.parametrize("query", [
+        "limit=0", "limit=101", "limit=-1", "limit=", "limit=1.0", "limit=1e2", "limit=1_0",
+        "before=0", "before=2147483648", "before=", "before=1%20OR%201=1",
+        "empresa_id=", "empresa_id=-1", "empresa_id=0", "empresa_id=2147483648",
+        "empresa_id=99999999999999999999999999999999999999999999999999",
+        "empresa_id=1&empresa_id=3", "limit=1&limit=100", "before=20&before=1",
+    ])
+    def test_audit_rejects_ambiguous_or_out_of_range_parameters(audit_client, query):
+>       assert audit_client.get("/api/auditoria/?" + query).status_code == 400
+E       AssertionError: assert 200 == 400
+E        +  where 200 = <WrapperTestResponse streamed [200 OK]>.status_code
+E        +    where <WrapperTestResponse streamed [200 OK]> = get(('/api/auditoria/?' + 'empresa_id=1&empresa_id=3'))
+E        +      where get = <FlaskClient <Flask 'app'>>.get
+
+tests/test_sprint06_data_adversarial.py:115: AssertionError
+__ test_audit_rejects_ambiguous_or_out_of_range_parameters[limit=1&limit=100] __
+
+audit_client = <FlaskClient <Flask 'app'>>, query = 'limit=1&limit=100'
+
+    @pytest.mark.parametrize("query", [
+        "limit=0", "limit=101", "limit=-1", "limit=", "limit=1.0", "limit=1e2", "limit=1_0",
+        "before=0", "before=2147483648", "before=", "before=1%20OR%201=1",
+        "empresa_id=", "empresa_id=-1", "empresa_id=0", "empresa_id=2147483648",
+        "empresa_id=99999999999999999999999999999999999999999999999999",
+        "empresa_id=1&empresa_id=3", "limit=1&limit=100", "before=20&before=1",
+    ])
+    def test_audit_rejects_ambiguous_or_out_of_range_parameters(audit_client, query):
+>       assert audit_client.get("/api/auditoria/?" + query).status_code == 400
+E       AssertionError: assert 200 == 400
+E        +  where 200 = <WrapperTestResponse streamed [200 OK]>.status_code
+E        +    where <WrapperTestResponse streamed [200 OK]> = get(('/api/auditoria/?' + 'limit=1&limit=100'))
+E        +      where get = <FlaskClient <Flask 'app'>>.get
+
+tests/test_sprint06_data_adversarial.py:115: AssertionError
+_ test_audit_rejects_ambiguous_or_out_of_range_parameters[before=20&before=1] __
+
+audit_client = <FlaskClient <Flask 'app'>>, query = 'before=20&before=1'
+
+    @pytest.mark.parametrize("query", [
+        "limit=0", "limit=101", "limit=-1", "limit=", "limit=1.0", "limit=1e2", "limit=1_0",
+        "before=0", "before=2147483648", "before=", "before=1%20OR%201=1",
+        "empresa_id=", "empresa_id=-1", "empresa_id=0", "empresa_id=2147483648",
+        "empresa_id=99999999999999999999999999999999999999999999999999",
+        "empresa_id=1&empresa_id=3", "limit=1&limit=100", "before=20&before=1",
+    ])
+    def test_audit_rejects_ambiguous_or_out_of_range_parameters(audit_client, query):
+>       assert audit_client.get("/api/auditoria/?" + query).status_code == 400
+E       AssertionError: assert 200 == 400
+E        +  where 200 = <WrapperTestResponse streamed [200 OK]>.status_code
+E        +    where <WrapperTestResponse streamed [200 OK]> = get(('/api/auditoria/?' + 'before=20&before=1'))
+E        +      where get = <FlaskClient <Flask 'app'>>.get
+
+tests/test_sprint06_data_adversarial.py:115: AssertionError
+______________ test_audit_first_page_includes_maximum_integer_id _______________
+
+audit_client = <FlaskClient <Flask 'app'>>, security_app = <Flask 'app'>
+
+    def test_audit_first_page_includes_maximum_integer_id(audit_client, security_app):
+        with security_app.app_context():
+            db.session.execute(text("INSERT INTO audit_logs (id, tenant_id, empresa_id, action, criado_em) VALUES (2147483647, 1, 1, 'MAX_ID', now())"))
+            db.session.commit()
+        response = audit_client.get("/api/auditoria/?empresa_id=1&limit=1")
+        assert response.status_code == 200
+>       assert response.json["data"][0]["id"] == 2147483647
+E       assert 293 == 2147483647
+
+tests/test_sprint06_data_adversarial.py:146: AssertionError
+______ test_storage_probe_detects_incomplete_or_corrupt_write[zero_write] ______
+
+storage_app = (<Flask 'tests.test_sprint06_data_adversarial'>, PosixPath('/tmp/pytest-of-tester/pytest-0/test_storage_probe_detects_inc0/storage'))
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7b02f5414b90>
+fault = 'zero_write'
+
+    @pytest.mark.parametrize("fault", ["zero_write", "short_write", "corruption"])
+    def test_storage_probe_detects_incomplete_or_corrupt_write(storage_app, monkeypatch, fault):
+        _, root = storage_app
+        original_write = os.write
+    
+        def damaged_write(descriptor, payload):
+            if fault == "zero_write":
+                return 0
+            if fault == "short_write":
+                return original_write(descriptor, payload[:1])
+            return original_write(descriptor, b"X" * len(payload))
+    
+        with monkeypatch.context() as injection:
+            injection.setattr("app.operations.os.write", damaged_write)
+>           with pytest.raises(OSError):
+E           Failed: DID NOT RAISE <class 'OSError'>
+
+tests/test_sprint06_data_adversarial.py:274: Failed
+_____ test_storage_probe_detects_incomplete_or_corrupt_write[short_write] ______
+
+storage_app = (<Flask 'tests.test_sprint06_data_adversarial'>, PosixPath('/tmp/pytest-of-tester/pytest-0/test_storage_probe_detects_inc1/storage'))
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7b02f8a8d6a0>
+fault = 'short_write'
+
+    @pytest.mark.parametrize("fault", ["zero_write", "short_write", "corruption"])
+    def test_storage_probe_detects_incomplete_or_corrupt_write(storage_app, monkeypatch, fault):
+        _, root = storage_app
+        original_write = os.write
+    
+        def damaged_write(descriptor, payload):
+            if fault == "zero_write":
+                return 0
+            if fault == "short_write":
+                return original_write(descriptor, payload[:1])
+            return original_write(descriptor, b"X" * len(payload))
+    
+        with monkeypatch.context() as injection:
+            injection.setattr("app.operations.os.write", damaged_write)
+>           with pytest.raises(OSError):
+E           Failed: DID NOT RAISE <class 'OSError'>
+
+tests/test_sprint06_data_adversarial.py:274: Failed
+______ test_storage_probe_detects_incomplete_or_corrupt_write[corruption] ______
+
+storage_app = (<Flask 'tests.test_sprint06_data_adversarial'>, PosixPath('/tmp/pytest-of-tester/pytest-0/test_storage_probe_detects_inc2/storage'))
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7b02f5fc3200>
+fault = 'corruption'
+
+    @pytest.mark.parametrize("fault", ["zero_write", "short_write", "corruption"])
+    def test_storage_probe_detects_incomplete_or_corrupt_write(storage_app, monkeypatch, fault):
+        _, root = storage_app
+        original_write = os.write
+    
+        def damaged_write(descriptor, payload):
+            if fault == "zero_write":
+                return 0
+            if fault == "short_write":
+                return original_write(descriptor, payload[:1])
+            return original_write(descriptor, b"X" * len(payload))
+    
+        with monkeypatch.context() as injection:
+            injection.setattr("app.operations.os.write", damaged_write)
+>           with pytest.raises(OSError):
+E           Failed: DID NOT RAISE <class 'OSError'>
+
+tests/test_sprint06_data_adversarial.py:274: Failed
+_ test_disabled_production_provider_factory_fails_closed[False-get_boleto_provider] _
+
+factory = <function get_boleto_provider at 0x7b02f936a700>, flags = False
+
+    @pytest.mark.parametrize("factory", [get_boleto_provider, get_fiscal_provider])
+    @pytest.mark.parametrize("flags", [False, True, "true"])
+    def test_disabled_production_provider_factory_fails_closed(factory, flags):
+        app = Flask(__name__)
+        app.config.update(TESTING=False, FEATURE_BOLETO=flags, FEATURE_FISCAL=flags, FEATURE_EXTERNAL_PROVIDERS=flags)
+>       with app.app_context(), pytest.raises(PermissionError):
+E       Failed: DID NOT RAISE <class 'PermissionError'>
+
+tests/test_sprint06_data_adversarial.py:295: Failed
+_ test_disabled_production_provider_factory_fails_closed[False-get_fiscal_provider] _
+
+factory = <function get_fiscal_provider at 0x7b02f92a4fe0>, flags = False
+
+    @pytest.mark.parametrize("factory", [get_boleto_provider, get_fiscal_provider])
+    @pytest.mark.parametrize("flags", [False, True, "true"])
+    def test_disabled_production_provider_factory_fails_closed(factory, flags):
+        app = Flask(__name__)
+        app.config.update(TESTING=False, FEATURE_BOLETO=flags, FEATURE_FISCAL=flags, FEATURE_EXTERNAL_PROVIDERS=flags)
+>       with app.app_context(), pytest.raises(PermissionError):
+E       Failed: DID NOT RAISE <class 'PermissionError'>
+
+tests/test_sprint06_data_adversarial.py:295: Failed
+_ test_disabled_production_provider_factory_fails_closed[True-get_boleto_provider] _
+
+factory = <function get_boleto_provider at 0x7b02f936a700>, flags = True
+
+    @pytest.mark.parametrize("factory", [get_boleto_provider, get_fiscal_provider])
+    @pytest.mark.parametrize("flags", [False, True, "true"])
+    def test_disabled_production_provider_factory_fails_closed(factory, flags):
+        app = Flask(__name__)
+        app.config.update(TESTING=False, FEATURE_BOLETO=flags, FEATURE_FISCAL=flags, FEATURE_EXTERNAL_PROVIDERS=flags)
+>       with app.app_context(), pytest.raises(PermissionError):
+E       Failed: DID NOT RAISE <class 'PermissionError'>
+
+tests/test_sprint06_data_adversarial.py:295: Failed
+_ test_disabled_production_provider_factory_fails_closed[True-get_fiscal_provider] _
+
+factory = <function get_fiscal_provider at 0x7b02f92a4fe0>, flags = True
+
+    @pytest.mark.parametrize("factory", [get_boleto_provider, get_fiscal_provider])
+    @pytest.mark.parametrize("flags", [False, True, "true"])
+    def test_disabled_production_provider_factory_fails_closed(factory, flags):
+        app = Flask(__name__)
+        app.config.update(TESTING=False, FEATURE_BOLETO=flags, FEATURE_FISCAL=flags, FEATURE_EXTERNAL_PROVIDERS=flags)
+>       with app.app_context(), pytest.raises(PermissionError):
+E       Failed: DID NOT RAISE <class 'PermissionError'>
+
+tests/test_sprint06_data_adversarial.py:295: Failed
+_ test_disabled_production_provider_factory_fails_closed[true-get_boleto_provider] _
+
+factory = <function get_boleto_provider at 0x7b02f936a700>, flags = 'true'
+
+    @pytest.mark.parametrize("factory", [get_boleto_provider, get_fiscal_provider])
+    @pytest.mark.parametrize("flags", [False, True, "true"])
+    def test_disabled_production_provider_factory_fails_closed(factory, flags):
+        app = Flask(__name__)
+        app.config.update(TESTING=False, FEATURE_BOLETO=flags, FEATURE_FISCAL=flags, FEATURE_EXTERNAL_PROVIDERS=flags)
+>       with app.app_context(), pytest.raises(PermissionError):
+E       Failed: DID NOT RAISE <class 'PermissionError'>
+
+tests/test_sprint06_data_adversarial.py:295: Failed
+_ test_disabled_production_provider_factory_fails_closed[true-get_fiscal_provider] _
+
+factory = <function get_fiscal_provider at 0x7b02f92a4fe0>, flags = 'true'
+
+    @pytest.mark.parametrize("factory", [get_boleto_provider, get_fiscal_provider])
+    @pytest.mark.parametrize("flags", [False, True, "true"])
+    def test_disabled_production_provider_factory_fails_closed(factory, flags):
+        app = Flask(__name__)
+        app.config.update(TESTING=False, FEATURE_BOLETO=flags, FEATURE_FISCAL=flags, FEATURE_EXTERNAL_PROVIDERS=flags)
+>       with app.app_context(), pytest.raises(PermissionError):
+E       Failed: DID NOT RAISE <class 'PermissionError'>
+
+tests/test_sprint06_data_adversarial.py:295: Failed
+------------------- generated xml file: /evidence/before.xml -------------------
+=========================== short test summary info ============================
+FAILED tests/test_sprint06_data_adversarial.py::test_audit_rejects_ambiguous_or_out_of_range_parameters[limit=1_0]
+FAILED tests/test_sprint06_data_adversarial.py::test_audit_rejects_ambiguous_or_out_of_range_parameters[empresa_id=]
+FAILED tests/test_sprint06_data_adversarial.py::test_audit_rejects_ambiguous_or_out_of_range_parameters[empresa_id=-1]
+FAILED tests/test_sprint06_data_adversarial.py::test_audit_rejects_ambiguous_or_out_of_range_parameters[empresa_id=0]
+FAILED tests/test_sprint06_data_adversarial.py::test_audit_rejects_ambiguous_or_out_of_range_parameters[empresa_id=2147483648]
+FAILED tests/test_sprint06_data_adversarial.py::test_audit_rejects_ambiguous_or_out_of_range_parameters[empresa_id=99999999999999999999999999999999999999999999999999]
+FAILED tests/test_sprint06_data_adversarial.py::test_audit_rejects_ambiguous_or_out_of_range_parameters[empresa_id=1&empresa_id=3]
+FAILED tests/test_sprint06_data_adversarial.py::test_audit_rejects_ambiguous_or_out_of_range_parameters[limit=1&limit=100]
+FAILED tests/test_sprint06_data_adversarial.py::test_audit_rejects_ambiguous_or_out_of_range_parameters[before=20&before=1]
+FAILED tests/test_sprint06_data_adversarial.py::test_audit_first_page_includes_maximum_integer_id
+FAILED tests/test_sprint06_data_adversarial.py::test_storage_probe_detects_incomplete_or_corrupt_write[zero_write]
+FAILED tests/test_sprint06_data_adversarial.py::test_storage_probe_detects_incomplete_or_corrupt_write[short_write]
+FAILED tests/test_sprint06_data_adversarial.py::test_storage_probe_detects_incomplete_or_corrupt_write[corruption]
+FAILED tests/test_sprint06_data_adversarial.py::test_disabled_production_provider_factory_fails_closed[False-get_boleto_provider]
+FAILED tests/test_sprint06_data_adversarial.py::test_disabled_production_provider_factory_fails_closed[False-get_fiscal_provider]
+FAILED tests/test_sprint06_data_adversarial.py::test_disabled_production_provider_factory_fails_closed[True-get_boleto_provider]
+FAILED tests/test_sprint06_data_adversarial.py::test_disabled_production_provider_factory_fails_closed[True-get_fiscal_provider]
+FAILED tests/test_sprint06_data_adversarial.py::test_disabled_production_provider_factory_fails_closed[true-get_boleto_provider]
+FAILED tests/test_sprint06_data_adversarial.py::test_disabled_production_provider_factory_fails_closed[true-get_fiscal_provider]
+19 failed, 68 passed in 91.60s (0:01:31)

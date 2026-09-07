@@ -1,0 +1,31 @@
+....................................................F................... [ 58%]
+....................................................                     [100%]
+=================================== FAILURES ===================================
+______ test_storage_probe_detects_incomplete_or_corrupt_write[corruption] ______
+
+storage_app = (<Flask 'tests.test_sprint06_data_adversarial'>, PosixPath('/tmp/pytest-of-tester/pytest-0/test_storage_probe_detects_inc2/storage'))
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7588b43d0c80>
+fault = 'corruption'
+
+    @pytest.mark.parametrize("fault", ["zero_write", "short_write", "corruption"])
+    def test_storage_probe_detects_incomplete_or_corrupt_write(storage_app, monkeypatch, fault):
+        _, root = storage_app
+        original_write = os.write
+    
+        def damaged_write(descriptor, payload):
+            if fault == "zero_write":
+                return 0
+            if fault == "short_write":
+                return original_write(descriptor, payload[:1])
+            return original_write(descriptor, b"X" * len(payload))
+    
+        with monkeypatch.context() as injection:
+            injection.setattr("app.operations.os.write", damaged_write)
+>           with pytest.raises(OSError):
+E           Failed: DID NOT RAISE <class 'OSError'>
+
+tests/test_sprint06_data_adversarial.py:275: Failed
+----------------- generated xml file: /evidence/regression.xml -----------------
+=========================== short test summary info ============================
+FAILED tests/test_sprint06_data_adversarial.py::test_storage_probe_detects_incomplete_or_corrupt_write[corruption]
+1 failed, 123 passed in 119.73s (0:01:59)

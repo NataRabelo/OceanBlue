@@ -1,0 +1,57 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.12, pytest-8.3.5, pluggy-1.6.0 -- /usr/local/bin/python
+rootdir: /app
+configfile: pytest.ini
+plugins: cov-6.1.1
+collecting ... collected 20 items / 18 deselected / 2 selected
+
+tests/test_sprint06_browser_adversarial.py::test_keyboard_skip_link_reaches_operational_controls[auditoria] FAILED [ 50%]
+tests/test_sprint06_browser_adversarial.py::test_keyboard_skip_link_reaches_operational_controls[operacoes] FAILED [100%]
+
+=================================== FAILURES ===================================
+_______ test_keyboard_skip_link_reaches_operational_controls[auditoria] ________
+
+operational_page = <Page url='http://127.0.0.1:8765/api/auditoria/view#page-content'>
+
+    def test_keyboard_skip_link_reaches_operational_controls(operational_page):
+        page = operational_page
+        page.keyboard.press("Tab")
+        assert_visible_focus(page.locator(".skip-link"))
+        page.keyboard.press("Enter")
+>       expect(page.locator("main")).to_be_focused()
+E       AssertionError: Locator expected to be focused
+E       Actual value: inactive 
+E       Call log:
+E         - Expect "to_be_focused" with timeout 5000ms
+E         - waiting for locator("main")
+E           9 × locator resolved to <main id="main-content" class="page-shell">…</main>
+E             - unexpected value "inactive"
+
+tests/test_sprint06_browser_adversarial.py:142: AssertionError
+---------------------------- Captured stderr setup -----------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+_______ test_keyboard_skip_link_reaches_operational_controls[operacoes] ________
+
+operational_page = <Page url='http://127.0.0.1:8765/api/operacoes/view#page-content'>
+
+    def test_keyboard_skip_link_reaches_operational_controls(operational_page):
+        page = operational_page
+        page.keyboard.press("Tab")
+        assert_visible_focus(page.locator(".skip-link"))
+        page.keyboard.press("Enter")
+>       expect(page.locator("main")).to_be_focused()
+E       AssertionError: Locator expected to be focused
+E       Actual value: inactive 
+E       Call log:
+E         - Expect "to_be_focused" with timeout 5000ms
+E         - waiting for locator("main")
+E           9 × locator resolved to <main class="page-shell cycle-page space-y-6">…</main>
+E             - unexpected value "inactive"
+
+tests/test_sprint06_browser_adversarial.py:142: AssertionError
+---------------------- generated xml file: /tmp/junit.xml ----------------------
+=========================== short test summary info ============================
+FAILED tests/test_sprint06_browser_adversarial.py::test_keyboard_skip_link_reaches_operational_controls[auditoria]
+FAILED tests/test_sprint06_browser_adversarial.py::test_keyboard_skip_link_reaches_operational_controls[operacoes]
+====================== 2 failed, 18 deselected in 31.08s =======================

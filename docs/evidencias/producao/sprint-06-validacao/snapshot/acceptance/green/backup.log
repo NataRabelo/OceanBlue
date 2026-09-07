@@ -1,0 +1,7 @@
+ConvertFrom-Json: C:\Users\Rabel\.codex\worktrees\944e\OceanBlue\scripts\operational_snapshot.ps1:122
+Line |
+ 122 |          $allMetadata = $inspection | ConvertFrom-Json
+     |                                       ~~~~~~~~~~~~~~~~
+     | Conversion from JSON failed with error: Additional text encountered after finished reading JSON content: e. Path
+     | '', line 2588, position 0.
+

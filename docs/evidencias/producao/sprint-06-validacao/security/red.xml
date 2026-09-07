@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="32" skipped="0" tests="49" time="3.649" timestamp="2026-09-07T07:25:48.048140+00:00" hostname="9003587559ae"><testcase classname="tests.test_sprint06_security_adversarial" name="test_forwarded_loopback_cannot_unlock_http_health[127.0.0.1-/health]" time="0.523"><failure message="assert 200 == 403&#10; +  where 200 = &lt;WrapperTestResponse streamed [200 OK]&gt;.status_code">tests/test_sprint06_security_adversarial.py:55: in test_forwarded_loopback_cannot_unlock_http_health
+    assert response.status_code == 403
+E   assert 200 == 403
+E    +  where 200 = &lt;WrapperTestResponse streamed [200 OK]&gt;.status_code</failure></testcase><testcase classname="tests.test_sprint06_security_adversarial" name="test_forwarded_loopback_cannot_unlock_http_health[127.0.0.1-/readiness]" time="0.039"><failure message="assert 503 == 403&#10; +  where 503 = &lt;WrapperTestResponse streamed [503 SERVICE UNAVAILABLE]&gt;.status_code">tests/test_sprint06_security_adversarial.py:55: in test_forwarded_loopback_cannot_unlock_http_health
+    assert response.status_code == 403
+E   assert 503 == 403
+E    +  where 503 = &lt;WrapperTestResponse streamed [503 SERVICE UNAVAILABLE]&gt;.status_code</failure></testcase><testcase classname="tests.test_sprint06_security_adversarial" name="test_forwarded_loopback_cannot_unlock_http_health[127.0.0.1-/api/health]" time="0.027"><failure message="assert 200 == 403&#10; +  where 200 = &lt;WrapperTestResponse streamed [200 OK]&gt;.status_code">tests/test_sprint06_security_adversarial.py:55: in test_forwarded_loopback_cannot_unlock_http_health
+    assert response.status_code == 403
+E   assert 200 == 403
+E    +  where 200 = &lt;WrapperTestResponse streamed [200 OK]&gt;.status_code</failure></testcase><testcase classname="tests.test_sprint06_security_adversarial" name="test_forwarded_loopback_cannot_unlock_http_health[127.0.0.1-/api/ready]" time="0.044"><failure message="assert 503 == 403&#10; +  where 503 = &lt;WrapperTestResponse streamed [503 SERVICE UNAVAILABLE]&gt;.status_code">tests/test_sprint06_security_adversarial.py:55: in test_forwarded_loopback_cannot_unlock_http_health
+    assert response.status_code == 403
+E   assert 503 == 403
+E    +  where 503 = &lt;WrapperTestResponse streamed [503 SERVICE UNAVAILABLE]&gt;.status_code</failure></testcase><testcase classname="tests.test_sprint06_security_adversarial" name="test_forwarded_loopback_cannot_unlock_http_health[::1-/health]" time="0.033"><failure message="assert 200 == 403&#10; +  where 200 = &lt;WrapperTestResponse streamed [200 OK]&gt;.status_code">tests/test_sprint06_security_adversarial.py:55: in test_forwarded_loopback_cannot_unlock_http_health
+    assert response.status_code == 403
+E   assert 200 == 403
+E    +  where 200 = &lt;WrapperTestResponse streamed [200 OK]&gt;.status_code</failure></testcase><testcase classname="tests.test_sprint06_security_adversarial" name="test_forwarded_loopback_cannot_unlock_http_health[::1-/readiness]" time="0.038"><failure message="assert 503 == 403&#10; +  where 503 = &lt;WrapperTestResponse streamed [503 SERVICE UNAVAILABLE]&gt;.status_code">tests/test_sprint06_security_adversarial.py:55: in test_forwarded_loopback_cannot_unlock_http_health
+    assert response.status_code == 403
+E   assert 503 == 403
+E    +  where 503 = &lt;WrapperTestResponse streamed [503 SERVICE UNAVAILABLE]&gt;.status_code</failure></testcase><testcase classname="tests.test_sprint06_security_adversarial" name="test_forwarded_loopback_cannot_unlock_http_health[::1-/api/health]" time="0.026"><failure message="assert 200 == 403&#10; +  where 200 = &lt;WrapperTestResponse streamed [200 OK]&gt;.status_code">tests/test_sprint06_security_adversarial.py:55: in test_forwarded_loopback_cannot_unlock_http_health
+    assert response.status_code == 403
+E   assert 200 == 403
+E    +  where 200 = &lt;WrapperTestResponse streamed [200 OK]&gt;.status_code</failure></testcase><testcase classname="tests.test_sprint06_security_adversarial" name="test_forwarded_loopback_cannot_unlock_http_health[::1-/api/ready]" time="0.039"><failure message="assert 503 == 403&#10; +  where 503 = &lt;WrapperTestResponse streamed [503 SERVICE UNAVAILABLE]&gt;.status_code">tests/test_sprint06_security_adversarial.py:55: in test_forwarded_loopback_cannot_unlock_http_health
+    assert response.status_code == 403
+E   assert 503 == 403
+E    +  where 503 = &lt;WrapperTestResponse streamed [503 SERVICE UNAVAILABLE]&gt;.status_code</failure></testcase><testcase classname="tests.test_sprint06_security_adversarial" name="test_forwarded_loopback_cannot_unlock_http_health[203.0.113.9, 127.0.0.1-/health]" time="0.056"><failure message="assert 200 == 403&#10; +  where 200 = &lt;WrapperTestResponse streamed [200 OK]&gt;.status_code">tests/test_sprint06_security_adversarial.py:55: in test_forwarded_loopback_cannot_unlock_http_health
+    assert response.status_code == 403
+E   assert 200 == 403
+E    +  where 200 = &lt;WrapperTestResponse streamed [200 OK]&gt;.status_code</failure></testcase><testcase classname="tests.test_sprint06_security_adversarial" name="test_forwarded_loopback_cannot_unlock_http_health[203.0.113.9, 127.0.0.1-/readiness]" time="0.034"><failure message="assert 503 == 403&#10; +  where 503 = &lt;WrapperTestResponse streamed [503 SERVICE UNAVAILABLE]&gt;.status_code">tests/test_sprint06_security_adversarial.py:55: in test_forwarded_loopback_cannot_unlock_http_health
+    assert response.status_code == 403
+E   assert 503 == 403
+E    +  where 503 = &lt;WrapperTestResponse streamed [503 SERVICE UNAVAILABLE]&gt;.status_code</failure></testcase><testcase classname="tests.test_sprint06_security_adversarial" name="test_forwarded_loopback_cannot_unlock_http_health[203.0.113.9, 127.0.0.1-/api/health]" time="0.043"><failure message="assert 200 == 403&#10; +  where 200 = &lt;WrapperTestResponse streamed [200 OK]&gt;.status_code">tests/test_sprint06_security_adversarial.py:55: in test_forwarded_loopback_cannot_unlock_http_health
+    assert response.status_code == 403
+E   assert 200 == 403
+E    +  where 200 = &lt;WrapperTestResponse streamed [200 OK]&gt;.status_code</failure></testcase><testcase classname="tests.test_sprint06_security_adversarial" name="test_forwarded_loopback_cannot_unlock_http_health[203.0.113.9, 127.0.0.1-/api/ready]" time="0.045"><failure message="assert 503 == 403&#10; +  where 503 = &lt;WrapperTestResponse streamed [503 SERVICE UNAVAILABLE]&gt;.status_code">tests/test_sprint06_security_adversarial.py:55: in test_forwarded_loopback_cannot_unlock_http_health
+    assert response.status_code == 403
+E   assert 503 == 403
+E    +  where 503 = &lt;WrapperTestResponse streamed [503 SERVICE UNAVAILABLE]&gt;.status_code</failure></testcase><testcase classname="tests.test_sprint06_security_adversarial" name="test_direct_loopback_health_stays_available[127.0.0.1]" time="0.031" /><testcase classname="tests.test_sprint06_security_adversarial" name="test_direct_loopback_health_stays_available[::1]" time="0.027" /><testcase classname="tests.test_sprint06_security_adversarial" name="test_untrusted_peer_cannot_promote_scheme_or_host[203.0.113.9]" time="0.052" /><testcase classname="tests.test_sprint06_security_adversarial" name="test_untrusted_peer_cannot_promote_scheme_or_host[not-an-ip]" time="0.031" /><testcase classname="tests.test_sprint06_security_adversarial" name="test_untrusted_peer_cannot_promote_scheme_or_host[]" time="0.060" /><testcase classname="tests.test_sprint06_security_adversarial" name="test_trusted_proxy_uses_last_hop_without_forwarded_host" time="0.044" /><testcase classname="tests.test_sprint06_security_adversarial" name="test_metrics_invalid_authorization_fails_closed[latin1]" time="0.047"><failure message="TypeError: comparing strings with non-ASCII characters is not supported">tests/test_sprint06_security_adversarial.py:93: in test_metrics_invalid_authorization_fails_closed
+    response = operational_app.test_client().get("/metrics", base_url="https://localhost",
+/usr/local/lib/python3.12/site-packages/werkzeug/test.py:1162: in get
+    return self.open(*args, **kw)
+/usr/local/lib/python3.12/site-packages/flask/testing.py:235: in open
+    response = super().open(
+/usr/local/lib/python3.12/site-packages/werkzeug/test.py:1116: in open
+    response_parts = self.run_wsgi_app(request.environ, buffered=buffered)
+/usr/local/lib/python3.12/site-packages/werkzeug/test.py:988: in run_wsgi_app
+    rv = run_wsgi_app(self.application, environ, buffered=buffered)
+/usr/local/lib/python3.12/site-packages/werkzeug/test.py:1264: in run_wsgi_app
+    app_rv = app(environ, start_response)
+/usr/local/lib/python3.12/site-packages/flask/app.py:1498: in __call__
+    return self.wsgi_app(environ, start_response)
+/usr/local/lib/python3.12/site-packages/flask/app.py:1476: in wsgi_app
+    response = self.handle_exception(e)
+/usr/local/lib/python3.12/site-packages/flask/app.py:1473: in wsgi_app
+    response = self.full_dispatch_request()
+/usr/local/lib/python3.12/site-packages/flask/app.py:882: in full_dispatch_request
+    rv = self.handle_user_exception(e)
+/usr/local/lib/python3.12/site-packages/flask/app.py:880: in full_dispatch_request
+    rv = self.dispatch_request()
+/usr/local/lib/python3.12/site-packages/flask/app.py:865: in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+app/operations.py:95: in metrics
+    if len(token) &lt; 32 or not hmac.compare_digest(request.headers.get("Authorization", ""), "Bearer " + token):
+E   TypeError: comparing strings with non-ASCII characters is not supported</failure></testcase><testcase classname="tests.test_sprint06_security_adversarial" name="test_metrics_invalid_authorization_fails_closed[unicode]" time="0.032"><failure message="TypeError: comparing strings with non-ASCII characters is not supported">tests/test_sprint06_security_adversarial.py:93: in test_metrics_invalid_authorization_fails_closed
+    response = operational_app.test_client().get("/metrics", base_url="https://localhost",
+/usr/local/lib/python3.12/site-packages/werkzeug/test.py:1162: in get
+    return self.open(*args, **kw)
+/usr/local/lib/python3.12/site-packages/flask/testing.py:235: in open
+    response = super().open(
+/usr/local/lib/python3.12/site-packages/werkzeug/test.py:1116: in open
+    response_parts = self.run_wsgi_app(request.environ, buffered=buffered)
+/usr/local/lib/python3.12/site-packages/werkzeug/test.py:988: in run_wsgi_app
+    rv = run_wsgi_app(self.application, environ, buffered=buffered)
+/usr/local/lib/python3.12/site-packages/werkzeug/test.py:1264: in run_wsgi_app
+    app_rv = app(environ, start_response)
+/usr/local/lib/python3.12/site-packages/flask/app.py:1498: in __call__
+    return self.wsgi_app(environ, start_response)
+/usr/local/lib/python3.12/site-packages/flask/app.py:1476: in wsgi_app
+    response = self.handle_exception(e)
+/usr/local/lib/python3.12/site-packages/flask/app.py:1473: in wsgi_app
+    response = self.full_dispatch_request()
+/usr/local/lib/python3.12/site-packages/flask/app.py:882: in full_dispatch_request
+    rv = self.handle_user_exception(e)
+/usr/local/lib/python3.12/site-packages/flask/app.py:880: in full_dispatch_request
+    rv = self.dispatch_request()
+/usr/local/lib/python3.12/site-packages/flask/app.py:865: in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+app/operations.py:95: in metrics
+    if len(token) &lt; 32 or not hmac.compare_digest(request.headers.get("Authorization", ""), "Bearer " + token):
+E   TypeError: comparing strings with non-ASCII characters is not supported</failure></testcase><testcase classname="tests.test_sprint06_security_adversarial" name="test_metrics_invalid_authorization_fails_closed[oversized]" time="0.028"><failure message="werkzeug.exceptions.BadRequestKeyError: 400 Bad Request: The browser (or proxy) sent a request that this server could not understand.">tests/test_sprint06_security_adversarial.py:96: in test_metrics_invalid_authorization_fails_closed
+    assert response.headers["Cache-Control"] == "no-store"
+/usr/local/lib/python3.12/site-packages/werkzeug/datastructures/headers.py:83: in __getitem__
+    return self._get_key(key)
+/usr/local/lib/python3.12/site-packages/werkzeug/datastructures/headers.py:97: in _get_key
+    raise BadRequestKeyError(key)
+E   werkzeug.exceptions.BadRequestKeyError: 400 Bad Request: The browser (or proxy) sent a request that this server could not understand.</failure></testcase><testcase classname="tests.test_sprint06_security_adversarial" name="test_metrics_unusable_token_fails_closed[empty]" time="0.030" /><testcase classname="tests.test_sprint06_security_adversarial" name="test_metrics_unusable_token_fails_closed[short]" time="0.027" /><testcase classname="tests.test_sprint06_security_adversarial" name="test_metrics_unusable_token_fails_closed[unicode]" time="0.016"><failure message="TypeError: comparing strings with non-ASCII characters is not supported">tests/test_sprint06_security_adversarial.py:102: in test_metrics_unusable_token_fails_closed
+    response = operational_app.test_client().get("/metrics", base_url="https://localhost",
+/usr/local/lib/python3.12/site-packages/werkzeug/test.py:1162: in get
+    return self.open(*args, **kw)
+/usr/local/lib/python3.12/site-packages/flask/testing.py:235: in open
+    response = super().open(
+/usr/local/lib/python3.12/site-packages/werkzeug/test.py:1116: in open
+    response_parts = self.run_wsgi_app(request.environ, buffered=buffered)
+/usr/local/lib/python3.12/site-packages/werkzeug/test.py:988: in run_wsgi_app
+    rv = run_wsgi_app(self.application, environ, buffered=buffered)
+/usr/local/lib/python3.12/site-packages/werkzeug/test.py:1264: in run_wsgi_app
+    app_rv = app(environ, start_response)
+/usr/local/lib/python3.12/site-packages/flask/app.py:1498: in __call__
+    return self.wsgi_app(environ, start_response)
+/usr/local/lib/python3.12/site-packages/flask/app.py:1476: in wsgi_app
+    response = self.handle_exception(e)
+/usr/local/lib/python3.12/site-packages/flask/app.py:1473: in wsgi_app
+    response = self.full_dispatch_request()
+/usr/local/lib/python3.12/site-packages/flask/app.py:882: in full_dispatch_request
+    rv = self.handle_user_exception(e)
+/usr/local/lib/python3.12/site-packages/flask/app.py:880: in full_dispatch_request
+    rv = self.dispatch_request()
+/usr/local/lib/python3.12/site-packages/flask/app.py:865: in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+app/operations.py:95: in metrics
+    if len(token) &lt; 32 or not hmac.compare_digest(request.headers.get("Authorization", ""), "Bearer " + token):
+E   TypeError: comparing strings with non-ASCII characters is not supported</failure></testcase><testcase classname="tests.test_sprint06_security_adversarial" name="test_metrics_first_scrape_includes_zero_counters" time="0.019"><failure message="KeyError: 'oceanblue_requests_total'">tests/test_sprint06_security_adversarial.py:115: in test_metrics_first_scrape_includes_zero_counters
+    assert float(values["oceanblue_" + name]) == 0
+E   KeyError: 'oceanblue_requests_total'</failure></testcase><testcase classname="tests.test_sprint06_security_adversarial" name="test_structured_log_fields_cannot_smuggle_secrets[event]" time="0.006"><failure message="assert 'senha=S06_P...r S06_SECRET' not in '{&quot;timestamp...type&quot;: null}'&#10;  &#10;  'senha=S06_PRIVATE;...1;Bearer S06_SECRET' is contained here:&#10;    &quot;event&quot;: &quot;senha=S06_PRIVATE;cpf=529.982.247-25;cartao=4111111111111111;Bearer S06_SECRET&quot;, &quot;error_type&quot;: null}">tests/test_sprint06_security_adversarial.py:124: in test_structured_log_fields_cannot_smuggle_secrets
+    assert PRIVATE not in formatted
+E   assert 'senha=S06_P...r S06_SECRET' not in '{"timestamp...type": null}'
+E     
+E     'senha=S06_PRIVATE;...1;Bearer S06_SECRET' is contained here:
+E       "event": "senha=S06_PRIVATE;cpf=529.982.247-25;cartao=4111111111111111;Bearer S06_SECRET", "error_type": null}</failure></testcase><testcase classname="tests.test_sprint06_security_adversarial" name="test_structured_log_fields_cannot_smuggle_secrets[request_id]" time="0.002"><failure message="assert 'senha=S06_P...r S06_SECRET' not in '{&quot;timestamp...S06_SECRET&quot;}'&#10;  &#10;  'senha=S06_PRIVATE;...1;Bearer S06_SECRET' is contained here:&#10;    est_id&quot;: &quot;senha=S06_PRIVATE;cpf=529.982.247-25;cartao=4111111111111111;Bearer S06_SECRET&quot;}">tests/test_sprint06_security_adversarial.py:124: in test_structured_log_fields_cannot_smuggle_secrets
+    assert PRIVATE not in formatted
+E   assert 'senha=S06_P...r S06_SECRET' not in '{"timestamp...S06_SECRET"}'
+E     
+E     'senha=S06_PRIVATE;...1;Bearer S06_SECRET' is contained here:
+E       est_id": "senha=S06_PRIVATE;cpf=529.982.247-25;cartao=4111111111111111;Bearer S06_SECRET"}</failure></testcase><testcase classname="tests.test_sprint06_security_adversarial" name="test_structured_log_fields_cannot_smuggle_secrets[route]" time="0.001"><failure message="assert 'senha=S06_P...r S06_SECRET' not in '{&quot;timestamp...S06_SECRET&quot;}'&#10;  &#10;  'senha=S06_PRIVATE;...1;Bearer S06_SECRET' is contained here:&#10;    &quot;route&quot;: &quot;senha=S06_PRIVATE;cpf=529.982.247-25;cartao=4111111111111111;Bearer S06_SECRET&quot;}">tests/test_sprint06_security_adversarial.py:124: in test_structured_log_fields_cannot_smuggle_secrets
+    assert PRIVATE not in formatted
+E   assert 'senha=S06_P...r S06_SECRET' not in '{"timestamp...S06_SECRET"}'
+E     
+E     'senha=S06_PRIVATE;...1;Bearer S06_SECRET' is contained here:
+E       "route": "senha=S06_PRIVATE;cpf=529.982.247-25;cartao=4111111111111111;Bearer S06_SECRET"}</failure></testcase><testcase classname="tests.test_sprint06_security_adversarial" name="test_structured_log_fields_cannot_smuggle_secrets[method]" time="0.002"><failure message="assert 'senha=S06_P...r S06_SECRET' not in '{&quot;timestamp...S06_SECRET&quot;}'&#10;  &#10;  'senha=S06_PRIVATE;...1;Bearer S06_SECRET' is contained here:&#10;    method&quot;: &quot;senha=S06_PRIVATE;cpf=529.982.247-25;cartao=4111111111111111;Bearer S06_SECRET&quot;}">tests/test_sprint06_security_adversarial.py:124: in test_structured_log_fields_cannot_smuggle_secrets
+    assert PRIVATE not in formatted
+E   assert 'senha=S06_P...r S06_SECRET' not in '{"timestamp...S06_SECRET"}'
+E     
+E     'senha=S06_PRIVATE;...1;Bearer S06_SECRET' is contained here:
+E       method": "senha=S06_PRIVATE;cpf=529.982.247-25;cartao=4111111111111111;Bearer S06_SECRET"}</failure></testcase><testcase classname="tests.test_sprint06_security_adversarial" name="test_structured_log_fields_cannot_smuggle_secrets[status]" time="0.001"><failure message="assert 'senha=S06_P...r S06_SECRET' not in '{&quot;timestamp...S06_SECRET&quot;}'&#10;  &#10;  'senha=S06_PRIVATE;...1;Bearer S06_SECRET' is contained here:&#10;    status&quot;: &quot;senha=S06_PRIVATE;cpf=529.982.247-25;cartao=4111111111111111;Bearer S06_SECRET&quot;}">tests/test_sprint06_security_adversarial.py:124: in test_structured_log_fields_cannot_smuggle_secrets
+    assert PRIVATE not in formatted
+E   assert 'senha=S06_P...r S06_SECRET' not in '{"timestamp...S06_SECRET"}'
+E     
+E     'senha=S06_PRIVATE;...1;Bearer S06_SECRET' is contained here:
+E       status": "senha=S06_PRIVATE;cpf=529.982.247-25;cartao=4111111111111111;Bearer S06_SECRET"}</failure></testcase><testcase classname="tests.test_sprint06_security_adversarial" name="test_structured_log_fields_cannot_smuggle_secrets[duration_ms]" time="0.002"><failure message="assert 'senha=S06_P...r S06_SECRET' not in '{&quot;timestamp...S06_SECRET&quot;}'&#10;  &#10;  'senha=S06_PRIVATE;...1;Bearer S06_SECRET' is contained here:&#10;    ion_ms&quot;: &quot;senha=S06_PRIVATE;cpf=529.982.247-25;cartao=4111111111111111;Bearer S06_SECRET&quot;}">tests/test_sprint06_security_adversarial.py:124: in test_structured_log_fields_cannot_smuggle_secrets
+    assert PRIVATE not in formatted
+E   assert 'senha=S06_P...r S06_SECRET' not in '{"timestamp...S06_SECRET"}'
+E     
+E     'senha=S06_PRIVATE;...1;Bearer S06_SECRET' is contained here:
+E       ion_ms": "senha=S06_PRIVATE;cpf=529.982.247-25;cartao=4111111111111111;Bearer S06_SECRET"}</failure></testcase><testcase classname="tests.test_sprint06_security_adversarial" name="test_structured_log_invalid_values_do_not_break_json[value0]" time="0.010"><failure message="assert 'S06_PRIVATE' not in '{&quot;timestamp...06_SECRET&quot;}}'&#10;  &#10;  'S06_PRIVATE' is contained here:&#10;    &quot;: &quot;senha=S06_PRIVATE;cpf=529.982.247-25;cartao=4111111111111111;Bearer S06_SECRET&quot;}, &quot;error_type&quot;: null, &quot;duration_ms&quot;: {&quot;password&quot;: &quot;senha=S06_PRIVATE;cpf=529.982.247-25;cartao=4111111111111111;Bearer S06_SECRET&quot;}}&#10;  ?           +++++++++++">tests/test_sprint06_security_adversarial.py:135: in test_structured_log_invalid_values_do_not_break_json
+    assert "S06_PRIVATE" not in formatted
+E   assert 'S06_PRIVATE' not in '{"timestamp...06_SECRET"}}'
+E     
+E     'S06_PRIVATE' is contained here:
+E       ": "senha=S06_PRIVATE;cpf=529.982.247-25;cartao=4111111111111111;Bearer S06_SECRET"}, "error_type": null, "duration_ms": {"password": "senha=S06_PRIVATE;cpf=529.982.247-25;cartao=4111111111111111;Bearer S06_SECRET"}}
+E     ?           +++++++++++</failure></testcase><testcase classname="tests.test_sprint06_security_adversarial" name="test_structured_log_invalid_values_do_not_break_json[value1]" time="0.002"><failure message="TypeError: Object of type object is not JSON serializable">tests/test_sprint06_security_adversarial.py:134: in test_structured_log_invalid_values_do_not_break_json
+    formatted = OperationalFormatter().format(record)
+app/operations.py:32: in format
+    return json.dumps(payload, ensure_ascii=True)
+/usr/local/lib/python3.12/json/__init__.py:231: in dumps
+    return _default_encoder.encode(obj)
+/usr/local/lib/python3.12/json/encoder.py:200: in encode
+    chunks = self.iterencode(o, _one_shot=True)
+/usr/local/lib/python3.12/json/encoder.py:258: in iterencode
+    return _iterencode(o, 0)
+/usr/local/lib/python3.12/json/encoder.py:180: in default
+    raise TypeError(f'Object of type {o.__class__.__name__} '
+E   TypeError: Object of type object is not JSON serializable</failure></testcase><testcase classname="tests.test_sprint06_security_adversarial" name="test_structured_log_invalid_values_do_not_break_json[nan]" time="0.003"><failure message="assert ('NaN' not in '{&quot;timestamp...on_ms&quot;: NaN}'&#10;  &#10;  'NaN' is contained here:&#10;     &quot;event&quot;: NaN, &quot;error_type&quot;: null, &quot;duration_ms&quot;: NaN}&#10;  ?           +++)">tests/test_sprint06_security_adversarial.py:136: in test_structured_log_invalid_values_do_not_break_json
+    assert "NaN" not in formatted and "Infinity" not in formatted
+E   assert ('NaN' not in '{"timestamp...on_ms": NaN}'
+E     
+E     'NaN' is contained here:
+E        "event": NaN, "error_type": null, "duration_ms": NaN}
+E     ?           +++)</failure></testcase><testcase classname="tests.test_sprint06_security_adversarial" name="test_structured_log_invalid_values_do_not_break_json[inf]" time="0.003"><failure message="assert ('NaN' not in '{&quot;timestamp...&quot;: Infinity}'&#10;  &#10;  'NaN' is contained here:&#10;    : Infinity} and 'Infinity' not in '{&quot;timestamp...&quot;: Infinity}'&#10;  &#10;  'Infinity' is contained here:&#10;     &quot;event&quot;: Infinity, &quot;error_type&quot;: null, &quot;duration_ms&quot;: Infinity}&#10;  ?           ++++++++)">tests/test_sprint06_security_adversarial.py:136: in test_structured_log_invalid_values_do_not_break_json
+    assert "NaN" not in formatted and "Infinity" not in formatted
+E   assert ('NaN' not in '{"timestamp...": Infinity}'
+E     
+E     'NaN' is contained here:
+E       : Infinity} and 'Infinity' not in '{"timestamp...": Infinity}'
+E     
+E     'Infinity' is contained here:
+E        "event": Infinity, "error_type": null, "duration_ms": Infinity}
+E     ?           ++++++++)</failure></testcase><testcase classname="tests.test_sprint06_security_adversarial" name="test_http_log_method_and_request_id_injection" time="0.027"><failure message="assert ('S06_PRIVATE' not in '{&quot;timestamp..._ms&quot;: 0.435}'&#10;  &#10;  'S06_PRIVATE' is contained here:&#10;    method&quot;: &quot;S06_PRIVATE&quot;, &quot;status&quot;: 405, &quot;duration_ms&quot;: 0.435}&#10;  ?           +++++++++++)">tests/test_sprint06_security_adversarial.py:149: in test_http_log_method_and_request_id_injection
+    assert "S06_PRIVATE" not in lines[0] and "forged" not in lines[0]
+E   assert ('S06_PRIVATE' not in '{"timestamp..._ms": 0.435}'
+E     
+E     'S06_PRIVATE' is contained here:
+E       method": "S06_PRIVATE", "status": 405, "duration_ms": 0.435}
+E     ?           +++++++++++)</failure></testcase><testcase classname="tests.test_sprint06_security_adversarial" name="test_http_logs_only_route_template_and_preserves_correlation" time="0.032" /><testcase classname="tests.test_sprint06_security_adversarial" name="test_exception_text_and_traceback_are_not_logged" time="0.001" /><testcase classname="tests.test_sprint06_security_adversarial" name="test_correlation_survives_earlier_request_gate" time="0.029"><failure message="AttributeError: request_id">tests/test_sprint06_security_adversarial.py:184: in test_correlation_survives_earlier_request_gate
+    assert payload["request_id"] == response.headers["X-Request-ID"] == g.request_id
+/usr/local/lib/python3.12/site-packages/flask/ctx.py:56: in __getattr__
+    raise AttributeError(name) from None
+E   AttributeError: request_id</failure></testcase><testcase classname="tests.test_sprint06_security_adversarial" name="test_health_responses_are_not_cacheable[/health]" time="0.042"><failure message="werkzeug.exceptions.BadRequestKeyError: 400 Bad Request: The browser (or proxy) sent a request that this server could not understand.">tests/test_sprint06_security_adversarial.py:196: in test_health_responses_are_not_cacheable
+    assert response.headers["Cache-Control"] == "no-store"
+/usr/local/lib/python3.12/site-packages/werkzeug/datastructures/headers.py:83: in __getitem__
+    return self._get_key(key)
+/usr/local/lib/python3.12/site-packages/werkzeug/datastructures/headers.py:97: in _get_key
+    raise BadRequestKeyError(key)
+E   werkzeug.exceptions.BadRequestKeyError: 400 Bad Request: The browser (or proxy) sent a request that this server could not understand.</failure></testcase><testcase classname="tests.test_sprint06_security_adversarial" name="test_health_responses_are_not_cacheable[/readiness]" time="0.071"><failure message="werkzeug.exceptions.BadRequestKeyError: 400 Bad Request: The browser (or proxy) sent a request that this server could not understand.">tests/test_sprint06_security_adversarial.py:196: in test_health_responses_are_not_cacheable
+    assert response.headers["Cache-Control"] == "no-store"
+/usr/local/lib/python3.12/site-packages/werkzeug/datastructures/headers.py:83: in __getitem__
+    return self._get_key(key)
+/usr/local/lib/python3.12/site-packages/werkzeug/datastructures/headers.py:97: in _get_key
+    raise BadRequestKeyError(key)
+E   werkzeug.exceptions.BadRequestKeyError: 400 Bad Request: The browser (or proxy) sent a request that this server could not understand.</failure></testcase><testcase classname="tests.test_sprint06_security_adversarial" name="test_health_responses_are_not_cacheable[/api/health]" time="0.031" /><testcase classname="tests.test_sprint06_security_adversarial" name="test_health_responses_are_not_cacheable[/api/ready]" time="0.029" /><testcase classname="tests.test_sprint06_security_adversarial" name="test_dependency_failures_keep_health_alive_and_hide_details" time="0.030" /><testcase classname="tests.test_sprint06_security_adversarial" name="test_storage_short_write_fails_readiness_and_cleans_probe" time="0.031"><failure message="Failed: DID NOT RAISE &lt;class 'OSError'&gt;">tests/test_sprint06_security_adversarial.py:215: in test_storage_short_write_fails_readiness_and_cleans_probe
+    with operational_app.app_context(), pytest.raises(OSError):
+E   Failed: DID NOT RAISE &lt;class 'OSError'&gt;</failure></testcase><testcase classname="tests.test_sprint06_security_adversarial" name="test_storage_failure_blocks_mutation_but_not_health[POST]" time="0.029" /><testcase classname="tests.test_sprint06_security_adversarial" name="test_storage_failure_blocks_mutation_but_not_health[PUT]" time="0.037" /><testcase classname="tests.test_sprint06_security_adversarial" name="test_storage_failure_blocks_mutation_but_not_health[PATCH]" time="0.036" /><testcase classname="tests.test_sprint06_security_adversarial" name="test_storage_failure_blocks_mutation_but_not_health[DELETE]" time="0.031" /></testsuite></testsuites>

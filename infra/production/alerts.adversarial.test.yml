@@ -1,0 +1,70 @@
+rule_files: [alerts.yml]
+evaluation_interval: 1m
+tests:
+  - interval: 1m
+    input_series: []
+    alert_rule_test:
+      - eval_time: 4m
+        alertname: OceanBlueReadinessUnavailable
+        exp_alerts:
+          - exp_labels: {severity: critical, job: oceanblue-readiness}
+            exp_annotations: {summary: "Sonda de readiness ausente; verificar proxy e coletor"}
+      - eval_time: 4m
+        alertname: OceanBlueMetricsUnavailable
+        exp_alerts:
+          - exp_labels: {severity: high}
+            exp_annotations: {summary: "Metricas ausentes; verificar aplicacao, proxy e coletor"}
+  - interval: 1m
+    input_series:
+      - series: 'probe_success{job="oceanblue-readiness"}'
+        values: '1 1 stale _ _ _ _ 1 1 1'
+      - series: oceanblue_requests_total
+        values: '0 100 stale _ _ _ _ 200 300 400'
+    alert_rule_test:
+      - eval_time: 6m
+        alertname: OceanBlueReadinessUnavailable
+        exp_alerts:
+          - exp_labels: {severity: critical, job: oceanblue-readiness}
+            exp_annotations: {summary: "Sonda de readiness ausente; verificar proxy e coletor"}
+      - eval_time: 6m
+        alertname: OceanBlueMetricsUnavailable
+        exp_alerts:
+          - exp_labels: {severity: high}
+            exp_annotations: {summary: "Metricas ausentes; verificar aplicacao, proxy e coletor"}
+      - eval_time: 8m
+        alertname: OceanBlueReadinessUnavailable
+        exp_alerts: []
+      - eval_time: 8m
+        alertname: OceanBlueMetricsUnavailable
+        exp_alerts: []
+  - interval: 1m
+    input_series:
+      - series: 'probe_success{job="oceanblue-readiness"}'
+        values: '1x10'
+      - series: oceanblue_requests_total
+        values: '0+100x10'
+      - series: oceanblue_errors_total
+        values: '0x10'
+      - series: oceanblue_slow_requests_total
+        values: '0x10'
+      - series: oceanblue_storage_free_bytes
+        values: '2147483648x10'
+    alert_rule_test:
+      - eval_time: 8m
+        alertname: OceanBlueReadinessUnavailable
+        exp_alerts: []
+      - eval_time: 8m
+        alertname: OceanBlueMetricsUnavailable
+        exp_alerts: []
+      - eval_time: 8m
+        alertname: OceanBlueReadinessFailed
+        exp_alerts: []
+      - eval_time: 8m
+        alertname: OceanBlueErrors
+        exp_alerts: []
+      - eval_time: 8m
+        alertname: OceanBlueSlowRequests
+        exp_alerts: []
+      - eval_time: 8m
+        alertname: OceanBlueStorageLow
+        exp_alerts: []

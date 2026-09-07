@@ -1,0 +1,7 @@
+WARNING: No external manifest digest supplied: hashes detect corruption, not malicious replacement of snapshot and manifest.
+Exception: C:\Users\Rabel\.codex\worktrees\944e\OceanBlue\scripts\operational_snapshot.ps1:236
+Line |
+ 236 |  … 9]{64}$') { throw 'Invalid snapshot path or hash; traversal is forbid …
+     |                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | Invalid snapshot path or hash; traversal is forbidden.
+

@@ -1,0 +1,6 @@
+Exception: C:\Users\Rabel\.codex\worktrees\944e\OceanBlue\scripts\operational_snapshot.ps1:29
+Line |
+  29 |  … DE -ne 0) { throw 'Docker operation failed; inspect the isolated cont …
+     |                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | Docker operation failed; inspect the isolated container. No credentials printed.
+

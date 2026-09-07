@@ -2,7 +2,7 @@ from datetime import date
 from decimal import Decimal, InvalidOperation, ROUND_HALF_UP
 from uuid import uuid4
 
-from app.models.db import ItemVenda, ModalidadePrecoVenda, PagamentoVenda, StatusVenda, TipoDesconto, Venda
+from app.models.db import ConfiguracaoClienteEmpresa, ItemVenda, ModalidadePrecoVenda, PagamentoVenda, StatusVenda, TipoDesconto, Venda
 from app.repositorys.pdv_repository import PdvRepository
 from app.services.acesso_empresa_service import AcessoEmpresaService
 from app.services.cliente_service import ClienteService
@@ -105,7 +105,13 @@ class PdvService:
             status=status_enum,
             limite=limite,
         )
-        return [PdvService.serializar_venda(item) for item in vendas]
+        empresa_ids = {item.empresa_id for item in vendas}
+        configuracoes = {record.empresa_id: record for record in ConfiguracaoClienteEmpresa.query.filter(
+            ConfiguracaoClienteEmpresa.tenant_id == tenant_id,
+            ConfiguracaoClienteEmpresa.empresa_id.in_(empresa_ids)).all()} if empresa_ids else {}
+        for company_id in empresa_ids - configuracoes.keys():
+            configuracoes[company_id] = ClienteService.obter_modelo_configuracao_empresa(company_id, tenant_id)
+        return [PdvService.serializar_venda(item, configuracoes[item.empresa_id]) for item in vendas]
 
     @staticmethod
     def obter_venda(venda_id, tenant_id, escopo):
@@ -531,8 +537,9 @@ class PdvService:
         }
 
     @staticmethod
-    def serializar_venda(venda):
-        configuracao = ClienteService.obter_modelo_configuracao_empresa(venda.empresa_id, venda.tenant_id)
+    def serializar_venda(venda, configuracao=None):
+        if configuracao is None:
+            configuracao = ClienteService.obter_modelo_configuracao_empresa(venda.empresa_id, venda.tenant_id)
         permite_cancelamento = (
             venda.status == StatusVenda.FINALIZADA
             and PdvService._esta_dentro_janela_cancelamento(venda.data_venda, configuracao.cancelamento_venda_limite_horas)

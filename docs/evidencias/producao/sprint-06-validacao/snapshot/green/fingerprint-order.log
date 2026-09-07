@@ -1,0 +1,2 @@
+WARNING: No external manifest digest supplied: hashes detect corruption, not malicious replacement of snapshot and manifest.
+RESTORE VERIFIED: compatible schema, database transaction committed only after storage verification; all table/sequence fingerprints and file SHA-256 match.

@@ -1,0 +1,404 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.12, pytest-8.3.5, pluggy-1.6.0
+rootdir: /app
+configfile: pytest.ini
+plugins: cov-6.1.1
+collected 20 items
+
+tests/test_sprint06_browser_adversarial.py FFF..F..FFFFFFFF.F.E          [100%]
+
+==================================== ERRORS ====================================
+_ ERROR at setup of test_cold_assets_local_and_loaded_page_offline_recovery[operacoes] _
+
+transaction_app = <Flask 'app'>
+request = <SubRequest 'browser_page' for <Function test_cold_assets_local_and_loaded_page_offline_recovery[operacoes]>>
+
+    @pytest.fixture
+    def browser_page(transaction_app, request):
+        with transaction_app.app_context():
+            ConfiguracaoNotificacaoEstoque.query.filter_by(tenant_id=1).one().popup_ao_entrar = False
+            db.session.commit()
+        directory = Path("/tmp/e2e") / request.node.name
+        directory.mkdir(parents=True, exist_ok=True)
+        with (directory / "server.log").open("w") as logfile:
+            server = subprocess.Popen([sys.executable, "-m", "gunicorn", "wsgi:app", "--bind", "127.0.0.1:8765",
+                "--workers", "2", "--access-logfile", "-", "--forwarded-allow-ips", ""], stdout=logfile, stderr=subprocess.STDOUT)
+            try:
+                with sync_playwright() as playwright:
+                    browser = playwright.chromium.launch(headless=True, args=["--no-sandbox"])
+>                   context = browser.new_context(viewport={"width": 1440, "height": 1100})
+
+tests/test_sprint04_browser.py:32: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/local/lib/python3.12/site-packages/playwright/sync_api/_generated.py:13969: in new_context
+    self._sync(
+/usr/local/lib/python3.12/site-packages/playwright/_impl/_browser.py:171: in new_context
+    channel = await self._channel.send("newContext", None, params)
+/usr/local/lib/python3.12/site-packages/playwright/_impl/_connection.py:69: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <playwright._impl._connection.Connection object at 0x7707e81780e0>
+cb = <function Channel.send.<locals>.<lambda> at 0x7707e7572660>
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -> Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        st: List[inspect.FrameInfo] = getattr(
+            task, "__pw_stack__", None
+        ) or inspect.stack(0)
+    
+        parsed_st = _extract_stack_trace_information_from_stack(st, is_internal, title)
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+>           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.TargetClosedError: Browser.new_context: Target page, context or browser has been closed
+E           Browser logs:
+E           
+E           <launching> /opt/playwright/chromium_headless_shell-1187/chrome-linux/headless_shell --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-extensions --disable-features=AcceptCHFrame,AvoidUnnecessaryBeforeUnloadCheckSync,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --enable-automation --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --no-sandbox --user-data-dir=/tmp/playwright_chromiumdev_profile-4QBeZs --remote-debugging-pipe --no-startup-window
+E           <launched> pid=1733
+E           [pid=1733][err] [0907/072806.246548:ERROR:dbus/bus.cc:408] Failed to connect to the bus: Failed to connect to socket /run/dbus/system_bus_socket: No such file or directory
+E           [pid=1733][err] [0100/000000.311637:WARNING:sandbox/policy/linux/sandbox_linux.cc:414] InitializeSandbox() called with multiple threads in process gpu-process.
+
+/usr/local/lib/python3.12/site-packages/playwright/_impl/_connection.py:558: TargetClosedError
+=================================== FAILURES ===================================
+______________ test_mobile_sidebar_keyboard_round_trip[auditoria] ______________
+
+operational_page = <Page url='http://127.0.0.1:8765/api/auditoria/view'>
+
+    def test_mobile_sidebar_keyboard_round_trip(operational_page):
+        page = operational_page
+        opener = open_sidebar(page)
+        close = page.locator(".sidebar-mobile-close")
+        last_link = page.locator("#tenantSidebar a[href]").last
+        page.keyboard.press("Shift+Tab")
+>       expect(last_link).to_be_focused()
+E       AssertionError: Locator expected to be focused
+E       Actual value: inactive 
+E       Call log:
+E         - Expect "to_be_focused" with timeout 5000ms
+E         - waiting for locator("#tenantSidebar a[href]").last
+E           9 × locator resolved to <a aria-current="false" title="Importacao em Lote" class="tenant-sidebar__link " href="/api/importacao-exportacao/view">…</a>
+E             - unexpected value "inactive"
+
+tests/test_sprint06_browser_adversarial.py:48: AssertionError
+---------------------------- Captured stderr setup -----------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade  -> 1150177c20ca, initial
+INFO  [alembic.runtime.migration] Running upgrade 1150177c20ca -> 7f3c1a2b9d4e, add roles and permissions
+INFO  [alembic.runtime.migration] Running upgrade 7f3c1a2b9d4e -> 9d1dca4d2bc5, v2
+INFO  [alembic.runtime.migration] Running upgrade 9d1dca4d2bc5 -> c3a1f9d4e8b2, convert quantities to integer
+INFO  [alembic.runtime.migration] Running upgrade c3a1f9d4e8b2 -> 4b2d8b0f6c11, add platform owners
+INFO  [alembic.runtime.migration] Running upgrade 4b2d8b0f6c11 -> 8f6e4c2a1b9d, add pdv financeiro permissions and defaults
+INFO  [alembic.runtime.migration] Running upgrade 8f6e4c2a1b9d -> b7c9d1e2f3a4, add cupons adiantamentos validade salario
+INFO  [alembic.runtime.migration] Running upgrade b7c9d1e2f3a4 -> d4e5f6a7b8c9, add empresa visual mode
+INFO  [alembic.runtime.migration] Running upgrade d4e5f6a7b8c9 -> e6f7a8b9c0d1, add stock alert settings
+INFO  [alembic.runtime.migration] Running upgrade e6f7a8b9c0d1 -> f2b4c6d8e9f1, add client wallet messaging and reversal controls
+INFO  [alembic.runtime.migration] Running upgrade 8f6e4c2a1b9d -> f9d0e1a2b3c4, add boleto financeiro models
+INFO  [alembic.runtime.migration] Running upgrade f2b4c6d8e9f1 -> a1b2c3d4e5f6, add stock alert dispatch tracking
+INFO  [alembic.runtime.migration] Running upgrade a1b2c3d4e5f6 -> b3c4d5e6f7a8, add cashback sale controls
+INFO  [alembic.runtime.migration] Running upgrade f2b4c6d8e9f1 -> a4f1c8d2e7b9, add wholesale pricing and fiscal foundation
+INFO  [alembic.runtime.migration] Running upgrade a4f1c8d2e7b9, b3c4d5e6f7a8 -> c9d8e7f6a5b4, merge cashback and fiscal heads
+INFO  [alembic.runtime.migration] Running upgrade c9d8e7f6a5b4 -> 0f6a8c2d4e9b, add audit and saas limits
+INFO  [alembic.runtime.migration] Running upgrade 0f6a8c2d4e9b, f9d0e1a2b3c4 -> ea3d60221646, merge migration heads
+INFO  [alembic.runtime.migration] Running upgrade ea3d60221646 -> 1a2b3c4d5e6f, add sprint3 boleto and fiscal external status
+INFO  [alembic.runtime.migration] Running upgrade 1a2b3c4d5e6f -> 2b3c4d5e6f7a, add sprint4 asaas and focus real configs
+INFO  [alembic.runtime.migration] Running upgrade 2b3c4d5e6f7a -> 3c4d5e6f7a8b, Align migrated types, tenant indexes and installment foreign key with models.
+INFO  [alembic.runtime.migration] Running upgrade 3c4d5e6f7a8b -> 4d5e6f7a8b9c, Shared authentication state, tenant integrity, SaaS quotas and access audit.
+INFO  [alembic.runtime.migration] Running upgrade 4d5e6f7a8b9c -> 5e6f7a8b9c0d
+INFO  [alembic.runtime.migration] Running upgrade 5e6f7a8b9c0d -> 6f7a8b9c0d1e
+INFO  [alembic.runtime.migration] Running upgrade 6f7a8b9c0d1e -> 7a8b9c0d1e2f
+INFO  [alembic.runtime.migration] Running upgrade 7a8b9c0d1e2f -> 8b9c0d1e2f3a
+INFO  [alembic.runtime.migration] Running upgrade 8b9c0d1e2f3a -> 9c0d1e2f3a4b
+INFO  [alembic.runtime.migration] Running upgrade 9c0d1e2f3a4b -> a0d1e2f3a4b5
+______________ test_mobile_sidebar_keyboard_round_trip[operacoes] ______________
+
+operational_page = <Page url='http://127.0.0.1:8765/api/operacoes/view'>
+
+    def test_mobile_sidebar_keyboard_round_trip(operational_page):
+        page = operational_page
+        opener = open_sidebar(page)
+        close = page.locator(".sidebar-mobile-close")
+        last_link = page.locator("#tenantSidebar a[href]").last
+        page.keyboard.press("Shift+Tab")
+>       expect(last_link).to_be_focused()
+E       AssertionError: Locator expected to be focused
+E       Actual value: inactive 
+E       Call log:
+E         - Expect "to_be_focused" with timeout 5000ms
+E         - waiting for locator("#tenantSidebar a[href]").last
+E           9 × locator resolved to <a aria-current="false" title="Importacao em Lote" class="tenant-sidebar__link " href="/api/importacao-exportacao/view">…</a>
+E             - unexpected value "inactive"
+
+tests/test_sprint06_browser_adversarial.py:48: AssertionError
+____________ test_mobile_sidebar_focus_fits_viewport[auditoria-320] ____________
+
+operational_page = <Page url='http://127.0.0.1:8765/api/auditoria/view'>
+width = 320
+
+    @pytest.mark.parametrize("width", [320, 390, 767])
+    def test_mobile_sidebar_focus_fits_viewport(operational_page, width):
+        page = operational_page
+        page.set_viewport_size({"width": width, "height": 568})
+        open_sidebar(page)
+        sidebar = page.locator("#tenantSidebar")
+        bounds = sidebar.bounding_box()
+>       assert bounds["x"] >= 0 and bounds["x"] + bounds["width"] <= width, bounds
+E       AssertionError: {'height': 568, 'width': 332, 'x': 0, 'y': 0}
+E       assert (0 >= 0 and (0 + 332) <= 320)
+
+tests/test_sprint06_browser_adversarial.py:74: AssertionError
+____________ test_mobile_sidebar_focus_fits_viewport[operacoes-320] ____________
+
+operational_page = <Page url='http://127.0.0.1:8765/api/operacoes/view'>
+width = 320
+
+    @pytest.mark.parametrize("width", [320, 390, 767])
+    def test_mobile_sidebar_focus_fits_viewport(operational_page, width):
+        page = operational_page
+        page.set_viewport_size({"width": width, "height": 568})
+        open_sidebar(page)
+        sidebar = page.locator("#tenantSidebar")
+        bounds = sidebar.bounding_box()
+>       assert bounds["x"] >= 0 and bounds["x"] + bounds["width"] <= width, bounds
+E       AssertionError: {'height': 568, 'width': 332, 'x': 0, 'y': 0}
+E       assert (0 >= 0 and (0 + 332) <= 320)
+
+tests/test_sprint06_browser_adversarial.py:74: AssertionError
+__________ test_sidebar_focus_survives_breakpoint_changes[auditoria] ___________
+
+operational_page = <Page url='http://127.0.0.1:8765/api/auditoria/view'>
+
+    def test_sidebar_focus_survives_breakpoint_changes(operational_page):
+        page = operational_page
+        opener = open_sidebar(page)
+        page.set_viewport_size({"width": 1024, "height": 844})
+        expect(page.locator(".sidebar-mobile-close")).to_be_hidden()
+>       expect(opener).to_be_focused()
+E       AssertionError: Locator expected to be focused
+E       Actual value: inactive 
+E       Call log:
+E         - Expect "to_be_focused" with timeout 5000ms
+E         - waiting for locator(".tenant-topbar [data-sidebar-toggle]")
+E           9 × locator resolved to <button type="button" aria-expanded="true" data-sidebar-toggle="" class="tenant-topbar__toggle" aria-label="Recolher menu lateral">…</button>
+E             - unexpected value "inactive"
+
+tests/test_sprint06_browser_adversarial.py:89: AssertionError
+__________ test_sidebar_focus_survives_breakpoint_changes[operacoes] ___________
+
+operational_page = <Page url='http://127.0.0.1:8765/api/operacoes/view'>
+
+    def test_sidebar_focus_survives_breakpoint_changes(operational_page):
+        page = operational_page
+        opener = open_sidebar(page)
+        page.set_viewport_size({"width": 1024, "height": 844})
+        expect(page.locator(".sidebar-mobile-close")).to_be_hidden()
+>       expect(opener).to_be_focused()
+E       AssertionError: Locator expected to be focused
+E       Actual value: inactive 
+E       Call log:
+E         - Expect "to_be_focused" with timeout 5000ms
+E         - waiting for locator(".tenant-topbar [data-sidebar-toggle]")
+E           9 × locator resolved to <button type="button" aria-expanded="true" data-sidebar-toggle="" class="tenant-topbar__toggle" aria-label="Recolher menu lateral">…</button>
+E             - unexpected value "inactive"
+
+tests/test_sprint06_browser_adversarial.py:89: AssertionError
+___________ test_persisted_mobile_sidebar_receives_focus[auditoria] ____________
+
+operational_page = <Page url='http://127.0.0.1:8765/api/auditoria/view'>
+
+    def test_persisted_mobile_sidebar_receives_focus(operational_page):
+        page = operational_page
+        open_sidebar(page)
+        page.reload(wait_until="networkidle")
+        expect(page.locator("#tenantSidebar")).to_be_visible()
+>       expect(page.locator(".sidebar-mobile-close")).to_be_focused()
+E       AssertionError: Locator expected to be focused
+E       Actual value: inactive 
+E       Call log:
+E         - Expect "to_be_focused" with timeout 5000ms
+E         - waiting for locator(".sidebar-mobile-close")
+E           9 × locator resolved to <button type="button" aria-expanded="true" data-sidebar-toggle="" class="sidebar-mobile-close" aria-label="Recolher menu lateral">Fechar menu</button>
+E             - unexpected value "inactive"
+
+tests/test_sprint06_browser_adversarial.py:106: AssertionError
+___________ test_persisted_mobile_sidebar_receives_focus[operacoes] ____________
+
+operational_page = <Page url='http://127.0.0.1:8765/api/operacoes/view'>
+
+    def test_persisted_mobile_sidebar_receives_focus(operational_page):
+        page = operational_page
+        open_sidebar(page)
+        page.reload(wait_until="networkidle")
+        expect(page.locator("#tenantSidebar")).to_be_visible()
+>       expect(page.locator(".sidebar-mobile-close")).to_be_focused()
+E       AssertionError: Locator expected to be focused
+E       Actual value: inactive 
+E       Call log:
+E         - Expect "to_be_focused" with timeout 5000ms
+E         - waiting for locator(".sidebar-mobile-close")
+E           9 × locator resolved to <button type="button" aria-expanded="true" data-sidebar-toggle="" class="sidebar-mobile-close" aria-label="Recolher menu lateral">Fechar menu</button>
+E             - unexpected value "inactive"
+
+tests/test_sprint06_browser_adversarial.py:106: AssertionError
+_________ test_user_disclosure_escape_and_tab_dismissal[auditoria-390] _________
+
+operational_page = <Page url='http://127.0.0.1:8765/api/auditoria/view'>
+width = 390
+
+    @pytest.mark.parametrize("width", [390, 1440])
+    def test_user_disclosure_escape_and_tab_dismissal(operational_page, width):
+        page = operational_page
+        page.set_viewport_size({"width": width, "height": 844})
+        button = page.locator("#userMenuBtn")
+        dropdown = page.locator("#userDropdown")
+        button.focus()
+        page.keyboard.press("Enter")
+        expect(dropdown).to_be_visible()
+        page.keyboard.press("Tab")
+        expect(dropdown.locator("a[href]").first).to_be_focused()
+        page.keyboard.press("Escape")
+>       expect(dropdown).to_be_hidden()
+E       AssertionError: Locator expected to be hidden
+E       Actual value: visible 
+E       Call log:
+E         - Expect "to_be_hidden" with timeout 5000ms
+E         - waiting for locator("#userDropdown")
+E           9 × locator resolved to <div id="userDropdown" class="absolute right-0 mt-3 w-60 glass rounded-2xl py-2 shadow-2xl animate-slide-in-top border border-white/10 z-[100]">…</div>
+E             - unexpected value "visible"
+
+tests/test_sprint06_browser_adversarial.py:123: AssertionError
+________ test_user_disclosure_escape_and_tab_dismissal[auditoria-1440] _________
+
+operational_page = <Page url='http://127.0.0.1:8765/api/auditoria/view'>
+width = 1440
+
+    @pytest.mark.parametrize("width", [390, 1440])
+    def test_user_disclosure_escape_and_tab_dismissal(operational_page, width):
+        page = operational_page
+        page.set_viewport_size({"width": width, "height": 844})
+        button = page.locator("#userMenuBtn")
+        dropdown = page.locator("#userDropdown")
+        button.focus()
+        page.keyboard.press("Enter")
+        expect(dropdown).to_be_visible()
+        page.keyboard.press("Tab")
+        expect(dropdown.locator("a[href]").first).to_be_focused()
+        page.keyboard.press("Escape")
+>       expect(dropdown).to_be_hidden()
+E       AssertionError: Locator expected to be hidden
+E       Actual value: visible 
+E       Call log:
+E         - Expect "to_be_hidden" with timeout 5000ms
+E         - waiting for locator("#userDropdown")
+E           9 × locator resolved to <div id="userDropdown" class="absolute right-0 mt-3 w-60 glass rounded-2xl py-2 shadow-2xl animate-slide-in-top border border-white/10 z-[100]">…</div>
+E             - unexpected value "visible"
+
+tests/test_sprint06_browser_adversarial.py:123: AssertionError
+_________ test_user_disclosure_escape_and_tab_dismissal[operacoes-390] _________
+
+operational_page = <Page url='http://127.0.0.1:8765/api/operacoes/view'>
+width = 390
+
+    @pytest.mark.parametrize("width", [390, 1440])
+    def test_user_disclosure_escape_and_tab_dismissal(operational_page, width):
+        page = operational_page
+        page.set_viewport_size({"width": width, "height": 844})
+        button = page.locator("#userMenuBtn")
+        dropdown = page.locator("#userDropdown")
+        button.focus()
+        page.keyboard.press("Enter")
+        expect(dropdown).to_be_visible()
+        page.keyboard.press("Tab")
+        expect(dropdown.locator("a[href]").first).to_be_focused()
+        page.keyboard.press("Escape")
+>       expect(dropdown).to_be_hidden()
+E       AssertionError: Locator expected to be hidden
+E       Actual value: visible 
+E       Call log:
+E         - Expect "to_be_hidden" with timeout 5000ms
+E         - waiting for locator("#userDropdown")
+E           9 × locator resolved to <div id="userDropdown" class="absolute right-0 mt-3 w-60 glass rounded-2xl py-2 shadow-2xl animate-slide-in-top border border-white/10 z-[100]">…</div>
+E             - unexpected value "visible"
+
+tests/test_sprint06_browser_adversarial.py:123: AssertionError
+________ test_user_disclosure_escape_and_tab_dismissal[operacoes-1440] _________
+
+operational_page = <Page url='http://127.0.0.1:8765/api/operacoes/view'>
+width = 1440
+
+    @pytest.mark.parametrize("width", [390, 1440])
+    def test_user_disclosure_escape_and_tab_dismissal(operational_page, width):
+        page = operational_page
+        page.set_viewport_size({"width": width, "height": 844})
+        button = page.locator("#userMenuBtn")
+        dropdown = page.locator("#userDropdown")
+        button.focus()
+        page.keyboard.press("Enter")
+        expect(dropdown).to_be_visible()
+        page.keyboard.press("Tab")
+        expect(dropdown.locator("a[href]").first).to_be_focused()
+        page.keyboard.press("Escape")
+>       expect(dropdown).to_be_hidden()
+E       AssertionError: Locator expected to be hidden
+E       Actual value: visible 
+E       Call log:
+E         - Expect "to_be_hidden" with timeout 5000ms
+E         - waiting for locator("#userDropdown")
+E           9 × locator resolved to <div id="userDropdown" class="absolute right-0 mt-3 w-60 glass rounded-2xl py-2 shadow-2xl animate-slide-in-top border border-white/10 z-[100]">…</div>
+E             - unexpected value "visible"
+
+tests/test_sprint06_browser_adversarial.py:123: AssertionError
+_______ test_keyboard_skip_link_reaches_operational_controls[operacoes] ________
+
+operational_page = <Page url='http://127.0.0.1:8765/api/operacoes/view#page-content'>
+
+    def test_keyboard_skip_link_reaches_operational_controls(operational_page):
+        page = operational_page
+        page.keyboard.press("Tab")
+        assert_visible_focus(page.locator(".skip-link"))
+        page.keyboard.press("Enter")
+        expect(page.locator("#page-content")).to_be_focused()
+        page.keyboard.press("Tab")
+        expect(page.locator(".tenant-topbar [data-sidebar-toggle]")).to_be_focused()
+        for selector in ["[data-back-button]", "#userMenuBtn", "main input, main select"]:
+            page.keyboard.press("Tab")
+>           assert_visible_focus(page.locator(selector).first)
+
+tests/test_sprint06_browser_adversarial.py:146: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+locator = <Locator frame=<Frame name= url='http://127.0.0.1:8765/api/operacoes/view#page-content'> selector='#userMenuBtn >> nth=0'>
+
+    def assert_visible_focus(locator):
+        expect(locator).to_be_focused()
+>       assert locator.evaluate("element => { const style = getComputedStyle(element); return style.outlineStyle !== 'none' && parseFloat(style.outlineWidth) >= 2; }")
+E       assert False
+E        +  where False = evaluate("element => { const style = getComputedStyle(element); return style.outlineStyle !== 'none' && parseFloat(style.outlineWidth) >= 2; }")
+E        +    where evaluate = <Locator frame=<Frame name= url='http://127.0.0.1:8765/api/operacoes/view#page-content'> selector='#userMenuBtn >> nth=0'>.evaluate
+
+tests/test_sprint06_browser_adversarial.py:38: AssertionError
+---------------------- generated xml file: /tmp/junit.xml ----------------------
+=========================== short test summary info ============================
+ERROR tests/test_sprint06_browser_adversarial.py::test_cold_assets_local_and_loaded_page_offline_recovery[operacoes]
+FAILED tests/test_sprint06_browser_adversarial.py::test_mobile_sidebar_keyboard_round_trip[auditoria]
+FAILED tests/test_sprint06_browser_adversarial.py::test_mobile_sidebar_keyboard_round_trip[operacoes]
+FAILED tests/test_sprint06_browser_adversarial.py::test_mobile_sidebar_focus_fits_viewport[auditoria-320]
+FAILED tests/test_sprint06_browser_adversarial.py::test_mobile_sidebar_focus_fits_viewport[operacoes-320]
+FAILED tests/test_sprint06_browser_adversarial.py::test_sidebar_focus_survives_breakpoint_changes[auditoria]
+FAILED tests/test_sprint06_browser_adversarial.py::test_sidebar_focus_survives_breakpoint_changes[operacoes]
+FAILED tests/test_sprint06_browser_adversarial.py::test_persisted_mobile_sidebar_receives_focus[auditoria]
+FAILED tests/test_sprint06_browser_adversarial.py::test_persisted_mobile_sidebar_receives_focus[operacoes]
+FAILED tests/test_sprint06_browser_adversarial.py::test_user_disclosure_escape_and_tab_dismissal[auditoria-390]
+FAILED tests/test_sprint06_browser_adversarial.py::test_user_disclosure_escape_and_tab_dismissal[auditoria-1440]
+FAILED tests/test_sprint06_browser_adversarial.py::test_user_disclosure_escape_and_tab_dismissal[operacoes-390]
+FAILED tests/test_sprint06_browser_adversarial.py::test_user_disclosure_escape_and_tab_dismissal[operacoes-1440]
+FAILED tests/test_sprint06_browser_adversarial.py::test_keyboard_skip_link_reaches_operational_controls[operacoes]
+============== 13 failed, 6 passed, 1 error in 277.95s (0:04:37) ===============

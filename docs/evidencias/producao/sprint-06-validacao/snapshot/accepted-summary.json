@@ -1,0 +1,31 @@
+{
+  "utc": "2026-09-07T07:51:03.5322123Z",
+  "red_cases": 22,
+  "red_failures": 12,
+  "accepted_cases": 32,
+  "accepted_passed": 32,
+  "supplemental_cases": 3,
+  "supplemental_passed": 3,
+  "snapshot_sha256": "167D282F7CCDE31A73F0DC659A2A704C1D8549FFCD531F61EFF8B97EB1F90A15",
+  "runner_sha256": "7911958AA76919263D3A2F1AF8277226BF6D683CC243F3563AD433EF8A3F001C",
+  "recovery": {
+    "rows": "2",
+    "backup_seconds": 23.677,
+    "restore_seconds": 24.929,
+    "lost_captured_records": 0,
+    "receipt": "synthetic-only: two records",
+    "sequence": "2"
+  },
+  "hard_kill": {
+    "reached_after_copy": true,
+    "marker": "True",
+    "database_empty": true,
+    "rollback_observed_seconds": 1.603,
+    "sql_sessions": "0"
+  },
+  "remaining_containers": [],
+  "remaining_volumes": [],
+  "remaining_networks": [],
+  "source_frozen": true,
+  "committed": false
+}

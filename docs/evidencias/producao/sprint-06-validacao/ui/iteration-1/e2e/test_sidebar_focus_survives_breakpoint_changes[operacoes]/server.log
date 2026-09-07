@@ -1,0 +1,9 @@
+[2026-09-07 07:31:41 +0000] [789] [INFO] Starting gunicorn 21.2.0
+[2026-09-07 07:31:41 +0000] [789] [INFO] Listening at: http://127.0.0.1:8765 (789)
+[2026-09-07 07:31:41 +0000] [789] [INFO] Using worker: sync
+[2026-09-07 07:31:41 +0000] [797] [INFO] Booting worker with pid: 797
+[2026-09-07 07:31:41 +0000] [798] [INFO] Booting worker with pid: 798
+[2026-09-07 07:31:44 +0000] [789] [INFO] Handling signal: term
+{"timestamp": "2026-09-07T07:31:44.641181+00:00", "level": "INFO", "event": "application_diagnostic", "error_type": null}
+{"timestamp": "2026-09-07T07:31:44.641254+00:00", "level": "INFO", "event": "application_diagnostic", "error_type": null}
+[2026-09-07 07:31:45 +0000] [789] [INFO] Shutting down: Master

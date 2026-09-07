@@ -1,0 +1,2 @@
+{"timestamp": "2026-09-07T07:46:24.903187+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "fc38e656665a10f6792f2b5339728984", "route": "/login", "method": "POST", "status": 503, "duration_ms": 0.465}
+{"fault": "real ENOSPC", "capacity_bytes": 1048576, "health": 200, "readiness": 503, "writes": 503, "recovery_seconds": 0.006765848000213737}

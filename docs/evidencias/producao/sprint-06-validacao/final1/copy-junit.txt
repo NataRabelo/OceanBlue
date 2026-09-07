@@ -1,0 +1,2 @@
+ oceanblue-s06-audit-final1-test-1 Copying oceanblue-s06-audit-final1-test-1:/tmp/junit.xml to C:\Users\Rabel\.codex\worktrees\944e\OceanBlue\docs\evidencias\producao\sprint-06-validacao\final1\junit.xml
+Error response from daemon: Could not find the file /tmp/junit.xml in container dc292dd7fe10fe65b0f7eb999471c66825a9cab66f53467f50fedf17071cc36e

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="3" time="19.694" timestamp="2026-09-07T07:23:55.536249+00:00" hostname="7bb2ae2f8e8f"><testcase classname="tests.test_sprint06_load_adversarial" name="test_concurrent_audit_reads_bounded_and_tenant_safe" time="10.087" /><testcase classname="tests.test_sprint06_load_adversarial" name="test_sixteen_writers_cannot_oversell_twelve_units" time="3.424" /><testcase classname="tests.test_sprint06_load_adversarial" name="test_critical_list_query_count_does_not_grow_per_sale" time="5.917"><failure message="AssertionError: {'/api/pdv/vendas': {'one_row': 15, 'twenty_five_rows': 39}}&#10;assert 39 &lt;= (15 + 2)">transaction_app = &lt;Flask 'app'&gt;
+
+    def test_critical_list_query_count_does_not_grow_per_sale(transaction_app):
+        with transaction_app.app_context():
+            record_id, product_id = stock_setup(30)
+            for number in range(25):
+                PdvService.criar_venda(sale_payload(product_id, key=f'query-sale-{number}'), 1, scope(), 1)
+        client = transaction_app.test_client()
+        assert login(client).status_code == 302
+        measurements = {}
+        for route in ('/api/pdv/vendas', '/api/financeiro/lancamentos', '/api/estoque/movimentos'):
+            counts = []
+            for limit in (1, 25):
+                statements = []
+    
+                def count_query(connection, cursor, statement, parameters, context, many):
+                    statements.append(statement)
+    
+                with transaction_app.app_context():
+                    event.listen(db.engine, 'before_cursor_execute', count_query)
+                    try:
+                        response = client.get(f'{route}?empresa_id=1&amp;limite={limit}')
+                    finally:
+                        event.remove(db.engine, 'before_cursor_execute', count_query)
+                assert response.status_code == 200, response.json
+                assert len(response.json['data']) == limit
+                counts.append(len(statements))
+            measurements[route] = dict(zip(('one_row', 'twenty_five_rows'), counts))
+&gt;           assert counts[1] &lt;= counts[0] + 2, measurements
+E           AssertionError: {'/api/pdv/vendas': {'one_row': 15, 'twenty_five_rows': 39}}
+E           assert 39 &lt;= (15 + 2)
+
+tests/test_sprint06_load_adversarial.py:114: AssertionError</failure></testcase></testsuite></testsuites>

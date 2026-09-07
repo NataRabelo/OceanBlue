@@ -1,0 +1,7 @@
+ROLLBACK VERIFIED: database empty; copied files removed.
+Exception: C:\Users\Rabel\.codex\worktrees\944e\OceanBlue\scripts\operational_snapshot.ps1:260
+Line |
+ 260 |  … rprint))) { throw 'Restored database invariant mismatch; transaction  …
+     |                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | Restored database invariant mismatch; transaction will roll back.
+

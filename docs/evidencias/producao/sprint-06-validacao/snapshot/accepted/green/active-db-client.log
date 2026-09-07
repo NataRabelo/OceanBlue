@@ -1,0 +1,6 @@
+Exception: C:\Users\Rabel\.codex\worktrees\944e\OceanBlue\scripts\operational_snapshot.ps1:139
+Line |
+ 139 |  … ") -ne 0) { throw 'Other database clients remain. Stop all writers.'  …
+     |                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | Other database clients remain. Stop all writers.
+

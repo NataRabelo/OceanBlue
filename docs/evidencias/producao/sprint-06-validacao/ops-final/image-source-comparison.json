@@ -1,0 +1,7 @@
+{
+  "runtime_sources_identical": true,
+  "differing_files": [
+    "scripts/validate_sprint06.ps1"
+  ],
+  "compared_files": 313
+}

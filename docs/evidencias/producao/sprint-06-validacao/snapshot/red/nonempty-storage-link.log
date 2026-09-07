@@ -1,0 +1,6 @@
+Exception: C:\Users\Rabel\.codex\worktrees\944e\OceanBlue\scripts\operational_snapshot.ps1:39
+Line |
+  39 |  … ributes]::ReparsePoint) { throw "Links are forbidden in snapshots." }
+     |                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | Links are forbidden in snapshots.
+

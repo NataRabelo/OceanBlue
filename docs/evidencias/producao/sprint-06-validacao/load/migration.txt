@@ -1,0 +1,11 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.12, pytest-8.3.5, pluggy-1.6.0
+rootdir: /app
+configfile: pytest.ini
+plugins: cov-6.1.1
+collected 5 items / 3 deselected / 2 selected
+
+tests/test_sprint06_load_adversarial.py ..                               [100%]
+
+-------------------- generated xml file: /tmp/migration.xml --------------------
+======================= 2 passed, 3 deselected in 14.04s =======================

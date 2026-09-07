@@ -1,0 +1,6 @@
+Exception: C:\Users\Rabel\.codex\worktrees\944e\OceanBlue\scripts\operational_snapshot.ps1:91
+Line |
+  91 |  … [$key] -ne $manifest.files[$key]) { throw "Snapshot hash mismatch." }
+     |                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | Snapshot hash mismatch.
+

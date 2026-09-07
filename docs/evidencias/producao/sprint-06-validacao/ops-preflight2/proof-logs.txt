@@ -1,0 +1,105 @@
+smoke-1  | INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+smoke-1  | INFO  [alembic.runtime.migration] Will assume transactional DDL.
+proxy-1  | /docker-entrypoint.sh: /docker-entrypoint.d/ is not empty, will attempt to perform configuration
+proxy-1  | /docker-entrypoint.sh: Looking for shell scripts in /docker-entrypoint.d/
+proxy-1  | /docker-entrypoint.sh: Launching /docker-entrypoint.d/10-listen-on-ipv6-by-default.sh
+smoke-1  | [2026-09-07 07:38:06 +0000] [1] [INFO] Starting gunicorn 21.2.0
+proxy-1  | 10-listen-on-ipv6-by-default.sh: info: can not modify /etc/nginx/conf.d/default.conf (read-only file system?)
+proxy-1  | /docker-entrypoint.sh: Sourcing /docker-entrypoint.d/15-local-resolvers.envsh
+smoke-1  | [2026-09-07 07:38:06 +0000] [1] [INFO] Listening at: http://0.0.0.0:5000 (1)
+smoke-1  | [2026-09-07 07:38:06 +0000] [1] [INFO] Using worker: gthread
+proxy-1  | /docker-entrypoint.sh: Launching /docker-entrypoint.d/20-envsubst-on-templates.sh
+proxy-1  | /docker-entrypoint.sh: Launching /docker-entrypoint.d/30-tune-worker-processes.sh
+proxy-1  | /docker-entrypoint.sh: Configuration complete; ready for start up
+proxy-1  | {"event":"proxy_request","request_id":"f59f5765324e0c73ef96967496cca1fa","status":200,"duration":0.007}
+smoke-1  | [2026-09-07 07:38:06 +0000] [16] [INFO] Booting worker with pid: 16
+proxy-1  | {"event":"proxy_request","request_id":"90dc05cece8fa3e53f6bccc5ab024b48","status":200,"duration":0.028}
+proxy-1  | {"event":"proxy_request","request_id":"862212b14a636a15f53883f85baf7819","status":200,"duration":0.011}
+proxy-1  | {"event":"proxy_request","request_id":"1230c3a3aeee5961bc47f539c4f83e9b","status":200,"duration":0.003}
+smoke-1  | {"timestamp": "2026-09-07T07:38:10.327163+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "e7c7788154942ba65549a5aa23fec9e1", "route": "/api/ready", "method": "GET", "status": 200, "duration_ms": 46.673}
+proxy-1  | {"event":"proxy_request","request_id":"a31465a18f09b01b50deafe90b4f7c77","status":404,"duration":0.004}
+smoke-1  | {"timestamp": "2026-09-07T07:38:14.197466+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "f59f5765324e0c73ef96967496cca1fa", "route": "/health", "method": "GET", "status": 200, "duration_ms": 0.346}
+proxy-1  | {"event":"proxy_request","request_id":"9e71376e1556d1b1445be1bccda6ca55","status":404,"duration":0.003}
+proxy-1  | {"event":"proxy_request","request_id":"fbd420a3b2b665850479a4955bf6ef64","status":404,"duration":0.003}
+proxy-1  | {"event":"proxy_request","request_id":"5c142bcd755d0f09cc953ac3fde39a10","status":404,"duration":0.000}
+smoke-1  | {"timestamp": "2026-09-07T07:38:15.611175+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "4435fb740233f0efe12f8d3c4401069c", "route": "/api/ready", "method": "GET", "status": 200, "duration_ms": 16.558}
+proxy-1  | {"event":"proxy_request","request_id":"4b7b66dbefdb673f9d58b25f945735c9","status":200,"duration":0.003}
+smoke-1  | {"timestamp": "2026-09-07T07:38:15.623625+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "90dc05cece8fa3e53f6bccc5ab024b48", "route": "/login", "method": "GET", "status": 200, "duration_ms": 22.628}
+proxy-1  | {"event":"proxy_request","request_id":"f97614ce932c24aea5a6ed3662bf2030","status":200,"duration":0.004}
+smoke-1  | {"timestamp": "2026-09-07T07:38:15.642830+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "862212b14a636a15f53883f85baf7819", "route": "/readiness", "method": "GET", "status": 200, "duration_ms": 7.924}
+smoke-1  | {"timestamp": "2026-09-07T07:38:15.654985+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "1230c3a3aeee5961bc47f539c4f83e9b", "route": "/metrics", "method": "GET", "status": 200, "duration_ms": 0.385}
+smoke-1  | {"timestamp": "2026-09-07T07:38:15.666637+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "a31465a18f09b01b50deafe90b4f7c77", "route": "/metrics", "method": "GET", "status": 404, "duration_ms": 0.36}
+proxy-1  | {"event":"proxy_request","request_id":"d7d6e5f04c0301d707c36fd79c55ff18","status":200,"duration":0.004}
+proxy-1  | {"event":"proxy_request","request_id":"518aa76d97d0c1081f66b9dac93051d3","status":200,"duration":0.003}
+proxy-1  | /docker-entrypoint.sh: /docker-entrypoint.d/ is not empty, will attempt to perform configuration
+smoke-1  | {"timestamp": "2026-09-07T07:38:15.676760+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "9e71376e1556d1b1445be1bccda6ca55", "route": "/api/fiscal/view", "method": "GET", "status": 404, "duration_ms": 0.307}
+proxy-1  | /docker-entrypoint.sh: Looking for shell scripts in /docker-entrypoint.d/
+proxy-1  | /docker-entrypoint.sh: Launching /docker-entrypoint.d/10-listen-on-ipv6-by-default.sh
+proxy-1  | 10-listen-on-ipv6-by-default.sh: info: can not modify /etc/nginx/conf.d/default.conf (read-only file system?)
+smoke-1  | {"timestamp": "2026-09-07T07:38:15.684606+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "fbd420a3b2b665850479a4955bf6ef64", "route": "/api/financeiro/boletos/view", "method": "GET", "status": 404, "duration_ms": 0.303}
+smoke-1  | {"timestamp": "2026-09-07T07:38:15.727029+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "d58952646fa02a7160d8a564c22c9500", "route": "/login", "method": "GET", "status": 403, "duration_ms": 0.176}
+smoke-1  | {"timestamp": "2026-09-07T07:38:17.300174+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "4b7b66dbefdb673f9d58b25f945735c9", "route": "/health", "method": "GET", "status": 200, "duration_ms": 0.236}
+smoke-1  | {"timestamp": "2026-09-07T07:38:17.337516+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "788b1fe03cbd599f187708fd9b7a1d27", "route": "/readiness", "method": "GET", "status": 200, "duration_ms": 7.638}
+proxy-1  | /docker-entrypoint.sh: Sourcing /docker-entrypoint.d/15-local-resolvers.envsh
+proxy-1  | /docker-entrypoint.sh: Launching /docker-entrypoint.d/20-envsubst-on-templates.sh
+proxy-1  | /docker-entrypoint.sh: Launching /docker-entrypoint.d/30-tune-worker-processes.sh
+proxy-1  | /docker-entrypoint.sh: Configuration complete; ready for start up
+proxy-1  | {"event":"proxy_request","request_id":"ff6b15d9c14bffe587a6fc1c498cb368","status":200,"duration":0.002}
+smoke-1  | [2026-09-07 07:38:17 +0000] [1] [ERROR] Worker (pid:16) was sent SIGKILL! Perhaps out of memory?
+smoke-1  | [2026-09-07 07:38:17 +0000] [45] [INFO] Booting worker with pid: 45
+smoke-1  | {"timestamp": "2026-09-07T07:38:18.735223+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "1c2f232e4a9976aa2b0f3fb8d4388e25", "route": "/readiness", "method": "GET", "status": 200, "duration_ms": 21.557}
+smoke-1  | {"timestamp": "2026-09-07T07:38:20.502955+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "f97614ce932c24aea5a6ed3662bf2030", "route": "/health", "method": "GET", "status": 200, "duration_ms": 0.288}
+smoke-1  | {"timestamp": "2026-09-07T07:38:20.910695+00:00", "level": "WARNING", "event": "application_diagnostic", "error_type": "OperationalError", "request_id": "b3eca6b13d0658c16689052021d9ff26"}
+smoke-1  | {"timestamp": "2026-09-07T07:38:20.911571+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "b3eca6b13d0658c16689052021d9ff26", "route": "/api/ready", "method": "GET", "status": 503, "duration_ms": 7.673}
+proxy-1  | {"event":"proxy_request","request_id":"2a9c55c597762473f79b9f2e3fb52f86","status":200,"duration":0.039}
+proxy-1  | {"event":"proxy_request","request_id":"01773871b7bb2b8a2fc22c46279f1162","status":200,"duration":0.017}
+smoke-1  | {"timestamp": "2026-09-07T07:38:21.156038+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "c2a035766cf13c77aaa2859603b941d3", "route": "/api/health", "method": "GET", "status": 200, "duration_ms": 0.253}
+proxy-1  | {"event":"proxy_request","request_id":"de133a76456507daa04904ee3c041932","status":200,"duration":0.003}
+smoke-1  | {"timestamp": "2026-09-07T07:38:21.161225+00:00", "level": "WARNING", "event": "application_diagnostic", "error_type": "OperationalError", "request_id": "dc61452d08f2262dbec73c0ad9feb693"}
+proxy-1  | {"event":"proxy_request","request_id":"bdff309d5dbc22d4504650587fc527c4","status":404,"duration":0.004}
+proxy-1  | {"event":"proxy_request","request_id":"4d076990e363d1fa20f433fa943400d9","status":404,"duration":0.003}
+proxy-1  | {"event":"proxy_request","request_id":"232b7de1587a26e449a7971053550e62","status":404,"duration":0.003}
+proxy-1  | {"event":"proxy_request","request_id":"3a1a73ca5c593c7c2f853c3755b4865b","status":404,"duration":0.000}
+proxy-1  | {"event":"proxy_request","request_id":"12ab2c2def343d8e50fa9cc83349b43a","status":200,"duration":0.010}
+proxy-1  | {"event":"proxy_request","request_id":"374344931770e80ac2f6b348d3624961","status":200,"duration":0.005}
+smoke-1  | {"timestamp": "2026-09-07T07:38:21.161952+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "dc61452d08f2262dbec73c0ad9feb693", "route": "/api/ready", "method": "GET", "status": 503, "duration_ms": 2.889}
+smoke-1  | {"timestamp": "2026-09-07T07:38:21.164932+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "c0d8d176eb3c0aae5ce421dc16a15ed3", "route": "/login", "method": "GET", "status": 403, "duration_ms": 0.225}
+proxy-1  | {"event":"proxy_request","request_id":"8152e4426454665968b11553f3608d43","status":200,"duration":0.003}
+proxy-1  | {"event":"proxy_request","request_id":"34b00dce3706a0d8dc85328365b229c0","status":200,"duration":0.004}
+smoke-1  | {"timestamp": "2026-09-07T07:38:21.167463+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "74d9aeeeccf98038516be1da77c66f38", "route": "/login", "method": "GET", "status": 403, "duration_ms": 0.191}
+proxy-1  | {"event":"proxy_request","request_id":"586edd12f86764e301ca0d12e80caa18","status":200,"duration":0.003}
+smoke-1  | {"timestamp": "2026-09-07T07:38:21.169915+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "07dcefa968c8f4ca453b42a2ab0fd625", "route": "/login", "method": "GET", "status": 403, "duration_ms": 0.105}
+smoke-1  | {"timestamp": "2026-09-07T07:38:23.618256+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "d7d6e5f04c0301d707c36fd79c55ff18", "route": "/health", "method": "GET", "status": 200, "duration_ms": 0.255}
+smoke-1  | {"timestamp": "2026-09-07T07:38:26.162192+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "f3ce2c2c341d3f3dcbc332037b96f2fe", "route": "/api/ready", "method": "GET", "status": 200, "duration_ms": 27.885}
+smoke-1  | {"timestamp": "2026-09-07T07:38:26.715941+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "518aa76d97d0c1081f66b9dac93051d3", "route": "/health", "method": "GET", "status": 200, "duration_ms": 0.226}
+smoke-1  | {"timestamp": "2026-09-07T07:38:27.730019+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "fe885827df671333c3b16c94d0dc38c0", "route": "/api/health", "method": "GET", "status": 200, "duration_ms": 0.248}
+smoke-1  | {"timestamp": "2026-09-07T07:38:27.746952+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "81ff3badcd38da4b88db73fceef196ce", "route": "/api/ready", "method": "GET", "status": 200, "duration_ms": 14.106}
+smoke-1  | {"timestamp": "2026-09-07T07:38:27.750436+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "cd8fe8bcf13eb30ccb02ae8f510da61a", "route": "/login", "method": "GET", "status": 403, "duration_ms": 0.212}
+smoke-1  | {"timestamp": "2026-09-07T07:38:27.752831+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "eda3f52723cf157ca9c7b9a2fe0f0ca8", "route": "/login", "method": "GET", "status": 403, "duration_ms": 0.101}
+smoke-1  | {"timestamp": "2026-09-07T07:38:27.755503+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "79624b2508c6cffb42e78c975a4506bf", "route": "/login", "method": "GET", "status": 403, "duration_ms": 0.185}
+smoke-1  | {"timestamp": "2026-09-07T07:38:31.390947+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "e86ae472075bf28788a748d460943181", "route": "/api/ready", "method": "GET", "status": 200, "duration_ms": 13.779}
+smoke-1  | {"timestamp": "2026-09-07T07:38:33.568437+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "bd86530af2658fd658b4ea02e22db9c5", "route": "/api/health", "method": "GET", "status": 200, "duration_ms": 0.168}
+smoke-1  | {"timestamp": "2026-09-07T07:38:33.588610+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "da0c525efd74ff423a76d3f43a5ed3d8", "route": "/api/ready", "method": "GET", "status": 200, "duration_ms": 17.019}
+smoke-1  | {"timestamp": "2026-09-07T07:38:33.594529+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "8495722775f2a1a2b3c62fab5bbb18dc", "route": "/login", "method": "GET", "status": 403, "duration_ms": 1.5}
+smoke-1  | {"timestamp": "2026-09-07T07:38:33.601176+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "552de0d43a13819d991f0b3e91b9c90b", "route": "/login", "method": "GET", "status": 403, "duration_ms": 0.731}
+smoke-1  | {"timestamp": "2026-09-07T07:38:33.609462+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "ae957eeaf89d4b57cbfd5cbef9b323cc", "route": "/login", "method": "GET", "status": 403, "duration_ms": 0.325}
+smoke-1  | {"timestamp": "2026-09-07T07:38:36.596774+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "4ea0eb5a5d5a1ee951c9c67ccafc6dc2", "route": "/api/ready", "method": "GET", "status": 200, "duration_ms": 13.772}
+smoke-1  | {"timestamp": "2026-09-07T07:38:38.758783+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "ff6b15d9c14bffe587a6fc1c498cb368", "route": "/health", "method": "GET", "status": 200, "duration_ms": 0.109}
+smoke-1  | {"timestamp": "2026-09-07T07:38:40.375322+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "2a9c55c597762473f79b9f2e3fb52f86", "route": "/login", "method": "GET", "status": 200, "duration_ms": 30.549}
+smoke-1  | {"timestamp": "2026-09-07T07:38:40.408026+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "01773871b7bb2b8a2fc22c46279f1162", "route": "/readiness", "method": "GET", "status": 200, "duration_ms": 12.079}
+smoke-1  | {"timestamp": "2026-09-07T07:38:40.418025+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "de133a76456507daa04904ee3c041932", "route": "/metrics", "method": "GET", "status": 200, "duration_ms": 0.557}
+smoke-1  | {"timestamp": "2026-09-07T07:38:40.429072+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "bdff309d5dbc22d4504650587fc527c4", "route": "/metrics", "method": "GET", "status": 404, "duration_ms": 0.522}
+smoke-1  | {"timestamp": "2026-09-07T07:38:40.437765+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "4d076990e363d1fa20f433fa943400d9", "route": "/api/fiscal/view", "method": "GET", "status": 404, "duration_ms": 0.199}
+smoke-1  | {"timestamp": "2026-09-07T07:38:40.445270+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "232b7de1587a26e449a7971053550e62", "route": "/api/financeiro/boletos/view", "method": "GET", "status": 404, "duration_ms": 0.223}
+smoke-1  | {"timestamp": "2026-09-07T07:38:40.529148+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "2a5b141b4c01edbb8b19cfe49ade70c1", "route": "/login", "method": "GET", "status": 403, "duration_ms": 0.11}
+smoke-1  | {"timestamp": "2026-09-07T07:38:42.024417+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "12ab2c2def343d8e50fa9cc83349b43a", "route": "/health", "method": "GET", "status": 200, "duration_ms": 0.324}
+smoke-1  | {"timestamp": "2026-09-07T07:38:42.209198+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "161438eae2ec2eb52079ad69db941c6f", "route": "/api/ready", "method": "GET", "status": 200, "duration_ms": 17.227}
+smoke-1  | {"timestamp": "2026-09-07T07:38:45.216532+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "374344931770e80ac2f6b348d3624961", "route": "/health", "method": "GET", "status": 200, "duration_ms": 0.362}
+smoke-1  | {"timestamp": "2026-09-07T07:38:47.529750+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "82955f021ccc48728e71823af11fefd4", "route": "/api/ready", "method": "GET", "status": 200, "duration_ms": 12.066}
+smoke-1  | {"timestamp": "2026-09-07T07:38:48.335090+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "8152e4426454665968b11553f3608d43", "route": "/health", "method": "GET", "status": 200, "duration_ms": 0.142}
+smoke-1  | {"timestamp": "2026-09-07T07:38:51.468190+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "34b00dce3706a0d8dc85328365b229c0", "route": "/health", "method": "GET", "status": 200, "duration_ms": 0.267}
+smoke-1  | {"timestamp": "2026-09-07T07:38:53.076862+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "f9b395cc171411cbc4296fb7af73259a", "route": "/api/ready", "method": "GET", "status": 200, "duration_ms": 23.989}
+smoke-1  | {"timestamp": "2026-09-07T07:38:54.632650+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "586edd12f86764e301ca0d12e80caa18", "route": "/health", "method": "GET", "status": 200, "duration_ms": 0.276}
+smoke-1  | [2026-09-07 07:38:56 +0000] [1] [INFO] Handling signal: term
+smoke-1  | {"timestamp": "2026-09-07T07:38:56.634634+00:00", "level": "INFO", "event": "application_diagnostic", "error_type": null}
+smoke-1  | [2026-09-07 07:38:57 +0000] [1] [INFO] Shutting down: Master

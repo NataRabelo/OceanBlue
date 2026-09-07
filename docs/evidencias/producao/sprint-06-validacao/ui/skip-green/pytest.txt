@@ -1,0 +1,12 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.12, pytest-8.3.5, pluggy-1.6.0 -- /usr/local/bin/python
+rootdir: /app
+configfile: pytest.ini
+plugins: cov-6.1.1
+collecting ... collected 20 items / 18 deselected / 2 selected
+
+tests/test_sprint06_browser_adversarial.py::test_keyboard_skip_link_reaches_operational_controls[auditoria] PASSED [ 50%]
+tests/test_sprint06_browser_adversarial.py::test_keyboard_skip_link_reaches_operational_controls[operacoes] PASSED [100%]
+
+---------------------- generated xml file: /tmp/junit.xml ----------------------
+====================== 2 passed, 18 deselected in 43.72s =======================

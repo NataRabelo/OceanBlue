@@ -1,0 +1,6 @@
+Exception: C:\Users\Rabel\.codex\worktrees\944e\OceanBlue\scripts\operational_snapshot.ps1:227
+Line |
+ 227 |  … xpectedManifestSha256) { throw 'Manifest custody SHA-256 mismatch.' }
+     |                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | Manifest custody SHA-256 mismatch.
+

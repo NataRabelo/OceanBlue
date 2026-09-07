@@ -1,0 +1,1 @@
+PASS: final readback implementation rejects actual read-only bind mount; errno=EROFS; uid=1000

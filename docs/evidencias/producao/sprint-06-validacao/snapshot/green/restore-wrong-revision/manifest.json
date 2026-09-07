@@ -1,0 +1,18 @@
+{
+  "version": 2,
+  "database": "source_db",
+  "schema_revision": "wrong_revision",
+  "postgres_major": 16,
+  "application_image": "sha256:b603f392544a1e3c8b9942e0c81ffd408e94b1fb18da4da90b3a6ecb65fcb8a5",
+  "database_fingerprint": {
+    "alembic_version": "1:537477c3b0dc82fa730b1558bc727d3f",
+    "proof_rows": "2:b584208bc13fb65d8f884291d01951fd",
+    "z_empty": "0:d41d8cd98f00b204e9800998ecf8427e",
+    "sequence:proof_rows_id_seq": "2:true"
+  },
+  "files": {
+    "database.dump": "23b547effa29027344b013e30ad6cf78c1c940b21a3c6dd57ea3795375660f94",
+    "instance/storage/proof.txt": "39cf337f7f00a682745e8d27a34a13d9468d5ec8806f777b4246d91997bd6015"
+  },
+  "created_utc": "2026-09-07T07:34:03.2939003Z"
+}

@@ -1,0 +1,2 @@
+PASS: real 64 KiB tmpfs full; ENOSPC; no probe leftovers; uid=1000
+PASS: recovered after freeing space; successful write/fsync/readback/cleanup

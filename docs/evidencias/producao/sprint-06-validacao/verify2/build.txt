@@ -1,0 +1,99 @@
+ Image oceanblue-s06-audit-verify2-test Building 
+ Image oceanblue-s06-audit-verify2-smoke Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 1.10kB 0.0s done
+#1 DONE 0.0s
+
+#2 [smoke internal] load build definition from Dockerfile
+#2 transferring dockerfile: 1.07kB 0.0s done
+#2 DONE 0.0s
+
+#3 [test internal] load build definition from Dockerfile.test
+#3 transferring dockerfile: 499B 0.0s done
+#3 DONE 0.1s
+
+#4 [smoke internal] load metadata for docker.io/library/python:3.12.12-slim-bookworm@sha256:593bd06efe90efa80dc4eee3948be7c0fde4134606dd40d8dd8dbcade98e669c
+#4 DONE 0.1s
+
+#5 [test internal] load .dockerignore
+#5 transferring context: 311B 0.0s done
+#5 DONE 0.0s
+
+#6 [test internal] load build context
+#6 DONE 0.0s
+
+#7 [smoke 1/6] FROM docker.io/library/python:3.12.12-slim-bookworm@sha256:593bd06efe90efa80dc4eee3948be7c0fde4134606dd40d8dd8dbcade98e669c
+#7 resolve docker.io/library/python:3.12.12-slim-bookworm@sha256:593bd06efe90efa80dc4eee3948be7c0fde4134606dd40d8dd8dbcade98e669c 0.1s done
+#7 resolve docker.io/library/python:3.12.12-slim-bookworm@sha256:593bd06efe90efa80dc4eee3948be7c0fde4134606dd40d8dd8dbcade98e669c 0.1s done
+#7 DONE 0.1s
+
+#6 [smoke internal] load build context
+#6 transferring context: 24.22kB 0.0s done
+#6 DONE 0.1s
+
+#8 [test 2/6] WORKDIR /app
+#8 CACHED
+
+#9 [test 3/7] COPY requirements-dev.txt .
+#9 CACHED
+
+#10 [test 4/7] RUN python -m pip install --no-cache-dir --require-hashes -r requirements-dev.txt
+#10 CACHED
+
+#11 [test 5/7] RUN python -m playwright install --with-deps chromium && chmod -R a+rX /opt/playwright
+#11 CACHED
+
+#12 [test 6/7] COPY . .
+#12 CACHED
+
+#13 [test 7/7] RUN useradd --create-home tester && chown -R tester:tester /app
+#13 CACHED
+
+#14 [smoke 5/6] COPY . .
+#14 CACHED
+
+#8 [smoke 2/6] WORKDIR /app
+#8 CACHED
+
+#15 [smoke 3/6] COPY requirements.txt .
+#15 CACHED
+
+#16 [smoke 4/6] RUN python -m pip install --no-cache-dir --require-hashes -r requirements.txt
+#16 CACHED
+
+#17 [smoke 6/6] RUN sed -i 's/\r$//' /app/docker-entrypoint.sh     && cp /app/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh     && chmod +x /usr/local/bin/docker-entrypoint.sh     && adduser --disabled-password --gecos "" appuser     && mkdir -p /app/instance/storage     && chown -R appuser:appuser /app/instance     && chmod 700 /app/instance /app/instance/storage
+#17 CACHED
+
+#18 [smoke] exporting to image
+#18 exporting layers 0.0s done
+#18 exporting manifest sha256:3014110e813c8fcb98532bb46a701a196a67ff72b37f53260c0a91486181dafb 0.1s done
+#18 exporting config sha256:001cc0ceefe0e44d80ab57b9a7f8d384f58eaf3ff4b717353d1c599bb2b74320
+#18 exporting config sha256:001cc0ceefe0e44d80ab57b9a7f8d384f58eaf3ff4b717353d1c599bb2b74320 0.1s done
+#18 exporting attestation manifest sha256:02c4349bb8834b43b831de7eef1263cf2bc24ab340979866aec186bee4e84dd1
+#18 exporting attestation manifest sha256:02c4349bb8834b43b831de7eef1263cf2bc24ab340979866aec186bee4e84dd1 0.5s done
+#18 exporting manifest list sha256:1884d01f99580c5db45337b871c4263f75eae6913bb94da87b017955f36f925e 0.0s done
+#18 naming to docker.io/library/oceanblue-s06-audit-verify2-smoke:latest
+#18 ...
+
+#19 [test] exporting to image
+#19 exporting layers 0.0s done
+#19 exporting manifest sha256:79323bf60a1fd20dd1a75a8b37a1212f7f8bb03739242f6340b5390c533563e5 0.1s done
+#19 exporting config sha256:3dd346809ce791842af71e49e901bfd298fa1381dd369156cb233f715c8df2d4 0.1s done
+#19 exporting attestation manifest sha256:e54ba4fb503c0ebf72eba1f937b341f749789cbac22959a5077b976d8df8198f 0.5s done
+#19 exporting manifest list sha256:df2b359fb9911cfa7bab0b0cf8b04309a4f3071347c28ab4909d60f799fe7224 0.1s done
+#19 naming to docker.io/library/oceanblue-s06-audit-verify2-test:latest 0.0s done
+#19 unpacking to docker.io/library/oceanblue-s06-audit-verify2-test:latest 0.0s done
+#19 DONE 0.9s
+
+#18 [smoke] exporting to image
+#18 naming to docker.io/library/oceanblue-s06-audit-verify2-smoke:latest 0.0s done
+#18 unpacking to docker.io/library/oceanblue-s06-audit-verify2-smoke:latest 0.0s done
+#18 DONE 1.0s
+
+#20 [test] resolving provenance for metadata file
+#20 DONE 0.0s
+
+#21 [smoke] resolving provenance for metadata file
+#21 DONE 0.1s
+ Image oceanblue-s06-audit-verify2-test Built 
+ Image oceanblue-s06-audit-verify2-smoke Built 

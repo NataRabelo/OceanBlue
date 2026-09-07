@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="19" skipped="0" tests="87" time="91.596" timestamp="2026-09-07T07:24:57.509516+00:00" hostname="b13f4c8dd48c"><testcase classname="tests.test_sprint06_data_adversarial" name="test_audit_tenant_cursor_and_header_tampering" time="5.175" /><testcase classname="tests.test_sprint06_data_adversarial" name="test_audit_cookie_claim_tampering" time="3.506" /><testcase classname="tests.test_sprint06_data_adversarial" name="test_audit_requires_permission_and_tenant_scope[/api/auditoria/]" time="3.140" /><testcase classname="tests.test_sprint06_data_adversarial" name="test_audit_requires_permission_and_tenant_scope[/api/auditoria/view]" time="3.170" /><testcase classname="tests.test_sprint06_data_adversarial" name="test_audit_live_company_revocation_and_empty_scope" time="2.489" /><testcase classname="tests.test_sprint06_data_adversarial" name="test_audit_inactive_company_denied" time="3.459" /><testcase classname="tests.test_sprint06_data_adversarial" name="test_audit_rejects_ambiguous_or_out_of_range_parameters[limit=0]" time="3.047" /><testcase classname="tests.test_sprint06_data_adversarial" name="test_audit_rejects_ambiguous_or_out_of_range_parameters[limit=101]" time="3.686" /><testcase classname="tests.test_sprint06_data_adversarial" name="test_audit_rejects_ambiguous_or_out_of_range_parameters[limit=-1]" time="3.069" /><testcase classname="tests.test_sprint06_data_adversarial" name="test_audit_rejects_ambiguous_or_out_of_range_parameters[limit=]" time="2.316" /><testcase classname="tests.test_sprint06_data_adversarial" name="test_audit_rejects_ambiguous_or_out_of_range_parameters[limit=1.0]" time="2.473" /><testcase classname="tests.test_sprint06_data_adversarial" name="test_audit_rejects_ambiguous_or_out_of_range_parameters[limit=1e2]" time="2.404" /><testcase classname="tests.test_sprint06_data_adversarial" name="test_audit_rejects_ambiguous_or_out_of_range_parameters[limit=1_0]" time="3.127"><failure message="AssertionError: assert 200 == 400&#10; +  where 200 = &lt;WrapperTestResponse streamed [200 OK]&gt;.status_code&#10; +    where &lt;WrapperTestResponse streamed [200 OK]&gt; = get(('/api/auditoria/?' + 'limit=1_0'))&#10; +      where get = &lt;FlaskClient &lt;Flask 'app'&gt;&gt;.get">audit_client = &lt;FlaskClient &lt;Flask 'app'&gt;&gt;, query = 'limit=1_0'
+
+    @pytest.mark.parametrize("query", [
+        "limit=0", "limit=101", "limit=-1", "limit=", "limit=1.0", "limit=1e2", "limit=1_0",
+        "before=0", "before=2147483648", "before=", "before=1%20OR%201=1",
+        "empresa_id=", "empresa_id=-1", "empresa_id=0", "empresa_id=2147483648",
+        "empresa_id=99999999999999999999999999999999999999999999999999",
+        "empresa_id=1&amp;empresa_id=3", "limit=1&amp;limit=100", "before=20&amp;before=1",
+    ])
+    def test_audit_rejects_ambiguous_or_out_of_range_parameters(audit_client, query):
+&gt;       assert audit_client.get("/api/auditoria/?" + query).status_code == 400
+E       AssertionError: assert 200 == 400
+E        +  where 200 = &lt;WrapperTestResponse streamed [200 OK]&gt;.status_code
+E        +    where &lt;WrapperTestResponse streamed [200 OK]&gt; = get(('/api/auditoria/?' + 'limit=1_0'))
+E        +      where get = &lt;FlaskClient &lt;Flask 'app'&gt;&gt;.get
+
+tests/test_sprint06_data_adversarial.py:115: AssertionError</failure></testcase><testcase classname="tests.test_sprint06_data_adversarial" name="test_audit_rejects_ambiguous_or_out_of_range_parameters[before=0]" time="4.416" /><testcase classname="tests.test_sprint06_data_adversarial" name="test_audit_rejects_ambiguous_or_out_of_range_parameters[before=2147483648]" time="3.180" /><testcase classname="tests.test_sprint06_data_adversarial" name="test_audit_rejects_ambiguous_or_out_of_range_parameters[before=]" time="3.030" /><testcase classname="tests.test_sprint06_data_adversarial" name="test_audit_rejects_ambiguous_or_out_of_range_parameters[before=1%20OR%201=1]" time="3.014" /><testcase classname="tests.test_sprint06_data_adversarial" name="test_audit_rejects_ambiguous_or_out_of_range_parameters[empresa_id=]" time="2.275"><failure message="AssertionError: assert 200 == 400&#10; +  where 200 = &lt;WrapperTestResponse streamed [200 OK]&gt;.status_code&#10; +    where &lt;WrapperTestResponse streamed [200 OK]&gt; = get(('/api/auditoria/?' + 'empresa_id='))&#10; +      where get = &lt;FlaskClient &lt;Flask 'app'&gt;&gt;.get">audit_client = &lt;FlaskClient &lt;Flask 'app'&gt;&gt;, query = 'empresa_id='
+
+    @pytest.mark.parametrize("query", [
+        "limit=0", "limit=101", "limit=-1", "limit=", "limit=1.0", "limit=1e2", "limit=1_0",
+        "before=0", "before=2147483648", "before=", "before=1%20OR%201=1",
+        "empresa_id=", "empresa_id=-1", "empresa_id=0", "empresa_id=2147483648",
+        "empresa_id=99999999999999999999999999999999999999999999999999",
+        "empresa_id=1&amp;empresa_id=3", "limit=1&amp;limit=100", "before=20&amp;before=1",
+    ])
+    def test_audit_rejects_ambiguous_or_out_of_range_parameters(audit_client, query):
+&gt;       assert audit_client.get("/api/auditoria/?" + query).status_code == 400
+E       AssertionError: assert 200 == 400
+E        +  where 200 = &lt;WrapperTestResponse streamed [200 OK]&gt;.status_code
+E        +    where &lt;WrapperTestResponse streamed [200 OK]&gt; = get(('/api/auditoria/?' + 'empresa_id='))
+E        +      where get = &lt;FlaskClient &lt;Flask 'app'&gt;&gt;.get
+
+tests/test_sprint06_data_adversarial.py:115: AssertionError</failure></testcase><testcase classname="tests.test_sprint06_data_adversarial" name="test_audit_rejects_ambiguous_or_out_of_range_parameters[empresa_id=-1]" time="2.710"><failure message="AssertionError: assert 403 == 400&#10; +  where 403 = &lt;WrapperTestResponse streamed [403 FORBIDDEN]&gt;.status_code&#10; +    where &lt;WrapperTestResponse streamed [403 FORBIDDEN]&gt; = get(('/api/auditoria/?' + 'empresa_id=-1'))&#10; +      where get = &lt;FlaskClient &lt;Flask 'app'&gt;&gt;.get">audit_client = &lt;FlaskClient &lt;Flask 'app'&gt;&gt;, query = 'empresa_id=-1'
+
+    @pytest.mark.parametrize("query", [
+        "limit=0", "limit=101", "limit=-1", "limit=", "limit=1.0", "limit=1e2", "limit=1_0",
+        "before=0", "before=2147483648", "before=", "before=1%20OR%201=1",
+        "empresa_id=", "empresa_id=-1", "empresa_id=0", "empresa_id=2147483648",
+        "empresa_id=99999999999999999999999999999999999999999999999999",
+        "empresa_id=1&amp;empresa_id=3", "limit=1&amp;limit=100", "before=20&amp;before=1",
+    ])
+    def test_audit_rejects_ambiguous_or_out_of_range_parameters(audit_client, query):
+&gt;       assert audit_client.get("/api/auditoria/?" + query).status_code == 400
+E       AssertionError: assert 403 == 400
+E        +  where 403 = &lt;WrapperTestResponse streamed [403 FORBIDDEN]&gt;.status_code
+E        +    where &lt;WrapperTestResponse streamed [403 FORBIDDEN]&gt; = get(('/api/auditoria/?' + 'empresa_id=-1'))
+E        +      where get = &lt;FlaskClient &lt;Flask 'app'&gt;&gt;.get
+
+tests/test_sprint06_data_adversarial.py:115: AssertionError</failure></testcase><testcase classname="tests.test_sprint06_data_adversarial" name="test_audit_rejects_ambiguous_or_out_of_range_parameters[empresa_id=0]" time="3.065"><failure message="AssertionError: assert 403 == 400&#10; +  where 403 = &lt;WrapperTestResponse streamed [403 FORBIDDEN]&gt;.status_code&#10; +    where &lt;WrapperTestResponse streamed [403 FORBIDDEN]&gt; = get(('/api/auditoria/?' + 'empresa_id=0'))&#10; +      where get = &lt;FlaskClient &lt;Flask 'app'&gt;&gt;.get">audit_client = &lt;FlaskClient &lt;Flask 'app'&gt;&gt;, query = 'empresa_id=0'
+
+    @pytest.mark.parametrize("query", [
+        "limit=0", "limit=101", "limit=-1", "limit=", "limit=1.0", "limit=1e2", "limit=1_0",
+        "before=0", "before=2147483648", "before=", "before=1%20OR%201=1",
+        "empresa_id=", "empresa_id=-1", "empresa_id=0", "empresa_id=2147483648",
+        "empresa_id=99999999999999999999999999999999999999999999999999",
+        "empresa_id=1&amp;empresa_id=3", "limit=1&amp;limit=100", "before=20&amp;before=1",
+    ])
+    def test_audit_rejects_ambiguous_or_out_of_range_parameters(audit_client, query):
+&gt;       assert audit_client.get("/api/auditoria/?" + query).status_code == 400
+E       AssertionError: assert 403 == 400
+E        +  where 403 = &lt;WrapperTestResponse streamed [403 FORBIDDEN]&gt;.status_code
+E        +    where &lt;WrapperTestResponse streamed [403 FORBIDDEN]&gt; = get(('/api/auditoria/?' + 'empresa_id=0'))
+E        +      where get = &lt;FlaskClient &lt;Flask 'app'&gt;&gt;.get
+
+tests/test_sprint06_data_adversarial.py:115: AssertionError</failure></testcase><testcase classname="tests.test_sprint06_data_adversarial" name="test_audit_rejects_ambiguous_or_out_of_range_parameters[empresa_id=2147483648]" time="2.225"><failure message="AssertionError: assert 403 == 400&#10; +  where 403 = &lt;WrapperTestResponse streamed [403 FORBIDDEN]&gt;.status_code&#10; +    where &lt;WrapperTestResponse streamed [403 FORBIDDEN]&gt; = get(('/api/auditoria/?' + 'empresa_id=2147483648'))&#10; +      where get = &lt;FlaskClient &lt;Flask 'app'&gt;&gt;.get">audit_client = &lt;FlaskClient &lt;Flask 'app'&gt;&gt;, query = 'empresa_id=2147483648'
+
+    @pytest.mark.parametrize("query", [
+        "limit=0", "limit=101", "limit=-1", "limit=", "limit=1.0", "limit=1e2", "limit=1_0",
+        "before=0", "before=2147483648", "before=", "before=1%20OR%201=1",
+        "empresa_id=", "empresa_id=-1", "empresa_id=0", "empresa_id=2147483648",
+        "empresa_id=99999999999999999999999999999999999999999999999999",
+        "empresa_id=1&amp;empresa_id=3", "limit=1&amp;limit=100", "before=20&amp;before=1",
+    ])
+    def test_audit_rejects_ambiguous_or_out_of_range_parameters(audit_client, query):
+&gt;       assert audit_client.get("/api/auditoria/?" + query).status_code == 400
+E       AssertionError: assert 403 == 400
+E        +  where 403 = &lt;WrapperTestResponse streamed [403 FORBIDDEN]&gt;.status_code
+E        +    where &lt;WrapperTestResponse streamed [403 FORBIDDEN]&gt; = get(('/api/auditoria/?' + 'empresa_id=2147483648'))
+E        +      where get = &lt;FlaskClient &lt;Flask 'app'&gt;&gt;.get
+
+tests/test_sprint06_data_adversarial.py:115: AssertionError</failure></testcase><testcase classname="tests.test_sprint06_data_adversarial" name="test_audit_rejects_ambiguous_or_out_of_range_parameters[empresa_id=99999999999999999999999999999999999999999999999999]" time="2.405"><failure message="AssertionError: assert 403 == 400&#10; +  where 403 = &lt;WrapperTestResponse streamed [403 FORBIDDEN]&gt;.status_code&#10; +    where &lt;WrapperTestResponse streamed [403 FORBIDDEN]&gt; = get(('/api/auditoria/?' + 'empresa_id=99999999999999999999999999999999999999999999999999'))&#10; +      where get = &lt;FlaskClient &lt;Flask 'app'&gt;&gt;.get">audit_client = &lt;FlaskClient &lt;Flask 'app'&gt;&gt;
+query = 'empresa_id=99999999999999999999999999999999999999999999999999'
+
+    @pytest.mark.parametrize("query", [
+        "limit=0", "limit=101", "limit=-1", "limit=", "limit=1.0", "limit=1e2", "limit=1_0",
+        "before=0", "before=2147483648", "before=", "before=1%20OR%201=1",
+        "empresa_id=", "empresa_id=-1", "empresa_id=0", "empresa_id=2147483648",
+        "empresa_id=99999999999999999999999999999999999999999999999999",
+        "empresa_id=1&amp;empresa_id=3", "limit=1&amp;limit=100", "before=20&amp;before=1",
+    ])
+    def test_audit_rejects_ambiguous_or_out_of_range_parameters(audit_client, query):
+&gt;       assert audit_client.get("/api/auditoria/?" + query).status_code == 400
+E       AssertionError: assert 403 == 400
+E        +  where 403 = &lt;WrapperTestResponse streamed [403 FORBIDDEN]&gt;.status_code
+E        +    where &lt;WrapperTestResponse streamed [403 FORBIDDEN]&gt; = get(('/api/auditoria/?' + 'empresa_id=99999999999999999999999999999999999999999999999999'))
+E        +      where get = &lt;FlaskClient &lt;Flask 'app'&gt;&gt;.get
+
+tests/test_sprint06_data_adversarial.py:115: AssertionError</failure></testcase><testcase classname="tests.test_sprint06_data_adversarial" name="test_audit_rejects_ambiguous_or_out_of_range_parameters[empresa_id=1&amp;empresa_id=3]" time="2.207"><failure message="AssertionError: assert 200 == 400&#10; +  where 200 = &lt;WrapperTestResponse streamed [200 OK]&gt;.status_code&#10; +    where &lt;WrapperTestResponse streamed [200 OK]&gt; = get(('/api/auditoria/?' + 'empresa_id=1&amp;empresa_id=3'))&#10; +      where get = &lt;FlaskClient &lt;Flask 'app'&gt;&gt;.get">audit_client = &lt;FlaskClient &lt;Flask 'app'&gt;&gt;, query = 'empresa_id=1&amp;empresa_id=3'
+
+    @pytest.mark.parametrize("query", [
+        "limit=0", "limit=101", "limit=-1", "limit=", "limit=1.0", "limit=1e2", "limit=1_0",
+        "before=0", "before=2147483648", "before=", "before=1%20OR%201=1",
+        "empresa_id=", "empresa_id=-1", "empresa_id=0", "empresa_id=2147483648",
+        "empresa_id=99999999999999999999999999999999999999999999999999",
+        "empresa_id=1&amp;empresa_id=3", "limit=1&amp;limit=100", "before=20&amp;before=1",
+    ])
+    def test_audit_rejects_ambiguous_or_out_of_range_parameters(audit_client, query):
+&gt;       assert audit_client.get("/api/auditoria/?" + query).status_code == 400
+E       AssertionError: assert 200 == 400
+E        +  where 200 = &lt;WrapperTestResponse streamed [200 OK]&gt;.status_code
+E        +    where &lt;WrapperTestResponse streamed [200 OK]&gt; = get(('/api/auditoria/?' + 'empresa_id=1&amp;empresa_id=3'))
+E        +      where get = &lt;FlaskClient &lt;Flask 'app'&gt;&gt;.get
+
+tests/test_sprint06_data_adversarial.py:115: AssertionError</failure></testcase><testcase classname="tests.test_sprint06_data_adversarial" name="test_audit_rejects_ambiguous_or_out_of_range_parameters[limit=1&amp;limit=100]" time="2.045"><failure message="AssertionError: assert 200 == 400&#10; +  where 200 = &lt;WrapperTestResponse streamed [200 OK]&gt;.status_code&#10; +    where &lt;WrapperTestResponse streamed [200 OK]&gt; = get(('/api/auditoria/?' + 'limit=1&amp;limit=100'))&#10; +      where get = &lt;FlaskClient &lt;Flask 'app'&gt;&gt;.get">audit_client = &lt;FlaskClient &lt;Flask 'app'&gt;&gt;, query = 'limit=1&amp;limit=100'
+
+    @pytest.mark.parametrize("query", [
+        "limit=0", "limit=101", "limit=-1", "limit=", "limit=1.0", "limit=1e2", "limit=1_0",
+        "before=0", "before=2147483648", "before=", "before=1%20OR%201=1",
+        "empresa_id=", "empresa_id=-1", "empresa_id=0", "empresa_id=2147483648",
+        "empresa_id=99999999999999999999999999999999999999999999999999",
+        "empresa_id=1&amp;empresa_id=3", "limit=1&amp;limit=100", "before=20&amp;before=1",
+    ])
+    def test_audit_rejects_ambiguous_or_out_of_range_parameters(audit_client, query):
+&gt;       assert audit_client.get("/api/auditoria/?" + query).status_code == 400
+E       AssertionError: assert 200 == 400
+E        +  where 200 = &lt;WrapperTestResponse streamed [200 OK]&gt;.status_code
+E        +    where &lt;WrapperTestResponse streamed [200 OK]&gt; = get(('/api/auditoria/?' + 'limit=1&amp;limit=100'))
+E        +      where get = &lt;FlaskClient &lt;Flask 'app'&gt;&gt;.get
+
+tests/test_sprint06_data_adversarial.py:115: AssertionError</failure></testcase><testcase classname="tests.test_sprint06_data_adversarial" name="test_audit_rejects_ambiguous_or_out_of_range_parameters[before=20&amp;before=1]" time="2.632"><failure message="AssertionError: assert 200 == 400&#10; +  where 200 = &lt;WrapperTestResponse streamed [200 OK]&gt;.status_code&#10; +    where &lt;WrapperTestResponse streamed [200 OK]&gt; = get(('/api/auditoria/?' + 'before=20&amp;before=1'))&#10; +      where get = &lt;FlaskClient &lt;Flask 'app'&gt;&gt;.get">audit_client = &lt;FlaskClient &lt;Flask 'app'&gt;&gt;, query = 'before=20&amp;before=1'
+
+    @pytest.mark.parametrize("query", [
+        "limit=0", "limit=101", "limit=-1", "limit=", "limit=1.0", "limit=1e2", "limit=1_0",
+        "before=0", "before=2147483648", "before=", "before=1%20OR%201=1",
+        "empresa_id=", "empresa_id=-1", "empresa_id=0", "empresa_id=2147483648",
+        "empresa_id=99999999999999999999999999999999999999999999999999",
+        "empresa_id=1&amp;empresa_id=3", "limit=1&amp;limit=100", "before=20&amp;before=1",
+    ])
+    def test_audit_rejects_ambiguous_or_out_of_range_parameters(audit_client, query):
+&gt;       assert audit_client.get("/api/auditoria/?" + query).status_code == 400
+E       AssertionError: assert 200 == 400
+E        +  where 200 = &lt;WrapperTestResponse streamed [200 OK]&gt;.status_code
+E        +    where &lt;WrapperTestResponse streamed [200 OK]&gt; = get(('/api/auditoria/?' + 'before=20&amp;before=1'))
+E        +      where get = &lt;FlaskClient &lt;Flask 'app'&gt;&gt;.get
+
+tests/test_sprint06_data_adversarial.py:115: AssertionError</failure></testcase><testcase classname="tests.test_sprint06_data_adversarial" name="test_audit_pagination_survives_insert_and_reaches_end" time="2.950" /><testcase classname="tests.test_sprint06_data_adversarial" name="test_audit_first_page_includes_maximum_integer_id" time="1.718"><failure message="assert 293 == 2147483647">audit_client = &lt;FlaskClient &lt;Flask 'app'&gt;&gt;, security_app = &lt;Flask 'app'&gt;
+
+    def test_audit_first_page_includes_maximum_integer_id(audit_client, security_app):
+        with security_app.app_context():
+            db.session.execute(text("INSERT INTO audit_logs (id, tenant_id, empresa_id, action, criado_em) VALUES (2147483647, 1, 1, 'MAX_ID', now())"))
+            db.session.commit()
+        response = audit_client.get("/api/auditoria/?empresa_id=1&amp;limit=1")
+        assert response.status_code == 200
+&gt;       assert response.json["data"][0]["id"] == 2147483647
+E       assert 293 == 2147483647
+
+tests/test_sprint06_data_adversarial.py:146: AssertionError</failure></testcase><testcase classname="tests.test_sprint06_data_adversarial" name="test_audit_http_tampering_is_read_only[POST]" time="1.961" /><testcase classname="tests.test_sprint06_data_adversarial" name="test_audit_http_tampering_is_read_only[PUT]" time="2.873" /><testcase classname="tests.test_sprint06_data_adversarial" name="test_audit_http_tampering_is_read_only[PATCH]" time="2.698" /><testcase classname="tests.test_sprint06_data_adversarial" name="test_audit_http_tampering_is_read_only[DELETE]" time="2.202" /><testcase classname="tests.test_sprint06_data_adversarial" name="test_audit_runtime_role_rejects_update_delete_and_truncate" time="1.812" /><testcase classname="tests.test_sprint06_data_adversarial" name="test_storage_rejects_unsafe_roots[relative]" time="0.012" /><testcase classname="tests.test_sprint06_data_adversarial" name="test_storage_rejects_unsafe_roots[traversal]" time="0.005" /><testcase classname="tests.test_sprint06_data_adversarial" name="test_storage_rejects_unsafe_roots[missing]" time="0.003" /><testcase classname="tests.test_sprint06_data_adversarial" name="test_storage_rejects_unsafe_roots[file]" time="0.002" /><testcase classname="tests.test_sprint06_data_adversarial" name="test_storage_rejects_unsafe_roots[symlink]" time="0.004" /><testcase classname="tests.test_sprint06_data_adversarial" name="test_storage_rejects_unsafe_roots[parent_symlink]" time="0.003" /><testcase classname="tests.test_sprint06_data_adversarial" name="test_storage_probe_never_overwrites_existing_link[symlink]" time="0.006" /><testcase classname="tests.test_sprint06_data_adversarial" name="test_storage_probe_never_overwrites_existing_link[hardlink]" time="0.005" /><testcase classname="tests.test_sprint06_data_adversarial" name="test_storage_io_errors_fail_closed_and_cleanup[open-30]" time="0.016" /><testcase classname="tests.test_sprint06_data_adversarial" name="test_storage_io_errors_fail_closed_and_cleanup[open-13]" time="0.009" /><testcase classname="tests.test_sprint06_data_adversarial" name="test_storage_io_errors_fail_closed_and_cleanup[write-28]" time="0.008" /><testcase classname="tests.test_sprint06_data_adversarial" name="test_storage_io_errors_fail_closed_and_cleanup[fsync-5]" time="0.016" /><testcase classname="tests.test_sprint06_data_adversarial" name="test_storage_read_only_directory_real_permissions" time="0.005" /><testcase classname="tests.test_sprint06_data_adversarial" name="test_storage_probe_detects_incomplete_or_corrupt_write[zero_write]" time="0.009"><failure message="Failed: DID NOT RAISE &lt;class 'OSError'&gt;">storage_app = (&lt;Flask 'tests.test_sprint06_data_adversarial'&gt;, PosixPath('/tmp/pytest-of-tester/pytest-0/test_storage_probe_detects_inc0/storage'))
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7b02f5414b90&gt;
+fault = 'zero_write'
+
+    @pytest.mark.parametrize("fault", ["zero_write", "short_write", "corruption"])
+    def test_storage_probe_detects_incomplete_or_corrupt_write(storage_app, monkeypatch, fault):
+        _, root = storage_app
+        original_write = os.write
+    
+        def damaged_write(descriptor, payload):
+            if fault == "zero_write":
+                return 0
+            if fault == "short_write":
+                return original_write(descriptor, payload[:1])
+            return original_write(descriptor, b"X" * len(payload))
+    
+        with monkeypatch.context() as injection:
+            injection.setattr("app.operations.os.write", damaged_write)
+&gt;           with pytest.raises(OSError):
+E           Failed: DID NOT RAISE &lt;class 'OSError'&gt;
+
+tests/test_sprint06_data_adversarial.py:274: Failed</failure></testcase><testcase classname="tests.test_sprint06_data_adversarial" name="test_storage_probe_detects_incomplete_or_corrupt_write[short_write]" time="0.007"><failure message="Failed: DID NOT RAISE &lt;class 'OSError'&gt;">storage_app = (&lt;Flask 'tests.test_sprint06_data_adversarial'&gt;, PosixPath('/tmp/pytest-of-tester/pytest-0/test_storage_probe_detects_inc1/storage'))
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7b02f8a8d6a0&gt;
+fault = 'short_write'
+
+    @pytest.mark.parametrize("fault", ["zero_write", "short_write", "corruption"])
+    def test_storage_probe_detects_incomplete_or_corrupt_write(storage_app, monkeypatch, fault):
+        _, root = storage_app
+        original_write = os.write
+    
+        def damaged_write(descriptor, payload):
+            if fault == "zero_write":
+                return 0
+            if fault == "short_write":
+                return original_write(descriptor, payload[:1])
+            return original_write(descriptor, b"X" * len(payload))
+    
+        with monkeypatch.context() as injection:
+            injection.setattr("app.operations.os.write", damaged_write)
+&gt;           with pytest.raises(OSError):
+E           Failed: DID NOT RAISE &lt;class 'OSError'&gt;
+
+tests/test_sprint06_data_adversarial.py:274: Failed</failure></testcase><testcase classname="tests.test_sprint06_data_adversarial" name="test_storage_probe_detects_incomplete_or_corrupt_write[corruption]" time="0.008"><failure message="Failed: DID NOT RAISE &lt;class 'OSError'&gt;">storage_app = (&lt;Flask 'tests.test_sprint06_data_adversarial'&gt;, PosixPath('/tmp/pytest-of-tester/pytest-0/test_storage_probe_detects_inc2/storage'))
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7b02f5fc3200&gt;
+fault = 'corruption'
+
+    @pytest.mark.parametrize("fault", ["zero_write", "short_write", "corruption"])
+    def test_storage_probe_detects_incomplete_or_corrupt_write(storage_app, monkeypatch, fault):
+        _, root = storage_app
+        original_write = os.write
+    
+        def damaged_write(descriptor, payload):
+            if fault == "zero_write":
+                return 0
+            if fault == "short_write":
+                return original_write(descriptor, payload[:1])
+            return original_write(descriptor, b"X" * len(payload))
+    
+        with monkeypatch.context() as injection:
+            injection.setattr("app.operations.os.write", damaged_write)
+&gt;           with pytest.raises(OSError):
+E           Failed: DID NOT RAISE &lt;class 'OSError'&gt;
+
+tests/test_sprint06_data_adversarial.py:274: Failed</failure></testcase><testcase classname="tests.test_sprint06_data_adversarial" name="test_production_feature_flags_reject_noncanonical_values[true-FEATURE_BOLETO]" time="0.001" /><testcase classname="tests.test_sprint06_data_adversarial" name="test_production_feature_flags_reject_noncanonical_values[true-FEATURE_FISCAL]" time="0.001" /><testcase classname="tests.test_sprint06_data_adversarial" name="test_production_feature_flags_reject_noncanonical_values[true-FEATURE_EXTERNAL_PROVIDERS]" time="0.001" /><testcase classname="tests.test_sprint06_data_adversarial" name="test_production_feature_flags_reject_noncanonical_values[TRUE-FEATURE_BOLETO]" time="0.001" /><testcase classname="tests.test_sprint06_data_adversarial" name="test_production_feature_flags_reject_noncanonical_values[TRUE-FEATURE_FISCAL]" time="0.002" /><testcase classname="tests.test_sprint06_data_adversarial" name="test_production_feature_flags_reject_noncanonical_values[TRUE-FEATURE_EXTERNAL_PROVIDERS]" time="0.001" /><testcase classname="tests.test_sprint06_data_adversarial" name="test_production_feature_flags_reject_noncanonical_values[False-FEATURE_BOLETO]" time="0.001" /><testcase classname="tests.test_sprint06_data_adversarial" name="test_production_feature_flags_reject_noncanonical_values[False-FEATURE_FISCAL]" time="0.001" /><testcase classname="tests.test_sprint06_data_adversarial" name="test_production_feature_flags_reject_noncanonical_values[False-FEATURE_EXTERNAL_PROVIDERS]" time="0.001" /><testcase classname="tests.test_sprint06_data_adversarial" name="test_production_feature_flags_reject_noncanonical_values[0-FEATURE_BOLETO]" time="0.001" /><testcase classname="tests.test_sprint06_data_adversarial" name="test_production_feature_flags_reject_noncanonical_values[0-FEATURE_FISCAL]" time="0.001" /><testcase classname="tests.test_sprint06_data_adversarial" name="test_production_feature_flags_reject_noncanonical_values[0-FEATURE_EXTERNAL_PROVIDERS]" time="0.000" /><testcase classname="tests.test_sprint06_data_adversarial" name="test_production_feature_flags_reject_noncanonical_values[1-FEATURE_BOLETO]" time="0.001" /><testcase classname="tests.test_sprint06_data_adversarial" name="test_production_feature_flags_reject_noncanonical_values[1-FEATURE_FISCAL]" time="0.001" /><testcase classname="tests.test_sprint06_data_adversarial" name="test_production_feature_flags_reject_noncanonical_values[1-FEATURE_EXTERNAL_PROVIDERS]" time="0.001" /><testcase classname="tests.test_sprint06_data_adversarial" name="test_production_feature_flags_reject_noncanonical_values[off-FEATURE_BOLETO]" time="0.001" /><testcase classname="tests.test_sprint06_data_adversarial" name="test_production_feature_flags_reject_noncanonical_values[off-FEATURE_FISCAL]" time="0.001" /><testcase classname="tests.test_sprint06_data_adversarial" name="test_production_feature_flags_reject_noncanonical_values[off-FEATURE_EXTERNAL_PROVIDERS]" time="0.001" /><testcase classname="tests.test_sprint06_data_adversarial" name="test_production_feature_flags_reject_noncanonical_values[-FEATURE_BOLETO]" time="0.001" /><testcase classname="tests.test_sprint06_data_adversarial" name="test_production_feature_flags_reject_noncanonical_values[-FEATURE_FISCAL]" time="0.001" /><testcase classname="tests.test_sprint06_data_adversarial" name="test_production_feature_flags_reject_noncanonical_values[-FEATURE_EXTERNAL_PROVIDERS]" time="0.001" /><testcase classname="tests.test_sprint06_data_adversarial" name="test_production_feature_flags_reject_noncanonical_values[ false-FEATURE_BOLETO]" time="0.001" /><testcase classname="tests.test_sprint06_data_adversarial" name="test_production_feature_flags_reject_noncanonical_values[ false-FEATURE_FISCAL]" time="0.001" /><testcase classname="tests.test_sprint06_data_adversarial" name="test_production_feature_flags_reject_noncanonical_values[ false-FEATURE_EXTERNAL_PROVIDERS]" time="0.001" /><testcase classname="tests.test_sprint06_data_adversarial" name="test_production_feature_flags_reject_noncanonical_values[false -FEATURE_BOLETO]" time="0.001" /><testcase classname="tests.test_sprint06_data_adversarial" name="test_production_feature_flags_reject_noncanonical_values[false -FEATURE_FISCAL]" time="0.001" /><testcase classname="tests.test_sprint06_data_adversarial" name="test_production_feature_flags_reject_noncanonical_values[false -FEATURE_EXTERNAL_PROVIDERS]" time="0.001" /><testcase classname="tests.test_sprint06_data_adversarial" name="test_production_feature_flags_reject_noncanonical_values[garbage-FEATURE_BOLETO]" time="0.001" /><testcase classname="tests.test_sprint06_data_adversarial" name="test_production_feature_flags_reject_noncanonical_values[garbage-FEATURE_FISCAL]" time="0.001" /><testcase classname="tests.test_sprint06_data_adversarial" name="test_production_feature_flags_reject_noncanonical_values[garbage-FEATURE_EXTERNAL_PROVIDERS]" time="0.001" /><testcase classname="tests.test_sprint06_data_adversarial" name="test_disabled_production_provider_factory_fails_closed[False-get_boleto_provider]" time="0.002"><failure message="Failed: DID NOT RAISE &lt;class 'PermissionError'&gt;">factory = &lt;function get_boleto_provider at 0x7b02f936a700&gt;, flags = False
+
+    @pytest.mark.parametrize("factory", [get_boleto_provider, get_fiscal_provider])
+    @pytest.mark.parametrize("flags", [False, True, "true"])
+    def test_disabled_production_provider_factory_fails_closed(factory, flags):
+        app = Flask(__name__)
+        app.config.update(TESTING=False, FEATURE_BOLETO=flags, FEATURE_FISCAL=flags, FEATURE_EXTERNAL_PROVIDERS=flags)
+&gt;       with app.app_context(), pytest.raises(PermissionError):
+E       Failed: DID NOT RAISE &lt;class 'PermissionError'&gt;
+
+tests/test_sprint06_data_adversarial.py:295: Failed</failure></testcase><testcase classname="tests.test_sprint06_data_adversarial" name="test_disabled_production_provider_factory_fails_closed[False-get_fiscal_provider]" time="0.002"><failure message="Failed: DID NOT RAISE &lt;class 'PermissionError'&gt;">factory = &lt;function get_fiscal_provider at 0x7b02f92a4fe0&gt;, flags = False
+
+    @pytest.mark.parametrize("factory", [get_boleto_provider, get_fiscal_provider])
+    @pytest.mark.parametrize("flags", [False, True, "true"])
+    def test_disabled_production_provider_factory_fails_closed(factory, flags):
+        app = Flask(__name__)
+        app.config.update(TESTING=False, FEATURE_BOLETO=flags, FEATURE_FISCAL=flags, FEATURE_EXTERNAL_PROVIDERS=flags)
+&gt;       with app.app_context(), pytest.raises(PermissionError):
+E       Failed: DID NOT RAISE &lt;class 'PermissionError'&gt;
+
+tests/test_sprint06_data_adversarial.py:295: Failed</failure></testcase><testcase classname="tests.test_sprint06_data_adversarial" name="test_disabled_production_provider_factory_fails_closed[True-get_boleto_provider]" time="0.002"><failure message="Failed: DID NOT RAISE &lt;class 'PermissionError'&gt;">factory = &lt;function get_boleto_provider at 0x7b02f936a700&gt;, flags = True
+
+    @pytest.mark.parametrize("factory", [get_boleto_provider, get_fiscal_provider])
+    @pytest.mark.parametrize("flags", [False, True, "true"])
+    def test_disabled_production_provider_factory_fails_closed(factory, flags):
+        app = Flask(__name__)
+        app.config.update(TESTING=False, FEATURE_BOLETO=flags, FEATURE_FISCAL=flags, FEATURE_EXTERNAL_PROVIDERS=flags)
+&gt;       with app.app_context(), pytest.raises(PermissionError):
+E       Failed: DID NOT RAISE &lt;class 'PermissionError'&gt;
+
+tests/test_sprint06_data_adversarial.py:295: Failed</failure></testcase><testcase classname="tests.test_sprint06_data_adversarial" name="test_disabled_production_provider_factory_fails_closed[True-get_fiscal_provider]" time="0.002"><failure message="Failed: DID NOT RAISE &lt;class 'PermissionError'&gt;">factory = &lt;function get_fiscal_provider at 0x7b02f92a4fe0&gt;, flags = True
+
+    @pytest.mark.parametrize("factory", [get_boleto_provider, get_fiscal_provider])
+    @pytest.mark.parametrize("flags", [False, True, "true"])
+    def test_disabled_production_provider_factory_fails_closed(factory, flags):
+        app = Flask(__name__)
+        app.config.update(TESTING=False, FEATURE_BOLETO=flags, FEATURE_FISCAL=flags, FEATURE_EXTERNAL_PROVIDERS=flags)
+&gt;       with app.app_context(), pytest.raises(PermissionError):
+E       Failed: DID NOT RAISE &lt;class 'PermissionError'&gt;
+
+tests/test_sprint06_data_adversarial.py:295: Failed</failure></testcase><testcase classname="tests.test_sprint06_data_adversarial" name="test_disabled_production_provider_factory_fails_closed[true-get_boleto_provider]" time="0.002"><failure message="Failed: DID NOT RAISE &lt;class 'PermissionError'&gt;">factory = &lt;function get_boleto_provider at 0x7b02f936a700&gt;, flags = 'true'
+
+    @pytest.mark.parametrize("factory", [get_boleto_provider, get_fiscal_provider])
+    @pytest.mark.parametrize("flags", [False, True, "true"])
+    def test_disabled_production_provider_factory_fails_closed(factory, flags):
+        app = Flask(__name__)
+        app.config.update(TESTING=False, FEATURE_BOLETO=flags, FEATURE_FISCAL=flags, FEATURE_EXTERNAL_PROVIDERS=flags)
+&gt;       with app.app_context(), pytest.raises(PermissionError):
+E       Failed: DID NOT RAISE &lt;class 'PermissionError'&gt;
+
+tests/test_sprint06_data_adversarial.py:295: Failed</failure></testcase><testcase classname="tests.test_sprint06_data_adversarial" name="test_disabled_production_provider_factory_fails_closed[true-get_fiscal_provider]" time="0.003"><failure message="Failed: DID NOT RAISE &lt;class 'PermissionError'&gt;">factory = &lt;function get_fiscal_provider at 0x7b02f92a4fe0&gt;, flags = 'true'
+
+    @pytest.mark.parametrize("factory", [get_boleto_provider, get_fiscal_provider])
+    @pytest.mark.parametrize("flags", [False, True, "true"])
+    def test_disabled_production_provider_factory_fails_closed(factory, flags):
+        app = Flask(__name__)
+        app.config.update(TESTING=False, FEATURE_BOLETO=flags, FEATURE_FISCAL=flags, FEATURE_EXTERNAL_PROVIDERS=flags)
+&gt;       with app.app_context(), pytest.raises(PermissionError):
+E       Failed: DID NOT RAISE &lt;class 'PermissionError'&gt;
+
+tests/test_sprint06_data_adversarial.py:295: Failed</failure></testcase><testcase classname="tests.test_sprint06_data_adversarial" name="test_real_provider_request_denied_before_network_or_secret[AsaasProvider]" time="0.001" /><testcase classname="tests.test_sprint06_data_adversarial" name="test_real_provider_request_denied_before_network_or_secret[FocusNFeProvider]" time="0.001" /><testcase classname="tests.test_sprint06_data_adversarial" name="test_real_provider_selection_and_download_denied" time="0.003" /></testsuite></testsuites>

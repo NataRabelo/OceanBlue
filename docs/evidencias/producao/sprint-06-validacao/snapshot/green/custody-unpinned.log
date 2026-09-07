@@ -1,0 +1,8 @@
+WARNING: No external manifest digest supplied: hashes detect corruption, not malicious replacement of snapshot and manifest.
+ROLLBACK VERIFIED: database empty; copied files removed.
+Exception: C:\Users\Rabel\.codex\worktrees\944e\OceanBlue\scripts\operational_snapshot.ps1:28
+Line |
+  28 |  … DE -ne 0) { throw 'Docker operation failed; inspect the isolated cont …
+     |                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | Docker operation failed; inspect the isolated container. No credentials printed.
+

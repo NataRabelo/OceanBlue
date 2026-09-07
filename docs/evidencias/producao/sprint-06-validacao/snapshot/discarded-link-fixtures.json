@@ -1,0 +1,7 @@
+[
+  {
+    "path": "red\\nonempty-storage-link-destination-check\\storage\\link",
+    "target": "/tmp",
+    "attributes": "Archive, ReparsePoint"
+  }
+]

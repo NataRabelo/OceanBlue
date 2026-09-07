@@ -1,0 +1,1 @@
+BACKUP VERIFIED: schema revision, tables, sequences and file SHA-256. Manifest SHA-256: 63b6ab9e10ab66452783dd5b62046391d87e1ffef48162e93937bd9175139c02

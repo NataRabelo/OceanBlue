@@ -1,0 +1,113 @@
+[
+    {
+        "Name": "oceanblue-s06-audit-ops-preflight2_test",
+        "Id": "e3501b2aed6bbc544370df3632e5e8c39d7147a75b6adc9a689d44326f90ab1a",
+        "Created": "2026-09-07T07:37:25.219401572Z",
+        "Scope": "local",
+        "Driver": "bridge",
+        "EnableIPv4": true,
+        "EnableIPv6": false,
+        "IPAM": {
+            "Driver": "default",
+            "Options": null,
+            "Config": [
+                {
+                    "Subnet": "172.30.62.0/24",
+                    "IPRange": "172.30.62.128/25",
+                    "Gateway": "172.30.62.128"
+                }
+            ]
+        },
+        "Internal": true,
+        "Attachable": false,
+        "Ingress": false,
+        "ConfigFrom": {
+            "Network": ""
+        },
+        "ConfigOnly": false,
+        "Options": {
+            "com.docker.network.enable_ipv4": "true",
+            "com.docker.network.enable_ipv6": "false"
+        },
+        "Labels": {
+            "com.docker.compose.config-hash": "c7bee33001fc135c2c24af4a91a1da01a60cb2356181bd19341f43e9d35a87e8",
+            "com.docker.compose.network": "test",
+            "com.docker.compose.project": "oceanblue-s06-audit-ops-preflight2",
+            "com.docker.compose.version": "5.5.0"
+        },
+        "Containers": {
+            "8af54f4ce256a155110bf971e0fec11029e5c0b0d314c6546c2f486b2000f4d8": {
+                "Name": "oceanblue-s06-audit-ops-preflight2-db-test-1",
+                "EndpointID": "9139b0e78c4d68be8b58e4307f777f839fa4d8ec220358be2ca6e2c425fc2717",
+                "MacAddress": "12:b6:b2:aa:fd:ec",
+                "IPv4Address": "172.30.62.129/24",
+                "IPv6Address": ""
+            }
+        },
+        "Status": {
+            "IPAM": {
+                "Subnets": {
+                    "172.30.62.0/24": {
+                        "IPsInUse": 4,
+                        "DynamicIPsAvailable": 125
+                    }
+                }
+            }
+        }
+    },
+    {
+        "Name": "oceanblue-s06-audit-ops-preflight2-restore_test",
+        "Id": "83b51bfd2a69400af70047da6d0e65bb311793703cbdb5375a906b2ab70fc5a3",
+        "Created": "2026-09-07T07:39:28.783810809Z",
+        "Scope": "local",
+        "Driver": "bridge",
+        "EnableIPv4": true,
+        "EnableIPv6": false,
+        "IPAM": {
+            "Driver": "default",
+            "Options": null,
+            "Config": [
+                {
+                    "Subnet": "172.22.0.0/16",
+                    "Gateway": "172.22.0.1"
+                }
+            ]
+        },
+        "Internal": true,
+        "Attachable": false,
+        "Ingress": false,
+        "ConfigFrom": {
+            "Network": ""
+        },
+        "ConfigOnly": false,
+        "Options": {
+            "com.docker.network.enable_ipv4": "true",
+            "com.docker.network.enable_ipv6": "false"
+        },
+        "Labels": {
+            "com.docker.compose.config-hash": "eca5b8dd78e892930bdbbbccba9ca7e66e861267b26b9cd6e0c02f8a4cb2b9d0",
+            "com.docker.compose.network": "test",
+            "com.docker.compose.project": "oceanblue-s06-audit-ops-preflight2-restore",
+            "com.docker.compose.version": "5.5.0"
+        },
+        "Containers": {
+            "774de88baae3e202c105bfefe0d4857f95a18cca3f777b38cb515025f907aa60": {
+                "Name": "oceanblue-s06-audit-ops-preflight2-restore-db-test-1",
+                "EndpointID": "0f73d3e725a4628a660b400ac4b4920105649df629ab4039acf78b77a68af1a8",
+                "MacAddress": "1a:61:d0:ab:df:6c",
+                "IPv4Address": "172.22.0.2/16",
+                "IPv6Address": ""
+            }
+        },
+        "Status": {
+            "IPAM": {
+                "Subnets": {
+                    "172.22.0.0/16": {
+                        "IPsInUse": 4,
+                        "DynamicIPsAvailable": 65532
+                    }
+                }
+            }
+        }
+    }
+]

@@ -1,0 +1,24 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.12, pytest-8.3.5, pluggy-1.6.0 -- /usr/local/bin/python
+rootdir: /app
+configfile: pytest.ini
+plugins: cov-6.1.1
+collecting ... collected 26 items
+
+tests/test_sprint06_browser_adversarial.py::test_mobile_sidebar_keyboard_round_trip[auditoria] PASSED [  3%]
+tests/test_sprint06_browser_adversarial.py::test_mobile_sidebar_keyboard_round_trip[operacoes] PASSED [  7%]
+tests/test_sprint06_browser_adversarial.py::test_mobile_sidebar_focus_fits_viewport[auditoria-320] PASSED [ 11%]
+tests/test_sprint06_browser_adversarial.py::test_mobile_sidebar_focus_fits_viewport[auditoria-390] PASSED [ 15%]
+tests/test_sprint06_browser_adversarial.py::test_mobile_sidebar_focus_fits_viewport[auditoria-767] PASSED [ 19%]
+tests/test_sprint06_browser_adversarial.py::test_mobile_sidebar_focus_fits_viewport[operacoes-320] PASSED [ 23%]
+tests/test_sprint06_browser_adversarial.py::test_mobile_sidebar_focus_fits_viewport[operacoes-390] PASSED [ 26%]
+tests/test_sprint06_browser_adversarial.py::test_mobile_sidebar_focus_fits_viewport[operacoes-767] PASSED [ 30%]
+tests/test_sprint06_browser_adversarial.py::test_sidebar_focus_survives_breakpoint_changes[auditoria] PASSED [ 34%]
+tests/test_sprint06_browser_adversarial.py::test_sidebar_focus_survives_breakpoint_changes[operacoes] PASSED [ 38%]
+tests/test_sprint06_browser_adversarial.py::test_persisted_mobile_sidebar_receives_focus[auditoria] 
+
+---------------------- generated xml file: /tmp/junit.xml ----------------------
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! KeyboardInterrupt !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+/usr/local/lib/python3.12/selectors.py:468: KeyboardInterrupt
+(to show a full traceback on KeyboardInterrupt use --full-trace)
+======================== 10 passed in 150.22s (0:02:30) ========================

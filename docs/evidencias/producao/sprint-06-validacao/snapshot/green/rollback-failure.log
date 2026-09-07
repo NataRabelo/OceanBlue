@@ -1,0 +1,7 @@
+Exception: C:\Users\Rabel\.codex\worktrees\944e\OceanBlue\scripts\operational_snapshot.ps1:13
+Line |
+  13 |  … stSha256) { throw 'Restore requires ExpectedManifestSha256 from a sep …
+     |                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | Restore requires ExpectedManifestSha256 from a separately trusted backup capture; do not derive trust from the
+     | supplied snapshot.
+

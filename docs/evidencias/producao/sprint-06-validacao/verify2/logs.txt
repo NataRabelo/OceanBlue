@@ -1,0 +1,53 @@
+smoke-1  | INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+smoke-1  | INFO  [alembic.runtime.migration] Will assume transactional DDL.
+smoke-1  | INFO  [alembic.runtime.migration] Running upgrade  -> 1150177c20ca, initial
+smoke-1  | INFO  [alembic.runtime.migration] Running upgrade 1150177c20ca -> 7f3c1a2b9d4e, add roles and permissions
+smoke-1  | INFO  [alembic.runtime.migration] Running upgrade 7f3c1a2b9d4e -> 9d1dca4d2bc5, v2
+smoke-1  | INFO  [alembic.runtime.migration] Running upgrade 9d1dca4d2bc5 -> c3a1f9d4e8b2, convert quantities to integer
+smoke-1  | INFO  [alembic.runtime.migration] Running upgrade c3a1f9d4e8b2 -> 4b2d8b0f6c11, add platform owners
+smoke-1  | INFO  [alembic.runtime.migration] Running upgrade 4b2d8b0f6c11 -> 8f6e4c2a1b9d, add pdv financeiro permissions and defaults
+smoke-1  | INFO  [alembic.runtime.migration] Running upgrade 8f6e4c2a1b9d -> b7c9d1e2f3a4, add cupons adiantamentos validade salario
+smoke-1  | INFO  [alembic.runtime.migration] Running upgrade b7c9d1e2f3a4 -> d4e5f6a7b8c9, add empresa visual mode
+smoke-1  | INFO  [alembic.runtime.migration] Running upgrade d4e5f6a7b8c9 -> e6f7a8b9c0d1, add stock alert settings
+smoke-1  | INFO  [alembic.runtime.migration] Running upgrade e6f7a8b9c0d1 -> f2b4c6d8e9f1, add client wallet messaging and reversal controls
+smoke-1  | INFO  [alembic.runtime.migration] Running upgrade 8f6e4c2a1b9d -> f9d0e1a2b3c4, add boleto financeiro models
+smoke-1  | INFO  [alembic.runtime.migration] Running upgrade f2b4c6d8e9f1 -> a1b2c3d4e5f6, add stock alert dispatch tracking
+smoke-1  | INFO  [alembic.runtime.migration] Running upgrade a1b2c3d4e5f6 -> b3c4d5e6f7a8, add cashback sale controls
+smoke-1  | INFO  [alembic.runtime.migration] Running upgrade f2b4c6d8e9f1 -> a4f1c8d2e7b9, add wholesale pricing and fiscal foundation
+smoke-1  | INFO  [alembic.runtime.migration] Running upgrade a4f1c8d2e7b9, b3c4d5e6f7a8 -> c9d8e7f6a5b4, merge cashback and fiscal heads
+smoke-1  | INFO  [alembic.runtime.migration] Running upgrade c9d8e7f6a5b4 -> 0f6a8c2d4e9b, add audit and saas limits
+smoke-1  | INFO  [alembic.runtime.migration] Running upgrade 0f6a8c2d4e9b, f9d0e1a2b3c4 -> ea3d60221646, merge migration heads
+smoke-1  | INFO  [alembic.runtime.migration] Running upgrade ea3d60221646 -> 1a2b3c4d5e6f, add sprint3 boleto and fiscal external status
+smoke-1  | INFO  [alembic.runtime.migration] Running upgrade 1a2b3c4d5e6f -> 2b3c4d5e6f7a, add sprint4 asaas and focus real configs
+smoke-1  | INFO  [alembic.runtime.migration] Running upgrade 2b3c4d5e6f7a -> 3c4d5e6f7a8b, Align migrated types, tenant indexes and installment foreign key with models.
+smoke-1  | INFO  [alembic.runtime.migration] Running upgrade 3c4d5e6f7a8b -> 4d5e6f7a8b9c, Shared authentication state, tenant integrity, SaaS quotas and access audit.
+smoke-1  | INFO  [alembic.runtime.migration] Running upgrade 4d5e6f7a8b9c -> 5e6f7a8b9c0d
+smoke-1  | INFO  [alembic.runtime.migration] Running upgrade 5e6f7a8b9c0d -> 6f7a8b9c0d1e
+smoke-1  | INFO  [alembic.runtime.migration] Running upgrade 6f7a8b9c0d1e -> 7a8b9c0d1e2f
+smoke-1  | INFO  [alembic.runtime.migration] Running upgrade 7a8b9c0d1e2f -> 8b9c0d1e2f3a
+smoke-1  | INFO  [alembic.runtime.migration] Running upgrade 8b9c0d1e2f3a -> 9c0d1e2f3a4b
+smoke-1  | INFO  [alembic.runtime.migration] Running upgrade 9c0d1e2f3a4b -> a0d1e2f3a4b5
+smoke-1  | [2026-09-07 08:28:58 +0000] [1] [INFO] Starting gunicorn 21.2.0
+smoke-1  | [2026-09-07 08:28:58 +0000] [1] [INFO] Listening at: http://0.0.0.0:5000 (1)
+smoke-1  | [2026-09-07 08:28:58 +0000] [1] [INFO] Using worker: gthread
+smoke-1  | [2026-09-07 08:28:58 +0000] [16] [INFO] Booting worker with pid: 16
+smoke-1  | {"timestamp": "2026-09-07T08:29:03.369264+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "2f74af61164ee017533aab894f0c9c11", "route": "/api/ready", "method": "GET", "status": 200, "duration_ms": 18.62}
+smoke-1  | {"timestamp": "2026-09-07T08:29:07.141390+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "f99458bf949ba158e974c33e88887976", "route": "/api/health", "method": "GET", "status": 200, "duration_ms": 0.287}
+smoke-1  | {"timestamp": "2026-09-07T08:29:07.195062+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "3ff0c56ece5412e6b5659e632c015bf1", "route": "/api/ready", "method": "GET", "status": 200, "duration_ms": 47.759}
+smoke-1  | {"timestamp": "2026-09-07T08:29:08.039490+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "1a89680275af876afd37d1d31877e969", "route": "/api/health", "method": "GET", "status": 200, "duration_ms": 0.224}
+smoke-1  | {"timestamp": "2026-09-07T08:29:08.052159+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "e6bd3f2c48095815e6057a2ee1c90d19", "route": "/api/ready", "method": "GET", "status": 200, "duration_ms": 10.552}
+smoke-1  | {"timestamp": "2026-09-07T08:29:08.054469+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "fb4226e2f25a66106eb900815b74fa4d", "route": "/login", "method": "GET", "status": 403, "duration_ms": 0.084}
+smoke-1  | {"timestamp": "2026-09-07T08:29:08.056013+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "ac73c935a41539259889e459a1f20c95", "route": "/login", "method": "GET", "status": 403, "duration_ms": 0.08}
+smoke-1  | {"timestamp": "2026-09-07T08:29:08.057513+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "e45873cad6bc5c13baee7fc13d842465", "route": "/login", "method": "GET", "status": 403, "duration_ms": 0.084}
+smoke-1  | {"timestamp": "2026-09-07T08:29:08.580599+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "13852c8eaca8e7513734d67d8ee6306d", "route": "/api/ready", "method": "GET", "status": 200, "duration_ms": 14.533}
+smoke-1  | {"timestamp": "2026-09-07T08:29:08.713489+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "2fc22cf57e97b5147e81f260208aff7c", "route": "/health", "method": "GET", "status": 200, "duration_ms": 0.234}
+smoke-1  | {"timestamp": "2026-09-07T08:29:08.720298+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "971947ee4329bb6d8ce11803326fc2c7", "route": "/readiness", "method": "GET", "status": 503, "duration_ms": 4.382}
+smoke-1  | {"timestamp": "2026-09-07T08:29:11.010049+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "a58514770ba97d1ef45bc5f7d7e2f443", "route": "/readiness", "method": "GET", "status": 200, "duration_ms": 11.014}
+smoke-1  | {"timestamp": "2026-09-07T08:29:12.595422+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "59963fdf80e2ddfaa3bfc852ea12c538", "route": "/api/health", "method": "GET", "status": 200, "duration_ms": 0.116}
+smoke-1  | {"timestamp": "2026-09-07T08:29:12.600310+00:00", "level": "WARNING", "event": "application_diagnostic", "error_type": "OperationalError", "request_id": "ac7f2b96d297827102908e1c730bffe6"}
+smoke-1  | {"timestamp": "2026-09-07T08:29:12.600868+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "ac7f2b96d297827102908e1c730bffe6", "route": "/api/ready", "method": "GET", "status": 503, "duration_ms": 3.247}
+smoke-1  | {"timestamp": "2026-09-07T08:29:12.602595+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "340ecc0da3d5496ed38cb79d956578d8", "route": "/login", "method": "GET", "status": 403, "duration_ms": 0.093}
+smoke-1  | {"timestamp": "2026-09-07T08:29:12.603929+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "47690a16c78e96aa135515ad58ff2df1", "route": "/login", "method": "GET", "status": 403, "duration_ms": 0.068}
+smoke-1  | {"timestamp": "2026-09-07T08:29:12.605486+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "554eb517db1de30848d67b54332c4e31", "route": "/login", "method": "GET", "status": 403, "duration_ms": 0.128}
+smoke-1  | {"timestamp": "2026-09-07T08:29:13.757042+00:00", "level": "WARNING", "event": "application_diagnostic", "error_type": "OperationalError", "request_id": "2e40606e324e4efb8188c1520889627c"}
+smoke-1  | {"timestamp": "2026-09-07T08:29:13.757490+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "2e40606e324e4efb8188c1520889627c", "route": "/api/ready", "method": "GET", "status": 503, "duration_ms": 2.348}

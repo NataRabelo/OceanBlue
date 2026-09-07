@@ -261,6 +261,8 @@ class MockIntegradorFiscalProvider(FiscalProvider):
 
 
 def get_fiscal_provider(_configuracao=None):
+    if not current_app.testing or current_app.config.get("FEATURE_FISCAL") is not True:
+        raise PermissionError("Emissao fiscal desativada neste ambiente.")
     if _configuracao and getattr(_configuracao, "integrador_provider", None) == "focus_nfe":
         raise PermissionError("Integracao fiscal real desativada nesta versao.")
     return MockIntegradorFiscalProvider()

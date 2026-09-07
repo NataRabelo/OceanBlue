@@ -1,0 +1,1 @@
+PASS: eight mounted source files retain their recorded SHA-256 hashes.

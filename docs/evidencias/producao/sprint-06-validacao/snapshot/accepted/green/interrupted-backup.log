@@ -1,0 +1,6 @@
+Exception: C:\Users\Rabel\.codex\worktrees\944e\OceanBlue\docs\evidencias\producao\sprint-06-validacao\snapshot\accepted\green\driver.ps1:18
+Line |
+  18 |  … 1] -like '*:/app/instance*') { throw 'Injected backup interruption' }
+     |                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | Injected backup interruption
+

@@ -1,0 +1,5 @@
+Exception: C:\Users\Rabel\.codex\worktrees\944e\OceanBlue\scripts\validate_proxy_logs.ps1:42
+Line |
+  42 |  … quest"')) { throw 'Proxy leaked private request data or lost structur …
+     |                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | Proxy leaked private request data or lost structured access evidence.

@@ -1,0 +1,193 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.12, pytest-8.3.5, pluggy-1.6.0 -- /usr/local/bin/python
+rootdir: /app
+configfile: pytest.ini
+plugins: cov-6.1.1
+collecting ... collected 20 items
+
+tests/test_sprint06_browser_adversarial.py::test_mobile_sidebar_keyboard_round_trip[auditoria] PASSED [  5%]
+tests/test_sprint06_browser_adversarial.py::test_mobile_sidebar_keyboard_round_trip[operacoes] PASSED [ 10%]
+tests/test_sprint06_browser_adversarial.py::test_mobile_sidebar_focus_fits_viewport[auditoria-320] PASSED [ 15%]
+tests/test_sprint06_browser_adversarial.py::test_mobile_sidebar_focus_fits_viewport[auditoria-390] PASSED [ 20%]
+tests/test_sprint06_browser_adversarial.py::test_mobile_sidebar_focus_fits_viewport[auditoria-767] ERROR [ 25%]
+tests/test_sprint06_browser_adversarial.py::test_mobile_sidebar_focus_fits_viewport[operacoes-320] PASSED [ 30%]
+tests/test_sprint06_browser_adversarial.py::test_mobile_sidebar_focus_fits_viewport[operacoes-390] PASSED [ 35%]
+tests/test_sprint06_browser_adversarial.py::test_mobile_sidebar_focus_fits_viewport[operacoes-767] PASSED [ 40%]
+tests/test_sprint06_browser_adversarial.py::test_sidebar_focus_survives_breakpoint_changes[auditoria] FAILED [ 45%]
+tests/test_sprint06_browser_adversarial.py::test_sidebar_focus_survives_breakpoint_changes[operacoes] ERROR [ 50%]
+tests/test_sprint06_browser_adversarial.py::test_persisted_mobile_sidebar_receives_focus[auditoria] PASSED [ 55%]
+tests/test_sprint06_browser_adversarial.py::test_persisted_mobile_sidebar_receives_focus[operacoes] PASSED [ 60%]
+tests/test_sprint06_browser_adversarial.py::test_user_disclosure_escape_and_tab_dismissal[auditoria-390] PASSED [ 65%]
+tests/test_sprint06_browser_adversarial.py::test_user_disclosure_escape_and_tab_dismissal[auditoria-1440] PASSED [ 70%]
+tests/test_sprint06_browser_adversarial.py::test_user_disclosure_escape_and_tab_dismissal[operacoes-390] 
+
+==================================== ERRORS ====================================
+___ ERROR at setup of test_mobile_sidebar_focus_fits_viewport[auditoria-767] ___
+
+transaction_app = <Flask 'app'>
+request = <SubRequest 'browser_page' for <Function test_mobile_sidebar_focus_fits_viewport[auditoria-767]>>
+
+    @pytest.fixture
+    def browser_page(transaction_app, request):
+        with transaction_app.app_context():
+            ConfiguracaoNotificacaoEstoque.query.filter_by(tenant_id=1).one().popup_ao_entrar = False
+            db.session.commit()
+        directory = Path("/tmp/e2e") / request.node.name
+        directory.mkdir(parents=True, exist_ok=True)
+        with (directory / "server.log").open("w") as logfile:
+            server = subprocess.Popen([sys.executable, "-m", "gunicorn", "wsgi:app", "--bind", "127.0.0.1:8765",
+                "--workers", "2", "--access-logfile", "-", "--forwarded-allow-ips", ""], stdout=logfile, stderr=subprocess.STDOUT)
+            try:
+                with sync_playwright() as playwright:
+                    browser = playwright.chromium.launch(headless=True, args=["--no-sandbox"])
+>                   context = browser.new_context(viewport={"width": 1440, "height": 1100})
+
+tests/test_sprint04_browser.py:32: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/local/lib/python3.12/site-packages/playwright/sync_api/_generated.py:13969: in new_context
+    self._sync(
+/usr/local/lib/python3.12/site-packages/playwright/_impl/_browser.py:171: in new_context
+    channel = await self._channel.send("newContext", None, params)
+/usr/local/lib/python3.12/site-packages/playwright/_impl/_connection.py:69: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <playwright._impl._connection.Connection object at 0x7f3a96e89eb0>
+cb = <function Channel.send.<locals>.<lambda> at 0x7f3a96e6fce0>
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -> Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        st: List[inspect.FrameInfo] = getattr(
+            task, "__pw_stack__", None
+        ) or inspect.stack(0)
+    
+        parsed_st = _extract_stack_trace_information_from_stack(st, is_internal, title)
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+>           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.TargetClosedError: Browser.new_context: Target page, context or browser has been closed
+E           Browser logs:
+E           
+E           <launching> /opt/playwright/chromium_headless_shell-1187/chrome-linux/headless_shell --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-extensions --disable-features=AcceptCHFrame,AvoidUnnecessaryBeforeUnloadCheckSync,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --enable-automation --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --no-sandbox --user-data-dir=/tmp/playwright_chromiumdev_profile-5DvXj8 --remote-debugging-pipe --no-startup-window
+E           <launched> pid=378
+E           [pid=378][err] [0907/073044.661096:ERROR:dbus/bus.cc:408] Failed to connect to the bus: Failed to connect to socket /run/dbus/system_bus_socket: No such file or directory
+
+/usr/local/lib/python3.12/site-packages/playwright/_impl/_connection.py:558: TargetClosedError
+_ ERROR at setup of test_sidebar_focus_survives_breakpoint_changes[operacoes] __
+
+transaction_app = <Flask 'app'>
+request = <SubRequest 'browser_page' for <Function test_sidebar_focus_survives_breakpoint_changes[operacoes]>>
+
+    @pytest.fixture
+    def browser_page(transaction_app, request):
+        with transaction_app.app_context():
+            ConfiguracaoNotificacaoEstoque.query.filter_by(tenant_id=1).one().popup_ao_entrar = False
+            db.session.commit()
+        directory = Path("/tmp/e2e") / request.node.name
+        directory.mkdir(parents=True, exist_ok=True)
+        with (directory / "server.log").open("w") as logfile:
+            server = subprocess.Popen([sys.executable, "-m", "gunicorn", "wsgi:app", "--bind", "127.0.0.1:8765",
+                "--workers", "2", "--access-logfile", "-", "--forwarded-allow-ips", ""], stdout=logfile, stderr=subprocess.STDOUT)
+            try:
+                with sync_playwright() as playwright:
+>                   browser = playwright.chromium.launch(headless=True, args=["--no-sandbox"])
+
+tests/test_sprint04_browser.py:31: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/local/lib/python3.12/site-packages/playwright/sync_api/_generated.py:14502: in launch
+    self._sync(
+/usr/local/lib/python3.12/site-packages/playwright/_impl/_browser_type.py:98: in launch
+    await self._channel.send(
+/usr/local/lib/python3.12/site-packages/playwright/_impl/_connection.py:69: in send
+    return await self._connection.wrap_api_call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <playwright._impl._connection.Connection object at 0x7f3a9a06d220>
+cb = <function Channel.send.<locals>.<lambda> at 0x7f3a9776c400>
+is_internal = False, title = None
+
+    async def wrap_api_call(
+        self, cb: Callable[[], Any], is_internal: bool = False, title: str = None
+    ) -> Any:
+        if self._api_zone.get():
+            return await cb()
+        task = asyncio.current_task(self._loop)
+        st: List[inspect.FrameInfo] = getattr(
+            task, "__pw_stack__", None
+        ) or inspect.stack(0)
+    
+        parsed_st = _extract_stack_trace_information_from_stack(st, is_internal, title)
+        self._api_zone.set(parsed_st)
+        try:
+            return await cb()
+        except Exception as error:
+>           raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+E           playwright._impl._errors.TargetClosedError: BrowserType.launch: Target page, context or browser has been closed
+E           Browser logs:
+E           
+E           <launching> /opt/playwright/chromium_headless_shell-1187/chrome-linux/headless_shell --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-extensions --disable-features=AcceptCHFrame,AvoidUnnecessaryBeforeUnloadCheckSync,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --enable-automation --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --no-sandbox --user-data-dir=/tmp/playwright_chromiumdev_profile-5Rw4OR --remote-debugging-pipe --no-startup-window
+E           <launched> pid=803
+E           [pid=803][err] [0907/073142.292108:ERROR:dbus/bus.cc:408] Failed to connect to the bus: Failed to connect to socket /run/dbus/system_bus_socket: No such file or directory
+E           [pid=803][err] [0907/073142.295820:ERROR:dbus/bus.cc:408] Failed to connect to the bus: Failed to connect to socket /run/dbus/system_bus_socket: No such file or directory
+E           [pid=803][err] [0907/073142.318546:WARNING:device/bluetooth/dbus/bluez_dbus_manager.cc:228] Floss manager service not available, cannot set Floss enable/disable.
+E           Call log:
+E             - <launching> /opt/playwright/chromium_headless_shell-1187/chrome-linux/headless_shell --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-extensions --disable-features=AcceptCHFrame,AvoidUnnecessaryBeforeUnloadCheckSync,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --enable-automation --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --no-sandbox --user-data-dir=/tmp/playwright_chromiumdev_profile-5Rw4OR --remote-debugging-pipe --no-startup-window
+E             - <launched> pid=803
+E             - [pid=803][err] [0907/073142.292108:ERROR:dbus/bus.cc:408] Failed to connect to the bus: Failed to connect to socket /run/dbus/system_bus_socket: No such file or directory
+E             - [pid=803][err] [0907/073142.295820:ERROR:dbus/bus.cc:408] Failed to connect to the bus: Failed to connect to socket /run/dbus/system_bus_socket: No such file or directory
+E             - [pid=803][err] [0907/073142.318546:WARNING:device/bluetooth/dbus/bluez_dbus_manager.cc:228] Floss manager service not available, cannot set Floss enable/disable.
+E             - [pid=803] <gracefully close start>
+E             - [pid=803] <kill>
+E             - [pid=803] <will force kill>
+E             - [pid=803][err] [0100/000000.352075:WARNING:sandbox/policy/linux/sandbox_linux.cc:414] InitializeSandbox() called with multiple threads in process gpu-process.
+E             - [pid=803] <process did exit: exitCode=null, signal=SIGSEGV>
+E             - [pid=803] starting temporary directories cleanup
+E             - [pid=803] finished temporary directories cleanup
+E             - [pid=803] <gracefully close end>
+
+/usr/local/lib/python3.12/site-packages/playwright/_impl/_connection.py:558: TargetClosedError
+=================================== FAILURES ===================================
+__________ test_sidebar_focus_survives_breakpoint_changes[auditoria] ___________
+
+operational_page = <Page url='http://127.0.0.1:8765/api/auditoria/view'>
+
+    def test_sidebar_focus_survives_breakpoint_changes(operational_page):
+        page = operational_page
+        opener = open_sidebar(page)
+        page.set_viewport_size({"width": 1024, "height": 844})
+        expect(page.locator(".sidebar-mobile-close")).to_be_hidden()
+        expect(opener).to_be_focused()
+        page.locator("#tenantSidebar a[href]").first.focus()
+        page.set_viewport_size({"width": 390, "height": 844})
+        expect(page.locator(".sidebar-mobile-close")).to_be_focused()
+        page.keyboard.press("Escape")
+        page.set_viewport_size({"width": 1024, "height": 844})
+        page.locator("#tenantSidebar a[href]").first.focus()
+        page.set_viewport_size({"width": 390, "height": 844})
+        expect(page.locator("#tenantSidebar")).to_be_hidden()
+>       expect(opener).to_be_focused()
+E       AssertionError: Locator expected to be focused
+E       Actual value: inactive 
+E       Call log:
+E         - Expect "to_be_focused" with timeout 5000ms
+E         - waiting for locator(".tenant-topbar [data-sidebar-toggle]")
+E           9 × locator resolved to <button type="button" aria-expanded="false" data-sidebar-toggle="" class="tenant-topbar__toggle" aria-controls="tenantSidebar" aria-label="Expandir menu lateral">…</button>
+E             - unexpected value "inactive"
+
+tests/test_sprint06_browser_adversarial.py:99: AssertionError
+---------------------- generated xml file: /tmp/junit.xml ----------------------
+=========================== short test summary info ============================
+ERROR tests/test_sprint06_browser_adversarial.py::test_mobile_sidebar_focus_fits_viewport[auditoria-767]
+ERROR tests/test_sprint06_browser_adversarial.py::test_sidebar_focus_survives_breakpoint_changes[operacoes]
+FAILED tests/test_sprint06_browser_adversarial.py::test_sidebar_focus_survives_breakpoint_changes[auditoria]
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! KeyboardInterrupt !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+/usr/local/lib/python3.12/selectors.py:468: KeyboardInterrupt
+(to show a full traceback on KeyboardInterrupt use --full-trace)
+============== 1 failed, 11 passed, 2 errors in 144.52s (0:02:24) ==============

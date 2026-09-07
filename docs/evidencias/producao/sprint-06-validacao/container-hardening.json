@@ -1,0 +1,1 @@
+{"uid": 1000, "effective_capabilities": 0, "no_new_privileges": true, "root_readonly": true, "private_env_not_in_image": true, "bounded_tmpfs_writable": true}

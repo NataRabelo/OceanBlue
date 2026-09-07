@@ -1,0 +1,11 @@
+{
+  "checked_utc": "2026-09-07T08:34:14.8536700Z",
+  "sprint06_containers_networks_volumes_remaining": [],
+  "unrelated_containers_preserved": [
+    "blueocean_api",
+    "blueocean_db",
+    "wnr_triagem_api",
+    "wnr_triagem_db"
+  ],
+  "images_retained_for_reproduction": true
+}

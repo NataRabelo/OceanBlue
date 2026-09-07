@@ -1,0 +1,71 @@
+{
+  "decision": "GO local homologation only; no production deployment",
+  "base_commit": "804256ae6edafb4a2db99dcdb39ddacb987f9148",
+  "full_pipeline_exit_codes": {
+    "verify1": 0,
+    "verify2": 0
+  },
+  "regressions": [
+    {
+      "round": "verify1",
+      "tests": 758,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 1755.395,
+      "lines_covered": 9017,
+      "lines_valid": 11700,
+      "line_percent": 77.06837606837607,
+      "branches_covered": 1609,
+      "branches_valid": 2672,
+      "branch_percent": 60.217065868263475,
+      "combined_percent": 73.93543000278319
+    },
+    {
+      "round": "verify2",
+      "tests": 758,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 1756.676,
+      "lines_covered": 9017,
+      "lines_valid": 11700,
+      "line_percent": 77.06837606837607,
+      "branches_covered": 1609,
+      "branches_valid": 2672,
+      "branch_percent": 60.217065868263475,
+      "combined_percent": 73.93543000278319
+    }
+  ],
+  "test_preservation": [
+    {
+      "round": "verify1",
+      "comparison": "case-sensitive classname::name",
+      "baseline": 578,
+      "actual": 758,
+      "added": 180,
+      "missing": [],
+      "duplicated_ids": 0
+    },
+    {
+      "round": "verify2",
+      "comparison": "case-sensitive classname::name",
+      "baseline": 578,
+      "actual": 758,
+      "added": 180,
+      "missing": [],
+      "duplicated_ids": 0
+    }
+  ],
+  "source_files_verified_per_test_and_smoke_image": 313,
+  "snapshot_cases": 32,
+  "snapshot_passed": 32,
+  "supplemental_snapshot_passed": 3,
+  "operational_runner_exit_code": 0,
+  "synthetic_secret_matches": 0,
+  "external_business_integrations": false,
+  "remote_ci_run": false,
+  "push": false,
+  "cleanup": "cleanup-final.json",
+  "limits": "See ../sprint-06-validacao.md"
+}

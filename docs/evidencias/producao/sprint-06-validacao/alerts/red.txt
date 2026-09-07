@@ -1,0 +1,34 @@
+
+
+
+
+
+  FAILED:
+    alertname: OceanBlueReadinessUnavailable, time: 4m, 
+        exp:[
+            0:
+              Labels:{alertname="OceanBlueReadinessUnavailable", job="oceanblue-readiness", severity="critical"}
+              Annotations:{summary="Sonda de readiness ausente; verificar proxy e coletor"}
+            ], 
+        got:[]
+    alertname: OceanBlueMetricsUnavailable, time: 4m, 
+        exp:[
+            0:
+              Labels:{alertname="OceanBlueMetricsUnavailable", severity="high"}
+              Annotations:{summary="Metricas ausentes; verificar aplicacao, proxy e coletor"}
+            ], 
+        got:[]
+    alertname: OceanBlueReadinessUnavailable, time: 6m, 
+        exp:[
+            0:
+              Labels:{alertname="OceanBlueReadinessUnavailable", job="oceanblue-readiness", severity="critical"}
+              Annotations:{summary="Sonda de readiness ausente; verificar proxy e coletor"}
+            ], 
+        got:[]
+    alertname: OceanBlueMetricsUnavailable, time: 6m, 
+        exp:[
+            0:
+              Labels:{alertname="OceanBlueMetricsUnavailable", severity="high"}
+              Annotations:{summary="Metricas ausentes; verificar aplicacao, proxy e coletor"}
+            ], 
+        got:[]

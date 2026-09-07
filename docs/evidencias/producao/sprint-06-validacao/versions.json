@@ -1,0 +1,13 @@
+{
+  "python": "3.12.12",
+  "packages": {
+    "Flask": "3.0.3",
+    "SQLAlchemy": "2.0.52",
+    "alembic": "1.19.2",
+    "psycopg2-binary": "2.9.9",
+    "gunicorn": "21.2.0",
+    "pytest": "8.3.5",
+    "pytest-cov": "6.1.1",
+    "playwright": "1.55.0"
+  }
+}

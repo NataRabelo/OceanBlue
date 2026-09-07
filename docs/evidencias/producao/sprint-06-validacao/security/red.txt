@@ -1,0 +1,345 @@
+FFFFFFFFFFFF......FFF..FFFFFFFFFFFFF..FFF...F....                        [100%]
+=================================== FAILURES ===================================
+_____ test_forwarded_loopback_cannot_unlock_http_health[127.0.0.1-/health] _____
+tests/test_sprint06_security_adversarial.py:55: in test_forwarded_loopback_cannot_unlock_http_health
+    assert response.status_code == 403
+E   assert 200 == 403
+E    +  where 200 = <WrapperTestResponse streamed [200 OK]>.status_code
+---------------------------- Captured stderr setup -----------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+___ test_forwarded_loopback_cannot_unlock_http_health[127.0.0.1-/readiness] ____
+tests/test_sprint06_security_adversarial.py:55: in test_forwarded_loopback_cannot_unlock_http_health
+    assert response.status_code == 403
+E   assert 503 == 403
+E    +  where 503 = <WrapperTestResponse streamed [503 SERVICE UNAVAILABLE]>.status_code
+----------------------------- Captured stderr call -----------------------------
+WARNI [tests.test_sprint06_security_adversarial] Readiness check failed: RuntimeError
+------------------------------ Captured log call -------------------------------
+WARNING  tests.test_sprint06_security_adversarial:health.py:38 Readiness check failed: RuntimeError
+___ test_forwarded_loopback_cannot_unlock_http_health[127.0.0.1-/api/health] ___
+tests/test_sprint06_security_adversarial.py:55: in test_forwarded_loopback_cannot_unlock_http_health
+    assert response.status_code == 403
+E   assert 200 == 403
+E    +  where 200 = <WrapperTestResponse streamed [200 OK]>.status_code
+___ test_forwarded_loopback_cannot_unlock_http_health[127.0.0.1-/api/ready] ____
+tests/test_sprint06_security_adversarial.py:55: in test_forwarded_loopback_cannot_unlock_http_health
+    assert response.status_code == 403
+E   assert 503 == 403
+E    +  where 503 = <WrapperTestResponse streamed [503 SERVICE UNAVAILABLE]>.status_code
+----------------------------- Captured stderr call -----------------------------
+WARNI [tests.test_sprint06_security_adversarial] Readiness check failed: RuntimeError
+------------------------------ Captured log call -------------------------------
+WARNING  tests.test_sprint06_security_adversarial:health.py:38 Readiness check failed: RuntimeError
+________ test_forwarded_loopback_cannot_unlock_http_health[::1-/health] ________
+tests/test_sprint06_security_adversarial.py:55: in test_forwarded_loopback_cannot_unlock_http_health
+    assert response.status_code == 403
+E   assert 200 == 403
+E    +  where 200 = <WrapperTestResponse streamed [200 OK]>.status_code
+______ test_forwarded_loopback_cannot_unlock_http_health[::1-/readiness] _______
+tests/test_sprint06_security_adversarial.py:55: in test_forwarded_loopback_cannot_unlock_http_health
+    assert response.status_code == 403
+E   assert 503 == 403
+E    +  where 503 = <WrapperTestResponse streamed [503 SERVICE UNAVAILABLE]>.status_code
+----------------------------- Captured stderr call -----------------------------
+WARNI [tests.test_sprint06_security_adversarial] Readiness check failed: RuntimeError
+------------------------------ Captured log call -------------------------------
+WARNING  tests.test_sprint06_security_adversarial:health.py:38 Readiness check failed: RuntimeError
+______ test_forwarded_loopback_cannot_unlock_http_health[::1-/api/health] ______
+tests/test_sprint06_security_adversarial.py:55: in test_forwarded_loopback_cannot_unlock_http_health
+    assert response.status_code == 403
+E   assert 200 == 403
+E    +  where 200 = <WrapperTestResponse streamed [200 OK]>.status_code
+______ test_forwarded_loopback_cannot_unlock_http_health[::1-/api/ready] _______
+tests/test_sprint06_security_adversarial.py:55: in test_forwarded_loopback_cannot_unlock_http_health
+    assert response.status_code == 403
+E   assert 503 == 403
+E    +  where 503 = <WrapperTestResponse streamed [503 SERVICE UNAVAILABLE]>.status_code
+----------------------------- Captured stderr call -----------------------------
+WARNI [tests.test_sprint06_security_adversarial] Readiness check failed: RuntimeError
+------------------------------ Captured log call -------------------------------
+WARNING  tests.test_sprint06_security_adversarial:health.py:38 Readiness check failed: RuntimeError
+_ test_forwarded_loopback_cannot_unlock_http_health[203.0.113.9, 127.0.0.1-/health] _
+tests/test_sprint06_security_adversarial.py:55: in test_forwarded_loopback_cannot_unlock_http_health
+    assert response.status_code == 403
+E   assert 200 == 403
+E    +  where 200 = <WrapperTestResponse streamed [200 OK]>.status_code
+_ test_forwarded_loopback_cannot_unlock_http_health[203.0.113.9, 127.0.0.1-/readiness] _
+tests/test_sprint06_security_adversarial.py:55: in test_forwarded_loopback_cannot_unlock_http_health
+    assert response.status_code == 403
+E   assert 503 == 403
+E    +  where 503 = <WrapperTestResponse streamed [503 SERVICE UNAVAILABLE]>.status_code
+----------------------------- Captured stderr call -----------------------------
+WARNI [tests.test_sprint06_security_adversarial] Readiness check failed: RuntimeError
+------------------------------ Captured log call -------------------------------
+WARNING  tests.test_sprint06_security_adversarial:health.py:38 Readiness check failed: RuntimeError
+_ test_forwarded_loopback_cannot_unlock_http_health[203.0.113.9, 127.0.0.1-/api/health] _
+tests/test_sprint06_security_adversarial.py:55: in test_forwarded_loopback_cannot_unlock_http_health
+    assert response.status_code == 403
+E   assert 200 == 403
+E    +  where 200 = <WrapperTestResponse streamed [200 OK]>.status_code
+_ test_forwarded_loopback_cannot_unlock_http_health[203.0.113.9, 127.0.0.1-/api/ready] _
+tests/test_sprint06_security_adversarial.py:55: in test_forwarded_loopback_cannot_unlock_http_health
+    assert response.status_code == 403
+E   assert 503 == 403
+E    +  where 503 = <WrapperTestResponse streamed [503 SERVICE UNAVAILABLE]>.status_code
+----------------------------- Captured stderr call -----------------------------
+WARNI [tests.test_sprint06_security_adversarial] Readiness check failed: RuntimeError
+------------------------------ Captured log call -------------------------------
+WARNING  tests.test_sprint06_security_adversarial:health.py:38 Readiness check failed: RuntimeError
+___________ test_metrics_invalid_authorization_fails_closed[latin1] ____________
+tests/test_sprint06_security_adversarial.py:93: in test_metrics_invalid_authorization_fails_closed
+    response = operational_app.test_client().get("/metrics", base_url="https://localhost",
+/usr/local/lib/python3.12/site-packages/werkzeug/test.py:1162: in get
+    return self.open(*args, **kw)
+/usr/local/lib/python3.12/site-packages/flask/testing.py:235: in open
+    response = super().open(
+/usr/local/lib/python3.12/site-packages/werkzeug/test.py:1116: in open
+    response_parts = self.run_wsgi_app(request.environ, buffered=buffered)
+/usr/local/lib/python3.12/site-packages/werkzeug/test.py:988: in run_wsgi_app
+    rv = run_wsgi_app(self.application, environ, buffered=buffered)
+/usr/local/lib/python3.12/site-packages/werkzeug/test.py:1264: in run_wsgi_app
+    app_rv = app(environ, start_response)
+/usr/local/lib/python3.12/site-packages/flask/app.py:1498: in __call__
+    return self.wsgi_app(environ, start_response)
+/usr/local/lib/python3.12/site-packages/flask/app.py:1476: in wsgi_app
+    response = self.handle_exception(e)
+/usr/local/lib/python3.12/site-packages/flask/app.py:1473: in wsgi_app
+    response = self.full_dispatch_request()
+/usr/local/lib/python3.12/site-packages/flask/app.py:882: in full_dispatch_request
+    rv = self.handle_user_exception(e)
+/usr/local/lib/python3.12/site-packages/flask/app.py:880: in full_dispatch_request
+    rv = self.dispatch_request()
+/usr/local/lib/python3.12/site-packages/flask/app.py:865: in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+app/operations.py:95: in metrics
+    if len(token) < 32 or not hmac.compare_digest(request.headers.get("Authorization", ""), "Bearer " + token):
+E   TypeError: comparing strings with non-ASCII characters is not supported
+___________ test_metrics_invalid_authorization_fails_closed[unicode] ___________
+tests/test_sprint06_security_adversarial.py:93: in test_metrics_invalid_authorization_fails_closed
+    response = operational_app.test_client().get("/metrics", base_url="https://localhost",
+/usr/local/lib/python3.12/site-packages/werkzeug/test.py:1162: in get
+    return self.open(*args, **kw)
+/usr/local/lib/python3.12/site-packages/flask/testing.py:235: in open
+    response = super().open(
+/usr/local/lib/python3.12/site-packages/werkzeug/test.py:1116: in open
+    response_parts = self.run_wsgi_app(request.environ, buffered=buffered)
+/usr/local/lib/python3.12/site-packages/werkzeug/test.py:988: in run_wsgi_app
+    rv = run_wsgi_app(self.application, environ, buffered=buffered)
+/usr/local/lib/python3.12/site-packages/werkzeug/test.py:1264: in run_wsgi_app
+    app_rv = app(environ, start_response)
+/usr/local/lib/python3.12/site-packages/flask/app.py:1498: in __call__
+    return self.wsgi_app(environ, start_response)
+/usr/local/lib/python3.12/site-packages/flask/app.py:1476: in wsgi_app
+    response = self.handle_exception(e)
+/usr/local/lib/python3.12/site-packages/flask/app.py:1473: in wsgi_app
+    response = self.full_dispatch_request()
+/usr/local/lib/python3.12/site-packages/flask/app.py:882: in full_dispatch_request
+    rv = self.handle_user_exception(e)
+/usr/local/lib/python3.12/site-packages/flask/app.py:880: in full_dispatch_request
+    rv = self.dispatch_request()
+/usr/local/lib/python3.12/site-packages/flask/app.py:865: in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+app/operations.py:95: in metrics
+    if len(token) < 32 or not hmac.compare_digest(request.headers.get("Authorization", ""), "Bearer " + token):
+E   TypeError: comparing strings with non-ASCII characters is not supported
+__________ test_metrics_invalid_authorization_fails_closed[oversized] __________
+tests/test_sprint06_security_adversarial.py:96: in test_metrics_invalid_authorization_fails_closed
+    assert response.headers["Cache-Control"] == "no-store"
+/usr/local/lib/python3.12/site-packages/werkzeug/datastructures/headers.py:83: in __getitem__
+    return self._get_key(key)
+/usr/local/lib/python3.12/site-packages/werkzeug/datastructures/headers.py:97: in _get_key
+    raise BadRequestKeyError(key)
+E   werkzeug.exceptions.BadRequestKeyError: 400 Bad Request: The browser (or proxy) sent a request that this server could not understand.
+______________ test_metrics_unusable_token_fails_closed[unicode] _______________
+tests/test_sprint06_security_adversarial.py:102: in test_metrics_unusable_token_fails_closed
+    response = operational_app.test_client().get("/metrics", base_url="https://localhost",
+/usr/local/lib/python3.12/site-packages/werkzeug/test.py:1162: in get
+    return self.open(*args, **kw)
+/usr/local/lib/python3.12/site-packages/flask/testing.py:235: in open
+    response = super().open(
+/usr/local/lib/python3.12/site-packages/werkzeug/test.py:1116: in open
+    response_parts = self.run_wsgi_app(request.environ, buffered=buffered)
+/usr/local/lib/python3.12/site-packages/werkzeug/test.py:988: in run_wsgi_app
+    rv = run_wsgi_app(self.application, environ, buffered=buffered)
+/usr/local/lib/python3.12/site-packages/werkzeug/test.py:1264: in run_wsgi_app
+    app_rv = app(environ, start_response)
+/usr/local/lib/python3.12/site-packages/flask/app.py:1498: in __call__
+    return self.wsgi_app(environ, start_response)
+/usr/local/lib/python3.12/site-packages/flask/app.py:1476: in wsgi_app
+    response = self.handle_exception(e)
+/usr/local/lib/python3.12/site-packages/flask/app.py:1473: in wsgi_app
+    response = self.full_dispatch_request()
+/usr/local/lib/python3.12/site-packages/flask/app.py:882: in full_dispatch_request
+    rv = self.handle_user_exception(e)
+/usr/local/lib/python3.12/site-packages/flask/app.py:880: in full_dispatch_request
+    rv = self.dispatch_request()
+/usr/local/lib/python3.12/site-packages/flask/app.py:865: in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+app/operations.py:95: in metrics
+    if len(token) < 32 or not hmac.compare_digest(request.headers.get("Authorization", ""), "Bearer " + token):
+E   TypeError: comparing strings with non-ASCII characters is not supported
+_______________ test_metrics_first_scrape_includes_zero_counters _______________
+tests/test_sprint06_security_adversarial.py:115: in test_metrics_first_scrape_includes_zero_counters
+    assert float(values["oceanblue_" + name]) == 0
+E   KeyError: 'oceanblue_requests_total'
+___________ test_structured_log_fields_cannot_smuggle_secrets[event] ___________
+tests/test_sprint06_security_adversarial.py:124: in test_structured_log_fields_cannot_smuggle_secrets
+    assert PRIVATE not in formatted
+E   assert 'senha=S06_P...r S06_SECRET' not in '{"timestamp...type": null}'
+E     
+E     'senha=S06_PRIVATE;...1;Bearer S06_SECRET' is contained here:
+E       "event": "senha=S06_PRIVATE;cpf=529.982.247-25;cartao=4111111111111111;Bearer S06_SECRET", "error_type": null}
+________ test_structured_log_fields_cannot_smuggle_secrets[request_id] _________
+tests/test_sprint06_security_adversarial.py:124: in test_structured_log_fields_cannot_smuggle_secrets
+    assert PRIVATE not in formatted
+E   assert 'senha=S06_P...r S06_SECRET' not in '{"timestamp...S06_SECRET"}'
+E     
+E     'senha=S06_PRIVATE;...1;Bearer S06_SECRET' is contained here:
+E       est_id": "senha=S06_PRIVATE;cpf=529.982.247-25;cartao=4111111111111111;Bearer S06_SECRET"}
+___________ test_structured_log_fields_cannot_smuggle_secrets[route] ___________
+tests/test_sprint06_security_adversarial.py:124: in test_structured_log_fields_cannot_smuggle_secrets
+    assert PRIVATE not in formatted
+E   assert 'senha=S06_P...r S06_SECRET' not in '{"timestamp...S06_SECRET"}'
+E     
+E     'senha=S06_PRIVATE;...1;Bearer S06_SECRET' is contained here:
+E       "route": "senha=S06_PRIVATE;cpf=529.982.247-25;cartao=4111111111111111;Bearer S06_SECRET"}
+__________ test_structured_log_fields_cannot_smuggle_secrets[method] ___________
+tests/test_sprint06_security_adversarial.py:124: in test_structured_log_fields_cannot_smuggle_secrets
+    assert PRIVATE not in formatted
+E   assert 'senha=S06_P...r S06_SECRET' not in '{"timestamp...S06_SECRET"}'
+E     
+E     'senha=S06_PRIVATE;...1;Bearer S06_SECRET' is contained here:
+E       method": "senha=S06_PRIVATE;cpf=529.982.247-25;cartao=4111111111111111;Bearer S06_SECRET"}
+__________ test_structured_log_fields_cannot_smuggle_secrets[status] ___________
+tests/test_sprint06_security_adversarial.py:124: in test_structured_log_fields_cannot_smuggle_secrets
+    assert PRIVATE not in formatted
+E   assert 'senha=S06_P...r S06_SECRET' not in '{"timestamp...S06_SECRET"}'
+E     
+E     'senha=S06_PRIVATE;...1;Bearer S06_SECRET' is contained here:
+E       status": "senha=S06_PRIVATE;cpf=529.982.247-25;cartao=4111111111111111;Bearer S06_SECRET"}
+________ test_structured_log_fields_cannot_smuggle_secrets[duration_ms] ________
+tests/test_sprint06_security_adversarial.py:124: in test_structured_log_fields_cannot_smuggle_secrets
+    assert PRIVATE not in formatted
+E   assert 'senha=S06_P...r S06_SECRET' not in '{"timestamp...S06_SECRET"}'
+E     
+E     'senha=S06_PRIVATE;...1;Bearer S06_SECRET' is contained here:
+E       ion_ms": "senha=S06_PRIVATE;cpf=529.982.247-25;cartao=4111111111111111;Bearer S06_SECRET"}
+_________ test_structured_log_invalid_values_do_not_break_json[value0] _________
+tests/test_sprint06_security_adversarial.py:135: in test_structured_log_invalid_values_do_not_break_json
+    assert "S06_PRIVATE" not in formatted
+E   assert 'S06_PRIVATE' not in '{"timestamp...06_SECRET"}}'
+E     
+E     'S06_PRIVATE' is contained here:
+E       ": "senha=S06_PRIVATE;cpf=529.982.247-25;cartao=4111111111111111;Bearer S06_SECRET"}, "error_type": null, "duration_ms": {"password": "senha=S06_PRIVATE;cpf=529.982.247-25;cartao=4111111111111111;Bearer S06_SECRET"}}
+E     ?           +++++++++++
+_________ test_structured_log_invalid_values_do_not_break_json[value1] _________
+tests/test_sprint06_security_adversarial.py:134: in test_structured_log_invalid_values_do_not_break_json
+    formatted = OperationalFormatter().format(record)
+app/operations.py:32: in format
+    return json.dumps(payload, ensure_ascii=True)
+/usr/local/lib/python3.12/json/__init__.py:231: in dumps
+    return _default_encoder.encode(obj)
+/usr/local/lib/python3.12/json/encoder.py:200: in encode
+    chunks = self.iterencode(o, _one_shot=True)
+/usr/local/lib/python3.12/json/encoder.py:258: in iterencode
+    return _iterencode(o, 0)
+/usr/local/lib/python3.12/json/encoder.py:180: in default
+    raise TypeError(f'Object of type {o.__class__.__name__} '
+E   TypeError: Object of type object is not JSON serializable
+__________ test_structured_log_invalid_values_do_not_break_json[nan] ___________
+tests/test_sprint06_security_adversarial.py:136: in test_structured_log_invalid_values_do_not_break_json
+    assert "NaN" not in formatted and "Infinity" not in formatted
+E   assert ('NaN' not in '{"timestamp...on_ms": NaN}'
+E     
+E     'NaN' is contained here:
+E        "event": NaN, "error_type": null, "duration_ms": NaN}
+E     ?           +++)
+__________ test_structured_log_invalid_values_do_not_break_json[inf] ___________
+tests/test_sprint06_security_adversarial.py:136: in test_structured_log_invalid_values_do_not_break_json
+    assert "NaN" not in formatted and "Infinity" not in formatted
+E   assert ('NaN' not in '{"timestamp...": Infinity}'
+E     
+E     'NaN' is contained here:
+E       : Infinity} and 'Infinity' not in '{"timestamp...": Infinity}'
+E     
+E     'Infinity' is contained here:
+E        "event": Infinity, "error_type": null, "duration_ms": Infinity}
+E     ?           ++++++++)
+________________ test_http_log_method_and_request_id_injection _________________
+tests/test_sprint06_security_adversarial.py:149: in test_http_log_method_and_request_id_injection
+    assert "S06_PRIVATE" not in lines[0] and "forged" not in lines[0]
+E   assert ('S06_PRIVATE' not in '{"timestamp..._ms": 0.435}'
+E     
+E     'S06_PRIVATE' is contained here:
+E       method": "S06_PRIVATE", "status": 405, "duration_ms": 0.435}
+E     ?           +++++++++++)
+----------------------------- Captured stderr call -----------------------------
+INFO  [tests.test_sprint06_security_adversarial] {'event': 'http_request', 'request_id': '7070b731f6a07deb60c493d2f18404f0', 'route': 'unmatched', 'method': 'S06_PRIVATE', 'status': 405, 'duration_ms': 0.435}
+------------------------------ Captured log call -------------------------------
+INFO     tests.test_sprint06_security_adversarial:operations.py:87 {'event': 'http_request', 'request_id': '7070b731f6a07deb60c493d2f18404f0', 'route': 'unmatched', 'method': 'S06_PRIVATE', 'status': 405, 'duration_ms': 0.435}
+________________ test_correlation_survives_earlier_request_gate ________________
+tests/test_sprint06_security_adversarial.py:184: in test_correlation_survives_earlier_request_gate
+    assert payload["request_id"] == response.headers["X-Request-ID"] == g.request_id
+/usr/local/lib/python3.12/site-packages/flask/ctx.py:56: in __getattr__
+    raise AttributeError(name) from None
+E   AttributeError: request_id
+----------------------------- Captured stderr call -----------------------------
+INFO  [tests.test_sprint06_security_adversarial] {'event': 'http_request', 'request_id': '0c9009cc2e1d7a6f9e1fa4bf5d203f48', 'route': '/health', 'method': 'GET', 'status': 403, 'duration_ms': -0.001}
+------------------------------ Captured log call -------------------------------
+INFO     tests.test_sprint06_security_adversarial:operations.py:87 {'event': 'http_request', 'request_id': '0c9009cc2e1d7a6f9e1fa4bf5d203f48', 'route': '/health', 'method': 'GET', 'status': 403, 'duration_ms': -0.001}
+_______________ test_health_responses_are_not_cacheable[/health] _______________
+tests/test_sprint06_security_adversarial.py:196: in test_health_responses_are_not_cacheable
+    assert response.headers["Cache-Control"] == "no-store"
+/usr/local/lib/python3.12/site-packages/werkzeug/datastructures/headers.py:83: in __getitem__
+    return self._get_key(key)
+/usr/local/lib/python3.12/site-packages/werkzeug/datastructures/headers.py:97: in _get_key
+    raise BadRequestKeyError(key)
+E   werkzeug.exceptions.BadRequestKeyError: 400 Bad Request: The browser (or proxy) sent a request that this server could not understand.
+_____________ test_health_responses_are_not_cacheable[/readiness] ______________
+tests/test_sprint06_security_adversarial.py:196: in test_health_responses_are_not_cacheable
+    assert response.headers["Cache-Control"] == "no-store"
+/usr/local/lib/python3.12/site-packages/werkzeug/datastructures/headers.py:83: in __getitem__
+    return self._get_key(key)
+/usr/local/lib/python3.12/site-packages/werkzeug/datastructures/headers.py:97: in _get_key
+    raise BadRequestKeyError(key)
+E   werkzeug.exceptions.BadRequestKeyError: 400 Bad Request: The browser (or proxy) sent a request that this server could not understand.
+__________ test_storage_short_write_fails_readiness_and_cleans_probe ___________
+tests/test_sprint06_security_adversarial.py:215: in test_storage_short_write_fails_readiness_and_cleans_probe
+    with operational_app.app_context(), pytest.raises(OSError):
+E   Failed: DID NOT RAISE <class 'OSError'>
+-------------------- generated xml file: /evidence/red.xml ---------------------
+=========================== short test summary info ============================
+FAILED tests/test_sprint06_security_adversarial.py::test_forwarded_loopback_cannot_unlock_http_health[127.0.0.1-/health]
+FAILED tests/test_sprint06_security_adversarial.py::test_forwarded_loopback_cannot_unlock_http_health[127.0.0.1-/readiness]
+FAILED tests/test_sprint06_security_adversarial.py::test_forwarded_loopback_cannot_unlock_http_health[127.0.0.1-/api/health]
+FAILED tests/test_sprint06_security_adversarial.py::test_forwarded_loopback_cannot_unlock_http_health[127.0.0.1-/api/ready]
+FAILED tests/test_sprint06_security_adversarial.py::test_forwarded_loopback_cannot_unlock_http_health[::1-/health]
+FAILED tests/test_sprint06_security_adversarial.py::test_forwarded_loopback_cannot_unlock_http_health[::1-/readiness]
+FAILED tests/test_sprint06_security_adversarial.py::test_forwarded_loopback_cannot_unlock_http_health[::1-/api/health]
+FAILED tests/test_sprint06_security_adversarial.py::test_forwarded_loopback_cannot_unlock_http_health[::1-/api/ready]
+FAILED tests/test_sprint06_security_adversarial.py::test_forwarded_loopback_cannot_unlock_http_health[203.0.113.9, 127.0.0.1-/health]
+FAILED tests/test_sprint06_security_adversarial.py::test_forwarded_loopback_cannot_unlock_http_health[203.0.113.9, 127.0.0.1-/readiness]
+FAILED tests/test_sprint06_security_adversarial.py::test_forwarded_loopback_cannot_unlock_http_health[203.0.113.9, 127.0.0.1-/api/health]
+FAILED tests/test_sprint06_security_adversarial.py::test_forwarded_loopback_cannot_unlock_http_health[203.0.113.9, 127.0.0.1-/api/ready]
+FAILED tests/test_sprint06_security_adversarial.py::test_metrics_invalid_authorization_fails_closed[latin1]
+FAILED tests/test_sprint06_security_adversarial.py::test_metrics_invalid_authorization_fails_closed[unicode]
+FAILED tests/test_sprint06_security_adversarial.py::test_metrics_invalid_authorization_fails_closed[oversized]
+FAILED tests/test_sprint06_security_adversarial.py::test_metrics_unusable_token_fails_closed[unicode]
+FAILED tests/test_sprint06_security_adversarial.py::test_metrics_first_scrape_includes_zero_counters
+FAILED tests/test_sprint06_security_adversarial.py::test_structured_log_fields_cannot_smuggle_secrets[event]
+FAILED tests/test_sprint06_security_adversarial.py::test_structured_log_fields_cannot_smuggle_secrets[request_id]
+FAILED tests/test_sprint06_security_adversarial.py::test_structured_log_fields_cannot_smuggle_secrets[route]
+FAILED tests/test_sprint06_security_adversarial.py::test_structured_log_fields_cannot_smuggle_secrets[method]
+FAILED tests/test_sprint06_security_adversarial.py::test_structured_log_fields_cannot_smuggle_secrets[status]
+FAILED tests/test_sprint06_security_adversarial.py::test_structured_log_fields_cannot_smuggle_secrets[duration_ms]
+FAILED tests/test_sprint06_security_adversarial.py::test_structured_log_invalid_values_do_not_break_json[value0]
+FAILED tests/test_sprint06_security_adversarial.py::test_structured_log_invalid_values_do_not_break_json[value1]
+FAILED tests/test_sprint06_security_adversarial.py::test_structured_log_invalid_values_do_not_break_json[nan]
+FAILED tests/test_sprint06_security_adversarial.py::test_structured_log_invalid_values_do_not_break_json[inf]
+FAILED tests/test_sprint06_security_adversarial.py::test_http_log_method_and_request_id_injection
+FAILED tests/test_sprint06_security_adversarial.py::test_correlation_survives_earlier_request_gate
+FAILED tests/test_sprint06_security_adversarial.py::test_health_responses_are_not_cacheable[/health]
+FAILED tests/test_sprint06_security_adversarial.py::test_health_responses_are_not_cacheable[/readiness]
+FAILED tests/test_sprint06_security_adversarial.py::test_storage_short_write_fails_readiness_and_cleans_probe
+32 failed, 17 passed in 3.66s

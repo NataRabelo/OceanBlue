@@ -1,0 +1,245 @@
+[
+  {
+    "case": "backup-valid",
+    "passed": true,
+    "observed": {
+      "exit_code": 0,
+      "seconds": 7.345,
+      "log": "backup.log"
+    }
+  },
+  {
+    "case": "roundtrip",
+    "passed": true,
+    "observed": {
+      "exit_code": 0,
+      "seconds": 7.961,
+      "log": "roundtrip.log"
+    }
+  },
+  {
+    "case": "backup-wrong-revision",
+    "passed": false,
+    "observed": {
+      "exit_code": 0,
+      "seconds": 8.177,
+      "log": "backup-wrong-revision.log"
+    }
+  },
+  {
+    "case": "format-version",
+    "passed": false,
+    "observed": {
+      "run": {
+        "exit_code": 0,
+        "seconds": 10.081,
+        "log": "format-version.log"
+      },
+      "database_empty": false
+    }
+  },
+  {
+    "case": "fingerprint-order",
+    "passed": false,
+    "observed": {
+      "run": {
+        "exit_code": 1,
+        "seconds": 7.664,
+        "log": "fingerprint-order.log"
+      },
+      "database_empty": false
+    }
+  },
+  {
+    "case": "fingerprint-content",
+    "passed": false,
+    "observed": {
+      "run": {
+        "exit_code": 1,
+        "seconds": 6.912,
+        "log": "fingerprint-content.log"
+      },
+      "database_empty": false
+    }
+  },
+  {
+    "case": "file-hash",
+    "passed": true,
+    "observed": {
+      "run": {
+        "exit_code": 1,
+        "seconds": 3.814,
+        "log": "file-hash.log"
+      },
+      "database_empty": true
+    }
+  },
+  {
+    "case": "traversal",
+    "passed": true,
+    "observed": {
+      "run": {
+        "exit_code": 1,
+        "seconds": 3.291,
+        "log": "traversal.log"
+      },
+      "database_empty": true
+    }
+  },
+  {
+    "case": "nonempty-table",
+    "passed": true,
+    "observed": {
+      "snapshot_table_absent": true,
+      "run": {
+        "exit_code": 1,
+        "seconds": 3.243,
+        "log": "nonempty-table.log"
+      }
+    }
+  },
+  {
+    "case": "nonempty-schema",
+    "passed": false,
+    "observed": {
+      "snapshot_table_absent": false,
+      "run": {
+        "exit_code": 0,
+        "seconds": 10.779,
+        "log": "nonempty-schema.log"
+      }
+    }
+  },
+  {
+    "case": "nonempty-sequence",
+    "passed": false,
+    "observed": {
+      "snapshot_table_absent": false,
+      "run": {
+        "exit_code": 1,
+        "seconds": 7.512,
+        "log": "nonempty-sequence.log"
+      }
+    }
+  },
+  {
+    "case": "nonempty-function",
+    "passed": false,
+    "observed": {
+      "snapshot_table_absent": false,
+      "run": {
+        "exit_code": 0,
+        "seconds": 7.778,
+        "log": "nonempty-function.log"
+      }
+    }
+  },
+  {
+    "case": "nonempty-storage",
+    "passed": true,
+    "observed": {
+      "snapshot_table_absent": true,
+      "run": {
+        "exit_code": 1,
+        "seconds": 3.373,
+        "log": "nonempty-storage.log"
+      }
+    }
+  },
+  {
+    "case": "nonempty-storage-link",
+    "passed": true,
+    "observed": {
+      "snapshot_table_absent": true,
+      "run": {
+        "exit_code": 1,
+        "seconds": 3.888,
+        "log": "nonempty-storage-link.log"
+      }
+    }
+  },
+  {
+    "case": "copy-failure",
+    "passed": false,
+    "observed": {
+      "storage": "[\"storage\", \"storage/proof.txt\"]",
+      "database_empty": false,
+      "run": {
+        "exit_code": 1,
+        "seconds": 6.359,
+        "log": "copy-failure.log"
+      }
+    }
+  },
+  {
+    "case": "interrupt",
+    "passed": false,
+    "observed": {
+      "storage": "[\"storage\"]",
+      "database_empty": false,
+      "run": {
+        "exit_code": 1,
+        "seconds": 6.456,
+        "log": "interrupt.log"
+      }
+    }
+  },
+  {
+    "case": "rollback-failure",
+    "passed": false,
+    "observed": {
+      "storage": "[\"storage\", \"storage/proof.txt\"]",
+      "database_empty": false,
+      "run": {
+        "exit_code": 1,
+        "seconds": 7.191,
+        "log": "rollback-failure.log"
+      }
+    }
+  },
+  {
+    "case": "interrupted-backup",
+    "passed": true,
+    "observed": {
+      "exit_code": 1,
+      "seconds": 5.835,
+      "log": "interrupted-backup.log"
+    }
+  },
+  {
+    "case": "active-app",
+    "passed": true,
+    "observed": {
+      "exit_code": 1,
+      "seconds": 1.805,
+      "log": "active-app.log"
+    }
+  },
+  {
+    "case": "active-db-client",
+    "passed": true,
+    "observed": {
+      "exit_code": 1,
+      "seconds": 1.856,
+      "log": "active-db-client.log"
+    }
+  },
+  {
+    "case": "shared-storage-writer",
+    "passed": false,
+    "observed": {
+      "exit_code": 0,
+      "seconds": 8.131,
+      "log": "shared-storage-writer.log"
+    }
+  },
+  {
+    "case": "root-junction",
+    "passed": false,
+    "observed": {
+      "exit_code": 0,
+      "seconds": 9.106,
+      "log": "root-junction.log"
+    }
+  }
+]

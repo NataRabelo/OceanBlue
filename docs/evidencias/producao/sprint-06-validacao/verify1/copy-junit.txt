@@ -1,0 +1,2 @@
+ oceanblue-s06-audit-verify1-test-1 Copying oceanblue-s06-audit-verify1-test-1:/tmp/junit.xml to C:\Users\Rabel\.codex\worktrees\944e\OceanBlue\docs\evidencias\producao\sprint-06-validacao\verify1\junit.xml
+ oceanblue-s06-audit-verify1-test-1 Copied oceanblue-s06-audit-verify1-test-1:/tmp/junit.xml to C:\Users\Rabel\.codex\worktrees\944e\OceanBlue\docs\evidencias\producao\sprint-06-validacao\verify1\junit.xml

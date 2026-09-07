@@ -1,0 +1,386 @@
+[
+  {
+    "case": "backup-valid",
+    "passed": true,
+    "observed": {
+      "exit_code": 0,
+      "seconds": 23.677,
+      "log": "backup.log",
+      "script_sha256": "167D282F7CCDE31A73F0DC659A2A704C1D8549FFCD531F61EFF8B97EB1F90A15"
+    }
+  },
+  {
+    "case": "roundtrip",
+    "passed": true,
+    "observed": {
+      "exit_code": 0,
+      "seconds": 24.929,
+      "log": "roundtrip.log",
+      "script_sha256": "167D282F7CCDE31A73F0DC659A2A704C1D8549FFCD531F61EFF8B97EB1F90A15"
+    }
+  },
+  {
+    "case": "independent-recovery",
+    "passed": true,
+    "observed": {
+      "rows": "2",
+      "backup_seconds": 23.677,
+      "restore_seconds": 24.929,
+      "lost_captured_records": 0,
+      "receipt": "synthetic-only: two records",
+      "sequence": "2"
+    }
+  },
+  {
+    "case": "backup-wrong-revision",
+    "passed": true,
+    "observed": {
+      "exit_code": 1,
+      "seconds": 15.364,
+      "log": "backup-wrong-revision.log",
+      "script_sha256": "167D282F7CCDE31A73F0DC659A2A704C1D8549FFCD531F61EFF8B97EB1F90A15"
+    }
+  },
+  {
+    "case": "format-version",
+    "passed": true,
+    "observed": {
+      "database_empty": true,
+      "run": {
+        "exit_code": 1,
+        "seconds": 15.518,
+        "log": "format-version.log",
+        "script_sha256": "167D282F7CCDE31A73F0DC659A2A704C1D8549FFCD531F61EFF8B97EB1F90A15"
+      }
+    }
+  },
+  {
+    "case": "fingerprint-order",
+    "passed": true,
+    "observed": {
+      "database_empty": false,
+      "run": {
+        "exit_code": 0,
+        "seconds": 27.266,
+        "log": "fingerprint-order.log",
+        "script_sha256": "167D282F7CCDE31A73F0DC659A2A704C1D8549FFCD531F61EFF8B97EB1F90A15"
+      }
+    }
+  },
+  {
+    "case": "fingerprint-content",
+    "passed": true,
+    "observed": {
+      "database_empty": true,
+      "run": {
+        "exit_code": 1,
+        "seconds": 21.852,
+        "log": "fingerprint-content.log",
+        "script_sha256": "167D282F7CCDE31A73F0DC659A2A704C1D8549FFCD531F61EFF8B97EB1F90A15"
+      }
+    }
+  },
+  {
+    "case": "file-hash",
+    "passed": true,
+    "observed": {
+      "database_empty": true,
+      "run": {
+        "exit_code": 1,
+        "seconds": 15.15,
+        "log": "file-hash.log",
+        "script_sha256": "167D282F7CCDE31A73F0DC659A2A704C1D8549FFCD531F61EFF8B97EB1F90A15"
+      }
+    }
+  },
+  {
+    "case": "traversal",
+    "passed": true,
+    "observed": {
+      "database_empty": true,
+      "run": {
+        "exit_code": 1,
+        "seconds": 17.488,
+        "log": "traversal.log",
+        "script_sha256": "167D282F7CCDE31A73F0DC659A2A704C1D8549FFCD531F61EFF8B97EB1F90A15"
+      }
+    }
+  },
+  {
+    "case": "manifest-pinned",
+    "passed": true,
+    "observed": {
+      "database_empty": true,
+      "run": {
+        "exit_code": 1,
+        "seconds": 14.601,
+        "log": "manifest-pinned.log",
+        "script_sha256": "167D282F7CCDE31A73F0DC659A2A704C1D8549FFCD531F61EFF8B97EB1F90A15"
+      }
+    }
+  },
+  {
+    "case": "custody-unpinned",
+    "passed": true,
+    "observed": {
+      "database_empty": true,
+      "run": {
+        "exit_code": 1,
+        "seconds": 2.134,
+        "log": "custody-unpinned.log",
+        "script_sha256": "167D282F7CCDE31A73F0DC659A2A704C1D8549FFCD531F61EFF8B97EB1F90A15"
+      }
+    }
+  },
+  {
+    "case": "restore-wrong-revision",
+    "passed": true,
+    "observed": {
+      "database_empty": true,
+      "run": {
+        "exit_code": 1,
+        "seconds": 19.088,
+        "log": "restore-wrong-revision.log",
+        "script_sha256": "167D282F7CCDE31A73F0DC659A2A704C1D8549FFCD531F61EFF8B97EB1F90A15"
+      }
+    }
+  },
+  {
+    "case": "postgres-version",
+    "passed": true,
+    "observed": {
+      "database_empty": true,
+      "run": {
+        "exit_code": 1,
+        "seconds": 17.352,
+        "log": "postgres-version.log",
+        "script_sha256": "167D282F7CCDE31A73F0DC659A2A704C1D8549FFCD531F61EFF8B97EB1F90A15"
+      }
+    }
+  },
+  {
+    "case": "nonempty-table",
+    "passed": true,
+    "observed": {
+      "run": {
+        "exit_code": 1,
+        "seconds": 21.236,
+        "log": "nonempty-table.log",
+        "script_sha256": "167D282F7CCDE31A73F0DC659A2A704C1D8549FFCD531F61EFF8B97EB1F90A15"
+      },
+      "snapshot_table_absent": true
+    }
+  },
+  {
+    "case": "nonempty-schema",
+    "passed": true,
+    "observed": {
+      "run": {
+        "exit_code": 1,
+        "seconds": 15.672,
+        "log": "nonempty-schema.log",
+        "script_sha256": "167D282F7CCDE31A73F0DC659A2A704C1D8549FFCD531F61EFF8B97EB1F90A15"
+      },
+      "snapshot_table_absent": true
+    }
+  },
+  {
+    "case": "nonempty-sequence",
+    "passed": true,
+    "observed": {
+      "run": {
+        "exit_code": 1,
+        "seconds": 14.581,
+        "log": "nonempty-sequence.log",
+        "script_sha256": "167D282F7CCDE31A73F0DC659A2A704C1D8549FFCD531F61EFF8B97EB1F90A15"
+      },
+      "snapshot_table_absent": true
+    }
+  },
+  {
+    "case": "nonempty-function",
+    "passed": true,
+    "observed": {
+      "run": {
+        "exit_code": 1,
+        "seconds": 14.569,
+        "log": "nonempty-function.log",
+        "script_sha256": "167D282F7CCDE31A73F0DC659A2A704C1D8549FFCD531F61EFF8B97EB1F90A15"
+      },
+      "snapshot_table_absent": true
+    }
+  },
+  {
+    "case": "nonempty-storage",
+    "passed": true,
+    "observed": {
+      "run": {
+        "exit_code": 1,
+        "seconds": 15.037,
+        "log": "nonempty-storage.log",
+        "script_sha256": "167D282F7CCDE31A73F0DC659A2A704C1D8549FFCD531F61EFF8B97EB1F90A15"
+      },
+      "snapshot_table_absent": true
+    }
+  },
+  {
+    "case": "nonempty-storage-link",
+    "passed": true,
+    "observed": {
+      "run": {
+        "exit_code": 1,
+        "seconds": 10.274,
+        "log": "nonempty-storage-link.log",
+        "script_sha256": "167D282F7CCDE31A73F0DC659A2A704C1D8549FFCD531F61EFF8B97EB1F90A15"
+      },
+      "snapshot_table_absent": true
+    }
+  },
+  {
+    "case": "copy-failure",
+    "passed": true,
+    "observed": {
+      "run": {
+        "exit_code": 1,
+        "seconds": 22.837,
+        "log": "copy-failure.log",
+        "script_sha256": "167D282F7CCDE31A73F0DC659A2A704C1D8549FFCD531F61EFF8B97EB1F90A15"
+      },
+      "database_empty": true,
+      "storage": "[\"storage\"]"
+    }
+  },
+  {
+    "case": "interrupt",
+    "passed": true,
+    "observed": {
+      "run": {
+        "exit_code": 1,
+        "seconds": 29.797,
+        "log": "interrupt.log",
+        "script_sha256": "167D282F7CCDE31A73F0DC659A2A704C1D8549FFCD531F61EFF8B97EB1F90A15"
+      },
+      "database_empty": true,
+      "storage": "[\"storage\"]"
+    }
+  },
+  {
+    "case": "rollback-failure",
+    "passed": true,
+    "observed": {
+      "run": {
+        "exit_code": 1,
+        "seconds": 21.508,
+        "log": "rollback-failure.log",
+        "script_sha256": "167D282F7CCDE31A73F0DC659A2A704C1D8549FFCD531F61EFF8B97EB1F90A15"
+      },
+      "database_empty": true,
+      "storage": "[\".oceanblue-restore-incomplete\", \"storage\", \"storage/proof.txt\"]"
+    }
+  },
+  {
+    "case": "interrupted-backup",
+    "passed": true,
+    "observed": {
+      "exit_code": 1,
+      "seconds": 16.547,
+      "log": "interrupted-backup.log",
+      "script_sha256": "167D282F7CCDE31A73F0DC659A2A704C1D8549FFCD531F61EFF8B97EB1F90A15"
+    }
+  },
+  {
+    "case": "active-app",
+    "passed": true,
+    "observed": {
+      "exit_code": 1,
+      "seconds": 2.14,
+      "log": "active-app.log",
+      "script_sha256": "167D282F7CCDE31A73F0DC659A2A704C1D8549FFCD531F61EFF8B97EB1F90A15"
+    }
+  },
+  {
+    "case": "active-db-client",
+    "passed": true,
+    "observed": {
+      "exit_code": 1,
+      "seconds": 6.732,
+      "log": "active-db-client.log",
+      "script_sha256": "167D282F7CCDE31A73F0DC659A2A704C1D8549FFCD531F61EFF8B97EB1F90A15"
+    }
+  },
+  {
+    "case": "shared-storage-writer",
+    "passed": true,
+    "observed": {
+      "exit_code": 1,
+      "seconds": 6.276,
+      "log": "shared-storage-writer.log",
+      "script_sha256": "167D282F7CCDE31A73F0DC659A2A704C1D8549FFCD531F61EFF8B97EB1F90A15"
+    }
+  },
+  {
+    "case": "root-junction",
+    "passed": true,
+    "observed": {
+      "exit_code": 1,
+      "seconds": 1.348,
+      "log": "root-junction.log",
+      "script_sha256": "167D282F7CCDE31A73F0DC659A2A704C1D8549FFCD531F61EFF8B97EB1F90A15"
+    }
+  },
+  {
+    "case": "db-rollback-failure",
+    "passed": true,
+    "observed": {
+      "run": {
+        "exit_code": 1,
+        "seconds": 16.642,
+        "log": "db-rollback-failure.log",
+        "script_sha256": "167D282F7CCDE31A73F0DC659A2A704C1D8549FFCD531F61EFF8B97EB1F90A15"
+      },
+      "database_empty": true,
+      "incomplete_marker": "True"
+    }
+  },
+  {
+    "case": "retry-incomplete",
+    "passed": true,
+    "observed": {
+      "exit_code": 1,
+      "seconds": 9.715,
+      "log": "retry-incomplete.log",
+      "script_sha256": "167D282F7CCDE31A73F0DC659A2A704C1D8549FFCD531F61EFF8B97EB1F90A15"
+    }
+  },
+  {
+    "case": "late-db-writer",
+    "passed": true,
+    "observed": {
+      "exit_code": 1,
+      "seconds": 18.209,
+      "log": "late-db-writer.log",
+      "script_sha256": "167D282F7CCDE31A73F0DC659A2A704C1D8549FFCD531F61EFF8B97EB1F90A15"
+    }
+  },
+  {
+    "case": "source-link",
+    "passed": true,
+    "observed": {
+      "exit_code": 1,
+      "seconds": 11.8,
+      "log": "source-link.log",
+      "script_sha256": "167D282F7CCDE31A73F0DC659A2A704C1D8549FFCD531F61EFF8B97EB1F90A15"
+    }
+  },
+  {
+    "case": "hard-kill",
+    "passed": true,
+    "observed": {
+      "reached_after_copy": true,
+      "marker": "True",
+      "database_empty": true,
+      "rollback_observed_seconds": 1.603,
+      "sql_sessions": "0"
+    }
+  }
+]

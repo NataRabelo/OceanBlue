@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "database_fingerprint": {
+    "alembic_version": "1:c4726a2a92f19d014abc06ea721a7aab",
+    "proof_rows": "2:6b157de548013e28ef229f814ef66c45",
+    "z_empty": "0:d41d8cd98f00b204e9800998ecf8427e",
+    "sequence:proof_rows_id_seq": "2:true"
+  },
+  "files": {
+    "database.dump": "ff3962d8912e2b2abd1423091be0e68efcc27d34b8e75ae72cf12fc83f5bf04d",
+    "instance/storage/proof.txt": "39cf337f7f00a682745e8d27a34a13d9468d5ec8806f777b4246d91997bd6015"
+  },
+  "database": "source_db",
+  "created_utc": "2026-09-07T07:24:44.0542063Z"
+}

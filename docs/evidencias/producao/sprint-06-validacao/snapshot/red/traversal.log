@@ -1,0 +1,6 @@
+Exception: C:\Users\Rabel\.codex\worktrees\944e\OceanBlue\scripts\operational_snapshot.ps1:89
+Line |
+  89 |  …  -ne $manifest.files.Count) { throw "Snapshot file count mismatch." }
+     |                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | Snapshot file count mismatch.
+

@@ -1,0 +1,12 @@
+oceanblue-s06-ui-red
+oceanblue-s06-ui-green
+oceanblue-s06-ui-final
+oceanblue-s06-ui-skip-red
+oceanblue-s06-ui-skip-green
+oceanblue-s06-ui-regression
+ Container oceanblue-s06-ui-independent-db-test-1 Stopping 
+ Container oceanblue-s06-ui-independent-db-test-1 Stopped 
+ Container oceanblue-s06-ui-independent-db-test-1 Removing 
+ Container oceanblue-s06-ui-independent-db-test-1 Removed 
+ Network oceanblue-s06-ui-independent_ui Removing 
+ Network oceanblue-s06-ui-independent_ui Removed 

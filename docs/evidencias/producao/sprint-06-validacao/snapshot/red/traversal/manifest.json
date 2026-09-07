@@ -1,0 +1,16 @@
+{
+  "database_fingerprint": {
+    "alembic_version": "1:537477c3b0dc82fa730b1558bc727d3f",
+    "proof_rows": "2:6b157de548013e28ef229f814ef66c45",
+    "z_empty": "0:d41d8cd98f00b204e9800998ecf8427e",
+    "sequence:proof_rows_id_seq": "2:true"
+  },
+  "database": "source_db",
+  "version": 1,
+  "files": {
+    "database.dump": "9cf83879d9830dc21ca396ee3303be66e1cdda5ef3475d99f6766951ea8ac13b",
+    "instance/storage/proof.txt": "39cf337f7f00a682745e8d27a34a13d9468d5ec8806f777b4246d91997bd6015",
+    "../escape": "0000000000000000000000000000000000000000000000000000000000000000"
+  },
+  "created_utc": "2026-09-07T07:24:25.6386025Z"
+}

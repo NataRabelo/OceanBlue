@@ -1,0 +1,6 @@
+Exception: C:\Users\Rabel\.codex\worktrees\944e\OceanBlue\scripts\operational_snapshot.ps1:239
+Line |
+ 239 |  … [string]) { throw 'Unsupported snapshot manifest version; create a ve …
+     |                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | Unsupported snapshot manifest version; create a version 2 snapshot.
+

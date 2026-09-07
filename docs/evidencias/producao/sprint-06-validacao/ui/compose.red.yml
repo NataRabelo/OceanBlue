@@ -1,0 +1,5 @@
+services:
+  test:
+    volumes:
+      - ${OCEANBLUE_UI_WORKSPACE:?workspace required}/docs/evidencias/producao/sprint-06-validacao/ui/header.red.js.txt:/app/app/static/js/header/header.js:ro
+      - ${OCEANBLUE_UI_WORKSPACE:?workspace required}/docs/evidencias/producao/sprint-06-validacao/ui/operational.red.css.txt:/app/app/static/css/core/operational.css:ro

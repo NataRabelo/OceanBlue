@@ -248,6 +248,8 @@ class MockApiBancariaProvider(BoletoProvider):
 
 
 def get_boleto_provider(_banco_emissor=None):
+    if not current_app.testing or current_app.config.get("FEATURE_BOLETO") is not True:
+        raise PermissionError("Emissao de boletos desativada neste ambiente.")
     empresa = getattr(_banco_emissor, "empresa", None)
     configuracao = getattr(empresa, "configuracao_asaas", None)
     if configuracao and configuracao.ativo and configuracao.api_key:

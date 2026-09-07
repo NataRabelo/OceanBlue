@@ -1,0 +1,36 @@
+services:
+  db-test:
+    image: postgres:16@sha256:23af655ba1ddf74eaa002e3deaf5fce022ab8791672336a7c1fb0ef2d57efb7f
+    pull_policy: never
+    environment:
+      POSTGRES_DB: oceanblue_test
+      POSTGRES_USER: oceanblue_test
+      POSTGRES_PASSWORD: isolated-test-only
+    tmpfs: [/var/lib/postgresql/data]
+    healthcheck:
+      test: [CMD-SHELL, pg_isready -U oceanblue_test -d oceanblue_test]
+      interval: 2s
+      timeout: 5s
+      retries: 30
+    networks: [ui]
+  test:
+    init: true
+    image: oceanblue-s06-complete-test
+    pull_policy: never
+    environment:
+      TEST_DATABASE_URL: postgresql+psycopg2://oceanblue_test:isolated-test-only@db-test:5432/oceanblue_test
+      FLASK_SKIP_DOTENV: "1"
+      PYTHONDONTWRITEBYTECODE: "1"
+    volumes:
+      - ${OCEANBLUE_UI_WORKSPACE:?workspace required}/tests/test_sprint06_browser_adversarial.py:/app/tests/test_sprint06_browser_adversarial.py:ro
+      - ${OCEANBLUE_UI_WORKSPACE:?workspace required}/tests/test_sprint06_browser.py:/app/tests/test_sprint06_browser.py:ro
+      - ${OCEANBLUE_UI_WORKSPACE:?workspace required}/app/static/js/header/header.js:/app/app/static/js/header/header.js:ro
+      - ${OCEANBLUE_UI_WORKSPACE:?workspace required}/app/static/css/core/operational.css:/app/app/static/css/core/operational.css:ro
+    depends_on:
+      db-test:
+        condition: service_healthy
+    networks: [ui]
+    command: [python, -m, pytest, tests/test_sprint06_browser_adversarial.py, --no-cov, -v, -p, no:cacheprovider, --junitxml=/tmp/junit.xml]
+networks:
+  ui:
+    internal: true

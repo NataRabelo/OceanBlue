@@ -1,0 +1,5 @@
+Exception: C:\Users\Rabel\.codex\worktrees\944e\OceanBlue\scripts\validate_proxy_logs.ps1:10
+Line |
+  10 |      if ($LASTEXITCODE) { throw ($output | Out-String) }
+     |                           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | docker: invalid reference format  Run 'docker run --help' for more information 

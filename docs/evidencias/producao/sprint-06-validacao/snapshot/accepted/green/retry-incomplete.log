@@ -1,0 +1,6 @@
+Exception: C:\Users\Rabel\.codex\worktrees\944e\OceanBlue\scripts\operational_snapshot.ps1:208
+Line |
+ 208 |  … $marker)) { throw 'Incomplete restore marker present. Keep applicatio …
+     |                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | Incomplete restore marker present. Keep application stopped and recover or replace this destination.
+

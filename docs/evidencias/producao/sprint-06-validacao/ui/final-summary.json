@@ -1,0 +1,31 @@
+{
+  "junit": {
+    "name": "pytest",
+    "errors": "0",
+    "failures": "0",
+    "skipped": "0",
+    "tests": "26",
+    "time": "358.947",
+    "timestamp": "2026-09-07T07:38:53.292793+00:00",
+    "hostname": "30ced0eed535"
+  },
+  "browser_cases": 26,
+  "versions": [
+    "140.0.7339.16"
+  ],
+  "page_errors": [],
+  "external_requests": [],
+  "offline_cases": 2,
+  "offline_axe_violations": [],
+  "offline_expected_failed_requests": [
+    "http://127.0.0.1:8765/api/auditoria/?limit=50",
+    "http://127.0.0.1:8765/api/financeiro/lancamentos?empresa_id=1"
+  ],
+  "asset_responses": 21,
+  "frozen_files_unchanged": {
+    "header.js": true,
+    "operational.css": true,
+    "test_sprint06_browser_adversarial.py": true,
+    "test_sprint06_browser.py": true
+  }
+}

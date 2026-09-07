@@ -1,0 +1,11 @@
+{
+  "files_including_dump": 2,
+  "tables": 48,
+  "captured_sales": "3",
+  "postgres_major": 16,
+  "format_version": 2,
+  "revision": "a0d1e2f3a4b5",
+  "trusted_manifest_sha256": "63b6ab9e10ab66452783dd5b62046391d87e1ffef48162e93937bd9175139c02",
+  "sequences": 44,
+  "captured_ledger": "3"
+}

@@ -1,0 +1,57 @@
+[
+    {
+        "Name": "oceanblue-s06-audit-verify2_test",
+        "Id": "8fd5f433cb165565c5f430c1a9a69588ecdec5f84d65c5b84e52039d9dce5226",
+        "Created": "2026-09-07T07:58:53.585399714Z",
+        "Scope": "local",
+        "Driver": "bridge",
+        "EnableIPv4": true,
+        "EnableIPv6": false,
+        "IPAM": {
+            "Driver": "default",
+            "Options": null,
+            "Config": [
+                {
+                    "Subnet": "172.21.0.0/16",
+                    "Gateway": "172.21.0.1"
+                }
+            ]
+        },
+        "Internal": true,
+        "Attachable": false,
+        "Ingress": false,
+        "ConfigFrom": {
+            "Network": ""
+        },
+        "ConfigOnly": false,
+        "Options": {
+            "com.docker.network.enable_ipv4": "true",
+            "com.docker.network.enable_ipv6": "false"
+        },
+        "Labels": {
+            "com.docker.compose.config-hash": "b0e7bbe7f8a812bd632543845416eed3e978ebcbdb5a241663190174df0ee970",
+            "com.docker.compose.network": "test",
+            "com.docker.compose.project": "oceanblue-s06-audit-verify2",
+            "com.docker.compose.version": "5.5.0"
+        },
+        "Containers": {
+            "2b267dce00c9b2f0ce461b17b1b16a7daec3aeff7f481b3a369cc52515064856": {
+                "Name": "oceanblue-s06-audit-verify2-smoke-1",
+                "EndpointID": "6c29613b49633f6b843e89202e25134400fd64d746e8abad1caf73bbc55a984d",
+                "MacAddress": "d2:60:c0:77:26:a0",
+                "IPv4Address": "172.21.0.3/16",
+                "IPv6Address": ""
+            }
+        },
+        "Status": {
+            "IPAM": {
+                "Subnets": {
+                    "172.21.0.0/16": {
+                        "IPsInUse": 4,
+                        "DynamicIPsAvailable": 65532
+                    }
+                }
+            }
+        }
+    }
+]

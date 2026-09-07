@@ -9,6 +9,21 @@ from app.services.acesso_empresa_service import AcessoEmpresaService
 auditoria_bp = Blueprint("auditoria", __name__)
 
 
+def _positive_integer_argument(name, default=None, maximum=2147483647):
+    values = request.args.getlist(name)
+    if not values:
+        return default
+    if len(values) != 1:
+        abort(400)
+    value = values[0]
+    if not value or len(value) > 10 or not value.isascii() or not value.isdecimal():
+        abort(400)
+    number = int(value)
+    if not 1 <= number <= maximum:
+        abort(400)
+    return number
+
+
 @auditoria_bp.get("/view")
 @permission_required("visualizar_auditoria")
 def pagina():
@@ -18,17 +33,14 @@ def pagina():
 @auditoria_bp.get("/")
 @permission_required("visualizar_auditoria")
 def listar():
-    try:
-        limit = int(request.args.get("limit", "50"))
-        before = int(request.args.get("before", "2147483647"))
-        company = int(request.args["empresa_id"]) if request.args.get("empresa_id") else None
-        if not 1 <= limit <= 100 or not 1 <= before <= 2147483647:
-            raise ValueError()
-    except ValueError:
-        abort(400)
+    limit = _positive_integer_argument("limit", default=50, maximum=100)
+    before = _positive_integer_argument("before")
+    company = _positive_integer_argument("empresa_id")
     tenant = get_jwt()["tenant_id"]
     scope = AcessoEmpresaService.obter_escopo(int(get_jwt_identity()), tenant)
-    query = AuditLog.query.filter(AuditLog.tenant_id == tenant, AuditLog.id < before)
+    query = AuditLog.query.filter(AuditLog.tenant_id == tenant)
+    if before is not None:
+        query = query.filter(AuditLog.id < before)
     companies = AcessoEmpresaService.filtrar_empresa_ids(scope)
     if companies is not None:
         query = query.filter(AuditLog.empresa_id.in_(companies))
