@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="9" skipped="0" tests="44" time="48.863" timestamp="2026-09-07T02:18:59.275559+00:00" hostname="43d200a8a9fe"><testcase classname="tests.test_sprint03_adversarial" name="test_sale_rollback_at_each_persisted_stage[Venda]" time="1.881" /><testcase classname="tests.test_sprint03_adversarial" name="test_sale_rollback_at_each_persisted_stage[ItemVenda]" time="0.902" /><testcase classname="tests.test_sprint03_adversarial" name="test_sale_rollback_at_each_persisted_stage[PagamentoVenda]" time="0.977" /><testcase classname="tests.test_sprint03_adversarial" name="test_sale_rollback_at_each_persisted_stage[MovimentoEstoque]" time="0.907" /><testcase classname="tests.test_sprint03_adversarial" name="test_sale_rollback_at_each_persisted_stage[LancamentoFinanceiro]" time="0.974" /><testcase classname="tests.test_sprint03_adversarial" name="test_sale_rollback_at_each_persisted_stage[OperacaoIdempotente]" time="0.912" /><testcase classname="tests.test_sprint03_adversarial" name="test_cancel_rollback_at_each_persisted_stage[Venda-after_update-False]" time="1.089" /><testcase classname="tests.test_sprint03_adversarial" name="test_cancel_rollback_at_each_persisted_stage[Venda-after_update-True]" time="1.038" /><testcase classname="tests.test_sprint03_adversarial" name="test_cancel_rollback_at_each_persisted_stage[MovimentoEstoque-after_insert-False]" time="0.977" /><testcase classname="tests.test_sprint03_adversarial" name="test_cancel_rollback_at_each_persisted_stage[MovimentoEstoque-after_insert-True]" time="1.800" /><testcase classname="tests.test_sprint03_adversarial" name="test_cancel_rollback_at_each_persisted_stage[LancamentoFinanceiro-after_insert-False]" time="1.491" /><testcase classname="tests.test_sprint03_adversarial" name="test_cancel_rollback_at_each_persisted_stage[LancamentoFinanceiro-after_insert-True]" time="1.176" /><testcase classname="tests.test_sprint03_adversarial" name="test_cancel_rollback_at_each_persisted_stage[OperacaoIdempotente-after_insert-False]" time="0.915" /><testcase classname="tests.test_sprint03_adversarial" name="test_cancel_rollback_at_each_persisted_stage[OperacaoIdempotente-after_insert-True]" time="1.053" /><testcase classname="tests.test_sprint03_adversarial" name="test_cashback_without_customer_cannot_reduce_payment" time="1.136"><failure message="AssertionError: {'data': {'cancelado_em': None, 'cashback_ativado': True, 'cashback_gerado': '0.00', 'cashback_percentual_aplicado': '0.00', ...}, 'message': 'Venda registrada com sucesso.', 'success': True}&#10;assert 201 == 400&#10; +  where 201 = &lt;WrapperTestResponse streamed [201 CREATED]&gt;.status_code">transaction_app = &lt;Flask 'app'&gt;
+
+    def test_cashback_without_customer_cannot_reduce_payment(transaction_app):
+        client = transaction_app.test_client()
+        assert login(client).status_code == 302
+        with transaction_app.app_context():
+            record_id, product_id = stock_setup()
+            payload = sale_payload(product_id)
+            payload["cashback_utilizado"] = "9.99"
+            payload["pagamentos"][0]["valor"] = "0.01"
+        response = client.post("/api/pdv/vendas", json=payload, headers=csrf_headers(client))
+&gt;       assert response.status_code == 400, response.json
+E       AssertionError: {'data': {'cancelado_em': None, 'cashback_ativado': True, 'cashback_gerado': '0.00', 'cashback_percentual_aplicado': '0.00', ...}, 'message': 'Venda registrada com sucesso.', 'success': True}
+E       assert 201 == 400
+E        +  where 201 = &lt;WrapperTestResponse streamed [201 CREATED]&gt;.status_code
+
+tests/test_sprint03_adversarial.py:91: AssertionError</failure></testcase><testcase classname="tests.test_sprint03_adversarial" name="test_partial_refunds_conserve_every_cent[False-0.01]" time="1.177"><failure message="AssertionError: assert Decimal('30.00') == Decimal('29.99')&#10; +  where Decimal('30.00') = sum(&lt;generator object test_partial_refunds_conserve_every_cent.&lt;locals&gt;.&lt;genexpr&gt; at 0x794f80e62c80&gt;, Decimal('0'))&#10; +    where Decimal('0') = Decimal(0)">transaction_app = &lt;Flask 'app'&gt;, discount = '0.01', separate_items = False
+
+    @pytest.mark.parametrize("discount", ["0.01", "0.02", "29.99"])
+    @pytest.mark.parametrize("separate_items", [False, True])
+    def test_partial_refunds_conserve_every_cent(transaction_app, discount, separate_items):
+        with transaction_app.app_context():
+            record_id, product_id = stock_setup()
+            payload = sale_payload(product_id, quantity=3)
+            if separate_items:
+                payload["itens"] = [{"produto_id": product_id, "quantidade": 1} for number in range(3)]
+            payload["desconto_manual"] = discount
+            expected = Decimal("30") - Decimal(discount)
+            payload["pagamentos"][0]["valor"] = str(expected)
+            sale = PdvService.criar_venda(payload, 1, scope(), 1)
+            for number in range(3):
+                item_id = sale["itens"][number if separate_items else 0]["id"]
+                sale = PdvService.cancelar_item_venda(sale["id"], item_id,
+                    {"quantidade": 1, "idempotency_key": f"refund-{number}"}, 1, scope(), 1)
+            refunds = LancamentoFinanceiro.query.filter_by(tipo=TipoFinanceiro.SAIDA).all()
+&gt;           assert sum((entry.valor for entry in refunds), Decimal(0)) == expected
+E           AssertionError: assert Decimal('30.00') == Decimal('29.99')
+E            +  where Decimal('30.00') = sum(&lt;generator object test_partial_refunds_conserve_every_cent.&lt;locals&gt;.&lt;genexpr&gt; at 0x794f80e62c80&gt;, Decimal('0'))
+E            +    where Decimal('0') = Decimal(0)
+
+tests/test_sprint03_adversarial.py:114: AssertionError</failure></testcase><testcase classname="tests.test_sprint03_adversarial" name="test_partial_refunds_conserve_every_cent[False-0.02]" time="1.115"><failure message="AssertionError: assert Decimal('29.97') == Decimal('29.98')&#10; +  where Decimal('29.97') = sum(&lt;generator object test_partial_refunds_conserve_every_cent.&lt;locals&gt;.&lt;genexpr&gt; at 0x794f7e1bdb40&gt;, Decimal('0'))&#10; +    where Decimal('0') = Decimal(0)">transaction_app = &lt;Flask 'app'&gt;, discount = '0.02', separate_items = False
+
+    @pytest.mark.parametrize("discount", ["0.01", "0.02", "29.99"])
+    @pytest.mark.parametrize("separate_items", [False, True])
+    def test_partial_refunds_conserve_every_cent(transaction_app, discount, separate_items):
+        with transaction_app.app_context():
+            record_id, product_id = stock_setup()
+            payload = sale_payload(product_id, quantity=3)
+            if separate_items:
+                payload["itens"] = [{"produto_id": product_id, "quantidade": 1} for number in range(3)]
+            payload["desconto_manual"] = discount
+            expected = Decimal("30") - Decimal(discount)
+            payload["pagamentos"][0]["valor"] = str(expected)
+            sale = PdvService.criar_venda(payload, 1, scope(), 1)
+            for number in range(3):
+                item_id = sale["itens"][number if separate_items else 0]["id"]
+                sale = PdvService.cancelar_item_venda(sale["id"], item_id,
+                    {"quantidade": 1, "idempotency_key": f"refund-{number}"}, 1, scope(), 1)
+            refunds = LancamentoFinanceiro.query.filter_by(tipo=TipoFinanceiro.SAIDA).all()
+&gt;           assert sum((entry.valor for entry in refunds), Decimal(0)) == expected
+E           AssertionError: assert Decimal('29.97') == Decimal('29.98')
+E            +  where Decimal('29.97') = sum(&lt;generator object test_partial_refunds_conserve_every_cent.&lt;locals&gt;.&lt;genexpr&gt; at 0x794f7e1bdb40&gt;, Decimal('0'))
+E            +    where Decimal('0') = Decimal(0)
+
+tests/test_sprint03_adversarial.py:114: AssertionError</failure></testcase><testcase classname="tests.test_sprint03_adversarial" name="test_partial_refunds_conserve_every_cent[False-29.99]" time="1.313"><failure message="AssertionError: assert Decimal('0') == Decimal('0.01')&#10; +  where Decimal('0') = sum(&lt;generator object test_partial_refunds_conserve_every_cent.&lt;locals&gt;.&lt;genexpr&gt; at 0x794f80b6e440&gt;, Decimal('0'))&#10; +    where Decimal('0') = Decimal(0)">transaction_app = &lt;Flask 'app'&gt;, discount = '29.99', separate_items = False
+
+    @pytest.mark.parametrize("discount", ["0.01", "0.02", "29.99"])
+    @pytest.mark.parametrize("separate_items", [False, True])
+    def test_partial_refunds_conserve_every_cent(transaction_app, discount, separate_items):
+        with transaction_app.app_context():
+            record_id, product_id = stock_setup()
+            payload = sale_payload(product_id, quantity=3)
+            if separate_items:
+                payload["itens"] = [{"produto_id": product_id, "quantidade": 1} for number in range(3)]
+            payload["desconto_manual"] = discount
+            expected = Decimal("30") - Decimal(discount)
+            payload["pagamentos"][0]["valor"] = str(expected)
+            sale = PdvService.criar_venda(payload, 1, scope(), 1)
+            for number in range(3):
+                item_id = sale["itens"][number if separate_items else 0]["id"]
+                sale = PdvService.cancelar_item_venda(sale["id"], item_id,
+                    {"quantidade": 1, "idempotency_key": f"refund-{number}"}, 1, scope(), 1)
+            refunds = LancamentoFinanceiro.query.filter_by(tipo=TipoFinanceiro.SAIDA).all()
+&gt;           assert sum((entry.valor for entry in refunds), Decimal(0)) == expected
+E           AssertionError: assert Decimal('0') == Decimal('0.01')
+E            +  where Decimal('0') = sum(&lt;generator object test_partial_refunds_conserve_every_cent.&lt;locals&gt;.&lt;genexpr&gt; at 0x794f80b6e440&gt;, Decimal('0'))
+E            +    where Decimal('0') = Decimal(0)
+
+tests/test_sprint03_adversarial.py:114: AssertionError</failure></testcase><testcase classname="tests.test_sprint03_adversarial" name="test_partial_refunds_conserve_every_cent[True-0.01]" time="0.949"><failure message="ValueError: Este item ja foi cancelado integralmente.">transaction_app = &lt;Flask 'app'&gt;, discount = '0.01', separate_items = True
+
+    @pytest.mark.parametrize("discount", ["0.01", "0.02", "29.99"])
+    @pytest.mark.parametrize("separate_items", [False, True])
+    def test_partial_refunds_conserve_every_cent(transaction_app, discount, separate_items):
+        with transaction_app.app_context():
+            record_id, product_id = stock_setup()
+            payload = sale_payload(product_id, quantity=3)
+            if separate_items:
+                payload["itens"] = [{"produto_id": product_id, "quantidade": 1} for number in range(3)]
+            payload["desconto_manual"] = discount
+            expected = Decimal("30") - Decimal(discount)
+            payload["pagamentos"][0]["valor"] = str(expected)
+            sale = PdvService.criar_venda(payload, 1, scope(), 1)
+            for number in range(3):
+                item_id = sale["itens"][number if separate_items else 0]["id"]
+&gt;               sale = PdvService.cancelar_item_venda(sale["id"], item_id,
+                    {"quantidade": 1, "idempotency_key": f"refund-{number}"}, 1, scope(), 1)
+
+tests/test_sprint03_adversarial.py:111: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+app/services/transaction_service.py:49: in execute
+    result = function(*args, **kwargs)
+app/services/idempotency_service.py:37: in execute
+    result = function(*args, **kwargs)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+venda_id = 1, item_id = 2
+data = {'idempotency_key': 'refund-2', 'quantidade': 1}, tenant_id = 1
+escopo = {'empresa_ids': [1], 'funcionario_id': 1, 'is_admin': True, 'permission_codes': {'cancelar_item_venda', 'cancelar_movimentacao_estoque', 'cancelar_venda', 'criar_adiantamento', 'criar_categoria', 'criar_cliente', ...}, ...}
+funcionario_id = 1
+
+    @staticmethod
+    @atomic_operation
+    @idempotent
+    def cancelar_item_venda(venda_id, item_id, data, tenant_id, escopo, funcionario_id):
+        try:
+            empresa_ids = AcessoEmpresaService.filtrar_empresa_ids(escopo)
+            item = PdvRepository.buscar_item_venda(venda_id, item_id, tenant_id)
+            if not item or not item.venda or (empresa_ids is not None and item.venda.empresa_id not in empresa_ids):
+                raise ValueError("Item da venda nao encontrado.")
+    
+            venda = item.venda
+            if venda.status != StatusVenda.FINALIZADA:
+                raise ValueError("Somente vendas finalizadas podem ter itens cancelados.")
+    
+            configuracao = ClienteService.obter_modelo_configuracao_empresa(venda.empresa_id, tenant_id)
+            PdvService._validar_janela_cancelamento(
+                data_base=venda.data_venda,
+                limite_horas=configuracao.cancelamento_item_limite_horas,
+                mensagem="A janela de cancelamento de itens expirou para esta empresa.",
+            )
+    
+            quantidade_informada = data.get("quantidade")
+            if quantidade_informada in (None, ""):
+                quantidade_informada = 1
+            quantidade_cancelar = PdvService._to_positive_int(quantidade_informada, "quantidade")
+            quantidade_cancelada_atual = int(getattr(item, "quantidade_cancelada", 0) or 0)
+            quantidade_disponivel = int(item.quantidade) - quantidade_cancelada_atual
+            if quantidade_disponivel &lt;= 0:
+&gt;               raise ValueError("Este item ja foi cancelado integralmente.")
+E               ValueError: Este item ja foi cancelado integralmente.
+
+app/services/pdv_service.py:421: ValueError</failure></testcase><testcase classname="tests.test_sprint03_adversarial" name="test_partial_refunds_conserve_every_cent[True-0.02]" time="0.966"><failure message="ValueError: Este item ja foi cancelado integralmente.">transaction_app = &lt;Flask 'app'&gt;, discount = '0.02', separate_items = True
+
+    @pytest.mark.parametrize("discount", ["0.01", "0.02", "29.99"])
+    @pytest.mark.parametrize("separate_items", [False, True])
+    def test_partial_refunds_conserve_every_cent(transaction_app, discount, separate_items):
+        with transaction_app.app_context():
+            record_id, product_id = stock_setup()
+            payload = sale_payload(product_id, quantity=3)
+            if separate_items:
+                payload["itens"] = [{"produto_id": product_id, "quantidade": 1} for number in range(3)]
+            payload["desconto_manual"] = discount
+            expected = Decimal("30") - Decimal(discount)
+            payload["pagamentos"][0]["valor"] = str(expected)
+            sale = PdvService.criar_venda(payload, 1, scope(), 1)
+            for number in range(3):
+                item_id = sale["itens"][number if separate_items else 0]["id"]
+&gt;               sale = PdvService.cancelar_item_venda(sale["id"], item_id,
+                    {"quantidade": 1, "idempotency_key": f"refund-{number}"}, 1, scope(), 1)
+
+tests/test_sprint03_adversarial.py:111: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+app/services/transaction_service.py:49: in execute
+    result = function(*args, **kwargs)
+app/services/idempotency_service.py:37: in execute
+    result = function(*args, **kwargs)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+venda_id = 1, item_id = 2
+data = {'idempotency_key': 'refund-2', 'quantidade': 1}, tenant_id = 1
+escopo = {'empresa_ids': [1], 'funcionario_id': 1, 'is_admin': True, 'permission_codes': {'cancelar_item_venda', 'cancelar_movimentacao_estoque', 'cancelar_venda', 'criar_adiantamento', 'criar_categoria', 'criar_cliente', ...}, ...}
+funcionario_id = 1
+
+    @staticmethod
+    @atomic_operation
+    @idempotent
+    def cancelar_item_venda(venda_id, item_id, data, tenant_id, escopo, funcionario_id):
+        try:
+            empresa_ids = AcessoEmpresaService.filtrar_empresa_ids(escopo)
+            item = PdvRepository.buscar_item_venda(venda_id, item_id, tenant_id)
+            if not item or not item.venda or (empresa_ids is not None and item.venda.empresa_id not in empresa_ids):
+                raise ValueError("Item da venda nao encontrado.")
+    
+            venda = item.venda
+            if venda.status != StatusVenda.FINALIZADA:
+                raise ValueError("Somente vendas finalizadas podem ter itens cancelados.")
+    
+            configuracao = ClienteService.obter_modelo_configuracao_empresa(venda.empresa_id, tenant_id)
+            PdvService._validar_janela_cancelamento(
+                data_base=venda.data_venda,
+                limite_horas=configuracao.cancelamento_item_limite_horas,
+                mensagem="A janela de cancelamento de itens expirou para esta empresa.",
+            )
+    
+            quantidade_informada = data.get("quantidade")
+            if quantidade_informada in (None, ""):
+                quantidade_informada = 1
+            quantidade_cancelar = PdvService._to_positive_int(quantidade_informada, "quantidade")
+            quantidade_cancelada_atual = int(getattr(item, "quantidade_cancelada", 0) or 0)
+            quantidade_disponivel = int(item.quantidade) - quantidade_cancelada_atual
+            if quantidade_disponivel &lt;= 0:
+&gt;               raise ValueError("Este item ja foi cancelado integralmente.")
+E               ValueError: Este item ja foi cancelado integralmente.
+
+app/services/pdv_service.py:421: ValueError</failure></testcase><testcase classname="tests.test_sprint03_adversarial" name="test_partial_refunds_conserve_every_cent[True-29.99]" time="1.096"><failure message="ValueError: Este item ja foi cancelado integralmente.">transaction_app = &lt;Flask 'app'&gt;, discount = '29.99', separate_items = True
+
+    @pytest.mark.parametrize("discount", ["0.01", "0.02", "29.99"])
+    @pytest.mark.parametrize("separate_items", [False, True])
+    def test_partial_refunds_conserve_every_cent(transaction_app, discount, separate_items):
+        with transaction_app.app_context():
+            record_id, product_id = stock_setup()
+            payload = sale_payload(product_id, quantity=3)
+            if separate_items:
+                payload["itens"] = [{"produto_id": product_id, "quantidade": 1} for number in range(3)]
+            payload["desconto_manual"] = discount
+            expected = Decimal("30") - Decimal(discount)
+            payload["pagamentos"][0]["valor"] = str(expected)
+            sale = PdvService.criar_venda(payload, 1, scope(), 1)
+            for number in range(3):
+                item_id = sale["itens"][number if separate_items else 0]["id"]
+&gt;               sale = PdvService.cancelar_item_venda(sale["id"], item_id,
+                    {"quantidade": 1, "idempotency_key": f"refund-{number}"}, 1, scope(), 1)
+
+tests/test_sprint03_adversarial.py:111: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+app/services/transaction_service.py:49: in execute
+    result = function(*args, **kwargs)
+app/services/idempotency_service.py:37: in execute
+    result = function(*args, **kwargs)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+venda_id = 1, item_id = 2
+data = {'idempotency_key': 'refund-2', 'quantidade': 1}, tenant_id = 1
+escopo = {'empresa_ids': [1], 'funcionario_id': 1, 'is_admin': True, 'permission_codes': {'cancelar_item_venda', 'cancelar_movimentacao_estoque', 'cancelar_venda', 'criar_adiantamento', 'criar_categoria', 'criar_cliente', ...}, ...}
+funcionario_id = 1
+
+    @staticmethod
+    @atomic_operation
+    @idempotent
+    def cancelar_item_venda(venda_id, item_id, data, tenant_id, escopo, funcionario_id):
+        try:
+            empresa_ids = AcessoEmpresaService.filtrar_empresa_ids(escopo)
+            item = PdvRepository.buscar_item_venda(venda_id, item_id, tenant_id)
+            if not item or not item.venda or (empresa_ids is not None and item.venda.empresa_id not in empresa_ids):
+                raise ValueError("Item da venda nao encontrado.")
+    
+            venda = item.venda
+            if venda.status != StatusVenda.FINALIZADA:
+                raise ValueError("Somente vendas finalizadas podem ter itens cancelados.")
+    
+            configuracao = ClienteService.obter_modelo_configuracao_empresa(venda.empresa_id, tenant_id)
+            PdvService._validar_janela_cancelamento(
+                data_base=venda.data_venda,
+                limite_horas=configuracao.cancelamento_item_limite_horas,
+                mensagem="A janela de cancelamento de itens expirou para esta empresa.",
+            )
+    
+            quantidade_informada = data.get("quantidade")
+            if quantidade_informada in (None, ""):
+                quantidade_informada = 1
+            quantidade_cancelar = PdvService._to_positive_int(quantidade_informada, "quantidade")
+            quantidade_cancelada_atual = int(getattr(item, "quantidade_cancelada", 0) or 0)
+            quantidade_disponivel = int(item.quantidade) - quantidade_cancelada_atual
+            if quantidade_disponivel &lt;= 0:
+&gt;               raise ValueError("Este item ja foi cancelado integralmente.")
+E               ValueError: Este item ja foi cancelado integralmente.
+
+app/services/pdv_service.py:421: ValueError</failure></testcase><testcase classname="tests.test_sprint03_adversarial" name="test_two_sales_for_last_unit_with_distinct_keys" time="0.876" /><testcase classname="tests.test_sprint03_adversarial" name="test_concurrent_same_key_different_payload" time="0.970" /><testcase classname="tests.test_sprint03_adversarial" name="test_simultaneous_full_and_partial_cancellation" time="0.908" /><testcase classname="tests.test_sprint03_adversarial" name="test_each_layout_invalid_middle_row_preserves_existing_data[categorias]" time="0.909" /><testcase classname="tests.test_sprint03_adversarial" name="test_each_layout_invalid_middle_row_preserves_existing_data[produtos]" time="0.968" /><testcase classname="tests.test_sprint03_adversarial" name="test_each_layout_invalid_middle_row_preserves_existing_data[funcionarios]" time="1.308" /><testcase classname="tests.test_sprint03_adversarial" name="test_each_layout_invalid_middle_row_preserves_existing_data[cupons]" time="0.893" /><testcase classname="tests.test_sprint03_adversarial" name="test_each_layout_invalid_middle_row_preserves_existing_data[formas_pagamento]" time="0.902" /><testcase classname="tests.test_sprint03_adversarial" name="test_each_layout_invalid_middle_row_preserves_existing_data[categorias_financeiras]" time="0.935" /><testcase classname="tests.test_sprint03_adversarial" name="test_duplicate_concurrent_batches_are_updates_without_duplicate_effects[categorias]" time="0.707" /><testcase classname="tests.test_sprint03_adversarial" name="test_duplicate_concurrent_batches_are_updates_without_duplicate_effects[produtos]" time="0.759" /><testcase classname="tests.test_sprint03_adversarial" name="test_duplicate_concurrent_batches_are_updates_without_duplicate_effects[funcionarios]" time="1.747" /><testcase classname="tests.test_sprint03_adversarial" name="test_duplicate_concurrent_batches_are_updates_without_duplicate_effects[cupons]" time="1.041" /><testcase classname="tests.test_sprint03_adversarial" name="test_duplicate_concurrent_batches_are_updates_without_duplicate_effects[formas_pagamento]" time="1.838" /><testcase classname="tests.test_sprint03_adversarial" name="test_duplicate_concurrent_batches_are_updates_without_duplicate_effects[categorias_financeiras]" time="1.715" /><testcase classname="tests.test_sprint03_adversarial" name="test_money_boundary_is_client_error_and_atomic[NaN]" time="1.496" /><testcase classname="tests.test_sprint03_adversarial" name="test_money_boundary_is_client_error_and_atomic[sNaN]" time="1.068" /><testcase classname="tests.test_sprint03_adversarial" name="test_money_boundary_is_client_error_and_atomic[Infinity]" time="1.166" /><testcase classname="tests.test_sprint03_adversarial" name="test_money_boundary_is_client_error_and_atomic[-Infinity]" time="0.991" /><testcase classname="tests.test_sprint03_adversarial" name="test_money_boundary_is_client_error_and_atomic[9999999999.999]" time="0.849" /><testcase classname="tests.test_sprint03_adversarial" name="test_money_boundary_is_client_error_and_atomic[1e1000]" time="0.823" /><testcase classname="tests.test_sprint03_adversarial" name="test_product_update_preserves_barcode_when_omitted" time="0.971"><failure message="AssertionError: assert '2000010000029' == '1234567890123'&#10;  &#10;  - 1234567890123&#10;  + 2000010000029">transaction_app = &lt;Flask 'app'&gt;
+
+    def test_product_update_preserves_barcode_when_omitted(transaction_app):
+        with transaction_app.app_context():
+            record = product(codigo_barras="1234567890123")
+            updated = ProdutoService.atualizar(record.id, {"nome": "Changed", "empresa_id": 1}, 1, scope())
+&gt;           assert updated.produto.codigo_barras == "1234567890123"
+E           AssertionError: assert '2000010000029' == '1234567890123'
+E             
+E             - 1234567890123
+E             + 2000010000029
+
+tests/test_sprint03_adversarial.py:199: AssertionError</failure></testcase><testcase classname="tests.test_sprint03_adversarial" name="test_employee_history_cannot_be_detached_by_delete" time="0.841"><failure message="Failed: DID NOT RAISE &lt;class 'ValueError'&gt;">transaction_app = &lt;Flask 'app'&gt;
+
+    def test_employee_history_cannot_be_detached_by_delete(transaction_app):
+        with transaction_app.app_context():
+            record = FuncionarioService.criar(employee(empresa_ids=[1]), 1)
+            record_id, employee_id = record.id, record.funcionario_id
+            product("Historical", criado_por_funcionario_id=employee_id)
+            historical_product = Produto.query.one()
+            historical_product.criado_por_funcionario_id = employee_id
+            db.session.commit()
+            before = snapshot()
+&gt;           with pytest.raises(ValueError, match="historico"):
+E           Failed: DID NOT RAISE &lt;class 'ValueError'&gt;
+
+tests/test_sprint03_adversarial.py:211: Failed</failure></testcase></testsuite></testsuites>

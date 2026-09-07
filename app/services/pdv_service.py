@@ -191,6 +191,8 @@ class PdvService:
             total_sem_cashback = (subtotal - desconto_total).quantize(Decimal("0.01"))
             if not cashback_ativado:
                 cashback_utilizado = Decimal("0.00")
+            if cashback_utilizado > Decimal("0.00") and not cliente_id:
+                raise ValueError("Informe o cliente para utilizar cashback.")
             if cashback_utilizado > total_sem_cashback:
                 raise ValueError("O cashback utilizado nao pode ser maior que o total liquido da venda.")
 
@@ -426,22 +428,22 @@ class PdvService:
             valor_bruto_cancelado = (
                 PdvService._to_decimal_value(item.valor_unitario) * quantidade_cancelar
             ).quantize(Decimal("0.01"))
-            percentual_desconto = Decimal("0.00")
-            if PdvService._to_decimal_value(venda.subtotal) > Decimal("0.00"):
-                percentual_desconto = (
-                    PdvService._to_decimal_value(venda.desconto) / PdvService._to_decimal_value(venda.subtotal)
-                )
-            valor_cancelamento_liquido = (
-                valor_bruto_cancelado * (Decimal("1.00") - percentual_desconto)
-            ).quantize(Decimal("0.01"))
-
             base_pos_desconto = (
                 PdvService._to_decimal_value(venda.total) + PdvService._to_decimal_value(getattr(venda, "cashback_utilizado", 0))
             ).quantize(Decimal("0.01"))
+            bruto_acumulado = valor_bruto_cancelado + sum(
+                (PdvService._to_decimal_value(record.valor_unitario) * int(record.quantidade_cancelada or 0)
+                 for record in venda.itens), Decimal("0.00")
+            )
+            cancelado_anterior = PdvService._to_decimal_value(venda.valor_cancelado)
+            cancelado_alvo = Decimal("0.00")
+            if venda.subtotal > 0:
+                cancelado_alvo = (base_pos_desconto * bruto_acumulado / venda.subtotal).quantize(Decimal("0.01"))
+            valor_cancelamento_liquido = cancelado_alvo - cancelado_anterior
             cashback_restaurar = Decimal("0.00")
             if base_pos_desconto > Decimal("0.00") and PdvService._to_decimal_value(getattr(venda, "cashback_utilizado", 0)) > Decimal("0.00"):
-                cashback_restaurar = (
-                    valor_cancelamento_liquido * PdvService._to_decimal_value(venda.cashback_utilizado) / base_pos_desconto
+                cashback_restaurar = (cancelado_alvo * venda.cashback_utilizado / base_pos_desconto).quantize(Decimal("0.01")) - (
+                    cancelado_anterior * venda.cashback_utilizado / base_pos_desconto
                 ).quantize(Decimal("0.01"))
 
             valor_estorno_financeiro = (valor_cancelamento_liquido - cashback_restaurar).quantize(Decimal("0.01"))

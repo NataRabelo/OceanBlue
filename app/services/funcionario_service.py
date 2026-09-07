@@ -233,6 +233,7 @@ class FuncionarioService:
             funcionario_id = funcionario_empresa.funcionario_id
             funcionario = funcionario_empresa.funcionario
 
+            FuncionarioService._validar_exclusao_vinculo(funcionario_id, funcionario_empresa.empresa_id, tenant_id)
             FuncionarioRepository.deletar(funcionario_empresa)
             db.session.flush()
 
@@ -243,6 +244,23 @@ class FuncionarioService:
         except Exception:
             FuncionarioRepository.rollback()
             raise
+
+    @staticmethod
+    def _validar_exclusao_vinculo(funcionario_id, empresa_id, tenant_id):
+        for table in db.metadata.tables.values():
+            if table.name == "funcionarios_empresa":
+                continue
+            references = [foreign.parent for foreign in table.foreign_keys
+                          if foreign.target_fullname == "funcionarios.id"]
+            if not references:
+                continue
+            query = db.select(table).where(db.or_(*(column == funcionario_id for column in references)))
+            if "tenant_id" in table.c:
+                query = query.where(table.c.tenant_id == tenant_id)
+            if "empresa_id" in table.c:
+                query = query.where(table.c.empresa_id == empresa_id)
+            if db.session.execute(query.limit(1)).first():
+                raise ValueError("Funcionario com historico deve ser desativado, preservando seu vinculo.")
 
     @staticmethod
     def _sincronizar_empresas(funcionario, data, tenant_id, empresa_id):
@@ -261,6 +279,7 @@ class FuncionarioService:
         links = FuncionarioEmpresa.query.filter_by(tenant_id=tenant_id, funcionario_id=funcionario.id).all()
         for link in links:
             if link.empresa_id not in empresa_ids:
+                FuncionarioService._validar_exclusao_vinculo(funcionario.id, link.empresa_id, tenant_id)
                 db.session.delete(link)
             else:
                 link.ativo = funcionario.ativo

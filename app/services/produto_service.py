@@ -145,7 +145,7 @@ class ProdutoService:
         descricao = (data.get("descricao") or "").strip() or None
         categoria_id = ProdutoService._to_int(data.get("categoria_id"), "Categoria")
         empresa_id = ProdutoService._to_int(data.get("empresa_id"), "Empresa")
-        codigo_barras = ProdutoService._normalize_barcode(data.get("codigo_barras"))
+        codigo_barras = ProdutoService._normalize_barcode(data.get("codigo_barras", produto.codigo_barras))
         possui_ncm = ProdutoService._to_bool(data.get("possui_ncm", False))
         ncm = ProdutoService._normalize_ncm(data.get("ncm"))
         estoque_minimo = ProdutoService._to_non_negative_int(data.get("estoque_minimo", 0), "estoque minimo")

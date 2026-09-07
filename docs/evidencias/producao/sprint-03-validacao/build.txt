@@ -1,0 +1,104 @@
+ Image oceanblue-s03-validation-final-test Building 
+ Image oceanblue-s03-validation-final-smoke Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 1.11kB 0.0s done
+#1 DONE 0.0s
+
+#2 [test internal] load build definition from Dockerfile.test
+#2 transferring dockerfile: 365B 0.0s done
+#2 DONE 0.0s
+
+#3 [smoke internal] load build definition from Dockerfile
+#3 transferring dockerfile: 947B 0.0s done
+#3 DONE 0.0s
+
+#4 [smoke internal] load metadata for docker.io/library/python:3.12.12-slim-bookworm@sha256:593bd06efe90efa80dc4eee3948be7c0fde4134606dd40d8dd8dbcade98e669c
+#4 DONE 0.1s
+
+#5 [test internal] load .dockerignore
+#5 transferring context: 297B done
+#5 DONE 0.0s
+
+#6 [test 1/6] FROM docker.io/library/python:3.12.12-slim-bookworm@sha256:593bd06efe90efa80dc4eee3948be7c0fde4134606dd40d8dd8dbcade98e669c
+#6 resolve docker.io/library/python:3.12.12-slim-bookworm@sha256:593bd06efe90efa80dc4eee3948be7c0fde4134606dd40d8dd8dbcade98e669c 0.0s done
+#6 DONE 0.0s
+
+#7 [smoke internal] load build context
+#7 transferring context: 210.90kB 0.1s done
+#7 transferring context: 210.90kB 0.1s done
+#7 DONE 0.2s
+
+#8 [test 3/6] COPY requirements-dev.txt .
+#8 CACHED
+
+#9 [test 2/6] WORKDIR /app
+#9 CACHED
+
+#10 [test 4/6] RUN python -m pip install --no-cache-dir --require-hashes -r requirements-dev.txt
+#10 CACHED
+
+#11 [smoke 3/6] COPY requirements.txt .
+#11 CACHED
+
+#9 [smoke 2/6] WORKDIR /app
+#9 CACHED
+
+#12 [smoke 4/6] RUN python -m pip install --no-cache-dir --require-hashes -r requirements.txt
+#12 CACHED
+
+#13 [test 5/6] COPY . .
+#13 DONE 1.8s
+
+#14 [smoke 5/6] COPY . .
+#14 DONE 1.8s
+
+#15 [test 6/6] RUN useradd --create-home tester && chown -R tester:tester /app
+#15 DONE 4.5s
+
+#16 [smoke 6/6] RUN sed -i 's/\r$//' /app/docker-entrypoint.sh     && cp /app/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh     && chmod +x /usr/local/bin/docker-entrypoint.sh     && adduser --disabled-password --gecos "" appuser     && chown -R appuser:appuser /app
+#16 1.062 Adding user `appuser' ...
+#16 1.062 Adding new group `appuser' (1000) ...
+#16 1.122 Adding new user `appuser' (1000) with group `appuser (1000)' ...
+#16 1.215 Creating home directory `/home/appuser' ...
+#16 1.215 Copying files from `/etc/skel' ...
+#16 1.273 Adding new user `appuser' to supplemental / extra groups `users' ...
+#16 1.273 Adding user `appuser' to group `users' ...
+#16 DONE 5.0s
+
+#17 [test] exporting to image
+#17 exporting layers 0.4s done
+#17 exporting manifest sha256:adb702d70b9b34901deef6bc396ccf8e6838eddaee89284718018690c9512562 0.0s done
+#17 exporting config sha256:33925236e0e5e37e808c4452717999ad31227a1d2b3d5b7af4fe42ee9a21495f 0.0s done
+#17 exporting attestation manifest sha256:2dd9059e2028f4ed2f709dcc5b622c5d0517e8ffecfea495a01f0c9659857009 0.0s done
+#17 exporting manifest list sha256:bedc4eb7d77193d371ba833231bde1e840b2097e18ec641a4d319cb94bb4d5ae 0.0s done
+#17 naming to docker.io/library/oceanblue-s03-validation-final-test:latest done
+#17 unpacking to docker.io/library/oceanblue-s03-validation-final-test:latest
+#17 unpacking to docker.io/library/oceanblue-s03-validation-final-test:latest 1.0s done
+#17 DONE 1.7s
+
+#18 [smoke] exporting to image
+#18 exporting layers 1.2s done
+#18 exporting manifest sha256:c4e3f71c21221a8545e8a16f9cfb82e2b1f488da1cf361c8f0e74b0b34160cf0
+#18 exporting manifest sha256:c4e3f71c21221a8545e8a16f9cfb82e2b1f488da1cf361c8f0e74b0b34160cf0 0.6s done
+#18 exporting config sha256:241899c57feb19f2aa13c9f9a20bb28f6e9df1101544f66035d6dcc4b4824dec
+#18 exporting config sha256:241899c57feb19f2aa13c9f9a20bb28f6e9df1101544f66035d6dcc4b4824dec 0.3s done
+#18 exporting attestation manifest sha256:7b8a963ae6a508457c176e54820de88ee47ad64b1e5af54cb7eabe8f339158d9
+#18 exporting attestation manifest sha256:7b8a963ae6a508457c176e54820de88ee47ad64b1e5af54cb7eabe8f339158d9 0.2s done
+#18 exporting manifest list sha256:3824c02474f76eaa293de249a12bbe0002ffbd8fbf45fef268adea4485732653
+#18 exporting manifest list sha256:3824c02474f76eaa293de249a12bbe0002ffbd8fbf45fef268adea4485732653 0.2s done
+#18 naming to docker.io/library/oceanblue-s03-validation-final-smoke:latest
+#18 naming to docker.io/library/oceanblue-s03-validation-final-smoke:latest done
+#18 unpacking to docker.io/library/oceanblue-s03-validation-final-smoke:latest
+#18 ...
+
+#19 [test] resolving provenance for metadata file
+#19 DONE 0.0s
+
+#18 [smoke] exporting to image
+#18 unpacking to docker.io/library/oceanblue-s03-validation-final-smoke:latest 0.3s done
+#18 DONE 3.0s
+
+#20 [smoke] resolving provenance for metadata file
+#20 DONE 0.0s
+ Image oceanblue-s03-validation-final-test Built 
+ Image oceanblue-s03-validation-final-smoke Built 

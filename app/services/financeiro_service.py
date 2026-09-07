@@ -22,6 +22,7 @@ from app.repositorys.financeiro_repository import FinanceiroRepository
 from app.services.acesso_empresa_service import AcessoEmpresaService
 from app.services.tenant_bootstrap_service import TenantBootstrapService
 from app.services.time_service import TimeService
+from app.services.money_service import allocate_money
 
 
 class FinanceiroService:
@@ -623,21 +624,15 @@ class FinanceiroService:
             if not lancamentos_origem:
                 raise ValueError("Nao foi possivel localizar os lancamentos financeiros da venda.")
 
-            total_entradas = sum(FinanceiroService._to_decimal_value(item.valor) for item in lancamentos_origem)
-            if total_entradas <= Decimal("0.00"):
-                raise ValueError("Nao foi possivel calcular o rateio do estorno financeiro.")
-
-            restante = valor_total_estorno
+            balances = []
+            for source in lancamentos_origem:
+                refunded = sum((record.valor for record in LancamentoFinanceiro.query.filter_by(
+                    tenant_id=tenant_id, lancamento_origem_id=source.id, tipo=TipoFinanceiro.SAIDA
+                ).all()), Decimal("0.00"))
+                balances.append(source.valor - refunded)
+            portions = allocate_money(valor_total_estorno, balances)
             estornos = []
-            for index, lancamento_origem in enumerate(lancamentos_origem, start=1):
-                if index == len(lancamentos_origem):
-                    valor_lancamento = restante
-                else:
-                    proporcao = FinanceiroService._to_decimal_value(lancamento_origem.valor) / total_entradas
-                    valor_lancamento = (valor_total_estorno * proporcao).quantize(Decimal("0.01"))
-                    if valor_lancamento > restante:
-                        valor_lancamento = restante
-
+            for lancamento_origem, valor_lancamento in zip(lancamentos_origem, portions):
                 if valor_lancamento <= Decimal("0.00"):
                     continue
 
@@ -663,9 +658,6 @@ class FinanceiroService:
                 )
                 FinanceiroRepository.adicionar(estorno)
                 estornos.append(estorno)
-                restante = (restante - valor_lancamento).quantize(Decimal("0.01"))
-                if restante <= Decimal("0.00"):
-                    break
 
             if persistir:
                 FinanceiroRepository.salvar()

@@ -52,6 +52,12 @@ Funcionarios existentes preservam a senha quando a coluna esta vazia. Novos func
 
 ## Migration e reproducao
 
+A validacao independente acrescenta a revision `6f7a8b9c0d1e`: CHECKs de finitude para as 47 colunas NUMERIC das 19 tabelas monetarias/configuracoes. `NaN` e infinitos sao recusados inclusive por SQL direto. A migration valida o legado e falha transacionalmente se houver valores invalidos; preserve os registros, investigue a origem e reconcilie-os antes de repetir o upgrade. Ela nao substitui valores invalidos nem apaga historico. Os testes demonstram que o head anterior e os dados permanecem intactos na falha.
+
+O uso de cashback exige cliente identificado. Cancelamentos parciais calculam o valor acumulado proporcionalmente ao bruto devolvido, descontando o valor ja cancelado: o ultimo centavo e compensado ao longo das devolucoes, inclusive quando a mesma mercadoria ocupa varias linhas. Estornos financeiros e restituicoes de cashback respeitam o saldo restante de cada pagamento/credito original. O cashback gerado tambem e reduzido proporcionalmente ao saldo da venda, chegando a zero no cancelamento integral por itens.
+
+A exclusao ou retirada de vinculo de funcionario com historico e recusada; desative o cadastro para preservar autoria e referencias. Atualizar um produto sem enviar `codigo_barras` preserva o codigo existente; o envio explicitamente vazio continua solicitando geracao automatica.
+
 A revision `5e6f7a8b9c0d` cria `operacoes_idempotentes`, com indice, unicidade e trigger de isolamento, e o indice unico de baixa por item. Ela depende da Sprint 2. Duplicidades historicas de baixas impedem a criacao do indice; devem ser investigadas e reconciliadas antes da migracao, sem apagar evidencias. Downgrade remove a memoria de idempotencia: nao repetir requisicoes antigas depois de um downgrade.
 
 Em Docker Linux e PowerShell 7, execute na raiz do checkout:
@@ -61,3 +67,5 @@ pwsh -NoProfile -File scripts/validate_sprint03.ps1 -Project oceanblue-s03-repro
 ```
 
 Use um nome de projeto novo. O runner constroi imagens com locks, valida inventario e todas as migrations, executa a suite completa com cobertura minima de 50%, exige JUnit sem falhas/erros/skips, realiza smoke produtivo e banco indisponivel e remove os seus containers em `finally`. As evidencias sao geradas em `docs/evidencias/producao/sprint-03/`. Nao acessa banco produtivo nem integra boleto/Nota Fiscal reais.
+
+Para reproduzir o aceite independente, incluindo os gates negativos da imagem e os testes destrutivos adicionais, execute `pwsh -NoProfile -File scripts/validate_sprint03_adversarial.ps1 -Project oceanblue-s03-validation-repro`. Os artefatos ficam em `docs/evidencias/producao/sprint-03-validacao/`; execucoes posteriores substituem os arquivos de aceite nessa pasta. Os seis formatos referem-se aos seis layouts XLSX descritos acima. Nenhuma integracao real e habilitada pelo runner.

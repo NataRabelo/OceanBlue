@@ -1,0 +1,22 @@
+time="2026-09-06T23:27:47-03:00" level=warning msg="Found orphan containers (oceanblue-s03-attack-retest, oceanblue-s03-attack-extra-corrected, oceanblue-s03-attack-extra, oceanblue-s03-attack-run) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up."
+ Container oceanblue-s03-attack-db-test-1 Running 
+ Container oceanblue-s03-attack-db-test-1 Waiting 
+ Container oceanblue-s03-attack-db-test-1 Healthy 
+ Container oceanblue-s03-attack-retest2 Creating 
+ Container oceanblue-s03-attack-retest2 Created 
+============================= test session starts ==============================
+platform linux -- Python 3.12.12, pytest-8.3.5, pluggy-1.6.0
+rootdir: /app
+configfile: pytest.ini
+plugins: cov-6.1.1
+collected 142 items
+
+tests/test_sprint03_adversarial.py ..................................... [ 26%]
+................                                                         [ 37%]
+tests/test_sprint03_database.py ..........                               [ 44%]
+tests/test_sprint03_transactions.py .................................... [ 69%]
+...............                                                          [ 80%]
+tests/test_fluxo_pdv_financeiro.py ............................          [100%]
+
+--------------------- generated xml file: /tmp/retest2.xml ---------------------
+======================= 142 passed in 153.23s (0:02:33) ========================

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="7" skipped="0" tests="7" time="9.944" timestamp="2026-09-07T02:26:08.172066+00:00" hostname="62ec47804c8c"><testcase classname="tests.test_sprint03_database" name="test_postgresql_rejects_nan_in_persisted_money[produtos_empresa-valor_compra]" time="2.320"><failure message="Failed: DID NOT RAISE &lt;class 'sqlalchemy.exc.IntegrityError'&gt;">transaction_app = &lt;Flask 'app'&gt;, table = 'produtos_empresa'
+column = 'valor_compra'
+
+    @pytest.mark.parametrize("table,column", [
+        ("produtos_empresa", "valor_compra"), ("funcionarios", "salario"),
+        ("vendas", "total"), ("pagamentos_venda", "valor"),
+        ("itens_venda", "valor_unitario"), ("lancamentos_financeiros", "valor"),
+        ("movimentos_estoque", "valor_unitario"),
+    ])
+    def test_postgresql_rejects_nan_in_persisted_money(transaction_app, table, column):
+        with transaction_app.app_context():
+            _, product_id = stock_setup()
+            PdvService.criar_venda(sale_payload(product_id), 1, scope(), 1)
+            db.session.remove()
+&gt;           with pytest.raises(IntegrityError):
+E           Failed: DID NOT RAISE &lt;class 'sqlalchemy.exc.IntegrityError'&gt;
+
+tests/test_sprint03_database.py:23: Failed</failure></testcase><testcase classname="tests.test_sprint03_database" name="test_postgresql_rejects_nan_in_persisted_money[funcionarios-salario]" time="1.166"><failure message="Failed: DID NOT RAISE &lt;class 'sqlalchemy.exc.IntegrityError'&gt;">transaction_app = &lt;Flask 'app'&gt;, table = 'funcionarios', column = 'salario'
+
+    @pytest.mark.parametrize("table,column", [
+        ("produtos_empresa", "valor_compra"), ("funcionarios", "salario"),
+        ("vendas", "total"), ("pagamentos_venda", "valor"),
+        ("itens_venda", "valor_unitario"), ("lancamentos_financeiros", "valor"),
+        ("movimentos_estoque", "valor_unitario"),
+    ])
+    def test_postgresql_rejects_nan_in_persisted_money(transaction_app, table, column):
+        with transaction_app.app_context():
+            _, product_id = stock_setup()
+            PdvService.criar_venda(sale_payload(product_id), 1, scope(), 1)
+            db.session.remove()
+&gt;           with pytest.raises(IntegrityError):
+E           Failed: DID NOT RAISE &lt;class 'sqlalchemy.exc.IntegrityError'&gt;
+
+tests/test_sprint03_database.py:23: Failed</failure></testcase><testcase classname="tests.test_sprint03_database" name="test_postgresql_rejects_nan_in_persisted_money[vendas-total]" time="1.335"><failure message="Failed: DID NOT RAISE &lt;class 'sqlalchemy.exc.IntegrityError'&gt;">transaction_app = &lt;Flask 'app'&gt;, table = 'vendas', column = 'total'
+
+    @pytest.mark.parametrize("table,column", [
+        ("produtos_empresa", "valor_compra"), ("funcionarios", "salario"),
+        ("vendas", "total"), ("pagamentos_venda", "valor"),
+        ("itens_venda", "valor_unitario"), ("lancamentos_financeiros", "valor"),
+        ("movimentos_estoque", "valor_unitario"),
+    ])
+    def test_postgresql_rejects_nan_in_persisted_money(transaction_app, table, column):
+        with transaction_app.app_context():
+            _, product_id = stock_setup()
+            PdvService.criar_venda(sale_payload(product_id), 1, scope(), 1)
+            db.session.remove()
+&gt;           with pytest.raises(IntegrityError):
+E           Failed: DID NOT RAISE &lt;class 'sqlalchemy.exc.IntegrityError'&gt;
+
+tests/test_sprint03_database.py:23: Failed</failure></testcase><testcase classname="tests.test_sprint03_database" name="test_postgresql_rejects_nan_in_persisted_money[pagamentos_venda-valor]" time="1.083"><failure message="Failed: DID NOT RAISE &lt;class 'sqlalchemy.exc.IntegrityError'&gt;">transaction_app = &lt;Flask 'app'&gt;, table = 'pagamentos_venda', column = 'valor'
+
+    @pytest.mark.parametrize("table,column", [
+        ("produtos_empresa", "valor_compra"), ("funcionarios", "salario"),
+        ("vendas", "total"), ("pagamentos_venda", "valor"),
+        ("itens_venda", "valor_unitario"), ("lancamentos_financeiros", "valor"),
+        ("movimentos_estoque", "valor_unitario"),
+    ])
+    def test_postgresql_rejects_nan_in_persisted_money(transaction_app, table, column):
+        with transaction_app.app_context():
+            _, product_id = stock_setup()
+            PdvService.criar_venda(sale_payload(product_id), 1, scope(), 1)
+            db.session.remove()
+&gt;           with pytest.raises(IntegrityError):
+E           Failed: DID NOT RAISE &lt;class 'sqlalchemy.exc.IntegrityError'&gt;
+
+tests/test_sprint03_database.py:23: Failed</failure></testcase><testcase classname="tests.test_sprint03_database" name="test_postgresql_rejects_nan_in_persisted_money[itens_venda-valor_unitario]" time="1.074"><failure message="Failed: DID NOT RAISE &lt;class 'sqlalchemy.exc.IntegrityError'&gt;">transaction_app = &lt;Flask 'app'&gt;, table = 'itens_venda'
+column = 'valor_unitario'
+
+    @pytest.mark.parametrize("table,column", [
+        ("produtos_empresa", "valor_compra"), ("funcionarios", "salario"),
+        ("vendas", "total"), ("pagamentos_venda", "valor"),
+        ("itens_venda", "valor_unitario"), ("lancamentos_financeiros", "valor"),
+        ("movimentos_estoque", "valor_unitario"),
+    ])
+    def test_postgresql_rejects_nan_in_persisted_money(transaction_app, table, column):
+        with transaction_app.app_context():
+            _, product_id = stock_setup()
+            PdvService.criar_venda(sale_payload(product_id), 1, scope(), 1)
+            db.session.remove()
+&gt;           with pytest.raises(IntegrityError):
+E           Failed: DID NOT RAISE &lt;class 'sqlalchemy.exc.IntegrityError'&gt;
+
+tests/test_sprint03_database.py:23: Failed</failure></testcase><testcase classname="tests.test_sprint03_database" name="test_postgresql_rejects_nan_in_persisted_money[lancamentos_financeiros-valor]" time="1.380"><failure message="Failed: DID NOT RAISE &lt;class 'sqlalchemy.exc.IntegrityError'&gt;">transaction_app = &lt;Flask 'app'&gt;, table = 'lancamentos_financeiros'
+column = 'valor'
+
+    @pytest.mark.parametrize("table,column", [
+        ("produtos_empresa", "valor_compra"), ("funcionarios", "salario"),
+        ("vendas", "total"), ("pagamentos_venda", "valor"),
+        ("itens_venda", "valor_unitario"), ("lancamentos_financeiros", "valor"),
+        ("movimentos_estoque", "valor_unitario"),
+    ])
+    def test_postgresql_rejects_nan_in_persisted_money(transaction_app, table, column):
+        with transaction_app.app_context():
+            _, product_id = stock_setup()
+            PdvService.criar_venda(sale_payload(product_id), 1, scope(), 1)
+            db.session.remove()
+&gt;           with pytest.raises(IntegrityError):
+E           Failed: DID NOT RAISE &lt;class 'sqlalchemy.exc.IntegrityError'&gt;
+
+tests/test_sprint03_database.py:23: Failed</failure></testcase><testcase classname="tests.test_sprint03_database" name="test_postgresql_rejects_nan_in_persisted_money[movimentos_estoque-valor_unitario]" time="1.333"><failure message="Failed: DID NOT RAISE &lt;class 'sqlalchemy.exc.IntegrityError'&gt;">transaction_app = &lt;Flask 'app'&gt;, table = 'movimentos_estoque'
+column = 'valor_unitario'
+
+    @pytest.mark.parametrize("table,column", [
+        ("produtos_empresa", "valor_compra"), ("funcionarios", "salario"),
+        ("vendas", "total"), ("pagamentos_venda", "valor"),
+        ("itens_venda", "valor_unitario"), ("lancamentos_financeiros", "valor"),
+        ("movimentos_estoque", "valor_unitario"),
+    ])
+    def test_postgresql_rejects_nan_in_persisted_money(transaction_app, table, column):
+        with transaction_app.app_context():
+            _, product_id = stock_setup()
+            PdvService.criar_venda(sale_payload(product_id), 1, scope(), 1)
+            db.session.remove()
+&gt;           with pytest.raises(IntegrityError):
+E           Failed: DID NOT RAISE &lt;class 'sqlalchemy.exc.IntegrityError'&gt;
+
+tests/test_sprint03_database.py:23: Failed</failure></testcase></testsuite></testsuites>

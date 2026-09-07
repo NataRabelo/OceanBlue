@@ -1,0 +1,314 @@
+time="2026-09-06T23:22:53-03:00" level=warning msg="Found orphan containers (oceanblue-s03-attack-extra, oceanblue-s03-attack-run) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up."
+ Container oceanblue-s03-attack-db-test-1 Running 
+ Container oceanblue-s03-attack-db-test-1 Waiting 
+ Container oceanblue-s03-attack-db-test-1 Healthy 
+ Container oceanblue-s03-attack-extra-corrected Creating 
+ Container oceanblue-s03-attack-extra-corrected Created 
+============================= test session starts ==============================
+platform linux -- Python 3.12.12, pytest-8.3.5, pluggy-1.6.0
+rootdir: /app
+configfile: pytest.ini
+plugins: cov-6.1.1
+collected 53 items / 44 deselected / 9 selected
+
+tests/test_sprint03_adversarial.py FFF......                             [100%]
+
+=================================== FAILURES ===================================
+____________ test_refunds_do_not_overpay_individual_payment_sources ____________
+
+transaction_app = <Flask 'app'>
+
+    def test_refunds_do_not_overpay_individual_payment_sources(transaction_app):
+        with transaction_app.app_context():
+            _, product_id = stock_setup()
+            payload = sale_payload(product_id, quantity=3)
+            payment = payload["pagamentos"][0]["forma_pagamento_id"]
+            payload["desconto_manual"] = "29.97"
+            payload["pagamentos"] = [{"forma_pagamento_id": payment, "valor": "0.01"} for number in range(3)]
+            sale = PdvService.criar_venda(payload, 1, scope(), 1)
+            for number in range(3):
+                PdvService.cancelar_item_venda(sale["id"], sale["itens"][0]["id"],
+                    {"quantidade": 1, "idempotency_key": f"source-{number}"}, 1, scope(), 1)
+            for source in LancamentoFinanceiro.query.filter_by(tipo=TipoFinanceiro.ENTRADA).all():
+                refunds = LancamentoFinanceiro.query.filter_by(lancamento_origem_id=source.id).all()
+>               assert sum((refund.valor for refund in refunds), Decimal(0)) == source.valor
+E               AssertionError: assert Decimal('0') == Decimal('0.01')
+E                +  where Decimal('0') = sum(<generator object test_refunds_do_not_overpay_individual_payment_sources.<locals>.<genexpr> at 0x73156fbb3340>, Decimal('0'))
+E                +    where Decimal('0') = Decimal(0)
+E                +  and   Decimal('0.01') = <LancamentoFinanceiro 1>.valor
+
+tests/test_sprint03_adversarial.py:243: AssertionError
+---------------------------- Captured stderr setup -----------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+______________ test_partial_refunds_revoke_all_generated_cashback ______________
+
+transaction_app = <Flask 'app'>
+
+    def test_partial_refunds_revoke_all_generated_cashback(transaction_app):
+        with transaction_app.app_context():
+            _, product_id = stock_setup()
+            customer_id = customer_setup()
+            config = ConfiguracaoClienteEmpresa.query.filter_by(tenant_id=1, empresa_id=1).one()
+            config.cashback_percentual = Decimal("0.04")
+            db.session.commit()
+            payload = {**sale_payload(product_id, quantity=3), "cliente_id": customer_id}
+            sale = PdvService.criar_venda(payload, 1, scope(), 1)
+            assert CreditoCashbackCliente.query.one().valor_original == Decimal("0.01")
+            for number in range(3):
+                PdvService.cancelar_item_venda(sale["id"], sale["itens"][0]["id"],
+                    {"quantidade": 1, "idempotency_key": f"earned-{number}"}, 1, scope(), 1)
+>           assert CarteiraCliente.query.one().saldo_disponivel == 0
+E           AssertionError: assert Decimal('0.01') == 0
+E            +  where Decimal('0.01') = <CarteiraCliente 1>.saldo_disponivel
+E            +    where <CarteiraCliente 1> = one()
+E            +      where one = <flask_sqlalchemy.query.Query object at 0x73156f74a720>.one
+E            +        where <flask_sqlalchemy.query.Query object at 0x73156f74a720> = CarteiraCliente.query
+
+tests/test_sprint03_adversarial.py:259: AssertionError
+__________ test_partial_refunds_restore_each_consumed_credit_exactly ___________
+
+self = <sqlalchemy.engine.base.Connection object at 0x73156f21c770>
+dialect = <sqlalchemy.dialects.postgresql.psycopg2.PGDialect_psycopg2 object at 0x73156ed63e90>
+context = <sqlalchemy.dialects.postgresql.psycopg2.PGExecutionContext_psycopg2 object at 0x73156f21c2f0>
+statement = <sqlalchemy.dialects.postgresql.base.PGCompiler object at 0x731571aa7890>
+parameters = [{'atualizado_em': datetime.datetime(2026, 9, 7, 2, 22, 59, 318338), 'creditos_cashback_cliente_id': 3, 'saldo_disponivel': Decimal('0.02')}]
+
+    def _exec_single_context(
+        self,
+        dialect: Dialect,
+        context: ExecutionContext,
+        statement: Union[str, Compiled],
+        parameters: Optional[_AnyMultiExecuteParams],
+    ) -> CursorResult[Any]:
+        """continue the _execute_context() method for a single DBAPI
+        cursor.execute() or cursor.executemany() call.
+    
+        """
+        if dialect.bind_typing is BindTyping.SETINPUTSIZES:
+            generic_setinputsizes = context._prepare_set_input_sizes()
+    
+            if generic_setinputsizes:
+                try:
+                    dialect.do_set_input_sizes(
+                        context.cursor, generic_setinputsizes, context
+                    )
+                except BaseException as e:
+                    self._handle_dbapi_exception(
+                        e, str(statement), parameters, None, context
+                    )
+    
+        cursor, str_statement, parameters = (
+            context.cursor,
+            context.statement,
+            context.parameters,
+        )
+    
+        effective_parameters: Optional[_AnyExecuteParams]
+    
+        if not context.executemany:
+            effective_parameters = parameters[0]
+        else:
+            effective_parameters = parameters
+    
+        if self._has_events or self.engine._has_events:
+            for fn in self.dispatch.before_cursor_execute:
+                str_statement, effective_parameters = fn(
+                    self,
+                    cursor,
+                    str_statement,
+                    effective_parameters,
+                    context,
+                    context.executemany,
+                )
+    
+        if self._echo:
+            self._log_info(str_statement)
+    
+            stats = context._get_cache_stats()
+    
+            if not self.engine.hide_parameters:
+                self._log_info(
+                    "[%s] %r",
+                    stats,
+                    sql_util._repr_params(
+                        effective_parameters,
+                        batches=10,
+                        ismulti=context.executemany,
+                    ),
+                )
+            else:
+                self._log_info(
+                    "[%s] [SQL parameters hidden due to hide_parameters=True]",
+                    stats,
+                )
+    
+        evt_handled: bool = False
+        try:
+            if context.execute_style is ExecuteStyle.EXECUTEMANY:
+                effective_parameters = cast(
+                    "_CoreMultiExecuteParams", effective_parameters
+                )
+                if self.dialect._has_events:
+                    for fn in self.dialect.dispatch.do_executemany:
+                        if fn(
+                            cursor,
+                            str_statement,
+                            effective_parameters,
+                            context,
+                        ):
+                            evt_handled = True
+                            break
+                if not evt_handled:
+                    self.dialect.do_executemany(
+                        cursor,
+                        str_statement,
+                        effective_parameters,
+                        context,
+                    )
+            elif not effective_parameters and context.no_parameters:
+                if self.dialect._has_events:
+                    for fn in self.dialect.dispatch.do_execute_no_params:
+                        if fn(cursor, str_statement, context):
+                            evt_handled = True
+                            break
+                if not evt_handled:
+                    self.dialect.do_execute_no_params(
+                        cursor, str_statement, context
+                    )
+            else:
+                effective_parameters = cast(
+                    "_CoreSingleExecuteParams", effective_parameters
+                )
+                if self.dialect._has_events:
+                    for fn in self.dialect.dispatch.do_execute:
+                        if fn(
+                            cursor,
+                            str_statement,
+                            effective_parameters,
+                            context,
+                        ):
+                            evt_handled = True
+                            break
+                if not evt_handled:
+>                   self.dialect.do_execute(
+                        cursor, str_statement, effective_parameters, context
+                    )
+
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <sqlalchemy.dialects.postgresql.psycopg2.PGDialect_psycopg2 object at 0x73156ed63e90>
+cursor = <cursor object at 0x73156e9b31f0; closed: -1>
+statement = 'UPDATE creditos_cashback_cliente SET saldo_disponivel=%(saldo_disponivel)s, atualizado_em=%(atualizado_em)s WHERE creditos_cashback_cliente.id = %(creditos_cashback_cliente_id)s'
+parameters = {'atualizado_em': datetime.datetime(2026, 9, 7, 2, 22, 59, 318338), 'creditos_cashback_cliente_id': 3, 'saldo_disponivel': Decimal('0.02')}
+context = <sqlalchemy.dialects.postgresql.psycopg2.PGExecutionContext_psycopg2 object at 0x73156f21c2f0>
+
+    def do_execute(self, cursor, statement, parameters, context=None):
+>       cursor.execute(statement, parameters)
+E       psycopg2.errors.CheckViolation: new row for relation "creditos_cashback_cliente" violates check constraint "ck_credito_cashback_saldo_lte_original"
+E       DETAIL:  Failing row contains (1, 1, 1, 3, 0.01, 0.02, 2026-10-07, null, null, Cashback gerado automaticamente pela venda VEN-1-20260907022258-..., 3, 2026-09-07 02:22:59.02061, 2026-09-07 02:22:59.318338, 1).
+
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: CheckViolation
+
+The above exception was the direct cause of the following exception:
+
+transaction_app = <Flask 'app'>
+
+    def test_partial_refunds_restore_each_consumed_credit_exactly(transaction_app):
+        with transaction_app.app_context():
+            _, product_id = stock_setup(20)
+            customer_id = customer_setup()
+            for number in range(3):
+                PdvService.criar_venda({**sale_payload(product_id, key=f"earn-{number}"), "cliente_id": customer_id}, 1, scope(), 1)
+            assert CarteiraCliente.query.one().saldo_disponivel == Decimal("0.03")
+            payload = {**sale_payload(product_id, quantity=3, key="spend"), "cliente_id": customer_id,
+                "cashback_utilizado": "0.03"}
+            payload["pagamentos"][0]["valor"] = "29.97"
+            sale = PdvService.criar_venda(payload, 1, scope(), 1)
+            for number in range(3):
+>               PdvService.cancelar_item_venda(sale["id"], sale["itens"][0]["id"],
+                    {"quantidade": 1, "idempotency_key": f"restore-{number}"}, 1, scope(), 1)
+
+tests/test_sprint03_adversarial.py:276: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+app/services/transaction_service.py:49: in execute
+    result = function(*args, **kwargs)
+app/services/idempotency_service.py:37: in execute
+    result = function(*args, **kwargs)
+app/services/pdv_service.py:486: in cancelar_item_venda
+    ClienteService.ajustar_cashback_gerado_por_cancelamento_item(
+app/services/cliente_service.py:1063: in ajustar_cashback_gerado_por_cancelamento_item
+    credito = ClienteRepository.buscar_credito_por_venda_origem(venda.id, tenant_id)
+app/repositorys/cliente_repository.py:224: in buscar_credito_por_venda_origem
+    .first()
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/query.py:2766: in first
+    return self.limit(1)._iter().first()  # type: ignore
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/query.py:2864: in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/session.py:2373: in execute
+    return self._execute_internal(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/session.py:2250: in _execute_internal
+    ) = compile_state_cls.orm_pre_session_exec(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/context.py:577: in orm_pre_session_exec
+    session._autoflush()
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/session.py:3073: in _autoflush
+    raise e.with_traceback(sys.exc_info()[2])
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/session.py:3062: in _autoflush
+    self.flush()
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/session.py:4353: in flush
+    self._flush(objects)
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/session.py:4488: in _flush
+    with util.safe_reraise():
+/usr/local/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py:122: in __exit__
+    raise exc_value.with_traceback(exc_tb)
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/session.py:4449: in _flush
+    flush_context.execute()
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/unitofwork.py:465: in execute
+    rec.execute(self)
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/unitofwork.py:641: in execute
+    util.preloaded.orm_persistence.save_obj(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/persistence.py:86: in save_obj
+    _emit_update_statements(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/persistence.py:913: in _emit_update_statements
+    c = connection.execute(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1421: in execute
+    return meth(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/sql/elements.py:526: in _execute_on_connection
+    return connection._execute_clauseelement(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1643: in _execute_clauseelement
+    ret = self._execute_context(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1848: in _execute_context
+    return self._exec_single_context(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1988: in _exec_single_context
+    self._handle_dbapi_exception(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2365: in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <sqlalchemy.dialects.postgresql.psycopg2.PGDialect_psycopg2 object at 0x73156ed63e90>
+cursor = <cursor object at 0x73156e9b31f0; closed: -1>
+statement = 'UPDATE creditos_cashback_cliente SET saldo_disponivel=%(saldo_disponivel)s, atualizado_em=%(atualizado_em)s WHERE creditos_cashback_cliente.id = %(creditos_cashback_cliente_id)s'
+parameters = {'atualizado_em': datetime.datetime(2026, 9, 7, 2, 22, 59, 318338), 'creditos_cashback_cliente_id': 3, 'saldo_disponivel': Decimal('0.02')}
+context = <sqlalchemy.dialects.postgresql.psycopg2.PGExecutionContext_psycopg2 object at 0x73156f21c2f0>
+
+    def do_execute(self, cursor, statement, parameters, context=None):
+>       cursor.execute(statement, parameters)
+E       sqlalchemy.exc.IntegrityError: (raised as a result of Query-invoked autoflush; consider using a session.no_autoflush block if this flush is occurring prematurely)
+E       (psycopg2.errors.CheckViolation) new row for relation "creditos_cashback_cliente" violates check constraint "ck_credito_cashback_saldo_lte_original"
+E       DETAIL:  Failing row contains (1, 1, 1, 3, 0.01, 0.02, 2026-10-07, null, null, Cashback gerado automaticamente pela venda VEN-1-20260907022258-..., 3, 2026-09-07 02:22:59.02061, 2026-09-07 02:22:59.318338, 1).
+E       
+E       [SQL: UPDATE creditos_cashback_cliente SET saldo_disponivel=%(saldo_disponivel)s, atualizado_em=%(atualizado_em)s WHERE creditos_cashback_cliente.id = %(creditos_cashback_cliente_id)s]
+E       [parameters: {'saldo_disponivel': Decimal('0.02'), 'atualizado_em': datetime.datetime(2026, 9, 7, 2, 22, 59, 318338), 'creditos_cashback_cliente_id': 3}]
+E       (Background on this error at: https://sqlalche.me/e/20/gkpj)
+
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: IntegrityError
+----------------- generated xml file: /tmp/extra-corrected.xml -----------------
+=========================== short test summary info ============================
+FAILED tests/test_sprint03_adversarial.py::test_refunds_do_not_overpay_individual_payment_sources
+FAILED tests/test_sprint03_adversarial.py::test_partial_refunds_revoke_all_generated_cashback
+FAILED tests/test_sprint03_adversarial.py::test_partial_refunds_restore_each_consumed_credit_exactly
+================== 3 failed, 6 passed, 44 deselected in 9.58s ==================
+

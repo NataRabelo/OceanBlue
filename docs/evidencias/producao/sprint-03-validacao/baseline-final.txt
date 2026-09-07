@@ -1,0 +1,678 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.12, pytest-8.3.5, pluggy-1.6.0
+rootdir: /app
+configfile: pytest.ini
+plugins: cov-6.1.1
+collected 63 items / 3 deselected / 60 selected
+
+tests/test_sprint03_adversarial.py ..............FFFFFFF................ [ 61%]
+.....FFFFF......                                                         [ 88%]
+tests/test_sprint03_database.py FFFFFFF                                  [100%]
+
+=================================== FAILURES ===================================
+_____________ test_cashback_without_customer_cannot_reduce_payment _____________
+
+transaction_app = <Flask 'app'>
+
+    def test_cashback_without_customer_cannot_reduce_payment(transaction_app):
+        client = transaction_app.test_client()
+        assert login(client).status_code == 302
+        with transaction_app.app_context():
+            record_id, product_id = stock_setup()
+            payload = sale_payload(product_id)
+            payload["cashback_utilizado"] = "9.99"
+            payload["pagamentos"][0]["valor"] = "0.01"
+        response = client.post("/api/pdv/vendas", json=payload, headers=csrf_headers(client))
+>       assert response.status_code == 400, response.json
+E       AssertionError: {'data': {'cancelado_em': None, 'cashback_ativado': True, 'cashback_gerado': '0.00', 'cashback_percentual_aplicado': '0.00', ...}, 'message': 'Venda registrada com sucesso.', 'success': True}
+E       assert 201 == 400
+E        +  where 201 = <WrapperTestResponse streamed [201 CREATED]>.status_code
+
+tests/test_sprint03_adversarial.py:92: AssertionError
+_____________ test_partial_refunds_conserve_every_cent[False-0.01] _____________
+
+transaction_app = <Flask 'app'>, discount = '0.01', separate_items = False
+
+    @pytest.mark.parametrize("discount", ["0.01", "0.02", "29.99"])
+    @pytest.mark.parametrize("separate_items", [False, True])
+    def test_partial_refunds_conserve_every_cent(transaction_app, discount, separate_items):
+        with transaction_app.app_context():
+            record_id, product_id = stock_setup()
+            payload = sale_payload(product_id, quantity=3)
+            if separate_items:
+                payload["itens"] = [{"produto_id": product_id, "quantidade": 1} for number in range(3)]
+            payload["desconto_manual"] = discount
+            expected = Decimal("30") - Decimal(discount)
+            payload["pagamentos"][0]["valor"] = str(expected)
+            sale = PdvService.criar_venda(payload, 1, scope(), 1)
+            item_ids = [record["id"] for record in sale["itens"]]
+            for number in range(3):
+                item_id = item_ids[number if separate_items else 0]
+                sale = PdvService.cancelar_item_venda(sale["id"], item_id,
+                    {"quantidade": 1, "idempotency_key": f"refund-{number}"}, 1, scope(), 1)
+            refunds = LancamentoFinanceiro.query.filter_by(tipo=TipoFinanceiro.SAIDA).all()
+>           assert sum((entry.valor for entry in refunds), Decimal(0)) == expected
+E           AssertionError: assert Decimal('30.00') == Decimal('29.99')
+E            +  where Decimal('30.00') = sum(<generator object test_partial_refunds_conserve_every_cent.<locals>.<genexpr> at 0x729191d53d00>, Decimal('0'))
+E            +    where Decimal('0') = Decimal(0)
+
+tests/test_sprint03_adversarial.py:116: AssertionError
+_____________ test_partial_refunds_conserve_every_cent[False-0.02] _____________
+
+transaction_app = <Flask 'app'>, discount = '0.02', separate_items = False
+
+    @pytest.mark.parametrize("discount", ["0.01", "0.02", "29.99"])
+    @pytest.mark.parametrize("separate_items", [False, True])
+    def test_partial_refunds_conserve_every_cent(transaction_app, discount, separate_items):
+        with transaction_app.app_context():
+            record_id, product_id = stock_setup()
+            payload = sale_payload(product_id, quantity=3)
+            if separate_items:
+                payload["itens"] = [{"produto_id": product_id, "quantidade": 1} for number in range(3)]
+            payload["desconto_manual"] = discount
+            expected = Decimal("30") - Decimal(discount)
+            payload["pagamentos"][0]["valor"] = str(expected)
+            sale = PdvService.criar_venda(payload, 1, scope(), 1)
+            item_ids = [record["id"] for record in sale["itens"]]
+            for number in range(3):
+                item_id = item_ids[number if separate_items else 0]
+                sale = PdvService.cancelar_item_venda(sale["id"], item_id,
+                    {"quantidade": 1, "idempotency_key": f"refund-{number}"}, 1, scope(), 1)
+            refunds = LancamentoFinanceiro.query.filter_by(tipo=TipoFinanceiro.SAIDA).all()
+>           assert sum((entry.valor for entry in refunds), Decimal(0)) == expected
+E           AssertionError: assert Decimal('29.97') == Decimal('29.98')
+E            +  where Decimal('29.97') = sum(<generator object test_partial_refunds_conserve_every_cent.<locals>.<genexpr> at 0x729190f45c00>, Decimal('0'))
+E            +    where Decimal('0') = Decimal(0)
+
+tests/test_sprint03_adversarial.py:116: AssertionError
+____________ test_partial_refunds_conserve_every_cent[False-29.99] _____________
+
+transaction_app = <Flask 'app'>, discount = '29.99', separate_items = False
+
+    @pytest.mark.parametrize("discount", ["0.01", "0.02", "29.99"])
+    @pytest.mark.parametrize("separate_items", [False, True])
+    def test_partial_refunds_conserve_every_cent(transaction_app, discount, separate_items):
+        with transaction_app.app_context():
+            record_id, product_id = stock_setup()
+            payload = sale_payload(product_id, quantity=3)
+            if separate_items:
+                payload["itens"] = [{"produto_id": product_id, "quantidade": 1} for number in range(3)]
+            payload["desconto_manual"] = discount
+            expected = Decimal("30") - Decimal(discount)
+            payload["pagamentos"][0]["valor"] = str(expected)
+            sale = PdvService.criar_venda(payload, 1, scope(), 1)
+            item_ids = [record["id"] for record in sale["itens"]]
+            for number in range(3):
+                item_id = item_ids[number if separate_items else 0]
+                sale = PdvService.cancelar_item_venda(sale["id"], item_id,
+                    {"quantidade": 1, "idempotency_key": f"refund-{number}"}, 1, scope(), 1)
+            refunds = LancamentoFinanceiro.query.filter_by(tipo=TipoFinanceiro.SAIDA).all()
+>           assert sum((entry.valor for entry in refunds), Decimal(0)) == expected
+E           AssertionError: assert Decimal('0') == Decimal('0.01')
+E            +  where Decimal('0') = sum(<generator object test_partial_refunds_conserve_every_cent.<locals>.<genexpr> at 0x729193d2fc40>, Decimal('0'))
+E            +    where Decimal('0') = Decimal(0)
+
+tests/test_sprint03_adversarial.py:116: AssertionError
+_____________ test_partial_refunds_conserve_every_cent[True-0.01] ______________
+
+transaction_app = <Flask 'app'>, discount = '0.01', separate_items = True
+
+    @pytest.mark.parametrize("discount", ["0.01", "0.02", "29.99"])
+    @pytest.mark.parametrize("separate_items", [False, True])
+    def test_partial_refunds_conserve_every_cent(transaction_app, discount, separate_items):
+        with transaction_app.app_context():
+            record_id, product_id = stock_setup()
+            payload = sale_payload(product_id, quantity=3)
+            if separate_items:
+                payload["itens"] = [{"produto_id": product_id, "quantidade": 1} for number in range(3)]
+            payload["desconto_manual"] = discount
+            expected = Decimal("30") - Decimal(discount)
+            payload["pagamentos"][0]["valor"] = str(expected)
+            sale = PdvService.criar_venda(payload, 1, scope(), 1)
+            item_ids = [record["id"] for record in sale["itens"]]
+            for number in range(3):
+                item_id = item_ids[number if separate_items else 0]
+                sale = PdvService.cancelar_item_venda(sale["id"], item_id,
+                    {"quantidade": 1, "idempotency_key": f"refund-{number}"}, 1, scope(), 1)
+            refunds = LancamentoFinanceiro.query.filter_by(tipo=TipoFinanceiro.SAIDA).all()
+>           assert sum((entry.valor for entry in refunds), Decimal(0)) == expected
+E           AssertionError: assert Decimal('30.00') == Decimal('29.99')
+E            +  where Decimal('30.00') = sum(<generator object test_partial_refunds_conserve_every_cent.<locals>.<genexpr> at 0x729190d57c40>, Decimal('0'))
+E            +    where Decimal('0') = Decimal(0)
+
+tests/test_sprint03_adversarial.py:116: AssertionError
+_____________ test_partial_refunds_conserve_every_cent[True-0.02] ______________
+
+transaction_app = <Flask 'app'>, discount = '0.02', separate_items = True
+
+    @pytest.mark.parametrize("discount", ["0.01", "0.02", "29.99"])
+    @pytest.mark.parametrize("separate_items", [False, True])
+    def test_partial_refunds_conserve_every_cent(transaction_app, discount, separate_items):
+        with transaction_app.app_context():
+            record_id, product_id = stock_setup()
+            payload = sale_payload(product_id, quantity=3)
+            if separate_items:
+                payload["itens"] = [{"produto_id": product_id, "quantidade": 1} for number in range(3)]
+            payload["desconto_manual"] = discount
+            expected = Decimal("30") - Decimal(discount)
+            payload["pagamentos"][0]["valor"] = str(expected)
+            sale = PdvService.criar_venda(payload, 1, scope(), 1)
+            item_ids = [record["id"] for record in sale["itens"]]
+            for number in range(3):
+                item_id = item_ids[number if separate_items else 0]
+                sale = PdvService.cancelar_item_venda(sale["id"], item_id,
+                    {"quantidade": 1, "idempotency_key": f"refund-{number}"}, 1, scope(), 1)
+            refunds = LancamentoFinanceiro.query.filter_by(tipo=TipoFinanceiro.SAIDA).all()
+>           assert sum((entry.valor for entry in refunds), Decimal(0)) == expected
+E           AssertionError: assert Decimal('29.97') == Decimal('29.98')
+E            +  where Decimal('29.97') = sum(<generator object test_partial_refunds_conserve_every_cent.<locals>.<genexpr> at 0x72918fbecf40>, Decimal('0'))
+E            +    where Decimal('0') = Decimal(0)
+
+tests/test_sprint03_adversarial.py:116: AssertionError
+_____________ test_partial_refunds_conserve_every_cent[True-29.99] _____________
+
+transaction_app = <Flask 'app'>, discount = '29.99', separate_items = True
+
+    @pytest.mark.parametrize("discount", ["0.01", "0.02", "29.99"])
+    @pytest.mark.parametrize("separate_items", [False, True])
+    def test_partial_refunds_conserve_every_cent(transaction_app, discount, separate_items):
+        with transaction_app.app_context():
+            record_id, product_id = stock_setup()
+            payload = sale_payload(product_id, quantity=3)
+            if separate_items:
+                payload["itens"] = [{"produto_id": product_id, "quantidade": 1} for number in range(3)]
+            payload["desconto_manual"] = discount
+            expected = Decimal("30") - Decimal(discount)
+            payload["pagamentos"][0]["valor"] = str(expected)
+            sale = PdvService.criar_venda(payload, 1, scope(), 1)
+            item_ids = [record["id"] for record in sale["itens"]]
+            for number in range(3):
+                item_id = item_ids[number if separate_items else 0]
+                sale = PdvService.cancelar_item_venda(sale["id"], item_id,
+                    {"quantidade": 1, "idempotency_key": f"refund-{number}"}, 1, scope(), 1)
+            refunds = LancamentoFinanceiro.query.filter_by(tipo=TipoFinanceiro.SAIDA).all()
+>           assert sum((entry.valor for entry in refunds), Decimal(0)) == expected
+E           AssertionError: assert Decimal('0') == Decimal('0.01')
+E            +  where Decimal('0') = sum(<generator object test_partial_refunds_conserve_every_cent.<locals>.<genexpr> at 0x729191d50dc0>, Decimal('0'))
+E            +    where Decimal('0') = Decimal(0)
+
+tests/test_sprint03_adversarial.py:116: AssertionError
+______________ test_product_update_preserves_barcode_when_omitted ______________
+
+transaction_app = <Flask 'app'>
+
+    def test_product_update_preserves_barcode_when_omitted(transaction_app):
+        with transaction_app.app_context():
+            record = product(codigo_barras="1234567890123")
+            updated = ProdutoService.atualizar(record.id, {"nome": "Changed", "empresa_id": 1}, 1, scope())
+>           assert updated.produto.codigo_barras == "1234567890123"
+E           AssertionError: assert '2000010000029' == '1234567890123'
+E             
+E             - 1234567890123
+E             + 2000010000029
+
+tests/test_sprint03_adversarial.py:201: AssertionError
+______________ test_employee_history_cannot_be_detached_by_delete ______________
+
+transaction_app = <Flask 'app'>
+
+    def test_employee_history_cannot_be_detached_by_delete(transaction_app):
+        with transaction_app.app_context():
+            record = FuncionarioService.criar(employee(empresa_ids=[1]), 1)
+            record_id, employee_id = record.id, record.funcionario_id
+            product("Historical", criado_por_funcionario_id=employee_id)
+            historical_product = Produto.query.one()
+            historical_product.criado_por_funcionario_id = employee_id
+            db.session.commit()
+            before = snapshot()
+>           with pytest.raises(ValueError, match="historico"):
+E           Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_sprint03_adversarial.py:213: Failed
+____________ test_refunds_do_not_overpay_individual_payment_sources ____________
+
+transaction_app = <Flask 'app'>
+
+    def test_refunds_do_not_overpay_individual_payment_sources(transaction_app):
+        with transaction_app.app_context():
+            _, product_id = stock_setup()
+            payload = sale_payload(product_id, quantity=3)
+            payment = payload["pagamentos"][0]["forma_pagamento_id"]
+            payload["desconto_manual"] = "29.97"
+            payload["pagamentos"] = [{"forma_pagamento_id": payment, "valor": "0.01"} for number in range(3)]
+            sale = PdvService.criar_venda(payload, 1, scope(), 1)
+            for number in range(3):
+                PdvService.cancelar_item_venda(sale["id"], sale["itens"][0]["id"],
+                    {"quantidade": 1, "idempotency_key": f"source-{number}"}, 1, scope(), 1)
+            for source in LancamentoFinanceiro.query.filter_by(tipo=TipoFinanceiro.ENTRADA).all():
+                refunds = LancamentoFinanceiro.query.filter_by(lancamento_origem_id=source.id).all()
+>               assert sum((refund.valor for refund in refunds), Decimal(0)) == source.valor
+E               AssertionError: assert Decimal('0') == Decimal('0.01')
+E                +  where Decimal('0') = sum(<generator object test_refunds_do_not_overpay_individual_payment_sources.<locals>.<genexpr> at 0x729190f47640>, Decimal('0'))
+E                +    where Decimal('0') = Decimal(0)
+E                +  and   Decimal('0.01') = <LancamentoFinanceiro 1>.valor
+
+tests/test_sprint03_adversarial.py:244: AssertionError
+______________ test_partial_refunds_revoke_all_generated_cashback ______________
+
+transaction_app = <Flask 'app'>
+
+    def test_partial_refunds_revoke_all_generated_cashback(transaction_app):
+        with transaction_app.app_context():
+            _, product_id = stock_setup()
+            customer_id = customer_setup()
+            config = ConfiguracaoClienteEmpresa.query.filter_by(tenant_id=1, empresa_id=1).one()
+            config.cashback_percentual = Decimal("0.04")
+            db.session.commit()
+            payload = {**sale_payload(product_id, quantity=3), "cliente_id": customer_id}
+            sale = PdvService.criar_venda(payload, 1, scope(), 1)
+            assert CreditoCashbackCliente.query.one().valor_original == Decimal("0.01")
+            for number in range(3):
+                PdvService.cancelar_item_venda(sale["id"], sale["itens"][0]["id"],
+                    {"quantidade": 1, "idempotency_key": f"earned-{number}"}, 1, scope(), 1)
+>           assert CarteiraCliente.query.one().saldo_disponivel == 0
+E           AssertionError: assert Decimal('0.01') == 0
+E            +  where Decimal('0.01') = <CarteiraCliente 1>.saldo_disponivel
+E            +    where <CarteiraCliente 1> = one()
+E            +      where one = <flask_sqlalchemy.query.Query object at 0x72918fa94860>.one
+E            +        where <flask_sqlalchemy.query.Query object at 0x72918fa94860> = CarteiraCliente.query
+
+tests/test_sprint03_adversarial.py:260: AssertionError
+__________ test_partial_refunds_restore_each_consumed_credit_exactly ___________
+
+self = <sqlalchemy.engine.base.Connection object at 0x72918e2445f0>
+dialect = <sqlalchemy.dialects.postgresql.psycopg2.PGDialect_psycopg2 object at 0x72918fa65760>
+context = <sqlalchemy.dialects.postgresql.psycopg2.PGExecutionContext_psycopg2 object at 0x72918e6f9190>
+statement = <sqlalchemy.dialects.postgresql.base.PGCompiler object at 0x72918e372450>
+parameters = [{'atualizado_em': datetime.datetime(2026, 9, 7, 2, 33, 17, 434523), 'creditos_cashback_cliente_id': 3, 'saldo_disponivel': Decimal('0.02')}]
+
+    def _exec_single_context(
+        self,
+        dialect: Dialect,
+        context: ExecutionContext,
+        statement: Union[str, Compiled],
+        parameters: Optional[_AnyMultiExecuteParams],
+    ) -> CursorResult[Any]:
+        """continue the _execute_context() method for a single DBAPI
+        cursor.execute() or cursor.executemany() call.
+    
+        """
+        if dialect.bind_typing is BindTyping.SETINPUTSIZES:
+            generic_setinputsizes = context._prepare_set_input_sizes()
+    
+            if generic_setinputsizes:
+                try:
+                    dialect.do_set_input_sizes(
+                        context.cursor, generic_setinputsizes, context
+                    )
+                except BaseException as e:
+                    self._handle_dbapi_exception(
+                        e, str(statement), parameters, None, context
+                    )
+    
+        cursor, str_statement, parameters = (
+            context.cursor,
+            context.statement,
+            context.parameters,
+        )
+    
+        effective_parameters: Optional[_AnyExecuteParams]
+    
+        if not context.executemany:
+            effective_parameters = parameters[0]
+        else:
+            effective_parameters = parameters
+    
+        if self._has_events or self.engine._has_events:
+            for fn in self.dispatch.before_cursor_execute:
+                str_statement, effective_parameters = fn(
+                    self,
+                    cursor,
+                    str_statement,
+                    effective_parameters,
+                    context,
+                    context.executemany,
+                )
+    
+        if self._echo:
+            self._log_info(str_statement)
+    
+            stats = context._get_cache_stats()
+    
+            if not self.engine.hide_parameters:
+                self._log_info(
+                    "[%s] %r",
+                    stats,
+                    sql_util._repr_params(
+                        effective_parameters,
+                        batches=10,
+                        ismulti=context.executemany,
+                    ),
+                )
+            else:
+                self._log_info(
+                    "[%s] [SQL parameters hidden due to hide_parameters=True]",
+                    stats,
+                )
+    
+        evt_handled: bool = False
+        try:
+            if context.execute_style is ExecuteStyle.EXECUTEMANY:
+                effective_parameters = cast(
+                    "_CoreMultiExecuteParams", effective_parameters
+                )
+                if self.dialect._has_events:
+                    for fn in self.dialect.dispatch.do_executemany:
+                        if fn(
+                            cursor,
+                            str_statement,
+                            effective_parameters,
+                            context,
+                        ):
+                            evt_handled = True
+                            break
+                if not evt_handled:
+                    self.dialect.do_executemany(
+                        cursor,
+                        str_statement,
+                        effective_parameters,
+                        context,
+                    )
+            elif not effective_parameters and context.no_parameters:
+                if self.dialect._has_events:
+                    for fn in self.dialect.dispatch.do_execute_no_params:
+                        if fn(cursor, str_statement, context):
+                            evt_handled = True
+                            break
+                if not evt_handled:
+                    self.dialect.do_execute_no_params(
+                        cursor, str_statement, context
+                    )
+            else:
+                effective_parameters = cast(
+                    "_CoreSingleExecuteParams", effective_parameters
+                )
+                if self.dialect._has_events:
+                    for fn in self.dialect.dispatch.do_execute:
+                        if fn(
+                            cursor,
+                            str_statement,
+                            effective_parameters,
+                            context,
+                        ):
+                            evt_handled = True
+                            break
+                if not evt_handled:
+>                   self.dialect.do_execute(
+                        cursor, str_statement, effective_parameters, context
+                    )
+
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <sqlalchemy.dialects.postgresql.psycopg2.PGDialect_psycopg2 object at 0x72918fa65760>
+cursor = <cursor object at 0x729190867e20; closed: -1>
+statement = 'UPDATE creditos_cashback_cliente SET saldo_disponivel=%(saldo_disponivel)s, atualizado_em=%(atualizado_em)s WHERE creditos_cashback_cliente.id = %(creditos_cashback_cliente_id)s'
+parameters = {'atualizado_em': datetime.datetime(2026, 9, 7, 2, 33, 17, 434523), 'creditos_cashback_cliente_id': 3, 'saldo_disponivel': Decimal('0.02')}
+context = <sqlalchemy.dialects.postgresql.psycopg2.PGExecutionContext_psycopg2 object at 0x72918e6f9190>
+
+    def do_execute(self, cursor, statement, parameters, context=None):
+>       cursor.execute(statement, parameters)
+E       psycopg2.errors.CheckViolation: new row for relation "creditos_cashback_cliente" violates check constraint "ck_credito_cashback_saldo_lte_original"
+E       DETAIL:  Failing row contains (1, 1, 1, 3, 0.01, 0.02, 2026-10-07, null, null, Cashback gerado automaticamente pela venda VEN-1-20260907023316-..., 3, 2026-09-07 02:33:16.854087, 2026-09-07 02:33:17.434523, 1).
+
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: CheckViolation
+
+The above exception was the direct cause of the following exception:
+
+transaction_app = <Flask 'app'>
+
+    def test_partial_refunds_restore_each_consumed_credit_exactly(transaction_app):
+        with transaction_app.app_context():
+            _, product_id = stock_setup(20)
+            customer_id = customer_setup()
+            for number in range(3):
+                PdvService.criar_venda({**sale_payload(product_id, key=f"earn-{number}"), "cliente_id": customer_id}, 1, scope(), 1)
+            assert CarteiraCliente.query.one().saldo_disponivel == Decimal("0.03")
+            payload = {**sale_payload(product_id, quantity=3, key="spend"), "cliente_id": customer_id,
+                "cashback_utilizado": "0.03"}
+            payload["pagamentos"][0]["valor"] = "29.97"
+            sale = PdvService.criar_venda(payload, 1, scope(), 1)
+            for number in range(3):
+>               PdvService.cancelar_item_venda(sale["id"], sale["itens"][0]["id"],
+                    {"quantidade": 1, "idempotency_key": f"restore-{number}"}, 1, scope(), 1)
+
+tests/test_sprint03_adversarial.py:277: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+app/services/transaction_service.py:49: in execute
+    result = function(*args, **kwargs)
+app/services/idempotency_service.py:37: in execute
+    result = function(*args, **kwargs)
+app/services/pdv_service.py:486: in cancelar_item_venda
+    ClienteService.ajustar_cashback_gerado_por_cancelamento_item(
+app/services/cliente_service.py:1063: in ajustar_cashback_gerado_por_cancelamento_item
+    credito = ClienteRepository.buscar_credito_por_venda_origem(venda.id, tenant_id)
+app/repositorys/cliente_repository.py:224: in buscar_credito_por_venda_origem
+    .first()
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/query.py:2766: in first
+    return self.limit(1)._iter().first()  # type: ignore
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/query.py:2864: in _iter
+    result: Union[ScalarResult[_T], Result[_T]] = self.session.execute(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/session.py:2373: in execute
+    return self._execute_internal(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/session.py:2250: in _execute_internal
+    ) = compile_state_cls.orm_pre_session_exec(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/context.py:577: in orm_pre_session_exec
+    session._autoflush()
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/session.py:3073: in _autoflush
+    raise e.with_traceback(sys.exc_info()[2])
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/session.py:3062: in _autoflush
+    self.flush()
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/session.py:4353: in flush
+    self._flush(objects)
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/session.py:4488: in _flush
+    with util.safe_reraise():
+/usr/local/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py:122: in __exit__
+    raise exc_value.with_traceback(exc_tb)
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/session.py:4449: in _flush
+    flush_context.execute()
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/unitofwork.py:465: in execute
+    rec.execute(self)
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/unitofwork.py:641: in execute
+    util.preloaded.orm_persistence.save_obj(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/persistence.py:86: in save_obj
+    _emit_update_statements(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/persistence.py:913: in _emit_update_statements
+    c = connection.execute(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1421: in execute
+    return meth(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/sql/elements.py:526: in _execute_on_connection
+    return connection._execute_clauseelement(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1643: in _execute_clauseelement
+    ret = self._execute_context(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1848: in _execute_context
+    return self._exec_single_context(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1988: in _exec_single_context
+    self._handle_dbapi_exception(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2365: in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <sqlalchemy.dialects.postgresql.psycopg2.PGDialect_psycopg2 object at 0x72918fa65760>
+cursor = <cursor object at 0x729190867e20; closed: -1>
+statement = 'UPDATE creditos_cashback_cliente SET saldo_disponivel=%(saldo_disponivel)s, atualizado_em=%(atualizado_em)s WHERE creditos_cashback_cliente.id = %(creditos_cashback_cliente_id)s'
+parameters = {'atualizado_em': datetime.datetime(2026, 9, 7, 2, 33, 17, 434523), 'creditos_cashback_cliente_id': 3, 'saldo_disponivel': Decimal('0.02')}
+context = <sqlalchemy.dialects.postgresql.psycopg2.PGExecutionContext_psycopg2 object at 0x72918e6f9190>
+
+    def do_execute(self, cursor, statement, parameters, context=None):
+>       cursor.execute(statement, parameters)
+E       sqlalchemy.exc.IntegrityError: (raised as a result of Query-invoked autoflush; consider using a session.no_autoflush block if this flush is occurring prematurely)
+E       (psycopg2.errors.CheckViolation) new row for relation "creditos_cashback_cliente" violates check constraint "ck_credito_cashback_saldo_lte_original"
+E       DETAIL:  Failing row contains (1, 1, 1, 3, 0.01, 0.02, 2026-10-07, null, null, Cashback gerado automaticamente pela venda VEN-1-20260907023316-..., 3, 2026-09-07 02:33:16.854087, 2026-09-07 02:33:17.434523, 1).
+E       
+E       [SQL: UPDATE creditos_cashback_cliente SET saldo_disponivel=%(saldo_disponivel)s, atualizado_em=%(atualizado_em)s WHERE creditos_cashback_cliente.id = %(creditos_cashback_cliente_id)s]
+E       [parameters: {'saldo_disponivel': Decimal('0.02'), 'atualizado_em': datetime.datetime(2026, 9, 7, 2, 33, 17, 434523), 'creditos_cashback_cliente_id': 3}]
+E       (Background on this error at: https://sqlalche.me/e/20/gkpj)
+
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: IntegrityError
+_ test_postgresql_rejects_nan_in_persisted_money[produtos_empresa-valor_compra] _
+
+transaction_app = <Flask 'app'>, table = 'produtos_empresa'
+column = 'valor_compra'
+
+    @pytest.mark.parametrize("table,column", [
+        ("produtos_empresa", "valor_compra"), ("funcionarios", "salario"),
+        ("vendas", "total"), ("pagamentos_venda", "valor"),
+        ("itens_venda", "valor_unitario"), ("lancamentos_financeiros", "valor"),
+        ("movimentos_estoque", "valor_unitario"),
+    ])
+    def test_postgresql_rejects_nan_in_persisted_money(transaction_app, table, column):
+        with transaction_app.app_context():
+            _, product_id = stock_setup()
+            PdvService.criar_venda(sale_payload(product_id), 1, scope(), 1)
+            db.session.remove()
+>           with pytest.raises(IntegrityError):
+E           Failed: DID NOT RAISE <class 'sqlalchemy.exc.IntegrityError'>
+
+tests/test_sprint03_database.py:23: Failed
+_____ test_postgresql_rejects_nan_in_persisted_money[funcionarios-salario] _____
+
+transaction_app = <Flask 'app'>, table = 'funcionarios', column = 'salario'
+
+    @pytest.mark.parametrize("table,column", [
+        ("produtos_empresa", "valor_compra"), ("funcionarios", "salario"),
+        ("vendas", "total"), ("pagamentos_venda", "valor"),
+        ("itens_venda", "valor_unitario"), ("lancamentos_financeiros", "valor"),
+        ("movimentos_estoque", "valor_unitario"),
+    ])
+    def test_postgresql_rejects_nan_in_persisted_money(transaction_app, table, column):
+        with transaction_app.app_context():
+            _, product_id = stock_setup()
+            PdvService.criar_venda(sale_payload(product_id), 1, scope(), 1)
+            db.session.remove()
+>           with pytest.raises(IntegrityError):
+E           Failed: DID NOT RAISE <class 'sqlalchemy.exc.IntegrityError'>
+
+tests/test_sprint03_database.py:23: Failed
+_________ test_postgresql_rejects_nan_in_persisted_money[vendas-total] _________
+
+transaction_app = <Flask 'app'>, table = 'vendas', column = 'total'
+
+    @pytest.mark.parametrize("table,column", [
+        ("produtos_empresa", "valor_compra"), ("funcionarios", "salario"),
+        ("vendas", "total"), ("pagamentos_venda", "valor"),
+        ("itens_venda", "valor_unitario"), ("lancamentos_financeiros", "valor"),
+        ("movimentos_estoque", "valor_unitario"),
+    ])
+    def test_postgresql_rejects_nan_in_persisted_money(transaction_app, table, column):
+        with transaction_app.app_context():
+            _, product_id = stock_setup()
+            PdvService.criar_venda(sale_payload(product_id), 1, scope(), 1)
+            db.session.remove()
+>           with pytest.raises(IntegrityError):
+E           Failed: DID NOT RAISE <class 'sqlalchemy.exc.IntegrityError'>
+
+tests/test_sprint03_database.py:23: Failed
+____ test_postgresql_rejects_nan_in_persisted_money[pagamentos_venda-valor] ____
+
+transaction_app = <Flask 'app'>, table = 'pagamentos_venda', column = 'valor'
+
+    @pytest.mark.parametrize("table,column", [
+        ("produtos_empresa", "valor_compra"), ("funcionarios", "salario"),
+        ("vendas", "total"), ("pagamentos_venda", "valor"),
+        ("itens_venda", "valor_unitario"), ("lancamentos_financeiros", "valor"),
+        ("movimentos_estoque", "valor_unitario"),
+    ])
+    def test_postgresql_rejects_nan_in_persisted_money(transaction_app, table, column):
+        with transaction_app.app_context():
+            _, product_id = stock_setup()
+            PdvService.criar_venda(sale_payload(product_id), 1, scope(), 1)
+            db.session.remove()
+>           with pytest.raises(IntegrityError):
+E           Failed: DID NOT RAISE <class 'sqlalchemy.exc.IntegrityError'>
+
+tests/test_sprint03_database.py:23: Failed
+__ test_postgresql_rejects_nan_in_persisted_money[itens_venda-valor_unitario] __
+
+transaction_app = <Flask 'app'>, table = 'itens_venda'
+column = 'valor_unitario'
+
+    @pytest.mark.parametrize("table,column", [
+        ("produtos_empresa", "valor_compra"), ("funcionarios", "salario"),
+        ("vendas", "total"), ("pagamentos_venda", "valor"),
+        ("itens_venda", "valor_unitario"), ("lancamentos_financeiros", "valor"),
+        ("movimentos_estoque", "valor_unitario"),
+    ])
+    def test_postgresql_rejects_nan_in_persisted_money(transaction_app, table, column):
+        with transaction_app.app_context():
+            _, product_id = stock_setup()
+            PdvService.criar_venda(sale_payload(product_id), 1, scope(), 1)
+            db.session.remove()
+>           with pytest.raises(IntegrityError):
+E           Failed: DID NOT RAISE <class 'sqlalchemy.exc.IntegrityError'>
+
+tests/test_sprint03_database.py:23: Failed
+_ test_postgresql_rejects_nan_in_persisted_money[lancamentos_financeiros-valor] _
+
+transaction_app = <Flask 'app'>, table = 'lancamentos_financeiros'
+column = 'valor'
+
+    @pytest.mark.parametrize("table,column", [
+        ("produtos_empresa", "valor_compra"), ("funcionarios", "salario"),
+        ("vendas", "total"), ("pagamentos_venda", "valor"),
+        ("itens_venda", "valor_unitario"), ("lancamentos_financeiros", "valor"),
+        ("movimentos_estoque", "valor_unitario"),
+    ])
+    def test_postgresql_rejects_nan_in_persisted_money(transaction_app, table, column):
+        with transaction_app.app_context():
+            _, product_id = stock_setup()
+            PdvService.criar_venda(sale_payload(product_id), 1, scope(), 1)
+            db.session.remove()
+>           with pytest.raises(IntegrityError):
+E           Failed: DID NOT RAISE <class 'sqlalchemy.exc.IntegrityError'>
+
+tests/test_sprint03_database.py:23: Failed
+_ test_postgresql_rejects_nan_in_persisted_money[movimentos_estoque-valor_unitario] _
+
+transaction_app = <Flask 'app'>, table = 'movimentos_estoque'
+column = 'valor_unitario'
+
+    @pytest.mark.parametrize("table,column", [
+        ("produtos_empresa", "valor_compra"), ("funcionarios", "salario"),
+        ("vendas", "total"), ("pagamentos_venda", "valor"),
+        ("itens_venda", "valor_unitario"), ("lancamentos_financeiros", "valor"),
+        ("movimentos_estoque", "valor_unitario"),
+    ])
+    def test_postgresql_rejects_nan_in_persisted_money(transaction_app, table, column):
+        with transaction_app.app_context():
+            _, product_id = stock_setup()
+            PdvService.criar_venda(sale_payload(product_id), 1, scope(), 1)
+            db.session.remove()
+>           with pytest.raises(IntegrityError):
+E           Failed: DID NOT RAISE <class 'sqlalchemy.exc.IntegrityError'>
+
+tests/test_sprint03_database.py:23: Failed
+----------------- generated xml file: /tmp/baseline-final.xml ------------------
+=========================== short test summary info ============================
+FAILED tests/test_sprint03_adversarial.py::test_cashback_without_customer_cannot_reduce_payment
+FAILED tests/test_sprint03_adversarial.py::test_partial_refunds_conserve_every_cent[False-0.01]
+FAILED tests/test_sprint03_adversarial.py::test_partial_refunds_conserve_every_cent[False-0.02]
+FAILED tests/test_sprint03_adversarial.py::test_partial_refunds_conserve_every_cent[False-29.99]
+FAILED tests/test_sprint03_adversarial.py::test_partial_refunds_conserve_every_cent[True-0.01]
+FAILED tests/test_sprint03_adversarial.py::test_partial_refunds_conserve_every_cent[True-0.02]
+FAILED tests/test_sprint03_adversarial.py::test_partial_refunds_conserve_every_cent[True-29.99]
+FAILED tests/test_sprint03_adversarial.py::test_product_update_preserves_barcode_when_omitted
+FAILED tests/test_sprint03_adversarial.py::test_employee_history_cannot_be_detached_by_delete
+FAILED tests/test_sprint03_adversarial.py::test_refunds_do_not_overpay_individual_payment_sources
+FAILED tests/test_sprint03_adversarial.py::test_partial_refunds_revoke_all_generated_cashback
+FAILED tests/test_sprint03_adversarial.py::test_partial_refunds_restore_each_consumed_credit_exactly
+FAILED tests/test_sprint03_database.py::test_postgresql_rejects_nan_in_persisted_money[produtos_empresa-valor_compra]
+FAILED tests/test_sprint03_database.py::test_postgresql_rejects_nan_in_persisted_money[funcionarios-salario]
+FAILED tests/test_sprint03_database.py::test_postgresql_rejects_nan_in_persisted_money[vendas-total]
+FAILED tests/test_sprint03_database.py::test_postgresql_rejects_nan_in_persisted_money[pagamentos_venda-valor]
+FAILED tests/test_sprint03_database.py::test_postgresql_rejects_nan_in_persisted_money[itens_venda-valor_unitario]
+FAILED tests/test_sprint03_database.py::test_postgresql_rejects_nan_in_persisted_money[lancamentos_financeiros-valor]
+FAILED tests/test_sprint03_database.py::test_postgresql_rejects_nan_in_persisted_money[movimentos_estoque-valor_unitario]
+=========== 19 failed, 41 passed, 3 deselected in 100.15s (0:01:40) ============

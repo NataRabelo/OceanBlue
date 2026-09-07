@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="7" skipped="0" tests="9" time="9.038" timestamp="2026-09-07T02:22:08.932112+00:00" hostname="c34d4024be81"><testcase classname="tests.test_sprint03_adversarial" name="test_refunds_do_not_overpay_individual_payment_sources" time="1.407"><failure message="AssertionError: assert Decimal('0') == Decimal('0.01')&#10; +  where Decimal('0') = sum(&lt;generator object test_refunds_do_not_overpay_individual_payment_sources.&lt;locals&gt;.&lt;genexpr&gt; at 0x7cae3abdf340&gt;, Decimal('0'))&#10; +    where Decimal('0') = Decimal(0)&#10; +  and   Decimal('0.01') = &lt;LancamentoFinanceiro 1&gt;.valor">transaction_app = &lt;Flask 'app'&gt;
+
+    def test_refunds_do_not_overpay_individual_payment_sources(transaction_app):
+        with transaction_app.app_context():
+            _, product_id = stock_setup()
+            payload = sale_payload(product_id, quantity=3)
+            payment = payload["pagamentos"][0]["forma_pagamento_id"]
+            payload["desconto_manual"] = "29.97"
+            payload["pagamentos"] = [{"forma_pagamento_id": payment, "valor": "0.01"} for number in range(3)]
+            sale = PdvService.criar_venda(payload, 1, scope(), 1)
+            for number in range(3):
+                PdvService.cancelar_item_venda(sale["id"], sale["itens"][0]["id"],
+                    {"quantidade": 1, "idempotency_key": f"source-{number}"}, 1, scope(), 1)
+            for source in LancamentoFinanceiro.query.filter_by(tipo=TipoFinanceiro.ENTRADA).all():
+                refunds = LancamentoFinanceiro.query.filter_by(lancamento_origem_id=source.id).all()
+&gt;               assert sum((refund.valor for refund in refunds), Decimal(0)) == source.valor
+E               AssertionError: assert Decimal('0') == Decimal('0.01')
+E                +  where Decimal('0') = sum(&lt;generator object test_refunds_do_not_overpay_individual_payment_sources.&lt;locals&gt;.&lt;genexpr&gt; at 0x7cae3abdf340&gt;, Decimal('0'))
+E                +    where Decimal('0') = Decimal(0)
+E                +  and   Decimal('0.01') = &lt;LancamentoFinanceiro 1&gt;.valor
+
+tests/test_sprint03_adversarial.py:242: AssertionError</failure></testcase><testcase classname="tests.test_sprint03_adversarial" name="test_partial_refunds_revoke_all_generated_cashback" time="0.743"><failure message="AttributeError: 'NoneType' object has no attribute 'cashback_percentual'">transaction_app = &lt;Flask 'app'&gt;
+
+    def test_partial_refunds_revoke_all_generated_cashback(transaction_app):
+        with transaction_app.app_context():
+            _, product_id = stock_setup()
+            customer_id = customer_setup()
+            config = db.session.get(ConfiguracaoClienteEmpresa, 1)
+&gt;           config.cashback_percentual = Decimal("0.04")
+E           AttributeError: 'NoneType' object has no attribute 'cashback_percentual'
+
+tests/test_sprint03_adversarial.py:250: AttributeError</failure></testcase><testcase classname="tests.test_sprint03_adversarial" name="test_partial_refunds_restore_each_consumed_credit_exactly" time="1.020"><failure message="sqlalchemy.exc.NoResultFound: No row was found when one was required">transaction_app = &lt;Flask 'app'&gt;
+
+    def test_partial_refunds_restore_each_consumed_credit_exactly(transaction_app):
+        with transaction_app.app_context():
+            _, product_id = stock_setup(20)
+            customer_id = customer_setup()
+            for number in range(3):
+                PdvService.criar_venda({**sale_payload(product_id, key=f"earn-{number}"), "cliente_id": customer_id}, 1, scope(), 1)
+&gt;           assert CarteiraCliente.query.one().saldo_disponivel == Decimal("0.03")
+
+tests/test_sprint03_adversarial.py:269: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/query.py:2815: in one
+    return self._iter().one()  # type: ignore
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/result.py:1867: in one
+    return self._only_one_row(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;sqlalchemy.engine.result.ScalarResult object at 0x7cae39d43ca0&gt;
+raise_for_second_row = True, raise_for_none = True, scalar = False
+
+    def _only_one_row(
+        self,
+        raise_for_second_row: bool,
+        raise_for_none: bool,
+        scalar: bool,
+    ) -&gt; Optional[_R]:
+        onerow = self._fetchone_impl
+    
+        row: Optional[_InterimRowType[Any]] = onerow(hard_close=True)
+        if row is None:
+            if raise_for_none:
+&gt;               raise exc.NoResultFound(
+                    "No row was found when one was required"
+                )
+E               sqlalchemy.exc.NoResultFound: No row was found when one was required
+
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/result.py:799: NoResultFound</failure></testcase><testcase classname="tests.test_sprint03_adversarial" name="test_cashback_insert_failure_rolls_back_sale_and_wallet[CreditoCashbackCliente]" time="0.907"><failure message="Failed: DID NOT RAISE &lt;class 'RuntimeError'&gt;">transaction_app = &lt;Flask 'app'&gt;
+model = &lt;class 'app.models.db.CreditoCashbackCliente'&gt;
+
+    @pytest.mark.parametrize("model", [CreditoCashbackCliente, MovimentoCarteiraCliente])
+    def test_cashback_insert_failure_rolls_back_sale_and_wallet(transaction_app, model):
+        with transaction_app.app_context():
+            _, product_id = stock_setup()
+            customer_id = customer_setup()
+            before = snapshot()
+    
+            def fail(*arguments):
+                raise RuntimeError("injected cashback")
+    
+            event.listen(model, "after_insert", fail)
+            try:
+&gt;               with pytest.raises(RuntimeError, match="injected"):
+E               Failed: DID NOT RAISE &lt;class 'RuntimeError'&gt;
+
+tests/test_sprint03_adversarial.py:294: Failed</failure></testcase><testcase classname="tests.test_sprint03_adversarial" name="test_cashback_insert_failure_rolls_back_sale_and_wallet[MovimentoCarteiraCliente]" time="0.893"><failure message="Failed: DID NOT RAISE &lt;class 'RuntimeError'&gt;">transaction_app = &lt;Flask 'app'&gt;
+model = &lt;class 'app.models.db.MovimentoCarteiraCliente'&gt;
+
+    @pytest.mark.parametrize("model", [CreditoCashbackCliente, MovimentoCarteiraCliente])
+    def test_cashback_insert_failure_rolls_back_sale_and_wallet(transaction_app, model):
+        with transaction_app.app_context():
+            _, product_id = stock_setup()
+            customer_id = customer_setup()
+            before = snapshot()
+    
+            def fail(*arguments):
+                raise RuntimeError("injected cashback")
+    
+            event.listen(model, "after_insert", fail)
+            try:
+&gt;               with pytest.raises(RuntimeError, match="injected"):
+E               Failed: DID NOT RAISE &lt;class 'RuntimeError'&gt;
+
+tests/test_sprint03_adversarial.py:294: Failed</failure></testcase><testcase classname="tests.test_sprint03_adversarial" name="test_import_foreign_company_rolls_back_every_row[produtos-fields0]" time="0.843" /><testcase classname="tests.test_sprint03_adversarial" name="test_import_foreign_company_rolls_back_every_row[funcionarios-fields1]" time="0.934" /><testcase classname="tests.test_sprint03_adversarial" name="test_idempotency_replay_rechecks_company_access[sale]" time="0.871"><failure message="Failed: DID NOT RAISE &lt;class 'PermissionError'&gt;">transaction_app = &lt;Flask 'app'&gt;, operation = 'sale'
+
+    @pytest.mark.parametrize("operation", ["sale", "cancel"])
+    def test_idempotency_replay_rechecks_company_access(transaction_app, operation):
+        from app.services.acesso_empresa_service import AcessoEmpresaService
+        with transaction_app.app_context():
+            _, product_id = stock_setup()
+            payload = sale_payload(product_id)
+            sale = PdvService.criar_venda(payload, 1, scope(), 1)
+            if operation == "cancel":
+                PdvService.cancelar_venda(sale["id"], payload, 1, scope(), 1)
+            before = snapshot()
+            restricted = {**scope(), "empresa_ids": [2], "acesso_global": False}
+&gt;           with pytest.raises(PermissionError):
+E           Failed: DID NOT RAISE &lt;class 'PermissionError'&gt;
+
+tests/test_sprint03_adversarial.py:322: Failed</failure></testcase><testcase classname="tests.test_sprint03_adversarial" name="test_idempotency_replay_rechecks_company_access[cancel]" time="1.069"><failure message="Failed: DID NOT RAISE &lt;class 'PermissionError'&gt;">transaction_app = &lt;Flask 'app'&gt;, operation = 'cancel'
+
+    @pytest.mark.parametrize("operation", ["sale", "cancel"])
+    def test_idempotency_replay_rechecks_company_access(transaction_app, operation):
+        from app.services.acesso_empresa_service import AcessoEmpresaService
+        with transaction_app.app_context():
+            _, product_id = stock_setup()
+            payload = sale_payload(product_id)
+            sale = PdvService.criar_venda(payload, 1, scope(), 1)
+            if operation == "cancel":
+                PdvService.cancelar_venda(sale["id"], payload, 1, scope(), 1)
+            before = snapshot()
+            restricted = {**scope(), "empresa_ids": [2], "acesso_global": False}
+&gt;           with pytest.raises(PermissionError):
+E           Failed: DID NOT RAISE &lt;class 'PermissionError'&gt;
+
+tests/test_sprint03_adversarial.py:322: Failed</failure></testcase></testsuite></testsuites>

@@ -350,6 +350,11 @@ class Funcionario(ModeloBase):
     role = db.relationship("Role", backref=db.backref("funcionarios", lazy=True))
 
     __table_args__ = (
+        CheckConstraint(
+            "salario NOT IN ('NaN'::numeric, 'Infinity'::numeric, '-Infinity'::numeric) "
+            "AND meta NOT IN ('NaN'::numeric, 'Infinity'::numeric, '-Infinity'::numeric) ",
+            name="ck_funcionarios_finite",
+        ),
         UniqueConstraint("tenant_id", "cpf", name="uq_funcionario_tenant_cpf"),
         UniqueConstraint("tenant_id", "usuario", name="uq_funcionario_tenant_usuario"),
     )
@@ -410,6 +415,10 @@ class CarteiraCliente(ModeloBase):
     )
 
     __table_args__ = (
+        CheckConstraint(
+            "saldo_disponivel NOT IN ('NaN'::numeric, 'Infinity'::numeric, '-Infinity'::numeric) ",
+            name="ck_carteiras_cliente_finite",
+        ),
         UniqueConstraint("tenant_id", "cliente_id", name="uq_carteira_cliente_tenant"),
         CheckConstraint("saldo_disponivel >= 0", name="ck_carteira_cliente_saldo_non_negative"),
     )
@@ -435,6 +444,11 @@ class CreditoCashbackCliente(ModeloBase):
     venda_origem = db.relationship("Venda", foreign_keys=[venda_origem_id], backref=db.backref("creditos_cashback", lazy=True))
 
     __table_args__ = (
+        CheckConstraint(
+            "valor_original NOT IN ('NaN'::numeric, 'Infinity'::numeric, '-Infinity'::numeric) "
+            "AND saldo_disponivel NOT IN ('NaN'::numeric, 'Infinity'::numeric, '-Infinity'::numeric) ",
+            name="ck_creditos_cashback_cliente_finite",
+        ),
         UniqueConstraint("tenant_id", "venda_origem_id", name="uq_credito_cashback_tenant_venda_origem"),
         CheckConstraint("valor_original >= 0", name="ck_credito_cashback_valor_original_non_negative"),
         CheckConstraint("saldo_disponivel >= 0", name="ck_credito_cashback_saldo_non_negative"),
@@ -463,6 +477,10 @@ class MovimentoCarteiraCliente(ModeloBase):
     funcionario = db.relationship("Funcionario", backref=db.backref("movimentos_carteira", lazy=True))
 
     __table_args__ = (
+        CheckConstraint(
+            "valor NOT IN ('NaN'::numeric, 'Infinity'::numeric, '-Infinity'::numeric) ",
+            name="ck_movimentos_carteira_cliente_finite",
+        ),
         CheckConstraint("valor > 0", name="ck_movimento_carteira_valor_positive"),
         Index("ix_movimento_carteira_tenant_cliente_data", "tenant_id", "cliente_id", "data_movimento"),
     )
@@ -544,6 +562,13 @@ class ProdutoEmpresa(ModeloBase):
     empresa = db.relationship("Empresa", backref=db.backref("produtos_empresa", lazy=True, cascade="all, delete-orphan"))
 
     __table_args__ = (
+        CheckConstraint(
+            "valor_compra NOT IN ('NaN'::numeric, 'Infinity'::numeric, '-Infinity'::numeric) "
+            "AND valor_venda NOT IN ('NaN'::numeric, 'Infinity'::numeric, '-Infinity'::numeric) "
+            "AND valor_varejo NOT IN ('NaN'::numeric, 'Infinity'::numeric, '-Infinity'::numeric) "
+            "AND valor_atacado NOT IN ('NaN'::numeric, 'Infinity'::numeric, '-Infinity'::numeric) ",
+            name="ck_produtos_empresa_finite",
+        ),
         UniqueConstraint("tenant_id", "produto_id", "empresa_id", name="uq_produto_empresa"),
         CheckConstraint("estoque_atual >= 0", name="ck_produto_empresa_estoque_atual_non_negative"),
         CheckConstraint("estoque_minimo >= 0", name="ck_produto_empresa_estoque_minimo_non_negative"),
@@ -606,6 +631,10 @@ class Cupom(ModeloBase):
     criado_por = db.relationship("Funcionario", backref=db.backref("cupons_criados", lazy=True))
 
     __table_args__ = (
+        CheckConstraint(
+            "valor_desconto NOT IN ('NaN'::numeric, 'Infinity'::numeric, '-Infinity'::numeric) ",
+            name="ck_cupons_finite",
+        ),
         UniqueConstraint("tenant_id", "codigo", name="uq_cupom_tenant_codigo"),
     )
 
@@ -636,6 +665,11 @@ class AdiantamentoFuncionario(ModeloBase):
     movimento_estoque = db.relationship("MovimentoEstoque", backref=db.backref("adiantamentos", lazy=True))
 
     __table_args__ = (
+        CheckConstraint(
+            "valor_unitario NOT IN ('NaN'::numeric, 'Infinity'::numeric, '-Infinity'::numeric) "
+            "AND valor_total NOT IN ('NaN'::numeric, 'Infinity'::numeric, '-Infinity'::numeric) ",
+            name="ck_adiantamentos_funcionario_finite",
+        ),
         CheckConstraint("quantidade IS NULL OR quantidade > 0", name="ck_adiantamento_quantidade_positive"),
         CheckConstraint("valor_unitario IS NULL OR valor_unitario >= 0", name="ck_adiantamento_valor_unitario_non_negative"),
         CheckConstraint("valor_total >= 0", name="ck_adiantamento_valor_total_non_negative"),
@@ -676,6 +710,11 @@ class MovimentoEstoque(ModeloBase):
     item_venda = db.relationship("ItemVenda", backref=db.backref("movimentos_estoque", lazy=True))
 
     __table_args__ = (
+        CheckConstraint(
+            "valor_unitario NOT IN ('NaN'::numeric, 'Infinity'::numeric, '-Infinity'::numeric) "
+            "AND valor_total NOT IN ('NaN'::numeric, 'Infinity'::numeric, '-Infinity'::numeric) ",
+            name="ck_movimentos_estoque_finite",
+        ),
         CheckConstraint("quantidade > 0", name="ck_movimento_estoque_quantidade_positive"),
         CheckConstraint("valor_unitario IS NULL OR valor_unitario >= 0", name="ck_movimento_estoque_valor_unitario_non_negative"),
         CheckConstraint("valor_total IS NULL OR valor_total >= 0", name="ck_movimento_estoque_valor_total_non_negative"),
@@ -725,6 +764,16 @@ class Venda(ModeloBase):
     )
 
     __table_args__ = (
+        CheckConstraint(
+            "subtotal NOT IN ('NaN'::numeric, 'Infinity'::numeric, '-Infinity'::numeric) "
+            "AND desconto NOT IN ('NaN'::numeric, 'Infinity'::numeric, '-Infinity'::numeric) "
+            "AND cashback_utilizado NOT IN ('NaN'::numeric, 'Infinity'::numeric, '-Infinity'::numeric) "
+            "AND cashback_gerado NOT IN ('NaN'::numeric, 'Infinity'::numeric, '-Infinity'::numeric) "
+            "AND cashback_percentual_aplicado NOT IN ('NaN'::numeric, 'Infinity'::numeric, '-Infinity'::numeric) "
+            "AND valor_cancelado NOT IN ('NaN'::numeric, 'Infinity'::numeric, '-Infinity'::numeric) "
+            "AND total NOT IN ('NaN'::numeric, 'Infinity'::numeric, '-Infinity'::numeric) ",
+            name="ck_vendas_finite",
+        ),
         UniqueConstraint("tenant_id", "empresa_id", "numero_unico", name="uq_venda_tenant_empresa_numero_unico"),
         CheckConstraint("subtotal >= 0", name="ck_venda_subtotal_non_negative"),
         CheckConstraint("desconto >= 0", name="ck_venda_desconto_non_negative"),
@@ -765,6 +814,12 @@ class ItemVenda(ModeloBase):
     )
 
     __table_args__ = (
+        CheckConstraint(
+            "valor_unitario NOT IN ('NaN'::numeric, 'Infinity'::numeric, '-Infinity'::numeric) "
+            "AND valor_total NOT IN ('NaN'::numeric, 'Infinity'::numeric, '-Infinity'::numeric) "
+            "AND valor_cancelado NOT IN ('NaN'::numeric, 'Infinity'::numeric, '-Infinity'::numeric) ",
+            name="ck_itens_venda_finite",
+        ),
         CheckConstraint("quantidade > 0", name="ck_item_venda_quantidade_positive"),
         CheckConstraint("quantidade_cancelada >= 0", name="ck_item_venda_quantidade_cancelada_non_negative"),
         CheckConstraint("quantidade_cancelada <= quantidade", name="ck_item_venda_quantidade_cancelada_lte_quantidade"),
@@ -787,6 +842,10 @@ class PagamentoVenda(ModeloBase):
     forma_pagamento = db.relationship("FormaPagamento", backref=db.backref("pagamentos_venda", lazy=True))
 
     __table_args__ = (
+        CheckConstraint(
+            "valor NOT IN ('NaN'::numeric, 'Infinity'::numeric, '-Infinity'::numeric) ",
+            name="ck_pagamentos_venda_finite",
+        ),
         CheckConstraint("valor >= 0", name="ck_pagamento_venda_valor_non_negative"),
     )
 
@@ -821,6 +880,10 @@ class LancamentoFinanceiro(ModeloBase):
     parcela_boleto = db.relationship("ParcelaBoleto", backref=db.backref("lancamentos_financeiros", lazy=True), foreign_keys=[parcela_boleto_id])
 
     __table_args__ = (
+        CheckConstraint(
+            "valor NOT IN ('NaN'::numeric, 'Infinity'::numeric, '-Infinity'::numeric) ",
+            name="ck_lancamentos_financeiros_finite",
+        ),
         CheckConstraint("valor >= 0", name="ck_lancamento_financeiro_valor_non_negative"),
         Index("ix_financeiro_tenant_empresa_data", "tenant_id", "empresa_id", "data_lancamento"),
         Index("ix_financeiro_tenant_boleto_parcela", "tenant_id", "boleto_id", "parcela_boleto_id"),
@@ -878,6 +941,10 @@ class ConfiguracaoParcelamento(ModeloBase):
     banco_emissor = db.relationship("BancoEmissor", backref=db.backref("configuracoes_parcelamento", lazy=True))
 
     __table_args__ = (
+        CheckConstraint(
+            "valor_minimo_por_parcela NOT IN ('NaN'::numeric, 'Infinity'::numeric, '-Infinity'::numeric) ",
+            name="ck_configuracoes_parcelamento_finite",
+        ),
         CheckConstraint("numero_min_parcelas >= 1", name="ck_config_parcelamento_min_positive"),
         CheckConstraint("numero_max_parcelas >= numero_min_parcelas", name="ck_config_parcelamento_max_gte_min"),
         CheckConstraint("intervalo_dias_padrao >= 1", name="ck_config_parcelamento_intervalo_positive"),
@@ -908,6 +975,13 @@ class RegraJurosMulta(ModeloBase):
     banco_emissor = db.relationship("BancoEmissor", backref=db.backref("regras_juros_multa", lazy=True))
 
     __table_args__ = (
+        CheckConstraint(
+            "percentual_multa NOT IN ('NaN'::numeric, 'Infinity'::numeric, '-Infinity'::numeric) "
+            "AND valor_fixo_multa NOT IN ('NaN'::numeric, 'Infinity'::numeric, '-Infinity'::numeric) "
+            "AND percentual_juros NOT IN ('NaN'::numeric, 'Infinity'::numeric, '-Infinity'::numeric) "
+            "AND percentual_maximo_teto NOT IN ('NaN'::numeric, 'Infinity'::numeric, '-Infinity'::numeric) ",
+            name="ck_regras_juros_multa_finite",
+        ),
         CheckConstraint("dias_carencia >= 0", name="ck_regra_juros_carencia_non_negative"),
         CheckConstraint("percentual_maximo_teto >= 0", name="ck_regra_juros_teto_non_negative"),
         Index("ix_regra_juros_tenant_empresa_vigencia", "tenant_id", "empresa_id", "banco_emissor_id", "vigente_desde", "vigente_ate"),
@@ -992,6 +1066,12 @@ class Boleto(ModeloBase):
     categoria = db.relationship("CategoriaFinanceira", backref=db.backref("boletos", lazy=True))
 
     __table_args__ = (
+        CheckConstraint(
+            "valor_nominal NOT IN ('NaN'::numeric, 'Infinity'::numeric, '-Infinity'::numeric) "
+            "AND valor_pago NOT IN ('NaN'::numeric, 'Infinity'::numeric, '-Infinity'::numeric) "
+            "AND valor_restante NOT IN ('NaN'::numeric, 'Infinity'::numeric, '-Infinity'::numeric) ",
+            name="ck_boletos_finite",
+        ),
         UniqueConstraint("tenant_id", "numero_boleto", name="uq_boleto_tenant_numero"),
         CheckConstraint("valor_nominal >= 0", name="ck_boleto_valor_nominal_non_negative"),
         CheckConstraint("valor_pago >= 0", name="ck_boleto_valor_pago_non_negative"),
@@ -1022,6 +1102,15 @@ class ParcelaBoleto(db.Model):
     boleto = db.relationship("Boleto", backref=db.backref("parcelas", lazy=True, cascade="all, delete-orphan"))
 
     __table_args__ = (
+        CheckConstraint(
+            "valor_parcela NOT IN ('NaN'::numeric, 'Infinity'::numeric, '-Infinity'::numeric) "
+            "AND valor_pago NOT IN ('NaN'::numeric, 'Infinity'::numeric, '-Infinity'::numeric) "
+            "AND valor_restante NOT IN ('NaN'::numeric, 'Infinity'::numeric, '-Infinity'::numeric) "
+            "AND juros_calculados NOT IN ('NaN'::numeric, 'Infinity'::numeric, '-Infinity'::numeric) "
+            "AND multa_calculada NOT IN ('NaN'::numeric, 'Infinity'::numeric, '-Infinity'::numeric) "
+            "AND desconto_aplicado NOT IN ('NaN'::numeric, 'Infinity'::numeric, '-Infinity'::numeric) ",
+            name="ck_parcelas_boleto_finite",
+        ),
         UniqueConstraint("boleto_id", "numero_parcela", name="uq_parcela_boleto_numero"),
         CheckConstraint("numero_parcela >= 1", name="ck_parcela_boleto_numero_positive"),
         CheckConstraint("valor_parcela >= 0", name="ck_parcela_boleto_valor_non_negative"),
@@ -1050,6 +1139,10 @@ class EventoBoleto(db.Model):
     criado_por = db.relationship("Funcionario", backref=db.backref("eventos_boleto", lazy=True))
 
     __table_args__ = (
+        CheckConstraint(
+            "valor NOT IN ('NaN'::numeric, 'Infinity'::numeric, '-Infinity'::numeric) ",
+            name="ck_eventos_boleto_finite",
+        ),
         Index("ix_evento_boleto_boleto_tipo_data", "boleto_id", "tipo_evento", "criado_em"),
     )
 
@@ -1109,6 +1202,11 @@ class FechamentoCaixa(ModeloBase):
     funcionario = db.relationship("Funcionario", backref=db.backref("fechamentos_caixa", lazy=True))
 
     __table_args__ = (
+        CheckConstraint(
+            "valor_inicial NOT IN ('NaN'::numeric, 'Infinity'::numeric, '-Infinity'::numeric) "
+            "AND valor_final NOT IN ('NaN'::numeric, 'Infinity'::numeric, '-Infinity'::numeric) ",
+            name="ck_fechamentos_caixa_finite",
+        ),
         UniqueConstraint(
             "tenant_id",
             "empresa_id",
@@ -1153,6 +1251,12 @@ class ConfiguracaoClienteEmpresa(ModeloBase):
     empresa = db.relationship("Empresa", backref=db.backref("configuracao_cliente", uselist=False, lazy=True, cascade="all, delete-orphan"))
 
     __table_args__ = (
+        CheckConstraint(
+            "cashback_percentual NOT IN ('NaN'::numeric, 'Infinity'::numeric, '-Infinity'::numeric) "
+            "AND cashback_percentual_limite_resgate_venda NOT IN ('NaN'::numeric, 'Infinity'::numeric, '-Infinity'::numeric) "
+            "AND cashback_valor_minimo_resgate NOT IN ('NaN'::numeric, 'Infinity'::numeric, '-Infinity'::numeric) ",
+            name="ck_configuracoes_cliente_empresa_finite",
+        ),
         UniqueConstraint("tenant_id", "empresa_id", name="uq_config_cliente_empresa_tenant"),
         CheckConstraint("cashback_percentual >= 0 AND cashback_percentual <= 100", name="ck_config_cliente_cashback_percentual_range"),
         CheckConstraint(

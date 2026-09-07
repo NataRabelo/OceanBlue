@@ -21,6 +21,7 @@ from app.security.errors import public_error
 from app.services.acesso_empresa_service import AcessoEmpresaService
 from app.services.comunicacao_service import ComunicacaoService
 from app.services.time_service import TimeService
+from app.services.money_service import allocate_money
 
 
 class ClienteService:
@@ -1003,17 +1004,15 @@ class ClienteService:
         if total_debitos <= Decimal("0.00"):
             return Decimal("0.00")
 
-        restante = valor
-        for index, movimento in enumerate(movimentos_debito, start=1):
-            valor_movimento = ClienteService._to_decimal_value(movimento.valor)
-            if index == len(movimentos_debito):
-                parcela = restante
-            else:
-                proporcao = (valor_movimento / total_debitos) if total_debitos > 0 else Decimal("0.00")
-                parcela = (valor * proporcao).quantize(Decimal("0.01"))
-                if parcela > restante:
-                    parcela = restante
-
+        balances = []
+        for movement in movimentos_debito:
+            restored = sum((record.valor for record in MovimentoCarteiraCliente.query.filter_by(
+                tenant_id=tenant_id, venda_id=venda.id, credito_id=movement.credito_id,
+                tipo=TipoMovimentoCarteiraCliente.ESTORNO,
+            ).all()), Decimal("0.00"))
+            balances.append(movement.valor - restored)
+        portions = allocate_money(valor, balances)
+        for movimento, parcela in zip(movimentos_debito, portions):
             if parcela <= Decimal("0.00"):
                 continue
 
@@ -1039,11 +1038,7 @@ class ClienteService:
                     data_movimento=TimeService.now_utc_naive(),
                 )
             )
-            restante = (restante - parcela).quantize(Decimal("0.01"))
-            if restante <= Decimal("0.00"):
-                break
-
-        return (valor - restante).quantize(Decimal("0.01"))
+        return valor
 
     @staticmethod
     def ajustar_cashback_gerado_por_cancelamento_item(venda, valor_cancelamento_liquido, tenant_id, funcionario_id):
@@ -1056,7 +1051,11 @@ class ClienteService:
         if valor_cancelamento <= Decimal("0.00"):
             return Decimal("0.00")
 
-        valor_estorno = (valor_cancelamento * percentual / Decimal("100")).quantize(Decimal("0.01"))
+        base = ClienteService._to_decimal_value(venda.total) + ClienteService._to_decimal_value(venda.cashback_utilizado)
+        restante = max(base - ClienteService._to_decimal_value(venda.valor_cancelado), Decimal("0.00"))
+        original = (ClienteService._to_decimal_value(venda.total) * percentual / Decimal("100")).quantize(Decimal("0.01"))
+        alvo = (original * restante / base).quantize(Decimal("0.01")) if base else Decimal("0.00")
+        valor_estorno = ClienteService._to_decimal_value(venda.cashback_gerado) - alvo
         if valor_estorno <= Decimal("0.00"):
             return Decimal("0.00")
 

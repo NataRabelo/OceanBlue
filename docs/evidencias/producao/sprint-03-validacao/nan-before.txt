@@ -1,0 +1,253 @@
+ Network oceanblue-s03-nan-before_test Creating 
+ Network oceanblue-s03-nan-before_test Creating 
+ Network oceanblue-s03-nan-before_test Created 
+ Network oceanblue-s03-nan-before_test Created 
+ Container oceanblue-s03-nan-before-db-test-1 Creating 
+ Container oceanblue-s03-nan-before-db-test-1 Created 
+ Container oceanblue-s03-nan-before-db-test-1 Starting 
+ Container oceanblue-s03-nan-before-db-test-1 Started 
+ Image oceanblue-s03-nan-before-test Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 588B 0.0s done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile.test
+#2 transferring dockerfile: 365B 0.0s done
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/python:3.12.12-slim-bookworm@sha256:593bd06efe90efa80dc4eee3948be7c0fde4134606dd40d8dd8dbcade98e669c
+#3 DONE 0.1s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 297B done
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 DONE 0.0s
+
+#6 [1/6] FROM docker.io/library/python:3.12.12-slim-bookworm@sha256:593bd06efe90efa80dc4eee3948be7c0fde4134606dd40d8dd8dbcade98e669c
+#6 resolve docker.io/library/python:3.12.12-slim-bookworm@sha256:593bd06efe90efa80dc4eee3948be7c0fde4134606dd40d8dd8dbcade98e669c 0.0s done
+#6 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 231.77kB 0.1s done
+#5 DONE 0.1s
+
+#7 [2/6] WORKDIR /app
+#7 CACHED
+
+#8 [3/6] COPY requirements-dev.txt .
+#8 CACHED
+
+#9 [4/6] RUN python -m pip install --no-cache-dir --require-hashes -r requirements-dev.txt
+#9 CACHED
+
+#10 [5/6] COPY . .
+#10 DONE 0.4s
+
+#11 [6/6] RUN useradd --create-home tester && chown -R tester:tester /app
+#11 DONE 2.4s
+
+#12 exporting to image
+#12 exporting layers
+#12 exporting layers 0.3s done
+#12 exporting manifest sha256:d1576a976fb159e2fb8b25f98cae3e9b32c8c5457d2907c1a7e280be6e85b097 0.0s done
+#12 exporting config sha256:be9269553a5d9c293502c140e8b95bc5e110b03b3c85d724e3498feff5e3b4db 0.0s done
+#12 exporting attestation manifest sha256:91482d16a13bbc0b79bbe12175c50ca8631877f4ff0210506d08dedd550efd99 0.0s done
+#12 exporting manifest list sha256:1f1b952db2e081b046e970bbc79b7b0652168292b1e1de47432731f63461ed08 0.0s done
+#12 naming to docker.io/library/oceanblue-s03-nan-before-test:latest
+#12 naming to docker.io/library/oceanblue-s03-nan-before-test:latest done
+#12 unpacking to docker.io/library/oceanblue-s03-nan-before-test:latest
+#12 unpacking to docker.io/library/oceanblue-s03-nan-before-test:latest 0.2s done
+#12 DONE 0.7s
+
+#13 resolving provenance for metadata file
+#13 DONE 0.0s
+ Image oceanblue-s03-nan-before-test Built 
+ Container oceanblue-s03-nan-before-db-test-1 Waiting 
+ Container oceanblue-s03-nan-before-db-test-1 Healthy 
+ Container oceanblue-s03-nan-before-run Creating 
+ Container oceanblue-s03-nan-before-run Created 
+============================= test session starts ==============================
+platform linux -- Python 3.12.12, pytest-8.3.5, pluggy-1.6.0
+rootdir: /app
+configfile: pytest.ini
+plugins: cov-6.1.1
+collected 10 items / 3 deselected / 7 selected
+
+tests/test_sprint03_database.py FFFFFFF                                  [100%]
+
+=================================== FAILURES ===================================
+_ test_postgresql_rejects_nan_in_persisted_money[produtos_empresa-valor_compra] _
+
+transaction_app = <Flask 'app'>, table = 'produtos_empresa'
+column = 'valor_compra'
+
+    @pytest.mark.parametrize("table,column", [
+        ("produtos_empresa", "valor_compra"), ("funcionarios", "salario"),
+        ("vendas", "total"), ("pagamentos_venda", "valor"),
+        ("itens_venda", "valor_unitario"), ("lancamentos_financeiros", "valor"),
+        ("movimentos_estoque", "valor_unitario"),
+    ])
+    def test_postgresql_rejects_nan_in_persisted_money(transaction_app, table, column):
+        with transaction_app.app_context():
+            _, product_id = stock_setup()
+            PdvService.criar_venda(sale_payload(product_id), 1, scope(), 1)
+            db.session.remove()
+>           with pytest.raises(IntegrityError):
+E           Failed: DID NOT RAISE <class 'sqlalchemy.exc.IntegrityError'>
+
+tests/test_sprint03_database.py:23: Failed
+---------------------------- Captured stderr setup -----------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade  -> 1150177c20ca, initial
+INFO  [alembic.runtime.migration] Running upgrade 1150177c20ca -> 7f3c1a2b9d4e, add roles and permissions
+INFO  [alembic.runtime.migration] Running upgrade 7f3c1a2b9d4e -> 9d1dca4d2bc5, v2
+INFO  [alembic.runtime.migration] Running upgrade 9d1dca4d2bc5 -> c3a1f9d4e8b2, convert quantities to integer
+INFO  [alembic.runtime.migration] Running upgrade c3a1f9d4e8b2 -> 4b2d8b0f6c11, add platform owners
+INFO  [alembic.runtime.migration] Running upgrade 4b2d8b0f6c11 -> 8f6e4c2a1b9d, add pdv financeiro permissions and defaults
+INFO  [alembic.runtime.migration] Running upgrade 8f6e4c2a1b9d -> b7c9d1e2f3a4, add cupons adiantamentos validade salario
+INFO  [alembic.runtime.migration] Running upgrade b7c9d1e2f3a4 -> d4e5f6a7b8c9, add empresa visual mode
+INFO  [alembic.runtime.migration] Running upgrade d4e5f6a7b8c9 -> e6f7a8b9c0d1, add stock alert settings
+INFO  [alembic.runtime.migration] Running upgrade e6f7a8b9c0d1 -> f2b4c6d8e9f1, add client wallet messaging and reversal controls
+INFO  [alembic.runtime.migration] Running upgrade 8f6e4c2a1b9d -> f9d0e1a2b3c4, add boleto financeiro models
+INFO  [alembic.runtime.migration] Running upgrade f2b4c6d8e9f1 -> a1b2c3d4e5f6, add stock alert dispatch tracking
+INFO  [alembic.runtime.migration] Running upgrade a1b2c3d4e5f6 -> b3c4d5e6f7a8, add cashback sale controls
+INFO  [alembic.runtime.migration] Running upgrade f2b4c6d8e9f1 -> a4f1c8d2e7b9, add wholesale pricing and fiscal foundation
+INFO  [alembic.runtime.migration] Running upgrade a4f1c8d2e7b9, b3c4d5e6f7a8 -> c9d8e7f6a5b4, merge cashback and fiscal heads
+INFO  [alembic.runtime.migration] Running upgrade c9d8e7f6a5b4 -> 0f6a8c2d4e9b, add audit and saas limits
+INFO  [alembic.runtime.migration] Running upgrade 0f6a8c2d4e9b, f9d0e1a2b3c4 -> ea3d60221646, merge migration heads
+INFO  [alembic.runtime.migration] Running upgrade ea3d60221646 -> 1a2b3c4d5e6f, add sprint3 boleto and fiscal external status
+INFO  [alembic.runtime.migration] Running upgrade 1a2b3c4d5e6f -> 2b3c4d5e6f7a, add sprint4 asaas and focus real configs
+INFO  [alembic.runtime.migration] Running upgrade 2b3c4d5e6f7a -> 3c4d5e6f7a8b, Align migrated types, tenant indexes and installment foreign key with models.
+INFO  [alembic.runtime.migration] Running upgrade 3c4d5e6f7a8b -> 4d5e6f7a8b9c, Shared authentication state, tenant integrity, SaaS quotas and access audit.
+INFO  [alembic.runtime.migration] Running upgrade 4d5e6f7a8b9c -> 5e6f7a8b9c0d
+_____ test_postgresql_rejects_nan_in_persisted_money[funcionarios-salario] _____
+
+transaction_app = <Flask 'app'>, table = 'funcionarios', column = 'salario'
+
+    @pytest.mark.parametrize("table,column", [
+        ("produtos_empresa", "valor_compra"), ("funcionarios", "salario"),
+        ("vendas", "total"), ("pagamentos_venda", "valor"),
+        ("itens_venda", "valor_unitario"), ("lancamentos_financeiros", "valor"),
+        ("movimentos_estoque", "valor_unitario"),
+    ])
+    def test_postgresql_rejects_nan_in_persisted_money(transaction_app, table, column):
+        with transaction_app.app_context():
+            _, product_id = stock_setup()
+            PdvService.criar_venda(sale_payload(product_id), 1, scope(), 1)
+            db.session.remove()
+>           with pytest.raises(IntegrityError):
+E           Failed: DID NOT RAISE <class 'sqlalchemy.exc.IntegrityError'>
+
+tests/test_sprint03_database.py:23: Failed
+_________ test_postgresql_rejects_nan_in_persisted_money[vendas-total] _________
+
+transaction_app = <Flask 'app'>, table = 'vendas', column = 'total'
+
+    @pytest.mark.parametrize("table,column", [
+        ("produtos_empresa", "valor_compra"), ("funcionarios", "salario"),
+        ("vendas", "total"), ("pagamentos_venda", "valor"),
+        ("itens_venda", "valor_unitario"), ("lancamentos_financeiros", "valor"),
+        ("movimentos_estoque", "valor_unitario"),
+    ])
+    def test_postgresql_rejects_nan_in_persisted_money(transaction_app, table, column):
+        with transaction_app.app_context():
+            _, product_id = stock_setup()
+            PdvService.criar_venda(sale_payload(product_id), 1, scope(), 1)
+            db.session.remove()
+>           with pytest.raises(IntegrityError):
+E           Failed: DID NOT RAISE <class 'sqlalchemy.exc.IntegrityError'>
+
+tests/test_sprint03_database.py:23: Failed
+____ test_postgresql_rejects_nan_in_persisted_money[pagamentos_venda-valor] ____
+
+transaction_app = <Flask 'app'>, table = 'pagamentos_venda', column = 'valor'
+
+    @pytest.mark.parametrize("table,column", [
+        ("produtos_empresa", "valor_compra"), ("funcionarios", "salario"),
+        ("vendas", "total"), ("pagamentos_venda", "valor"),
+        ("itens_venda", "valor_unitario"), ("lancamentos_financeiros", "valor"),
+        ("movimentos_estoque", "valor_unitario"),
+    ])
+    def test_postgresql_rejects_nan_in_persisted_money(transaction_app, table, column):
+        with transaction_app.app_context():
+            _, product_id = stock_setup()
+            PdvService.criar_venda(sale_payload(product_id), 1, scope(), 1)
+            db.session.remove()
+>           with pytest.raises(IntegrityError):
+E           Failed: DID NOT RAISE <class 'sqlalchemy.exc.IntegrityError'>
+
+tests/test_sprint03_database.py:23: Failed
+__ test_postgresql_rejects_nan_in_persisted_money[itens_venda-valor_unitario] __
+
+transaction_app = <Flask 'app'>, table = 'itens_venda'
+column = 'valor_unitario'
+
+    @pytest.mark.parametrize("table,column", [
+        ("produtos_empresa", "valor_compra"), ("funcionarios", "salario"),
+        ("vendas", "total"), ("pagamentos_venda", "valor"),
+        ("itens_venda", "valor_unitario"), ("lancamentos_financeiros", "valor"),
+        ("movimentos_estoque", "valor_unitario"),
+    ])
+    def test_postgresql_rejects_nan_in_persisted_money(transaction_app, table, column):
+        with transaction_app.app_context():
+            _, product_id = stock_setup()
+            PdvService.criar_venda(sale_payload(product_id), 1, scope(), 1)
+            db.session.remove()
+>           with pytest.raises(IntegrityError):
+E           Failed: DID NOT RAISE <class 'sqlalchemy.exc.IntegrityError'>
+
+tests/test_sprint03_database.py:23: Failed
+_ test_postgresql_rejects_nan_in_persisted_money[lancamentos_financeiros-valor] _
+
+transaction_app = <Flask 'app'>, table = 'lancamentos_financeiros'
+column = 'valor'
+
+    @pytest.mark.parametrize("table,column", [
+        ("produtos_empresa", "valor_compra"), ("funcionarios", "salario"),
+        ("vendas", "total"), ("pagamentos_venda", "valor"),
+        ("itens_venda", "valor_unitario"), ("lancamentos_financeiros", "valor"),
+        ("movimentos_estoque", "valor_unitario"),
+    ])
+    def test_postgresql_rejects_nan_in_persisted_money(transaction_app, table, column):
+        with transaction_app.app_context():
+            _, product_id = stock_setup()
+            PdvService.criar_venda(sale_payload(product_id), 1, scope(), 1)
+            db.session.remove()
+>           with pytest.raises(IntegrityError):
+E           Failed: DID NOT RAISE <class 'sqlalchemy.exc.IntegrityError'>
+
+tests/test_sprint03_database.py:23: Failed
+_ test_postgresql_rejects_nan_in_persisted_money[movimentos_estoque-valor_unitario] _
+
+transaction_app = <Flask 'app'>, table = 'movimentos_estoque'
+column = 'valor_unitario'
+
+    @pytest.mark.parametrize("table,column", [
+        ("produtos_empresa", "valor_compra"), ("funcionarios", "salario"),
+        ("vendas", "total"), ("pagamentos_venda", "valor"),
+        ("itens_venda", "valor_unitario"), ("lancamentos_financeiros", "valor"),
+        ("movimentos_estoque", "valor_unitario"),
+    ])
+    def test_postgresql_rejects_nan_in_persisted_money(transaction_app, table, column):
+        with transaction_app.app_context():
+            _, product_id = stock_setup()
+            PdvService.criar_venda(sale_payload(product_id), 1, scope(), 1)
+            db.session.remove()
+>           with pytest.raises(IntegrityError):
+E           Failed: DID NOT RAISE <class 'sqlalchemy.exc.IntegrityError'>
+
+tests/test_sprint03_database.py:23: Failed
+------------------- generated xml file: /tmp/nan-before.xml --------------------
+=========================== short test summary info ============================
+FAILED tests/test_sprint03_database.py::test_postgresql_rejects_nan_in_persisted_money[produtos_empresa-valor_compra]
+FAILED tests/test_sprint03_database.py::test_postgresql_rejects_nan_in_persisted_money[funcionarios-salario]
+FAILED tests/test_sprint03_database.py::test_postgresql_rejects_nan_in_persisted_money[vendas-total]
+FAILED tests/test_sprint03_database.py::test_postgresql_rejects_nan_in_persisted_money[pagamentos_venda-valor]
+FAILED tests/test_sprint03_database.py::test_postgresql_rejects_nan_in_persisted_money[itens_venda-valor_unitario]
+FAILED tests/test_sprint03_database.py::test_postgresql_rejects_nan_in_persisted_money[lancamentos_financeiros-valor]
+FAILED tests/test_sprint03_database.py::test_postgresql_rejects_nan_in_persisted_money[movimentos_estoque-valor_unitario]
+======================= 7 failed, 3 deselected in 9.95s ========================
+

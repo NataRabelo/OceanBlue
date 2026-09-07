@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="3" skipped="0" tests="104" time="111.437" timestamp="2026-09-07T02:24:23.811260+00:00" hostname="c8a27e714e48"><testcase classname="tests.test_sprint03_adversarial" name="test_sale_rollback_at_each_persisted_stage[Venda]" time="1.199" /><testcase classname="tests.test_sprint03_adversarial" name="test_sale_rollback_at_each_persisted_stage[ItemVenda]" time="0.907" /><testcase classname="tests.test_sprint03_adversarial" name="test_sale_rollback_at_each_persisted_stage[PagamentoVenda]" time="0.938" /><testcase classname="tests.test_sprint03_adversarial" name="test_sale_rollback_at_each_persisted_stage[MovimentoEstoque]" time="0.952" /><testcase classname="tests.test_sprint03_adversarial" name="test_sale_rollback_at_each_persisted_stage[LancamentoFinanceiro]" time="1.037" /><testcase classname="tests.test_sprint03_adversarial" name="test_sale_rollback_at_each_persisted_stage[OperacaoIdempotente]" time="1.203" /><testcase classname="tests.test_sprint03_adversarial" name="test_cancel_rollback_at_each_persisted_stage[Venda-after_update-False]" time="1.120" /><testcase classname="tests.test_sprint03_adversarial" name="test_cancel_rollback_at_each_persisted_stage[Venda-after_update-True]" time="0.970" /><testcase classname="tests.test_sprint03_adversarial" name="test_cancel_rollback_at_each_persisted_stage[MovimentoEstoque-after_insert-False]" time="1.121" /><testcase classname="tests.test_sprint03_adversarial" name="test_cancel_rollback_at_each_persisted_stage[MovimentoEstoque-after_insert-True]" time="1.156" /><testcase classname="tests.test_sprint03_adversarial" name="test_cancel_rollback_at_each_persisted_stage[LancamentoFinanceiro-after_insert-False]" time="1.087" /><testcase classname="tests.test_sprint03_adversarial" name="test_cancel_rollback_at_each_persisted_stage[LancamentoFinanceiro-after_insert-True]" time="0.959" /><testcase classname="tests.test_sprint03_adversarial" name="test_cancel_rollback_at_each_persisted_stage[OperacaoIdempotente-after_insert-False]" time="1.298" /><testcase classname="tests.test_sprint03_adversarial" name="test_cancel_rollback_at_each_persisted_stage[OperacaoIdempotente-after_insert-True]" time="1.123" /><testcase classname="tests.test_sprint03_adversarial" name="test_cashback_without_customer_cannot_reduce_payment" time="1.244" /><testcase classname="tests.test_sprint03_adversarial" name="test_partial_refunds_conserve_every_cent[False-0.01]" time="1.176" /><testcase classname="tests.test_sprint03_adversarial" name="test_partial_refunds_conserve_every_cent[False-0.02]" time="1.140" /><testcase classname="tests.test_sprint03_adversarial" name="test_partial_refunds_conserve_every_cent[False-29.99]" time="0.964" /><testcase classname="tests.test_sprint03_adversarial" name="test_partial_refunds_conserve_every_cent[True-0.01]" time="1.090"><failure message="ValueError: Este item ja foi cancelado integralmente.">transaction_app = &lt;Flask 'app'&gt;, discount = '0.01', separate_items = True
+
+    @pytest.mark.parametrize("discount", ["0.01", "0.02", "29.99"])
+    @pytest.mark.parametrize("separate_items", [False, True])
+    def test_partial_refunds_conserve_every_cent(transaction_app, discount, separate_items):
+        with transaction_app.app_context():
+            record_id, product_id = stock_setup()
+            payload = sale_payload(product_id, quantity=3)
+            if separate_items:
+                payload["itens"] = [{"produto_id": product_id, "quantidade": 1} for number in range(3)]
+            payload["desconto_manual"] = discount
+            expected = Decimal("30") - Decimal(discount)
+            payload["pagamentos"][0]["valor"] = str(expected)
+            sale = PdvService.criar_venda(payload, 1, scope(), 1)
+            for number in range(3):
+                item_id = sale["itens"][number if separate_items else 0]["id"]
+&gt;               sale = PdvService.cancelar_item_venda(sale["id"], item_id,
+                    {"quantidade": 1, "idempotency_key": f"refund-{number}"}, 1, scope(), 1)
+
+tests/test_sprint03_adversarial.py:112: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+app/services/transaction_service.py:49: in execute
+    result = function(*args, **kwargs)
+app/services/idempotency_service.py:37: in execute
+    result = function(*args, **kwargs)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+venda_id = 1, item_id = 3
+data = {'idempotency_key': 'refund-2', 'quantidade': 1}, tenant_id = 1
+escopo = {'empresa_ids': [1], 'funcionario_id': 1, 'is_admin': True, 'permission_codes': {'cancelar_item_venda', 'cancelar_movimentacao_estoque', 'cancelar_venda', 'criar_adiantamento', 'criar_categoria', 'criar_cliente', ...}, ...}
+funcionario_id = 1
+
+    @staticmethod
+    @atomic_operation
+    @idempotent
+    def cancelar_item_venda(venda_id, item_id, data, tenant_id, escopo, funcionario_id):
+        try:
+            empresa_ids = AcessoEmpresaService.filtrar_empresa_ids(escopo)
+            item = PdvRepository.buscar_item_venda(venda_id, item_id, tenant_id)
+            if not item or not item.venda or (empresa_ids is not None and item.venda.empresa_id not in empresa_ids):
+                raise ValueError("Item da venda nao encontrado.")
+    
+            venda = item.venda
+            if venda.status != StatusVenda.FINALIZADA:
+                raise ValueError("Somente vendas finalizadas podem ter itens cancelados.")
+    
+            configuracao = ClienteService.obter_modelo_configuracao_empresa(venda.empresa_id, tenant_id)
+            PdvService._validar_janela_cancelamento(
+                data_base=venda.data_venda,
+                limite_horas=configuracao.cancelamento_item_limite_horas,
+                mensagem="A janela de cancelamento de itens expirou para esta empresa.",
+            )
+    
+            quantidade_informada = data.get("quantidade")
+            if quantidade_informada in (None, ""):
+                quantidade_informada = 1
+            quantidade_cancelar = PdvService._to_positive_int(quantidade_informada, "quantidade")
+            quantidade_cancelada_atual = int(getattr(item, "quantidade_cancelada", 0) or 0)
+            quantidade_disponivel = int(item.quantidade) - quantidade_cancelada_atual
+            if quantidade_disponivel &lt;= 0:
+&gt;               raise ValueError("Este item ja foi cancelado integralmente.")
+E               ValueError: Este item ja foi cancelado integralmente.
+
+app/services/pdv_service.py:423: ValueError</failure></testcase><testcase classname="tests.test_sprint03_adversarial" name="test_partial_refunds_conserve_every_cent[True-0.02]" time="0.976"><failure message="ValueError: Este item ja foi cancelado integralmente.">transaction_app = &lt;Flask 'app'&gt;, discount = '0.02', separate_items = True
+
+    @pytest.mark.parametrize("discount", ["0.01", "0.02", "29.99"])
+    @pytest.mark.parametrize("separate_items", [False, True])
+    def test_partial_refunds_conserve_every_cent(transaction_app, discount, separate_items):
+        with transaction_app.app_context():
+            record_id, product_id = stock_setup()
+            payload = sale_payload(product_id, quantity=3)
+            if separate_items:
+                payload["itens"] = [{"produto_id": product_id, "quantidade": 1} for number in range(3)]
+            payload["desconto_manual"] = discount
+            expected = Decimal("30") - Decimal(discount)
+            payload["pagamentos"][0]["valor"] = str(expected)
+            sale = PdvService.criar_venda(payload, 1, scope(), 1)
+            for number in range(3):
+                item_id = sale["itens"][number if separate_items else 0]["id"]
+&gt;               sale = PdvService.cancelar_item_venda(sale["id"], item_id,
+                    {"quantidade": 1, "idempotency_key": f"refund-{number}"}, 1, scope(), 1)
+
+tests/test_sprint03_adversarial.py:112: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+app/services/transaction_service.py:49: in execute
+    result = function(*args, **kwargs)
+app/services/idempotency_service.py:37: in execute
+    result = function(*args, **kwargs)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+venda_id = 1, item_id = 3
+data = {'idempotency_key': 'refund-2', 'quantidade': 1}, tenant_id = 1
+escopo = {'empresa_ids': [1], 'funcionario_id': 1, 'is_admin': True, 'permission_codes': {'cancelar_item_venda', 'cancelar_movimentacao_estoque', 'cancelar_venda', 'criar_adiantamento', 'criar_categoria', 'criar_cliente', ...}, ...}
+funcionario_id = 1
+
+    @staticmethod
+    @atomic_operation
+    @idempotent
+    def cancelar_item_venda(venda_id, item_id, data, tenant_id, escopo, funcionario_id):
+        try:
+            empresa_ids = AcessoEmpresaService.filtrar_empresa_ids(escopo)
+            item = PdvRepository.buscar_item_venda(venda_id, item_id, tenant_id)
+            if not item or not item.venda or (empresa_ids is not None and item.venda.empresa_id not in empresa_ids):
+                raise ValueError("Item da venda nao encontrado.")
+    
+            venda = item.venda
+            if venda.status != StatusVenda.FINALIZADA:
+                raise ValueError("Somente vendas finalizadas podem ter itens cancelados.")
+    
+            configuracao = ClienteService.obter_modelo_configuracao_empresa(venda.empresa_id, tenant_id)
+            PdvService._validar_janela_cancelamento(
+                data_base=venda.data_venda,
+                limite_horas=configuracao.cancelamento_item_limite_horas,
+                mensagem="A janela de cancelamento de itens expirou para esta empresa.",
+            )
+    
+            quantidade_informada = data.get("quantidade")
+            if quantidade_informada in (None, ""):
+                quantidade_informada = 1
+            quantidade_cancelar = PdvService._to_positive_int(quantidade_informada, "quantidade")
+            quantidade_cancelada_atual = int(getattr(item, "quantidade_cancelada", 0) or 0)
+            quantidade_disponivel = int(item.quantidade) - quantidade_cancelada_atual
+            if quantidade_disponivel &lt;= 0:
+&gt;               raise ValueError("Este item ja foi cancelado integralmente.")
+E               ValueError: Este item ja foi cancelado integralmente.
+
+app/services/pdv_service.py:423: ValueError</failure></testcase><testcase classname="tests.test_sprint03_adversarial" name="test_partial_refunds_conserve_every_cent[True-29.99]" time="1.124"><failure message="ValueError: Este item ja foi cancelado integralmente.">transaction_app = &lt;Flask 'app'&gt;, discount = '29.99', separate_items = True
+
+    @pytest.mark.parametrize("discount", ["0.01", "0.02", "29.99"])
+    @pytest.mark.parametrize("separate_items", [False, True])
+    def test_partial_refunds_conserve_every_cent(transaction_app, discount, separate_items):
+        with transaction_app.app_context():
+            record_id, product_id = stock_setup()
+            payload = sale_payload(product_id, quantity=3)
+            if separate_items:
+                payload["itens"] = [{"produto_id": product_id, "quantidade": 1} for number in range(3)]
+            payload["desconto_manual"] = discount
+            expected = Decimal("30") - Decimal(discount)
+            payload["pagamentos"][0]["valor"] = str(expected)
+            sale = PdvService.criar_venda(payload, 1, scope(), 1)
+            for number in range(3):
+                item_id = sale["itens"][number if separate_items else 0]["id"]
+&gt;               sale = PdvService.cancelar_item_venda(sale["id"], item_id,
+                    {"quantidade": 1, "idempotency_key": f"refund-{number}"}, 1, scope(), 1)
+
+tests/test_sprint03_adversarial.py:112: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+app/services/transaction_service.py:49: in execute
+    result = function(*args, **kwargs)
+app/services/idempotency_service.py:37: in execute
+    result = function(*args, **kwargs)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+venda_id = 1, item_id = 3
+data = {'idempotency_key': 'refund-2', 'quantidade': 1}, tenant_id = 1
+escopo = {'empresa_ids': [1], 'funcionario_id': 1, 'is_admin': True, 'permission_codes': {'cancelar_item_venda', 'cancelar_movimentacao_estoque', 'cancelar_venda', 'criar_adiantamento', 'criar_categoria', 'criar_cliente', ...}, ...}
+funcionario_id = 1
+
+    @staticmethod
+    @atomic_operation
+    @idempotent
+    def cancelar_item_venda(venda_id, item_id, data, tenant_id, escopo, funcionario_id):
+        try:
+            empresa_ids = AcessoEmpresaService.filtrar_empresa_ids(escopo)
+            item = PdvRepository.buscar_item_venda(venda_id, item_id, tenant_id)
+            if not item or not item.venda or (empresa_ids is not None and item.venda.empresa_id not in empresa_ids):
+                raise ValueError("Item da venda nao encontrado.")
+    
+            venda = item.venda
+            if venda.status != StatusVenda.FINALIZADA:
+                raise ValueError("Somente vendas finalizadas podem ter itens cancelados.")
+    
+            configuracao = ClienteService.obter_modelo_configuracao_empresa(venda.empresa_id, tenant_id)
+            PdvService._validar_janela_cancelamento(
+                data_base=venda.data_venda,
+                limite_horas=configuracao.cancelamento_item_limite_horas,
+                mensagem="A janela de cancelamento de itens expirou para esta empresa.",
+            )
+    
+            quantidade_informada = data.get("quantidade")
+            if quantidade_informada in (None, ""):
+                quantidade_informada = 1
+            quantidade_cancelar = PdvService._to_positive_int(quantidade_informada, "quantidade")
+            quantidade_cancelada_atual = int(getattr(item, "quantidade_cancelada", 0) or 0)
+            quantidade_disponivel = int(item.quantidade) - quantidade_cancelada_atual
+            if quantidade_disponivel &lt;= 0:
+&gt;               raise ValueError("Este item ja foi cancelado integralmente.")
+E               ValueError: Este item ja foi cancelado integralmente.
+
+app/services/pdv_service.py:423: ValueError</failure></testcase><testcase classname="tests.test_sprint03_adversarial" name="test_two_sales_for_last_unit_with_distinct_keys" time="0.943" /><testcase classname="tests.test_sprint03_adversarial" name="test_concurrent_same_key_different_payload" time="0.882" /><testcase classname="tests.test_sprint03_adversarial" name="test_simultaneous_full_and_partial_cancellation" time="1.185" /><testcase classname="tests.test_sprint03_adversarial" name="test_each_layout_invalid_middle_row_preserves_existing_data[categorias]" time="0.805" /><testcase classname="tests.test_sprint03_adversarial" name="test_each_layout_invalid_middle_row_preserves_existing_data[produtos]" time="0.810" /><testcase classname="tests.test_sprint03_adversarial" name="test_each_layout_invalid_middle_row_preserves_existing_data[funcionarios]" time="1.018" /><testcase classname="tests.test_sprint03_adversarial" name="test_each_layout_invalid_middle_row_preserves_existing_data[cupons]" time="1.027" /><testcase classname="tests.test_sprint03_adversarial" name="test_each_layout_invalid_middle_row_preserves_existing_data[formas_pagamento]" time="0.803" /><testcase classname="tests.test_sprint03_adversarial" name="test_each_layout_invalid_middle_row_preserves_existing_data[categorias_financeiras]" time="0.791" /><testcase classname="tests.test_sprint03_adversarial" name="test_duplicate_concurrent_batches_are_updates_without_duplicate_effects[categorias]" time="0.703" /><testcase classname="tests.test_sprint03_adversarial" name="test_duplicate_concurrent_batches_are_updates_without_duplicate_effects[produtos]" time="0.744" /><testcase classname="tests.test_sprint03_adversarial" name="test_duplicate_concurrent_batches_are_updates_without_duplicate_effects[funcionarios]" time="0.975" /><testcase classname="tests.test_sprint03_adversarial" name="test_duplicate_concurrent_batches_are_updates_without_duplicate_effects[cupons]" time="0.875" /><testcase classname="tests.test_sprint03_adversarial" name="test_duplicate_concurrent_batches_are_updates_without_duplicate_effects[formas_pagamento]" time="0.809" /><testcase classname="tests.test_sprint03_adversarial" name="test_duplicate_concurrent_batches_are_updates_without_duplicate_effects[categorias_financeiras]" time="0.963" /><testcase classname="tests.test_sprint03_adversarial" name="test_money_boundary_is_client_error_and_atomic[NaN]" time="0.880" /><testcase classname="tests.test_sprint03_adversarial" name="test_money_boundary_is_client_error_and_atomic[sNaN]" time="0.834" /><testcase classname="tests.test_sprint03_adversarial" name="test_money_boundary_is_client_error_and_atomic[Infinity]" time="0.999" /><testcase classname="tests.test_sprint03_adversarial" name="test_money_boundary_is_client_error_and_atomic[-Infinity]" time="0.834" /><testcase classname="tests.test_sprint03_adversarial" name="test_money_boundary_is_client_error_and_atomic[9999999999.999]" time="0.841" /><testcase classname="tests.test_sprint03_adversarial" name="test_money_boundary_is_client_error_and_atomic[1e1000]" time="0.835" /><testcase classname="tests.test_sprint03_adversarial" name="test_product_update_preserves_barcode_when_omitted" time="0.886" /><testcase classname="tests.test_sprint03_adversarial" name="test_employee_history_cannot_be_detached_by_delete" time="0.897" /><testcase classname="tests.test_sprint03_adversarial" name="test_refunds_do_not_overpay_individual_payment_sources" time="0.963" /><testcase classname="tests.test_sprint03_adversarial" name="test_partial_refunds_revoke_all_generated_cashback" time="1.252" /><testcase classname="tests.test_sprint03_adversarial" name="test_partial_refunds_restore_each_consumed_credit_exactly" time="1.432" /><testcase classname="tests.test_sprint03_adversarial" name="test_cashback_insert_failure_rolls_back_sale_and_wallet[CreditoCashbackCliente]" time="1.069" /><testcase classname="tests.test_sprint03_adversarial" name="test_cashback_insert_failure_rolls_back_sale_and_wallet[MovimentoCarteiraCliente]" time="0.819" /><testcase classname="tests.test_sprint03_adversarial" name="test_import_foreign_company_rolls_back_every_row[produtos-fields0]" time="0.776" /><testcase classname="tests.test_sprint03_adversarial" name="test_import_foreign_company_rolls_back_every_row[funcionarios-fields1]" time="0.792" /><testcase classname="tests.test_sprint03_adversarial" name="test_idempotency_replay_rechecks_company_access[sale]" time="1.253" /><testcase classname="tests.test_sprint03_adversarial" name="test_idempotency_replay_rechecks_company_access[cancel]" time="0.938" /><testcase classname="tests.test_sprint03_transactions" name="test_parent_and_links_rollback_after_child_insert_failure[ProdutoEmpresa-product]" time="0.811" /><testcase classname="tests.test_sprint03_transactions" name="test_parent_and_links_rollback_after_child_insert_failure[FuncionarioEmpresa-employee]" time="0.775" /><testcase classname="tests.test_sprint03_transactions" name="test_parent_and_links_rollback_after_child_insert_failure[RolePermission-role]" time="0.731" /><testcase classname="tests.test_sprint03_transactions" name="test_final_parent_delete_failure_restores_link[product]" time="1.049" /><testcase classname="tests.test_sprint03_transactions" name="test_final_parent_delete_failure_restores_link[employee]" time="0.818" /><testcase classname="tests.test_sprint03_transactions" name="test_employee_company_set_and_role_changes_are_atomic" time="1.090" /><testcase classname="tests.test_sprint03_transactions" name="test_product_multiple_companies_preserves_balances_and_quota" time="0.757" /><testcase classname="tests.test_sprint03_transactions" name="test_invalid_product_never_leaves_parent[fields0]" time="0.927" /><testcase classname="tests.test_sprint03_transactions" name="test_invalid_product_never_leaves_parent[fields1]" time="0.767" /><testcase classname="tests.test_sprint03_transactions" name="test_invalid_product_never_leaves_parent[fields2]" time="0.696" /><testcase classname="tests.test_sprint03_transactions" name="test_invalid_product_never_leaves_parent[fields3]" time="1.075" /><testcase classname="tests.test_sprint03_transactions" name="test_invalid_product_never_leaves_parent[fields4]" time="0.830" /><testcase classname="tests.test_sprint03_transactions" name="test_invalid_product_never_leaves_parent[fields5]" time="0.736" /><testcase classname="tests.test_sprint03_transactions" name="test_invalid_product_never_leaves_parent[fields6]" time="0.716" /><testcase classname="tests.test_sprint03_transactions" name="test_invalid_product_never_leaves_parent[fields7]" time="0.793" /><testcase classname="tests.test_sprint03_transactions" name="test_invalid_product_never_leaves_parent[fields8]" time="0.904" /><testcase classname="tests.test_sprint03_transactions" name="test_invalid_product_never_leaves_parent[fields9]" time="0.784" /><testcase classname="tests.test_sprint03_transactions" name="test_category_validation_and_in_use_delete" time="0.865" /><testcase classname="tests.test_sprint03_transactions" name="test_concurrent_generated_and_duplicate_barcodes" time="1.069" /><testcase classname="tests.test_sprint03_transactions" name="test_concurrent_stock_exhaustion_has_one_winner" time="0.840" /><testcase classname="tests.test_sprint03_transactions" name="test_sale_and_partial_cancellation_replay_concurrently" time="1.800" /><testcase classname="tests.test_sprint03_transactions" name="test_full_cancellation_and_stock_callback_replays" time="1.446" /><testcase classname="tests.test_sprint03_transactions" name="test_sale_failure_after_stock_restores_every_table" time="1.183" /><testcase classname="tests.test_sprint03_transactions" name="test_all_six_layouts_preview_import_export_reimport[categorias]" time="2.553" /><testcase classname="tests.test_sprint03_transactions" name="test_all_six_layouts_preview_import_export_reimport[produtos]" time="1.217" /><testcase classname="tests.test_sprint03_transactions" name="test_all_six_layouts_preview_import_export_reimport[funcionarios]" time="1.108" /><testcase classname="tests.test_sprint03_transactions" name="test_all_six_layouts_preview_import_export_reimport[cupons]" time="0.971" /><testcase classname="tests.test_sprint03_transactions" name="test_all_six_layouts_preview_import_export_reimport[formas_pagamento]" time="0.968" /><testcase classname="tests.test_sprint03_transactions" name="test_all_six_layouts_preview_import_export_reimport[categorias_financeiras]" time="0.940" /><testcase classname="tests.test_sprint03_transactions" name="test_all_layouts_reject_entire_batch_when_last_row_invalid[categorias]" time="0.765" /><testcase classname="tests.test_sprint03_transactions" name="test_all_layouts_reject_entire_batch_when_last_row_invalid[produtos]" time="1.161" /><testcase classname="tests.test_sprint03_transactions" name="test_all_layouts_reject_entire_batch_when_last_row_invalid[funcionarios]" time="0.996" /><testcase classname="tests.test_sprint03_transactions" name="test_all_layouts_reject_entire_batch_when_last_row_invalid[cupons]" time="0.854" /><testcase classname="tests.test_sprint03_transactions" name="test_all_layouts_reject_entire_batch_when_last_row_invalid[formas_pagamento]" time="0.822" /><testcase classname="tests.test_sprint03_transactions" name="test_all_layouts_reject_entire_batch_when_last_row_invalid[categorias_financeiras]" time="0.794" /><testcase classname="tests.test_sprint03_transactions" name="test_import_stock_update_and_conflicting_barcode_rollback" time="0.817" /><testcase classname="tests.test_sprint03_transactions" name="test_concurrent_import_last_quota_and_no_orphans" time="1.349" /><testcase classname="tests.test_sprint03_transactions" name="test_http_preview_and_multicompany_employee" time="1.513" /><testcase classname="tests.test_sprint03_transactions" name="test_role_replacement_failure_preserves_permissions_and_name" time="0.878" /><testcase classname="tests.test_sprint03_transactions" name="test_cancel_failure_restores_sale_stock_finance_and_idempotency" time="1.549" /><testcase classname="tests.test_sprint03_transactions" name="test_commit_failure_does_not_send_notification_or_leave_sale" time="1.974" /><testcase classname="tests.test_sprint03_transactions" name="test_uncancelled_sale_cannot_restore_stock" time="2.071" /><testcase classname="tests.test_sprint03_transactions" name="test_manual_cancellation_concurrent_replay" time="1.681" /><testcase classname="tests.test_sprint03_transactions" name="test_deactivation_is_local_to_product_company" time="2.533" /><testcase classname="tests.test_sprint03_transactions" name="test_import_invalid_values_rollback[row0]" time="1.134" /><testcase classname="tests.test_sprint03_transactions" name="test_import_invalid_values_rollback[row1]" time="0.880" /><testcase classname="tests.test_sprint03_transactions" name="test_import_invalid_values_rollback[row2]" time="1.071" /><testcase classname="tests.test_sprint03_transactions" name="test_import_invalid_values_rollback[row3]" time="1.083" /><testcase classname="tests.test_sprint03_transactions" name="test_export_formula_like_text_is_literal" time="0.989" /><testcase classname="tests.test_sprint03_transactions" name="test_http_sale_requires_key_and_replays_same_business_response" time="2.683" /><testcase classname="tests.test_sprint03_transactions" name="test_migration_rejects_duplicate_legacy_sale_debits_atomically" time="1.163" /></testsuite></testsuites>
