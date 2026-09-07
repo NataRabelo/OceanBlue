@@ -1,0 +1,91 @@
+time="2026-09-06T22:09:06-03:00" level=warning msg="Found orphan containers (oceanblue-s02-before) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up."
+ Container oceanblue-s02-adversarial-db-test-1 Running 
+ Container oceanblue-s02-adversarial-db-test-1 Waiting 
+ Container oceanblue-s02-adversarial-db-test-1 Healthy 
+ Container oceanblue-s02-before-corrected Creating 
+ Container oceanblue-s02-before-corrected Created 
+FFFFFFFFF.........F...                                                   [100%]
+=================================== FAILURES ===================================
+_____________ test_platform_account_limit_ignores_supplied_tenant ______________
+tests/test_sprint02_adversarial.py:21: in test_platform_account_limit_ignores_supplied_tenant
+    assert statuses == [401] * 5 + [429]
+E   assert [401, 401, 401, 401, 401, 401] == [401, 401, 401, 401, 401, 429]
+E     
+E     At index 5 diff: 401 != 429
+E     Use -v to get more diff
+---------------------------- Captured stderr setup -----------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+______________ test_case_sensitive_accounts_do_not_share_lockout _______________
+tests/test_sprint02_adversarial.py:28: in test_case_sensitive_accounts_do_not_share_lockout
+    assert login(client, tenant="Tenant 1").status_code == 302
+E   AssertionError: assert 429 == 302
+E    +  where 429 = <WrapperTestResponse streamed [429 TOO MANY REQUESTS]>.status_code
+E    +    where <WrapperTestResponse streamed [429 TOO MANY REQUESTS]> = login(<FlaskClient <Flask 'app'>>, tenant='Tenant 1')
+_________ test_unicode_csrf_is_invalid_input_not_server_error[/login] __________
+tests/test_sprint02_adversarial.py:36: in test_unicode_csrf_is_invalid_input_not_server_error
+    assert response.status_code == 400
+E   assert 500 == 400
+E    +  where 500 = <WrapperTestResponse streamed [500 INTERNAL SERVER ERROR]>.status_code
+____ test_unicode_csrf_is_invalid_input_not_server_error[/redefinir-senha] _____
+tests/test_sprint02_adversarial.py:36: in test_unicode_csrf_is_invalid_input_not_server_error
+    assert response.status_code == 400
+E   assert 500 == 400
+E    +  where 500 = <WrapperTestResponse streamed [500 INTERNAL SERVER ERROR]>.status_code
+____________ test_authenticated_html_is_never_cached[tenant-/home] _____________
+tests/test_sprint02_adversarial.py:45: in test_authenticated_html_is_never_cached
+    assert response.headers.get("Cache-Control") == "no-store"
+E   assert None == 'no-store'
+E    +  where None = get('Cache-Control')
+E    +    where get = Headers([('Content-Type', 'text/html; charset=utf-8'), ('Content-Length', '34636'), ('X-Content-Type-Options', 'nosnif...rc 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; frame-ancestors 'none';")]).get
+E    +      where Headers([('Content-Type', 'text/html; charset=utf-8'), ('Content-Length', '34636'), ('X-Content-Type-Options', 'nosnif...rc 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; frame-ancestors 'none';")]) = <WrapperTestResponse streamed [200 OK]>.headers
+_______ test_authenticated_html_is_never_cached[platform-/platform/home] _______
+tests/test_sprint02_adversarial.py:45: in test_authenticated_html_is_never_cached
+    assert response.headers.get("Cache-Control") == "no-store"
+E   assert None == 'no-store'
+E    +  where None = get('Cache-Control')
+E    +    where get = Headers([('Content-Type', 'text/html; charset=utf-8'), ('Content-Length', '24743'), ('X-Content-Type-Options', 'nosnif...rc 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; frame-ancestors 'none';")]).get
+E    +      where Headers([('Content-Type', 'text/html; charset=utf-8'), ('Content-Length', '24743'), ('X-Content-Type-Options', 'nosnif...rc 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; frame-ancestors 'none';")]) = <WrapperTestResponse streamed [200 OK]>.headers
+________ test_successful_provider_response_cannot_disclose_credentials _________
+tests/test_sprint02_adversarial.py:63: in test_successful_provider_response_cannot_disclose_credentials
+    assert "PRIVATE" not in json.dumps(result)
+E   assert 'PRIVATE' not in '{"canal": "...secret\\"}"}'
+E     
+E     'PRIVATE' is contained here:
+E       :\"Bearer PRIVATE-provider-secret\"}"}
+E     ?           +++++++
+_________ test_fiscal_mock_does_not_probe_server_files_or_environment __________
+tests/test_sprint02_adversarial.py:73: in test_fiscal_mock_does_not_probe_server_files_or_environment
+    assert probes == []
+E   AssertionError: assert ['/private/ke...T_SECRET_KEY'] == []
+E     
+E     Left contains 2 more items, first extra item: '/private/key.pfx'
+E     Use -v to get more diff
+_____________ test_database_failure_is_redacted_in_readiness_logs ______________
+tests/test_sprint02_adversarial.py:87: in test_database_failure_is_redacted_in_readiness_logs
+    assert "PRIVATE" not in str(warning.call_args)
+E   assert 'PRIVATE' not in "call('Readi...TE-driver'))"
+E     
+E     'PRIVATE' is contained here:
+E       imeError) PRIVATE-driver'))
+E     ?           +++++++
+_______ test_every_api_method_enforces_auth_scope_and_csrf[wrong_scope] ________
+tests/test_sprint02_adversarial.py:163: in test_every_api_method_enforces_auth_scope_and_csrf
+    assert response.headers["Location"].endswith("/platform/home")
+E   AssertionError: assert False
+E    +  where False = <built-in method endswith of str object at 0x7074b084e8b0>('/platform/home')
+E    +    where <built-in method endswith of str object at 0x7074b084e8b0> = '/home'.endswith
+------------------- generated xml file: /tmp/adversarial.xml -------------------
+=========================== short test summary info ============================
+FAILED tests/test_sprint02_adversarial.py::test_platform_account_limit_ignores_supplied_tenant
+FAILED tests/test_sprint02_adversarial.py::test_case_sensitive_accounts_do_not_share_lockout
+FAILED tests/test_sprint02_adversarial.py::test_unicode_csrf_is_invalid_input_not_server_error[/login]
+FAILED tests/test_sprint02_adversarial.py::test_unicode_csrf_is_invalid_input_not_server_error[/redefinir-senha]
+FAILED tests/test_sprint02_adversarial.py::test_authenticated_html_is_never_cached[tenant-/home]
+FAILED tests/test_sprint02_adversarial.py::test_authenticated_html_is_never_cached[platform-/platform/home]
+FAILED tests/test_sprint02_adversarial.py::test_successful_provider_response_cannot_disclose_credentials
+FAILED tests/test_sprint02_adversarial.py::test_fiscal_mock_does_not_probe_server_files_or_environment
+FAILED tests/test_sprint02_adversarial.py::test_database_failure_is_redacted_in_readiness_logs
+FAILED tests/test_sprint02_adversarial.py::test_every_api_method_enforces_auth_scope_and_csrf[wrong_scope]
+10 failed, 12 passed in 17.90s
+

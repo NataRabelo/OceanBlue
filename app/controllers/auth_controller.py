@@ -1,4 +1,5 @@
 import hmac
+import json
 import secrets
 from datetime import datetime, timezone
 
@@ -21,7 +22,9 @@ auth_bp = Blueprint("auth", __name__)
 
 
 def _rate_limit():
-    identity = "|".join(str(request.form.get(field) or ("tenant" if field == "scope" else "")).strip().lower() for field in ("scope", "tenant", "usuario"))
+    scope = request.form.get("scope") or "tenant"
+    tenant = "" if scope == "platform" else str(request.form.get("tenant") or "").strip()
+    identity = json.dumps([scope, tenant, str(request.form.get("usuario") or "").strip()], ensure_ascii=True)
     limits = [
         (f"ip:{request.remote_addr}", current_app.config["LOGIN_RATE_LIMIT_ATTEMPTS"] * 10),
         (f"account:{identity}", current_app.config["LOGIN_RATE_LIMIT_ATTEMPTS"]),
@@ -31,6 +34,11 @@ def _rate_limit():
         if not allowed:
             return retry
     return 0
+
+
+def _valid_login_csrf(value):
+    expected = session.get("login_csrf")
+    return isinstance(value, str) and isinstance(expected, str) and bool(value) and hmac.compare_digest(value.encode(), expected.encode())
 
 
 def _audit(action, status, auth_data=None):
@@ -46,7 +54,7 @@ def login():
         session.setdefault("login_csrf", secrets.token_urlsafe(32))
         return render_template("pages/login.html")
     csrf = request.form.get("login_csrf") or ""
-    if not csrf or not hmac.compare_digest(csrf, session.get("login_csrf", "")):
+    if not _valid_login_csrf(csrf):
         return jsonify(success=False, message="Formulario expirado. Recarregue a pagina."), 400
     retry = _rate_limit()
     if retry:
@@ -119,7 +127,7 @@ def redefinir_senha():
     allowed, retry = LoginRateLimiter.hit(f"reset:{request.remote_addr}", 10, 300)
     if not allowed:
         return jsonify(success=False, message="Aguarde para tentar novamente."), 429, {"Retry-After": str(retry)}
-    if not hmac.compare_digest(str(data.get("login_csrf") or ""), session.get("login_csrf", "missing")):
+    if not _valid_login_csrf(data.get("login_csrf")):
         return jsonify(success=False, message="Formulario expirado."), 400
     try:
         AuthService.redefinir_senha(data.get("token"), data.get("nova_senha"))

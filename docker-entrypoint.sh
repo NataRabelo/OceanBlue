@@ -26,8 +26,8 @@ while time.time() < deadline:
             connection.execute(text("SELECT 1"))
         break
     except Exception as exc:
-        last_error = exc
-        print(f"Aguardando banco de dados: {exc}", flush=True)
+        last_error = type(exc).__name__
+        print(f"Aguardando banco de dados: {last_error}", flush=True)
         time.sleep(2)
 else:
     raise SystemExit(f"Banco indisponivel apos aguardar: {last_error}")

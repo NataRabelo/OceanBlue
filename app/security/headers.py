@@ -20,7 +20,7 @@ def register_security_headers(app):
 
     @app.after_request
     def add_security_headers(response):
-        if request.path in {"/login", "/senha", "/redefinir-senha"} or request.path.startswith("/api/"):
+        if getattr(g, "auth_user", None) or request.path in {"/login", "/senha", "/redefinir-senha"} or request.path.startswith("/api/"):
             response.headers["Cache-Control"] = "no-store"
         response.headers.setdefault("X-Content-Type-Options", "nosniff")
         response.headers.setdefault("X-Frame-Options", "DENY")

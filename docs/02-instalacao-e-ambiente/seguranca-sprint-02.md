@@ -20,9 +20,15 @@ Os JWTs anteriores nao possuem versao de sessao e identificador da chave; todos 
 
 O PostgreSQL compartilha os contadores entre workers e instancias. Por padrao, sao cinco tentativas por conta/organizacao/ambiente em uma janela fixa de 300 segundos, e cinquenta por IP. Tentativas bem-sucedidas tambem contam; o login nao limpa o contador. A resposta 429 inclui `Retry-After`. Falha do armazenamento bloqueia o login.
 
+O contador usa os mesmos nomes exatos e distingue maiusculas/minusculas como a autenticacao. Na plataforma, o campo organizacao e ignorado tanto na busca quanto no contador; varia-lo nao abre novas tentativas. Contas homonimas em tenants diferentes continuam independentes.
+
 O endereco usado e `request.remote_addr`. Headers enviados pelo cliente nao sao aceitos diretamente. `TRUST_PROXY_HEADERS=false` e o padrao. Somente ative ProxyFix quando a aplicacao estiver acessivel exclusivamente pelo proxy confiavel; ajuste a quantidade de proxies e bloqueie acesso direto ao backend. O proxy deve substituir os headers de encaminhamento.
 
+A imagem desativa a interpretacao nativa de headers HTTPS do Gunicorn com `--forwarded-allow-ips ""`, inclusive em loopback. Preserve esse argumento se substituir o comando de inicializacao; a confianca em encaminhamento deve ser configurada exclusivamente no ProxyFix.
+
 Comunicacoes SMTP/WhatsApp/SMS exigem hosts confiaveis cadastrados pelo operador em `OUTBOUND_ALLOWED_HOSTS`, separados por virgula; vazio bloqueia envios. Hosts internos, loopback e metadata sao recusados na resolucao DNS. SMTP exige TLS; webhooks exigem HTTPS na porta 443 e nao seguem redirecionamentos. Nunca inclua dominios controlados por tenants nessa lista.
+
+Respostas bem-sucedidas de webhooks geram uma confirmacao local; seus corpos nao sao lidos, armazenados ou devolvidos ao navegador, pois podem refletir credenciais e dados de depuracao. Paginas autenticadas e APIs usam `Cache-Control: no-store`. Falhas de banco em readiness e inicializacao registram somente o tipo da excecao.
 
 ## Isolamento e cotas
 
@@ -56,5 +62,7 @@ Alteracoes em perfis, permissoes, associacoes perfil/permissao e funcionarios/vi
 Execute periodicamente `flask cleanup-auth-state` para remover revogacoes e codigos expirados. O contador de tentativas tambem limpa suas janelas vencidas. Nao ha agendamento criado por esta entrega.
 
 Boleto/Asaas, Fiscal/Focus/SEFAZ reais permanecem bloqueados no seletor de provider, no transporte e no webhook Asaas. Configuracoes existentes nao habilitam chamadas reais. Os testes de protocolo usam somente transportes simulados.
+
+O fluxo fiscal simulado confere somente a declaracao do caminho, extensao e nome da variavel do certificado. Nao consulta arquivos nem variaveis de ambiente indicadas pelo tenant. A mensagem de resultado informa explicitamente que nenhum certificado real foi verificado; esse resultado nao comprova prontidao fiscal real.
 
 Referencias de implementacao: [Fernet e rotacao](https://cryptography.io/en/stable/fernet/), [travas transacionais PostgreSQL 16](https://www.postgresql.org/docs/16/explicit-locking.html#ADVISORY-LOCKS).

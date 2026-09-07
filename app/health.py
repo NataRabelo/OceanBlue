@@ -26,7 +26,7 @@ def readiness():
         }), 200
     except Exception as exc:
         db.session.rollback()
-        current_app.logger.warning("Readiness check failed: %s", exc)
+        current_app.logger.warning("Readiness check failed: %s", type(exc).__name__)
         return jsonify({
             "status": "error",
             "database": "error",

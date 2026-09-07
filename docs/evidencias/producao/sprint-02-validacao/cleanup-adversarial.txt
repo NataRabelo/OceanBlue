@@ -1,0 +1,31 @@
+ Container oceanblue-s02-adversarial-test-1 Stopping 
+ Container oceanblue-s02-before Stopping 
+ Container oceanblue-s02-after Stopping 
+ Container oceanblue-s02-before-corrected Stopping 
+ Container oceanblue-s02-adversarial-test-1 Stopped 
+ Container oceanblue-s02-adversarial-test-1 Removing 
+ Container oceanblue-s02-before Stopped 
+ Container oceanblue-s02-before Removing 
+ Container oceanblue-s02-before-corrected Stopped 
+ Container oceanblue-s02-before-corrected Removing 
+ Container oceanblue-s02-after Stopped 
+ Container oceanblue-s02-after Removing 
+ Container oceanblue-s02-adversarial-test-1 Removed 
+ Container oceanblue-s02-before-corrected Removed 
+ Container oceanblue-s02-after Removed 
+ Container oceanblue-s02-before Removed 
+ Container oceanblue-s02-adversarial-db-test-1 Stopping 
+ Container oceanblue-s02-adversarial-db-test-1 Stopped 
+ Container oceanblue-s02-adversarial-db-test-1 Removing 
+ Container oceanblue-s02-adversarial-db-test-1 Removed 
+ Container oceanblue-s02-before Stopping 
+ Container oceanblue-s02-after Stopping 
+ Container oceanblue-s02-before-corrected Stopping 
+ Container oceanblue-s02-before-corrected Error Error while Stopping
+ Container oceanblue-s02-before-corrected Removed 
+ Container oceanblue-s02-after Error Error while Stopping
+ Container oceanblue-s02-after Removed 
+ Container oceanblue-s02-before Error Error while Stopping
+ Container oceanblue-s02-before Removed 
+ Network oceanblue-s02-adversarial_test Removing 
+ Network oceanblue-s02-adversarial_test Removed 

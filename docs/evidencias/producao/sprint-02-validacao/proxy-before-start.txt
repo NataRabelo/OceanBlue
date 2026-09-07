@@ -1,0 +1,80 @@
+ Image oceanblue-s02-proxy-before-smoke Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 591B 0.0s done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 918B done
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/python:3.12.12-slim-bookworm@sha256:593bd06efe90efa80dc4eee3948be7c0fde4134606dd40d8dd8dbcade98e669c
+#3 DONE 0.0s
+
+#4 [internal] load .dockerignore
+#4 transferring context:
+#4 transferring context: 297B done
+#4 DONE 0.0s
+
+#5 [1/6] FROM docker.io/library/python:3.12.12-slim-bookworm@sha256:593bd06efe90efa80dc4eee3948be7c0fde4134606dd40d8dd8dbcade98e669c
+#5 resolve docker.io/library/python:3.12.12-slim-bookworm@sha256:593bd06efe90efa80dc4eee3948be7c0fde4134606dd40d8dd8dbcade98e669c 0.0s done
+#5 DONE 0.0s
+
+#6 [internal] load build context
+#6 transferring context: 27.98kB 0.0s done
+#6 DONE 0.1s
+
+#7 [2/6] WORKDIR /app
+#7 CACHED
+
+#8 [3/6] COPY requirements.txt .
+#8 CACHED
+
+#9 [4/6] RUN python -m pip install --no-cache-dir --require-hashes -r requirements.txt
+#9 CACHED
+
+#10 [5/6] COPY . .
+#10 DONE 0.1s
+
+#11 [6/6] RUN sed -i 's/\r$//' /app/docker-entrypoint.sh     && cp /app/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh     && chmod +x /usr/local/bin/docker-entrypoint.sh     && adduser --disabled-password --gecos "" appuser     && chown -R appuser:appuser /app
+#11 0.491 Adding user `appuser' ...
+#11 0.491 Adding new group `appuser' (1000) ...
+#11 0.545 Adding new user `appuser' (1000) with group `appuser (1000)' ...
+#11 0.636 Creating home directory `/home/appuser' ...
+#11 0.636 Copying files from `/etc/skel' ...
+#11 0.665 Adding new user `appuser' to supplemental / extra groups `users' ...
+#11 0.665 Adding user `appuser' to group `users' ...
+#11 DONE 4.5s
+
+#12 exporting to image
+#12 exporting layers
+#12 exporting layers 0.3s done
+#12 exporting manifest sha256:9d667ea03a1aeef44afffe14ff2428c7ab2657e5b68d4922df81b5035b0100ee 0.0s done
+#12 exporting config sha256:3583b5f48904f57bdc636bd2c789cfede05fba9bff9c41f1678c3c9d87560997 0.0s done
+#12 exporting attestation manifest sha256:6e412b770b29be258aada309fd92682bb51466bb0685745eb012930c698d2e35 0.0s done
+#12 exporting manifest list sha256:589c5facb4d7f6cbabcb3d4a5771d5395517ebe6770b9e7b3f3907c9d9db162b
+#12 exporting manifest list sha256:589c5facb4d7f6cbabcb3d4a5771d5395517ebe6770b9e7b3f3907c9d9db162b 0.0s done
+#12 naming to docker.io/library/oceanblue-s02-proxy-before-smoke:latest done
+#12 unpacking to docker.io/library/oceanblue-s02-proxy-before-smoke:latest 0.1s done
+#12 DONE 0.6s
+
+#13 resolving provenance for metadata file
+#13 DONE 0.0s
+ Image oceanblue-s02-proxy-before-smoke Built 
+ Network oceanblue-s02-proxy-before_test Creating 
+ Network oceanblue-s02-proxy-before_test Creating 
+ Network oceanblue-s02-proxy-before_test Created 
+ Network oceanblue-s02-proxy-before_test Created 
+ Container oceanblue-s02-proxy-before-db-test-1 Creating 
+ Container oceanblue-s02-proxy-before-db-test-1 Created 
+ Container oceanblue-s02-proxy-before-smoke-1 Creating 
+ Container oceanblue-s02-proxy-before-smoke-1 Created 
+ Container oceanblue-s02-proxy-before-db-test-1 Starting 
+ Container oceanblue-s02-proxy-before-db-test-1 Started 
+ Container oceanblue-s02-proxy-before-db-test-1 Waiting 
+ Container oceanblue-s02-proxy-before-db-test-1 Healthy 
+ Container oceanblue-s02-proxy-before-smoke-1 Starting 
+ Container oceanblue-s02-proxy-before-smoke-1 Started 
+ Container oceanblue-s02-proxy-before-smoke-1 Waiting 
+ Container oceanblue-s02-proxy-before-db-test-1 Waiting 
+ Container oceanblue-s02-proxy-before-db-test-1 Healthy 
+ Container oceanblue-s02-proxy-before-smoke-1 Healthy 

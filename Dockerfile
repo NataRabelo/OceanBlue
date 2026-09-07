@@ -20,4 +20,4 @@ HEALTHCHECK --interval=5s --timeout=5s --retries=6 CMD python -c "from urllib.re
 USER appuser
 
 ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
-CMD ["gunicorn", "-w", "4", "-b", "0.0.0.0:5000", "--timeout", "60", "wsgi:app"]
+CMD ["gunicorn", "-w", "4", "-b", "0.0.0.0:5000", "--timeout", "60", "--forwarded-allow-ips", "", "wsgi:app"]

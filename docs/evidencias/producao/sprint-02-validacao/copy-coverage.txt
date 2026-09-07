@@ -1,0 +1,2 @@
+ oceanblue-s02-final-test-1 Copying oceanblue-s02-final-test-1:/app/coverage.xml to C:\Users\Rabel\.codex\worktrees\ff1f\OceanBlue\docs\evidencias\producao\sprint-02-validacao\coverage.xml
+ oceanblue-s02-final-test-1 Copied oceanblue-s02-final-test-1:/app/coverage.xml to C:\Users\Rabel\.codex\worktrees\ff1f\OceanBlue\docs\evidencias\producao\sprint-02-validacao\coverage.xml

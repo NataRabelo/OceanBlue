@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/app/scripts/validate_security_smoke.py", line 41, in <module>
+    main()
+  File "/app/scripts/validate_security_smoke.py", line 24, in main
+    assert request_status("/login", {"X-Forwarded-Proto": "https", "X-Forwarded-For": "127.0.0.1"})[0] == 403
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

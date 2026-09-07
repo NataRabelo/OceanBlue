@@ -561,18 +561,14 @@ class FiscalService:
 
         if not caminho:
             return False, "Caminho do certificado digital nao configurado."
-        if not os.path.exists(caminho):
-            return False, "O arquivo do certificado digital nao foi encontrado no caminho informado."
         if not senha_env:
             return False, "Informe a variavel de ambiente que contem a senha do certificado."
-        if not os.getenv(senha_env):
-            return False, "A variavel de ambiente da senha do certificado nao esta carregada."
 
         extensao = os.path.splitext(caminho)[1].lower()
         if extensao not in {".pfx", ".p12"}:
             return False, "Utilize um certificado A1 no formato .pfx ou .p12."
 
-        return True, "Certificado localizado e pronto para uso pelo integrador fiscal."
+        return True, "Configuracao declarada para simulacao; certificado real nao verificado nesta versao."
 
     @staticmethod
     def _salvar_xml_nota(venda, configuracao, nota):

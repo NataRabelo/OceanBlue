@@ -210,13 +210,12 @@ class ComunicacaoService:
 
         try:
             opener = request.build_opener(request.ProxyHandler({}), NoRedirect())
-            with opener.open(requisicao, timeout=timeout) as response:
-                resposta = response.read().decode("utf-8", errors="ignore")
+            with opener.open(requisicao, timeout=timeout):
                 return {
                     "canal": canal.value,
                     "destinatario": destinatario,
                     "status": "ENVIADO",
-                    "resposta": resposta or f"Mensagem enviada via webhook de {canal.value.lower()}.",
+                    "resposta": f"Mensagem enviada via webhook de {canal.value.lower()}.",
                 }
         except error.HTTPError as exc:
             raise ValueError(

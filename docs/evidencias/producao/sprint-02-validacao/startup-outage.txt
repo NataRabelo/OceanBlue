@@ -1,0 +1,2 @@
+Aguardando banco de dados: OperationalError
+Banco indisponivel apos aguardar: OperationalError

@@ -1,0 +1,55 @@
+ Image oceanblue-s02-adversarial-test Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 590B 0.0s done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile.test
+#2 transferring dockerfile: 365B done
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/python:3.12.12-slim-bookworm@sha256:593bd06efe90efa80dc4eee3948be7c0fde4134606dd40d8dd8dbcade98e669c
+#3 DONE 0.0s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 297B done
+#4 DONE 0.0s
+
+#5 [1/6] FROM docker.io/library/python:3.12.12-slim-bookworm@sha256:593bd06efe90efa80dc4eee3948be7c0fde4134606dd40d8dd8dbcade98e669c
+#5 resolve docker.io/library/python:3.12.12-slim-bookworm@sha256:593bd06efe90efa80dc4eee3948be7c0fde4134606dd40d8dd8dbcade98e669c 0.0s done
+#5 DONE 0.0s
+
+#6 [internal] load build context
+#6 transferring context: 91.00kB 0.0s done
+#6 DONE 0.1s
+
+#7 [2/6] WORKDIR /app
+#7 CACHED
+
+#8 [3/6] COPY requirements-dev.txt .
+#8 CACHED
+
+#9 [4/6] RUN python -m pip install --no-cache-dir --require-hashes -r requirements-dev.txt
+#9 CACHED
+
+#10 [5/6] COPY . .
+#10 DONE 0.2s
+
+#11 [6/6] RUN useradd --create-home tester && chown -R tester:tester /app
+#11 DONE 1.8s
+
+#12 exporting to image
+#12 exporting layers
+#12 exporting layers 0.3s done
+#12 exporting manifest sha256:777b25c3c43f1912813f345a4f0d90edee49571b2faea74b9274d091b9eb3413 0.0s done
+#12 exporting config sha256:357b319dc4ea84f028313cce32c2deade4d6e5c34d8886a163466d36e6eb51f7 0.0s done
+#12 exporting attestation manifest sha256:d187902a50028df43087600c9bfa9edb59dde3bed209722ca5b9844b5803c43f 0.0s done
+#12 exporting manifest list sha256:8717f064cd5c5204e6ea06bb17ca7d31d89c524ea4180e3613eeadbf329c5152
+#12 exporting manifest list sha256:8717f064cd5c5204e6ea06bb17ca7d31d89c524ea4180e3613eeadbf329c5152 0.0s done
+#12 naming to docker.io/library/oceanblue-s02-adversarial-test:latest done
+#12 unpacking to docker.io/library/oceanblue-s02-adversarial-test:latest
+#12 unpacking to docker.io/library/oceanblue-s02-adversarial-test:latest 0.2s done
+#12 DONE 0.7s
+
+#13 resolving provenance for metadata file
+#13 DONE 0.0s
+ Image oceanblue-s02-adversarial-test Built 
