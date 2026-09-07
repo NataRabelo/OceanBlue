@@ -2,13 +2,11 @@
 
 Data: 2026-09-06, America/Sao_Paulo. Os logs usam UTC e terminam em 2026-09-07.
 
-## Decisao: NO-GO para aceite final
+## Decisao: GO para a Sprint 1
 
 Os gates locais estao aprovados: instalacoes sem cache, 20 migrations com ida/volta, schema comparado com modelos, **85 testes passando em duas execucoes completas**, cobertura combinada **53,37%** e smoke produtivo saudavel nas duas execucoes. Nenhum teste foi removido, desabilitado ou marcado como skip/xfail; o limite de cobertura continua em 50%.
 
-O requisito de **pipeline remoto verde no commit entregue ainda nao foi comprovado**. A consulta ao GitHub Actions retornou `total_count: 0` em `2026-09-07T00:04:32.5967813Z`. A main remota ainda aponta para `352a77c7d39836e57b6d9f366d3fc7a83d0a3f3b`, anterior a Sprint 1. Esta tarefa faz commit local; nao publica branch, nao altera a main e nao efetua deploy. A execucao local dos comandos do workflow nao e apresentada como uma execucao GitHub Actions.
-
-Para remover o bloqueio: publicar/integrar o commit desta validacao pelo fluxo do repositorio e obter a execucao verde de `Sprint 1 verification`, com logs, JUnit, cobertura e smoke vinculados ao SHA integrado. Se a integracao modificar codigo, repetir os gates nesse SHA. Evidencia: [consulta remota](sprint-01-validacao/github-actions.json), [pagina de Actions](https://github.com/NataRabelo/OceanBlue/actions).
+O requisito de **pipeline remoto verde** foi comprovado depois da publicacao autorizada. A `main` remota recebeu o commit de validacao `f3264daa0bd81ec180e92ab2e73bd5cf477ca3b0` e o workflow `Sprint 1 verification`, execucao `34069019932`, terminou com `status=completed` e `conclusion=success` em `2026-09-07T00:13:32Z`. Evidencia: [consulta remota registrada](sprint-01-validacao/github-actions.json) e [execucao no GitHub Actions](https://github.com/NataRabelo/OceanBlue/actions/runs/34069019932).
 
 ## Base e isolamento
 
@@ -91,4 +89,4 @@ Repita de `up --build` ate `down -v` para validar a segunda execucao. O projeto 
 
 O gate de schema compara tabelas, colunas, tipos reconhecidos pelo Alembic, nulabilidade, indices, unicidades e FKs. Nao certifica todos os server defaults, CHECKs ou labels de ENUMs historicos. O teste com dados cobre seis registros representativos e um valor invalido; nao representa todas as bases legadas possiveis. A nova migration exige valores validos e referencias existentes, usa DDL transacional e pode bloquear tabelas durante a conversao: a janela de uma atualizacao produtiva deve ser avaliada separadamente.
 
-Cobertura de 53,37% e o gate inicial da Sprint, nao homologacao funcional integral. Nao houve chamadas a Asaas/Focus/SEFAZ, deploy, teste de carga, backup/restore produtivo ou teste Python nativo Windows. A unica pendencia para a decisao desta validacao e obter o pipeline remoto verde no SHA integrado; nao ha falha local conhecida restante nos gates exercitados.
+Cobertura de 53,37% e o gate inicial da Sprint, nao homologacao funcional integral. Nao houve chamadas a Asaas/Focus/SEFAZ, deploy, teste de carga, backup/restore produtivo ou teste Python nativo Windows. Nao ha falha local ou remota conhecida restante nos gates exercitados da Sprint 1. O `GO` autoriza o inicio da Sprint 2; nao representa aceite antecipado das demais sprints nem da producao final.
