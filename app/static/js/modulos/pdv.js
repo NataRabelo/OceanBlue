@@ -562,7 +562,7 @@ function obterClienteSelecionadoPdv() {
 }
 
 function obterBaseTotalAntesDoCashback() {
-    const subtotal = pdvPage.carrinho.reduce((sum, item) => sum + multiplicar(item.valor_venda, item.quantidade), 0);
+    const subtotal = obterSubtotalCarrinho();
     const descontoManual = parseCurrencyValue(document.getElementById("pdv-desconto-manual")?.value || "0");
     const cupom = obterCupomSelecionado();
     const descontoCupom = calcularDescontoCupom(cupom, subtotal);
@@ -1314,7 +1314,7 @@ function abrirModalConfirmacaoVenda(payload) {
     const content = document.getElementById("pdv-confirm-content");
     if (!content) return;
 
-    const subtotal = pdvPage.carrinho.reduce((sum, item) => sum + multiplicar(item.valor_venda, item.quantidade), 0);
+    const subtotal = obterSubtotalCarrinho();
     const desconto = parseCurrencyValue(document.getElementById("pdv-total-desconto")?.textContent || "0");
     const total = parseCurrencyValue(document.getElementById("pdv-total-geral")?.textContent || "0");
     const empresa = pdvPage.auxiliares.empresas.find((item) => String(item.id) === String(payload.empresa_id));
@@ -1546,7 +1546,7 @@ function validarModalidadePrecoCarrinho() {
 
 function atualizarResumoVenda() {
     recalcularPrecosCarrinho();
-    const subtotal = pdvPage.carrinho.reduce((sum, item) => sum + multiplicar(item.valor_venda, item.quantidade), 0);
+    const subtotal = obterSubtotalCarrinho();
     const descontoManual = parseCurrencyValue(document.getElementById("pdv-desconto-manual")?.value || "0");
     const cupom = obterCupomSelecionado();
     const descontoCupom = calcularDescontoCupom(cupom, subtotal);
@@ -1972,6 +1972,11 @@ function formatCurrencyInput(value) {
 
 function normalizeMoneyForApi(value) {
     return window.DecimalInput?.normalize(value, 2) ?? "0.00";
+}
+
+function obterSubtotalCarrinho() {
+    return pdvPage.carrinho.reduce((centavos, item) =>
+        centavos + Math.round(parseCurrencyValue(item.valor_venda) * 100) * Number(item.quantidade), 0) / 100;
 }
 
 function multiplicar(valor, quantidade) {

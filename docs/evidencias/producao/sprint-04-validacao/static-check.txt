@@ -1,0 +1,1 @@
+Staged whitespace check: OK

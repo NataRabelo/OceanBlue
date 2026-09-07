@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="1" time="7.166" timestamp="2026-09-07T03:41:47.746886+00:00" hostname="b88e448e3424"><testcase classname="tests.test_sprint04_browser_adversarial" name="test_browser_coupon_minimum_exact_cents_and_split_payment" time="6.823"><failure message="ValueError: O valor de atacado nao pode ser maior que o valor de varejo.">browser_page = &lt;Page url='http://127.0.0.1:8765/home'&gt;
+transaction_app = &lt;Flask 'app'&gt;
+
+    def test_browser_coupon_minimum_exact_cents_and_split_payment(browser_page, transaction_app):
+        page = browser_page
+        with transaction_app.app_context():
+            record_id, _ = stock_setup(2)
+            db.session.get(ProdutoEmpresa, record_id).valor_varejo = Decimal("0.10")
+&gt;           second = product("Setenta centavos", valor_varejo="0.70")
+
+tests/test_sprint04_browser_adversarial.py:18: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_sprint03_transactions.py:41: in product
+    return ProdutoService.criar({"nome": name, "empresa_id": 1, "valor_varejo": "10",
+app/services/transaction_service.py:49: in execute
+    result = function(*args, **kwargs)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+data = {'empresa_id': 1, 'nome': 'Setenta centavos', 'valor_atacado': '8', 'valor_varejo': '0.70'}
+tenant_id = 1
+escopo = {'empresa_ids': [1], 'funcionario_id': 1, 'is_admin': True, 'permission_codes': {'aplicar_desconto', 'autorizar_desconto', 'cancelar_item_venda', 'cancelar_movimentacao_estoque', 'cancelar_venda', 'criar_adiantamento', ...}, ...}
+funcionario_id = 1
+
+    @staticmethod
+    @atomic_operation
+    def criar(data, tenant_id, escopo, funcionario_id=None):
+        if data.get("produto_id"):
+            return ProdutoService._vincular(data, tenant_id, escopo)
+        TenantEntitlementService.validar_limite_produtos(
+            tenant_id,
+            ProdutoRepository.contar_produtos(tenant_id),
+        )
+        nome = (data.get("nome") or "").strip()
+        descricao = (data.get("descricao") or "").strip() or None
+        categoria_id = ProdutoService._to_int(data.get("categoria_id"), "Categoria")
+        empresa_id = ProdutoService._to_int(data.get("empresa_id"), "Empresa")
+        codigo_barras = ProdutoService._normalize_barcode(data.get("codigo_barras"))
+        possui_ncm = ProdutoService._to_bool(data.get("possui_ncm", False))
+        ncm = ProdutoService._normalize_ncm(data.get("ncm"))
+        estoque_minimo = ProdutoService._to_non_negative_int(data.get("estoque_minimo", 0), "estoque minimo")
+        valor_compra = ProdutoService._to_decimal(data.get("valor_compra", 0), "valor de compra", 2)
+        valor_varejo = ProdutoService._to_decimal(
+            data.get("valor_varejo", data.get("valor_venda", 0)),
+            "valor de varejo",
+            2,
+        )
+        valor_atacado = ProdutoService._to_decimal(
+            data.get("valor_atacado", data.get("valor_varejo", data.get("valor_venda", 0))),
+            "valor de atacado",
+            2,
+        )
+        quantidade_minima_atacado = ProdutoService._to_positive_int(
+            data.get("quantidade_minima_atacado", 1),
+            "quantidade minima para atacado",
+            default=1,
+        )
+        data_validade = ProdutoService._to_optional_date(data.get("data_validade"))
+        ativo = ProdutoService._to_bool(data.get("ativo", True))
+    
+        if not nome or len(nome) &gt; 150:
+            raise ValueError("Nome do produto e obrigatorio.")
+    
+        if not empresa_id:
+            raise ValueError("Empresa e obrigatoria.")
+    
+        AcessoEmpresaService.validar_empresa(empresa_id, escopo)
+    
+        empresa = ProdutoRepository.buscar_empresa_por_id(empresa_id, tenant_id)
+        if not empresa:
+            raise ValueError("Empresa nao encontrada.")
+    
+        categoria = None
+        if categoria_id:
+            categoria = ProdutoRepository.buscar_categoria_por_id(categoria_id, tenant_id)
+            if not categoria or not categoria.ativo:
+                raise ValueError("Categoria nao encontrada.")
+    
+        if ProdutoRepository.buscar_produto_por_nome(nome, tenant_id):
+            raise ValueError("Ja existe um produto com esse nome.")
+    
+        if not codigo_barras:
+            codigo_barras = ProdutoService._gerar_codigo_barras(tenant_id)
+    
+        if codigo_barras and ProdutoRepository.buscar_produto_por_codigo_barras(codigo_barras, tenant_id):
+            raise ValueError("Ja existe um produto com esse codigo de barras.")
+    
+        if possui_ncm and not ncm:
+            raise ValueError("Informe o NCM quando 'possui NCM' estiver marcado.")
+    
+        if valor_atacado &gt; valor_varejo:
+&gt;           raise ValueError("O valor de atacado nao pode ser maior que o valor de varejo.")
+E           ValueError: O valor de atacado nao pode ser maior que o valor de varejo.
+
+app/services/produto_service.py:98: ValueError</failure></testcase></testsuite></testsuites>

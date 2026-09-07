@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="8" skipped="0" tests="8" time="9.026" timestamp="2026-09-07T03:43:51.706022+00:00" hostname="c2bacae22db5"><testcase classname="tests.test_sprint04_adversarial" name="test_sale_identifiers_cannot_be_truncated_into_another_record[fraction-empresa_id]" time="1.200"><failure message="Failed: DID NOT RAISE &lt;class 'ValueError'&gt;">transaction_app = &lt;Flask 'app'&gt;, field = 'empresa_id', malformed = 'fraction'
+
+    @pytest.mark.parametrize("field", ["empresa_id", "produto_id", "cliente_id", "forma_pagamento_id"])
+    @pytest.mark.parametrize("malformed", ["fraction", "boolean"])
+    def test_sale_identifiers_cannot_be_truncated_into_another_record(transaction_app, field, malformed):
+        with transaction_app.app_context():
+            _, product_id = stock_setup()
+            customer_id = customer()
+            payload = sale_payload(product_id)
+            payload.update(cliente_id=customer_id, cashback_ativado=False)
+            target = payload["itens"][0] if field == "produto_id" else (
+                payload["pagamentos"][0] if field == "forma_pagamento_id" else payload)
+            target[field] = target[field] + 0.9 if malformed == "fraction" else True
+            before = snapshot()
+&gt;           with pytest.raises(ValueError):
+E           Failed: DID NOT RAISE &lt;class 'ValueError'&gt;
+
+tests/test_sprint04_adversarial.py:262: Failed</failure></testcase><testcase classname="tests.test_sprint04_adversarial" name="test_sale_identifiers_cannot_be_truncated_into_another_record[fraction-produto_id]" time="0.939"><failure message="Failed: DID NOT RAISE &lt;class 'ValueError'&gt;">transaction_app = &lt;Flask 'app'&gt;, field = 'produto_id', malformed = 'fraction'
+
+    @pytest.mark.parametrize("field", ["empresa_id", "produto_id", "cliente_id", "forma_pagamento_id"])
+    @pytest.mark.parametrize("malformed", ["fraction", "boolean"])
+    def test_sale_identifiers_cannot_be_truncated_into_another_record(transaction_app, field, malformed):
+        with transaction_app.app_context():
+            _, product_id = stock_setup()
+            customer_id = customer()
+            payload = sale_payload(product_id)
+            payload.update(cliente_id=customer_id, cashback_ativado=False)
+            target = payload["itens"][0] if field == "produto_id" else (
+                payload["pagamentos"][0] if field == "forma_pagamento_id" else payload)
+            target[field] = target[field] + 0.9 if malformed == "fraction" else True
+            before = snapshot()
+&gt;           with pytest.raises(ValueError):
+E           Failed: DID NOT RAISE &lt;class 'ValueError'&gt;
+
+tests/test_sprint04_adversarial.py:262: Failed</failure></testcase><testcase classname="tests.test_sprint04_adversarial" name="test_sale_identifiers_cannot_be_truncated_into_another_record[fraction-cliente_id]" time="0.969"><failure message="Failed: DID NOT RAISE &lt;class 'ValueError'&gt;">transaction_app = &lt;Flask 'app'&gt;, field = 'cliente_id', malformed = 'fraction'
+
+    @pytest.mark.parametrize("field", ["empresa_id", "produto_id", "cliente_id", "forma_pagamento_id"])
+    @pytest.mark.parametrize("malformed", ["fraction", "boolean"])
+    def test_sale_identifiers_cannot_be_truncated_into_another_record(transaction_app, field, malformed):
+        with transaction_app.app_context():
+            _, product_id = stock_setup()
+            customer_id = customer()
+            payload = sale_payload(product_id)
+            payload.update(cliente_id=customer_id, cashback_ativado=False)
+            target = payload["itens"][0] if field == "produto_id" else (
+                payload["pagamentos"][0] if field == "forma_pagamento_id" else payload)
+            target[field] = target[field] + 0.9 if malformed == "fraction" else True
+            before = snapshot()
+&gt;           with pytest.raises(ValueError):
+E           Failed: DID NOT RAISE &lt;class 'ValueError'&gt;
+
+tests/test_sprint04_adversarial.py:262: Failed</failure></testcase><testcase classname="tests.test_sprint04_adversarial" name="test_sale_identifiers_cannot_be_truncated_into_another_record[fraction-forma_pagamento_id]" time="1.086"><failure message="Failed: DID NOT RAISE &lt;class 'ValueError'&gt;">transaction_app = &lt;Flask 'app'&gt;, field = 'forma_pagamento_id'
+malformed = 'fraction'
+
+    @pytest.mark.parametrize("field", ["empresa_id", "produto_id", "cliente_id", "forma_pagamento_id"])
+    @pytest.mark.parametrize("malformed", ["fraction", "boolean"])
+    def test_sale_identifiers_cannot_be_truncated_into_another_record(transaction_app, field, malformed):
+        with transaction_app.app_context():
+            _, product_id = stock_setup()
+            customer_id = customer()
+            payload = sale_payload(product_id)
+            payload.update(cliente_id=customer_id, cashback_ativado=False)
+            target = payload["itens"][0] if field == "produto_id" else (
+                payload["pagamentos"][0] if field == "forma_pagamento_id" else payload)
+            target[field] = target[field] + 0.9 if malformed == "fraction" else True
+            before = snapshot()
+&gt;           with pytest.raises(ValueError):
+E           Failed: DID NOT RAISE &lt;class 'ValueError'&gt;
+
+tests/test_sprint04_adversarial.py:262: Failed</failure></testcase><testcase classname="tests.test_sprint04_adversarial" name="test_sale_identifiers_cannot_be_truncated_into_another_record[boolean-empresa_id]" time="0.982"><failure message="Failed: DID NOT RAISE &lt;class 'ValueError'&gt;">transaction_app = &lt;Flask 'app'&gt;, field = 'empresa_id', malformed = 'boolean'
+
+    @pytest.mark.parametrize("field", ["empresa_id", "produto_id", "cliente_id", "forma_pagamento_id"])
+    @pytest.mark.parametrize("malformed", ["fraction", "boolean"])
+    def test_sale_identifiers_cannot_be_truncated_into_another_record(transaction_app, field, malformed):
+        with transaction_app.app_context():
+            _, product_id = stock_setup()
+            customer_id = customer()
+            payload = sale_payload(product_id)
+            payload.update(cliente_id=customer_id, cashback_ativado=False)
+            target = payload["itens"][0] if field == "produto_id" else (
+                payload["pagamentos"][0] if field == "forma_pagamento_id" else payload)
+            target[field] = target[field] + 0.9 if malformed == "fraction" else True
+            before = snapshot()
+&gt;           with pytest.raises(ValueError):
+E           Failed: DID NOT RAISE &lt;class 'ValueError'&gt;
+
+tests/test_sprint04_adversarial.py:262: Failed</failure></testcase><testcase classname="tests.test_sprint04_adversarial" name="test_sale_identifiers_cannot_be_truncated_into_another_record[boolean-produto_id]" time="1.107"><failure message="Failed: DID NOT RAISE &lt;class 'ValueError'&gt;">transaction_app = &lt;Flask 'app'&gt;, field = 'produto_id', malformed = 'boolean'
+
+    @pytest.mark.parametrize("field", ["empresa_id", "produto_id", "cliente_id", "forma_pagamento_id"])
+    @pytest.mark.parametrize("malformed", ["fraction", "boolean"])
+    def test_sale_identifiers_cannot_be_truncated_into_another_record(transaction_app, field, malformed):
+        with transaction_app.app_context():
+            _, product_id = stock_setup()
+            customer_id = customer()
+            payload = sale_payload(product_id)
+            payload.update(cliente_id=customer_id, cashback_ativado=False)
+            target = payload["itens"][0] if field == "produto_id" else (
+                payload["pagamentos"][0] if field == "forma_pagamento_id" else payload)
+            target[field] = target[field] + 0.9 if malformed == "fraction" else True
+            before = snapshot()
+&gt;           with pytest.raises(ValueError):
+E           Failed: DID NOT RAISE &lt;class 'ValueError'&gt;
+
+tests/test_sprint04_adversarial.py:262: Failed</failure></testcase><testcase classname="tests.test_sprint04_adversarial" name="test_sale_identifiers_cannot_be_truncated_into_another_record[boolean-cliente_id]" time="1.084"><failure message="Failed: DID NOT RAISE &lt;class 'ValueError'&gt;">transaction_app = &lt;Flask 'app'&gt;, field = 'cliente_id', malformed = 'boolean'
+
+    @pytest.mark.parametrize("field", ["empresa_id", "produto_id", "cliente_id", "forma_pagamento_id"])
+    @pytest.mark.parametrize("malformed", ["fraction", "boolean"])
+    def test_sale_identifiers_cannot_be_truncated_into_another_record(transaction_app, field, malformed):
+        with transaction_app.app_context():
+            _, product_id = stock_setup()
+            customer_id = customer()
+            payload = sale_payload(product_id)
+            payload.update(cliente_id=customer_id, cashback_ativado=False)
+            target = payload["itens"][0] if field == "produto_id" else (
+                payload["pagamentos"][0] if field == "forma_pagamento_id" else payload)
+            target[field] = target[field] + 0.9 if malformed == "fraction" else True
+            before = snapshot()
+&gt;           with pytest.raises(ValueError):
+E           Failed: DID NOT RAISE &lt;class 'ValueError'&gt;
+
+tests/test_sprint04_adversarial.py:262: Failed</failure></testcase><testcase classname="tests.test_sprint04_adversarial" name="test_sale_identifiers_cannot_be_truncated_into_another_record[boolean-forma_pagamento_id]" time="1.286"><failure message="Failed: DID NOT RAISE &lt;class 'ValueError'&gt;">transaction_app = &lt;Flask 'app'&gt;, field = 'forma_pagamento_id'
+malformed = 'boolean'
+
+    @pytest.mark.parametrize("field", ["empresa_id", "produto_id", "cliente_id", "forma_pagamento_id"])
+    @pytest.mark.parametrize("malformed", ["fraction", "boolean"])
+    def test_sale_identifiers_cannot_be_truncated_into_another_record(transaction_app, field, malformed):
+        with transaction_app.app_context():
+            _, product_id = stock_setup()
+            customer_id = customer()
+            payload = sale_payload(product_id)
+            payload.update(cliente_id=customer_id, cashback_ativado=False)
+            target = payload["itens"][0] if field == "produto_id" else (
+                payload["pagamentos"][0] if field == "forma_pagamento_id" else payload)
+            target[field] = target[field] + 0.9 if malformed == "fraction" else True
+            before = snapshot()
+&gt;           with pytest.raises(ValueError):
+E           Failed: DID NOT RAISE &lt;class 'ValueError'&gt;
+
+tests/test_sprint04_adversarial.py:262: Failed</failure></testcase></testsuite></testsuites>

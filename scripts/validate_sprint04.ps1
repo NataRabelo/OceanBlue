@@ -1,8 +1,8 @@
-param([string]$Project = "oceanblue-s04-final")
+param([string]$Project = "oceanblue-s04-final", [string]$EvidenceDirectory = "docs/evidencias/producao/sprint-04-execucao")
 
 $ErrorActionPreference = "Stop"
 $workspace = Split-Path $PSScriptRoot -Parent
-$evidence = Join-Path $workspace "docs/evidencias/producao/sprint-04-execucao"
+$evidence = Join-Path $workspace $EvidenceDirectory
 Set-Location $workspace
 New-Item -ItemType Directory -Force $evidence | Out-Null
 $compose = @("compose", "-p", $Project, "-f", "compose.test.yml")

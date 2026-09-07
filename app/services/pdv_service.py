@@ -789,11 +789,7 @@ class PdvService:
     def _to_int(value, field_name):
         if value in (None, ""):
             raise ValueError(f"{field_name} e obrigatorio.")
-
-        try:
-            return int(value)
-        except (TypeError, ValueError):
-            raise ValueError(f"{field_name} invalido.")
+        return PdvService._to_positive_int(value, field_name)
 
     @staticmethod
     def _to_positive_int(value, field_name):
@@ -854,10 +850,7 @@ class PdvService:
     def _to_optional_int(value, field_name):
         if value in (None, ""):
             return None
-        try:
-            return int(value)
-        except (TypeError, ValueError):
-            raise ValueError(f"{field_name} invalido.")
+        return PdvService._to_positive_int(value, field_name)
 
     @staticmethod
     def _to_bool(value, default=False):

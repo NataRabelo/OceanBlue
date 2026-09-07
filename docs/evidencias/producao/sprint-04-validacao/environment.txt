@@ -1,0 +1,6 @@
+BASE main local: ef81ccbb0d7f16b12092332ac2d1a9867c4264a3
+Projetos exclusivos: oceanblue-s04-attack; oceanblue-s04-validation-final
+Dados sinteticos; transporte substituido; sem integracoes externas
+postgres (PostgreSQL) 16.12 (Debian 16.12-1.pgdg13+1)
+{"/var/lib/postgresql/data":""} {}
+internal=true

@@ -12,6 +12,10 @@ from app.security.field_crypto import FieldCrypto
 from app.security.outbound import NoRedirect, validate_host, validate_webhook
 
 
+class PreDeliveryError(PermissionError):
+    pass
+
+
 class ComunicacaoService:
 
     @staticmethod
@@ -56,8 +60,11 @@ class ComunicacaoService:
         if not configuracao.email_remetente:
             raise ValueError("Email remetente nao configurado.")
         if not configuracao.smtp_ssl and not configuracao.smtp_tls:
-            raise PermissionError("O envio SMTP exige TLS.")
-        validate_host(configuracao.smtp_host, int(configuracao.smtp_port or 587))
+            raise PreDeliveryError("O envio SMTP exige TLS.")
+        try:
+            validate_host(configuracao.smtp_host, int(configuracao.smtp_port or 587))
+        except PermissionError as exc:
+            raise PreDeliveryError(str(exc)) from exc
 
         mensagem = EmailMessage()
         remetente_nome = (configuracao.email_remetente_nome or "").strip()

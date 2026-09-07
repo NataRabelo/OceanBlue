@@ -1,0 +1,55 @@
+time="2026-09-07T00:42:40-03:00" level=warning msg="Found orphan containers (oceanblue-s04-browser-before, oceanblue-s04-attack-tests) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up."
+ Container oceanblue-s04-attack-db-test-1 Running 
+ Container oceanblue-s04-attack-db-test-1 Waiting 
+ Container oceanblue-s04-attack-db-test-1 Healthy 
+ Container oceanblue-s04-retest Creating 
+ Container oceanblue-s04-retest Created 
+============================= test session starts ==============================
+platform linux -- Python 3.12.12, pytest-8.3.5, pluggy-1.6.0
+rootdir: /app
+configfile: pytest.ini
+plugins: cov-6.1.1
+collected 36 items
+
+tests/test_sprint04_adversarial.py ...................................   [ 97%]
+tests/test_sprint04_browser_adversarial.py F                             [100%]
+
+=================================== FAILURES ===================================
+__________ test_browser_coupon_minimum_exact_cents_and_split_payment ___________
+
+browser_page = <Page url='http://127.0.0.1:8765/api/pdv/view'>
+transaction_app = <Flask 'app'>
+
+    def test_browser_coupon_minimum_exact_cents_and_split_payment(browser_page, transaction_app):
+        page = browser_page
+        with transaction_app.app_context():
+            record_id, _ = stock_setup(2)
+            db.session.get(ProdutoEmpresa, record_id).valor_varejo = Decimal("0.10")
+            db.session.get(ProdutoEmpresa, record_id).valor_atacado = Decimal("0.10")
+            second = product("Setenta centavos", valor_varejo="0.70", valor_atacado="0.70")
+            second.estoque_atual = 2
+            coupon(valor_minimo="0.80")
+            db.session.commit()
+        page.goto("http://127.0.0.1:8765/api/pdv/view", wait_until="networkidle")
+        page.locator("#pdv-empresa").select_option("1")
+        page.locator("#pdv-modalidade-preco").select_option("VAREJO")
+        buttons = page.locator("#pdv-produtos-grid button")
+        buttons.nth(0).click()
+        buttons.nth(1).click()
+        expect(page.locator("#pdv-total-subtotal")).to_contain_text("0,80")
+        page.locator("#pdv-cupom-codigo").fill("CAMPANHA")
+>       expect(page.locator("#pdv-total-geral")).to_contain_text("0,72")
+E       AssertionError: Locator expected to contain text '0,72'
+E       Actual value: R$ 0,80 
+E       Call log:
+E         - Expect "to_contain_text" with timeout 5000ms
+E         - waiting for locator("#pdv-total-geral")
+E           9 × locator resolved to <strong id="pdv-total-geral" class="pdv-total-value">R$ 0,80</strong>
+E             - unexpected value "R$ 0,80"
+
+tests/test_sprint04_browser_adversarial.py:31: AssertionError
+--------------------- generated xml file: /tmp/retest.xml ----------------------
+=========================== short test summary info ============================
+FAILED tests/test_sprint04_browser_adversarial.py::test_browser_coupon_minimum_exact_cents_and_split_payment
+======================== 1 failed, 35 passed in 47.39s =========================
+

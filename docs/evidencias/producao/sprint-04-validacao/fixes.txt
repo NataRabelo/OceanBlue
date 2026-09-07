@@ -1,0 +1,19 @@
+time="2026-09-07T00:44:49-03:00" level=warning msg="Found orphan containers (oceanblue-s04-identifiers, oceanblue-s04-retest, oceanblue-s04-browser-before, oceanblue-s04-attack-tests) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up."
+ Container oceanblue-s04-attack-db-test-1 Running 
+ Container oceanblue-s04-attack-db-test-1 Waiting 
+ Container oceanblue-s04-attack-db-test-1 Healthy 
+ Container oceanblue-s04-fixes Creating 
+ Container oceanblue-s04-fixes Created 
+============================= test session starts ==============================
+platform linux -- Python 3.12.12, pytest-8.3.5, pluggy-1.6.0
+rootdir: /app
+configfile: pytest.ini
+plugins: cov-6.1.1
+collected 44 items
+
+tests/test_sprint04_adversarial.py ..................................... [ 84%]
+......                                                                   [ 97%]
+tests/test_sprint04_browser_adversarial.py .                             [100%]
+
+---------------------- generated xml file: /tmp/fixes.xml ----------------------
+============================= 44 passed in 56.27s ==============================

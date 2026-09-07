@@ -1,0 +1,56 @@
+ Container oceanblue-s04-attack-tests Stopping 
+ Container oceanblue-s04-identifiers Stopping 
+ Container oceanblue-s04-regression Stopping 
+ Container oceanblue-s04-retest Stopping 
+ Container oceanblue-s04-browser-before Stopping 
+ Container oceanblue-s04-extra Stopping 
+ Container oceanblue-s04-fixes Stopping 
+ Container oceanblue-s04-identifiers Stopped 
+ Container oceanblue-s04-browser-before Stopped 
+ Container oceanblue-s04-attack-tests Stopped 
+ Container oceanblue-s04-identifiers Removing 
+ Container oceanblue-s04-attack-tests Removing 
+ Container oceanblue-s04-browser-before Removing 
+ Container oceanblue-s04-extra Stopped 
+ Container oceanblue-s04-extra Removing 
+ Container oceanblue-s04-retest Stopped 
+ Container oceanblue-s04-retest Removing 
+ Container oceanblue-s04-fixes Stopped 
+ Container oceanblue-s04-fixes Removing 
+ Container oceanblue-s04-regression Stopped 
+ Container oceanblue-s04-regression Removing 
+ Container oceanblue-s04-regression Removed 
+ Container oceanblue-s04-browser-before Removed 
+ Container oceanblue-s04-extra Removed 
+ Container oceanblue-s04-identifiers Removed 
+ Container oceanblue-s04-attack-tests Removed 
+ Container oceanblue-s04-fixes Removed 
+ Container oceanblue-s04-retest Removed 
+ Container oceanblue-s04-attack-db-test-1 Stopping 
+ Container oceanblue-s04-attack-db-test-1 Stopped 
+ Container oceanblue-s04-attack-db-test-1 Removing 
+ Container oceanblue-s04-attack-db-test-1 Removed 
+ Container oceanblue-s04-attack-tests Stopping 
+ Container oceanblue-s04-fixes Stopping 
+ Container oceanblue-s04-retest Stopping 
+ Container oceanblue-s04-browser-before Stopping 
+ Container oceanblue-s04-regression Stopping 
+ Container oceanblue-s04-identifiers Stopping 
+ Container oceanblue-s04-extra Stopping 
+ Container oceanblue-s04-extra Error Error while Stopping
+ Container oceanblue-s04-extra Removed 
+ Container oceanblue-s04-regression Error Error while Stopping
+ Container oceanblue-s04-regression Removed 
+ Container oceanblue-s04-fixes Error Error while Stopping
+ Container oceanblue-s04-fixes Removed 
+ Container oceanblue-s04-browser-before Error Error while Stopping
+ Container oceanblue-s04-browser-before Removed 
+ Container oceanblue-s04-attack-tests Error Error while Stopping
+ Container oceanblue-s04-attack-tests Removed 
+ Container oceanblue-s04-retest Error Error while Stopping
+ Container oceanblue-s04-retest Removed 
+ Container oceanblue-s04-identifiers Error Error while Stopping
+ Container oceanblue-s04-identifiers Removed 
+ Network oceanblue-s04-attack_test Removing 
+ Network oceanblue-s04-attack_test Removed 
+oceanblue-s04-inventory

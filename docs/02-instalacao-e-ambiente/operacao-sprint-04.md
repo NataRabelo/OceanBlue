@@ -2,6 +2,8 @@
 
 ## Precos, pagamentos e devolucoes
 
+Identificadores de empresa, produto, cliente e forma de pagamento exigem inteiros positivos; booleanos e numeros fracionados sao recusados sem truncamento. O subtotal do carrinho e somado em centavos inteiros antes da comparacao com o minimo do cupom, inclusive para combinacoes como 0,10 + 0,70 = 0,80.
+
 O servidor sempre consulta o preco cadastrado na empresa; `valor_unitario` enviado pelo navegador nao substitui a tabela. `VAREJO` usa varejo; `ATACADO` exige preco menor e quantidade minima; `AUTOMATICO` escolhe por produto. Linhas repetidas do mesmo produto somam quantidades para verificar o minimo de atacado, preservando os itens originais para devolucao. Quantidades sao inteiras positivas.
 
 Dinheiro e persistido em NUMERIC/Decimal com dois decimais. Entradas do PDV e descontos percentuais de cupom usam ROUND_HALF_UP. A interface arredonda o cupom em centavos antes de calcular pagamentos. Rateios de devolucao mantem o algoritmo cumulativo validado na Sprint 3: cada centavo e conservado, inclusive pagamentos de um centavo, descontos quase totais e cashback consumido de varios creditos. Nenhum pagamento pode arredondar para zero; o somatorio precisa ser exatamente igual ao total. Venda com total zero exige lista de pagamentos vazia.
@@ -29,6 +31,8 @@ Campos opcionais vazios removem a respectiva regra, salvo empresa imutavel. Camp
 Criacao, alteracao e consumo usam o bloqueio transacional por tenant da Sprint 3. A ultima utilizacao concorrente tem uma unica vencedora. A contagem global usa SQL explicito com tenant/cupom para que o filtro de empresas do operador nao esconda usos em outras lojas. Falhas da venda nao consomem uso. Replays nao consomem novamente. Cancelamentos preservam o uso historico; cupons utilizados nao podem ser excluidos, apenas desativados. A migration recusa dados legados invalidos sem saneamento automatico.
 
 ## Alertas, historico e retentativa
+
+Recusas de TLS e autorizacao do destino anteriores ao transporte sao identificadas explicitamente como falhas seguras (`FALHOU`). Depois de corrigir a configuracao, permitem retentativa; uma excecao generica de permissao durante o transporte continua incerta.
 
 As entregas de estoque sao persistidas na tabela `entregas_alerta` na mesma transacao da venda ou movimento. Cada destinatario tem uma entrega independente, com chave unica por tenant/empresa/evento/destino. Estoque baixo e ruptura preservam cooldown de 12 horas e sao limitados a uma entrega por estado/produto/dia. Validade gera uma entrega por produto/data de validade/dia, incluindo produtos vencidos e proximos do vencimento. Repetir o processamento, inclusive em concorrencia, nao duplica registros ou envios confirmados.
 

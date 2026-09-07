@@ -1,0 +1,62 @@
+ Image oceanblue-s04-attack-test Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 580B 0.0s done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile.test
+#2 transferring dockerfile: 499B done
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/python:3.12.12-slim-bookworm@sha256:593bd06efe90efa80dc4eee3948be7c0fde4134606dd40d8dd8dbcade98e669c
+#3 DONE 0.0s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 311B done
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 DONE 0.0s
+
+#6 [1/7] FROM docker.io/library/python:3.12.12-slim-bookworm@sha256:593bd06efe90efa80dc4eee3948be7c0fde4134606dd40d8dd8dbcade98e669c
+#6 resolve docker.io/library/python:3.12.12-slim-bookworm@sha256:593bd06efe90efa80dc4eee3948be7c0fde4134606dd40d8dd8dbcade98e669c
+#6 resolve docker.io/library/python:3.12.12-slim-bookworm@sha256:593bd06efe90efa80dc4eee3948be7c0fde4134606dd40d8dd8dbcade98e669c 0.0s done
+#6 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 41.63kB 0.0s done
+#5 DONE 0.1s
+
+#7 [3/7] COPY requirements-dev.txt .
+#7 CACHED
+
+#8 [4/7] RUN python -m pip install --no-cache-dir --require-hashes -r requirements-dev.txt
+#8 CACHED
+
+#9 [2/7] WORKDIR /app
+#9 CACHED
+
+#10 [5/7] RUN python -m playwright install --with-deps chromium && chmod -R a+rX /opt/playwright
+#10 CACHED
+
+#11 [6/7] COPY . .
+#11 DONE 0.2s
+
+#12 [7/7] RUN useradd --create-home tester && chown -R tester:tester /app
+#12 DONE 1.3s
+
+#13 exporting to image
+#13 exporting layers
+#13 exporting layers 0.3s done
+#13 exporting manifest sha256:7c014f8c5563eddaa6ae6701e495239e5cda1134dd09df64a49dd20b24a3b788 0.0s done
+#13 exporting config sha256:b6e2e5a6aa53c416212203ac97e6adcd22fd34a805d10c096f9a61e4d979302b 0.0s done
+#13 exporting attestation manifest sha256:76f8fb6d3b865b1c3eb5401f50f2a6269267d83a13d14260f83a0d1392bd2d06 0.0s done
+#13 exporting manifest list sha256:b2e1e6054c015c0b27def6681c5bbb71836b999477e3b9ca0d74be61b950039a 0.0s done
+#13 naming to docker.io/library/oceanblue-s04-attack-test:latest
+#13 naming to docker.io/library/oceanblue-s04-attack-test:latest done
+#13 unpacking to docker.io/library/oceanblue-s04-attack-test:latest
+#13 unpacking to docker.io/library/oceanblue-s04-attack-test:latest 0.2s done
+#13 DONE 0.7s
+
+#14 resolving provenance for metadata file
+#14 DONE 0.0s
+ Image oceanblue-s04-attack-test Built 

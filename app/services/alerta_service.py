@@ -5,7 +5,7 @@ from app.extensions import db
 from app.models.db import CanalMensagemCliente, EntregaAlerta, ProdutoEmpresa
 from app.services.acesso_empresa_service import AcessoEmpresaService
 from app.services.cliente_service import ClienteService
-from app.services.comunicacao_service import ComunicacaoService
+from app.services.comunicacao_service import ComunicacaoService, PreDeliveryError
 from app.services.time_service import TimeService
 from app.services.transaction_service import atomic_operation, after_commit
 
@@ -89,7 +89,7 @@ class AlertaService:
             try:
                 ComunicacaoService.enviar(configuracao=config, canal=CanalMensagemCliente.EMAIL,
                     destinatario=entrega.destinatario, assunto=entrega.assunto, conteudo=entrega.conteudo)
-            except (ValueError, ConnectionRefusedError, smtplib.SMTPRecipientsRefused,
+            except (PreDeliveryError, ValueError, ConnectionRefusedError, smtplib.SMTPRecipientsRefused,
                     smtplib.SMTPAuthenticationError, smtplib.SMTPConnectError, smtplib.SMTPHeloError,
                     smtplib.SMTPSenderRefused, smtplib.SMTPDataError):
                 entrega.status = "FALHOU"

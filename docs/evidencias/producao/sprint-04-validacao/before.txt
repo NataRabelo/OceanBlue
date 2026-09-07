@@ -1,0 +1,105 @@
+ Network oceanblue-s04-attack_test Creating 
+ Network oceanblue-s04-attack_test Creating 
+ Network oceanblue-s04-attack_test Created 
+ Network oceanblue-s04-attack_test Created 
+ Container oceanblue-s04-attack-db-test-1 Creating 
+ Container oceanblue-s04-attack-db-test-1 Created 
+ Container oceanblue-s04-attack-db-test-1 Starting 
+ Container oceanblue-s04-attack-db-test-1 Started 
+ Container oceanblue-s04-attack-db-test-1 Waiting 
+ Container oceanblue-s04-attack-db-test-1 Healthy 
+ Container oceanblue-s04-attack-tests Creating 
+ Container oceanblue-s04-attack-tests Created 
+============================= test session starts ==============================
+platform linux -- Python 3.12.12, pytest-8.3.5, pluggy-1.6.0
+rootdir: /app
+configfile: pytest.ini
+plugins: cov-6.1.1
+collected 35 items
+
+tests/test_sprint04_adversarial.py FF.................................   [100%]
+
+=================================== FAILURES ===================================
+____________ test_pretransport_security_rejection_is_retryable[tls] ____________
+
+transaction_app = <Flask 'app'>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x799ea2871fa0>
+boundary = 'tls'
+
+    @pytest.mark.parametrize("boundary", ["tls", "allowlist"])
+    def test_pretransport_security_rejection_is_retryable(transaction_app, monkeypatch, boundary):
+        with transaction_app.app_context():
+            delivery_id = pending_alert(monkeypatch)
+            configuration = ConfiguracaoClienteEmpresa.query.filter_by(empresa_id=1).one()
+            configuration.smtp_tls = boundary != "tls"
+            configuration.smtp_ssl = False
+            db.session.commit()
+            result = AlertaService.entregar(delivery_id, 1)
+>           assert result["status"] == "FALHOU", result
+E           AssertionError: {'assunto': 'Alerta de estoque: Produto abaixo do minimo - Empresa 1-1', 'chave': 'estoque:1:ESTOQUE_BAIXO:2026-09-07'...stoque atual: 1
+E             Estoque minimo: 2
+E             Gerado em: 07/09/2026 00:40', 'criado_em': '2026-09-07T03:40:42.333433+00:00', ...}
+E           assert 'INCERTO' == 'FALHOU'
+E             
+E             - FALHOU
+E             + INCERTO
+
+tests/test_sprint04_adversarial.py:43: AssertionError
+---------------------------- Captured stderr setup -----------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade  -> 1150177c20ca, initial
+INFO  [alembic.runtime.migration] Running upgrade 1150177c20ca -> 7f3c1a2b9d4e, add roles and permissions
+INFO  [alembic.runtime.migration] Running upgrade 7f3c1a2b9d4e -> 9d1dca4d2bc5, v2
+INFO  [alembic.runtime.migration] Running upgrade 9d1dca4d2bc5 -> c3a1f9d4e8b2, convert quantities to integer
+INFO  [alembic.runtime.migration] Running upgrade c3a1f9d4e8b2 -> 4b2d8b0f6c11, add platform owners
+INFO  [alembic.runtime.migration] Running upgrade 4b2d8b0f6c11 -> 8f6e4c2a1b9d, add pdv financeiro permissions and defaults
+INFO  [alembic.runtime.migration] Running upgrade 8f6e4c2a1b9d -> b7c9d1e2f3a4, add cupons adiantamentos validade salario
+INFO  [alembic.runtime.migration] Running upgrade b7c9d1e2f3a4 -> d4e5f6a7b8c9, add empresa visual mode
+INFO  [alembic.runtime.migration] Running upgrade d4e5f6a7b8c9 -> e6f7a8b9c0d1, add stock alert settings
+INFO  [alembic.runtime.migration] Running upgrade e6f7a8b9c0d1 -> f2b4c6d8e9f1, add client wallet messaging and reversal controls
+INFO  [alembic.runtime.migration] Running upgrade 8f6e4c2a1b9d -> f9d0e1a2b3c4, add boleto financeiro models
+INFO  [alembic.runtime.migration] Running upgrade f2b4c6d8e9f1 -> a1b2c3d4e5f6, add stock alert dispatch tracking
+INFO  [alembic.runtime.migration] Running upgrade a1b2c3d4e5f6 -> b3c4d5e6f7a8, add cashback sale controls
+INFO  [alembic.runtime.migration] Running upgrade f2b4c6d8e9f1 -> a4f1c8d2e7b9, add wholesale pricing and fiscal foundation
+INFO  [alembic.runtime.migration] Running upgrade a4f1c8d2e7b9, b3c4d5e6f7a8 -> c9d8e7f6a5b4, merge cashback and fiscal heads
+INFO  [alembic.runtime.migration] Running upgrade c9d8e7f6a5b4 -> 0f6a8c2d4e9b, add audit and saas limits
+INFO  [alembic.runtime.migration] Running upgrade 0f6a8c2d4e9b, f9d0e1a2b3c4 -> ea3d60221646, merge migration heads
+INFO  [alembic.runtime.migration] Running upgrade ea3d60221646 -> 1a2b3c4d5e6f, add sprint3 boleto and fiscal external status
+INFO  [alembic.runtime.migration] Running upgrade 1a2b3c4d5e6f -> 2b3c4d5e6f7a, add sprint4 asaas and focus real configs
+INFO  [alembic.runtime.migration] Running upgrade 2b3c4d5e6f7a -> 3c4d5e6f7a8b, Align migrated types, tenant indexes and installment foreign key with models.
+INFO  [alembic.runtime.migration] Running upgrade 3c4d5e6f7a8b -> 4d5e6f7a8b9c, Shared authentication state, tenant integrity, SaaS quotas and access audit.
+INFO  [alembic.runtime.migration] Running upgrade 4d5e6f7a8b9c -> 5e6f7a8b9c0d
+INFO  [alembic.runtime.migration] Running upgrade 5e6f7a8b9c0d -> 6f7a8b9c0d1e
+INFO  [alembic.runtime.migration] Running upgrade 6f7a8b9c0d1e -> 7a8b9c0d1e2f
+_________ test_pretransport_security_rejection_is_retryable[allowlist] _________
+
+transaction_app = <Flask 'app'>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x799ea0b53d40>
+boundary = 'allowlist'
+
+    @pytest.mark.parametrize("boundary", ["tls", "allowlist"])
+    def test_pretransport_security_rejection_is_retryable(transaction_app, monkeypatch, boundary):
+        with transaction_app.app_context():
+            delivery_id = pending_alert(monkeypatch)
+            configuration = ConfiguracaoClienteEmpresa.query.filter_by(empresa_id=1).one()
+            configuration.smtp_tls = boundary != "tls"
+            configuration.smtp_ssl = False
+            db.session.commit()
+            result = AlertaService.entregar(delivery_id, 1)
+>           assert result["status"] == "FALHOU", result
+E           AssertionError: {'assunto': 'Alerta de estoque: Produto abaixo do minimo - Empresa 1-1', 'chave': 'estoque:1:ESTOQUE_BAIXO:2026-09-07'...stoque atual: 1
+E             Estoque minimo: 2
+E             Gerado em: 07/09/2026 00:40', 'criado_em': '2026-09-07T03:40:43.172769+00:00', ...}
+E           assert 'INCERTO' == 'FALHOU'
+E             
+E             - FALHOU
+E             + INCERTO
+
+tests/test_sprint04_adversarial.py:43: AssertionError
+--------------------- generated xml file: /tmp/before.xml ----------------------
+=========================== short test summary info ============================
+FAILED tests/test_sprint04_adversarial.py::test_pretransport_security_rejection_is_retryable[tls]
+FAILED tests/test_sprint04_adversarial.py::test_pretransport_security_rejection_is_retryable[allowlist]
+======================== 2 failed, 33 passed in 37.88s =========================
+
