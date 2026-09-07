@@ -1,0 +1,129 @@
+ Container oceanblue-s01-independent-db-test-1 Starting 
+ Container oceanblue-s01-independent-db-test-1 Started 
+ Container oceanblue-s01-independent-db-test-1 Waiting 
+ Container oceanblue-s01-independent-db-test-1 Healthy 
+ Container oceanblue-s01-independent-test-run-171a09b006a1 Creating 
+ Container oceanblue-s01-independent-test-run-171a09b006a1 Created 
+............FFFFFFF                                                      [100%]
+=================================== FAILURES ===================================
+________________ test_startup_rejects_unknown_environment[prod] ________________
+
+environment = 'prod'
+
+    @pytest.mark.parametrize("environment", ["prod", "", "production-typo"])
+    def test_startup_rejects_unknown_environment(environment):
+        result = run_startup({"FLASK_ENV": environment})
+        assert result.returncode != 0
+>       assert "FLASK_ENV invalido" in result.stderr
+E       assert 'FLASK_ENV invalido' in 'Traceback (most recent call last):\n  File "<string>", line 1, in <module>\nAssertionError\n'
+E        +  where 'Traceback (most recent call last):\n  File "<string>", line 1, in <module>\nAssertionError\n' = CompletedProcess(args=['/usr/local/bin/python', '-c', "from app import create_app; app = create_app(); assert not app....de=1, stdout='', stderr='Traceback (most recent call last):\n  File "<string>", line 1, in <module>\nAssertionError\n').stderr
+
+tests/test_startup.py:69: AssertionError
+__________________ test_startup_rejects_unknown_environment[] __________________
+
+environment = ''
+
+    @pytest.mark.parametrize("environment", ["prod", "", "production-typo"])
+    def test_startup_rejects_unknown_environment(environment):
+        result = run_startup({"FLASK_ENV": environment})
+        assert result.returncode != 0
+>       assert "FLASK_ENV invalido" in result.stderr
+E       assert 'FLASK_ENV invalido' in 'Traceback (most recent call last):\n  File "<string>", line 1, in <module>\nAssertionError\n'
+E        +  where 'Traceback (most recent call last):\n  File "<string>", line 1, in <module>\nAssertionError\n' = CompletedProcess(args=['/usr/local/bin/python', '-c', "from app import create_app; app = create_app(); assert not app....de=1, stdout='', stderr='Traceback (most recent call last):\n  File "<string>", line 1, in <module>\nAssertionError\n').stderr
+
+tests/test_startup.py:69: AssertionError
+__________ test_startup_rejects_unknown_environment[production-typo] ___________
+
+environment = 'production-typo'
+
+    @pytest.mark.parametrize("environment", ["prod", "", "production-typo"])
+    def test_startup_rejects_unknown_environment(environment):
+        result = run_startup({"FLASK_ENV": environment})
+        assert result.returncode != 0
+>       assert "FLASK_ENV invalido" in result.stderr
+E       assert 'FLASK_ENV invalido' in 'Traceback (most recent call last):\n  File "<string>", line 1, in <module>\nAssertionError\n'
+E        +  where 'Traceback (most recent call last):\n  File "<string>", line 1, in <module>\nAssertionError\n' = CompletedProcess(args=['/usr/local/bin/python', '-c', "from app import create_app; app = create_app(); assert not app....de=1, stdout='', stderr='Traceback (most recent call last):\n  File "<string>", line 1, in <module>\nAssertionError\n').stderr
+
+tests/test_startup.py:69: AssertionError
+_ test_production_startup_rejects_invalid_database_without_leaking_url[sqlite:///production.db] _
+
+database_url = 'sqlite:///production.db'
+
+    @pytest.mark.parametrize("database_url", [
+        "sqlite:///production.db",
+        "mysql://unused:private-database-password@localhost/oceanblue",
+        "malformed-private-database-password",
+        "postgresql://unused:private-database-password@localhost:not-a-port/oceanblue",
+    ])
+    def test_production_startup_rejects_invalid_database_without_leaking_url(database_url):
+        result = run_startup({"DATABASE_URL": database_url})
+        assert result.returncode != 0
+>       assert "DATABASE_URL deve ser uma URL PostgreSQL valida" in result.stderr
+E       assert 'DATABASE_URL deve ser uma URL PostgreSQL valida' in 'Traceback (most recent call last):\n  File "<string>", line 1, in <module>\n  File "/app/app/__init__.py", line 363, ...ASE_URL para Postgres.")\nRuntimeError: SQLite nao deve ser usado em producao. Configure DATABASE_URL para Postgres.\n'
+E        +  where 'Traceback (most recent call last):\n  File "<string>", line 1, in <module>\n  File "/app/app/__init__.py", line 363, ...ASE_URL para Postgres.")\nRuntimeError: SQLite nao deve ser usado em producao. Configure DATABASE_URL para Postgres.\n' = CompletedProcess(args=['/usr/local/bin/python', '-c', "from app import create_app; app = create_app(); assert not app....SE_URL para Postgres.")\nRuntimeError: SQLite nao deve ser usado em producao. Configure DATABASE_URL para Postgres.\n').stderr
+
+tests/test_startup.py:81: AssertionError
+_ test_production_startup_rejects_invalid_database_without_leaking_url[mysql://unused:private-database-password@localhost/oceanblue] _
+
+database_url = 'mysql://unused:private-database-password@localhost/oceanblue'
+
+    @pytest.mark.parametrize("database_url", [
+        "sqlite:///production.db",
+        "mysql://unused:private-database-password@localhost/oceanblue",
+        "malformed-private-database-password",
+        "postgresql://unused:private-database-password@localhost:not-a-port/oceanblue",
+    ])
+    def test_production_startup_rejects_invalid_database_without_leaking_url(database_url):
+        result = run_startup({"DATABASE_URL": database_url})
+        assert result.returncode != 0
+>       assert "DATABASE_URL deve ser uma URL PostgreSQL valida" in result.stderr
+E       assert 'DATABASE_URL deve ser uma URL PostgreSQL valida' in 'Traceback (most recent call last):\n  File "<string>", line 1, in <module>\n  File "/app/app/__init__.py", line 381, ...    return __import__("MySQLdb")\n           ^^^^^^^^^^^^^^^^^^^^^\nModuleNotFoundError: No module named \'MySQLdb\'\n'
+E        +  where 'Traceback (most recent call last):\n  File "<string>", line 1, in <module>\n  File "/app/app/__init__.py", line 381, ...    return __import__("MySQLdb")\n           ^^^^^^^^^^^^^^^^^^^^^\nModuleNotFoundError: No module named \'MySQLdb\'\n' = CompletedProcess(args=['/usr/local/bin/python', '-c', "from app import create_app; app = create_app(); assert not app....   return __import__("MySQLdb")\n           ^^^^^^^^^^^^^^^^^^^^^\nModuleNotFoundError: No module named \'MySQLdb\'\n').stderr
+
+tests/test_startup.py:81: AssertionError
+_ test_production_startup_rejects_invalid_database_without_leaking_url[malformed-private-database-password] _
+
+database_url = 'malformed-private-database-password'
+
+    @pytest.mark.parametrize("database_url", [
+        "sqlite:///production.db",
+        "mysql://unused:private-database-password@localhost/oceanblue",
+        "malformed-private-database-password",
+        "postgresql://unused:private-database-password@localhost:not-a-port/oceanblue",
+    ])
+    def test_production_startup_rejects_invalid_database_without_leaking_url(database_url):
+        result = run_startup({"DATABASE_URL": database_url})
+        assert result.returncode != 0
+>       assert "DATABASE_URL deve ser uma URL PostgreSQL valida" in result.stderr
+E       assert 'DATABASE_URL deve ser uma URL PostgreSQL valida' in 'Traceback (most recent call last):\n  File "<string>", line 1, in <module>\n  File "/app/app/__init__.py", line 381, ...rl\n    raise exc.ArgumentError(\nsqlalchemy.exc.ArgumentError: Could not parse SQLAlchemy URL from given URL string\n'
+E        +  where 'Traceback (most recent call last):\n  File "<string>", line 1, in <module>\n  File "/app/app/__init__.py", line 381, ...rl\n    raise exc.ArgumentError(\nsqlalchemy.exc.ArgumentError: Could not parse SQLAlchemy URL from given URL string\n' = CompletedProcess(args=['/usr/local/bin/python', '-c', "from app import create_app; app = create_app(); assert not app....l\n    raise exc.ArgumentError(\nsqlalchemy.exc.ArgumentError: Could not parse SQLAlchemy URL from given URL string\n').stderr
+
+tests/test_startup.py:81: AssertionError
+_ test_production_startup_rejects_invalid_database_without_leaking_url[postgresql://unused:private-database-password@localhost:not-a-port/oceanblue] _
+
+database_url = 'postgresql://unused:private-database-password@localhost:not-a-port/oceanblue'
+
+    @pytest.mark.parametrize("database_url", [
+        "sqlite:///production.db",
+        "mysql://unused:private-database-password@localhost/oceanblue",
+        "malformed-private-database-password",
+        "postgresql://unused:private-database-password@localhost:not-a-port/oceanblue",
+    ])
+    def test_production_startup_rejects_invalid_database_without_leaking_url(database_url):
+        result = run_startup({"DATABASE_URL": database_url})
+        assert result.returncode != 0
+>       assert "DATABASE_URL deve ser uma URL PostgreSQL valida" in result.stderr
+E       assert 'DATABASE_URL deve ser uma URL PostgreSQL valida' in 'Traceback (most recent call last):\n  File "<string>", line 1, in <module>\n  File "/app/app/__init__.py", line 381, ...                         ^^^^^^^^^^^^^^^^^^^^^^^\nValueError: invalid literal for int() with base 10: \'not-a-port\'\n'
+E        +  where 'Traceback (most recent call last):\n  File "<string>", line 1, in <module>\n  File "/app/app/__init__.py", line 381, ...                         ^^^^^^^^^^^^^^^^^^^^^^^\nValueError: invalid literal for int() with base 10: \'not-a-port\'\n' = CompletedProcess(args=['/usr/local/bin/python', '-c', "from app import create_app; app = create_app(); assert not app....                        ^^^^^^^^^^^^^^^^^^^^^^^\nValueError: invalid literal for int() with base 10: \'not-a-port\'\n').stderr
+
+tests/test_startup.py:81: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_startup.py::test_startup_rejects_unknown_environment[prod]
+FAILED tests/test_startup.py::test_startup_rejects_unknown_environment[] - as...
+FAILED tests/test_startup.py::test_startup_rejects_unknown_environment[production-typo]
+FAILED tests/test_startup.py::test_production_startup_rejects_invalid_database_without_leaking_url[sqlite:///production.db]
+FAILED tests/test_startup.py::test_production_startup_rejects_invalid_database_without_leaking_url[mysql://unused:private-database-password@localhost/oceanblue]
+FAILED tests/test_startup.py::test_production_startup_rejects_invalid_database_without_leaking_url[malformed-private-database-password]
+FAILED tests/test_startup.py::test_production_startup_rejects_invalid_database_without_leaking_url[postgresql://unused:private-database-password@localhost:not-a-port/oceanblue]
+7 failed, 12 passed in 13.26s
+

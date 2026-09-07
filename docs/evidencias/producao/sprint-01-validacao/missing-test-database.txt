@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/app/scripts/validate_migrations.py", line 54, in <module>
+    main()
+  File "/app/scripts/validate_migrations.py", line 7, in main
+    configure_test_environment()
+  File "/app/scripts/test_environment.py", line 9, in configure_test_environment
+    raise RuntimeError("TEST_DATABASE_URL obrigatoria; use o PostgreSQL isolado de compose.test.yml.")
+RuntimeError: TEST_DATABASE_URL obrigatoria; use o PostgreSQL isolado de compose.test.yml.

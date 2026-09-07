@@ -1,0 +1,4 @@
+ Container oceanblue-s01-final-db-test-1 Stopping 
+ Container oceanblue-s01-final-db-test-1 Stopped 
+LIVENESS WITHOUT DATABASE OK
+READINESS 503 WITHOUT DATABASE DETAILS OK

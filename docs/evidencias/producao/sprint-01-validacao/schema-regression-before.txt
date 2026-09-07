@@ -1,0 +1,171 @@
+ Container oceanblue-s01-independent-db-test-1 Running 
+ Container oceanblue-s01-independent-db-test-1 Waiting 
+ Container oceanblue-s01-independent-db-test-1 Healthy 
+ Container oceanblue-s01-independent-test-run-116b1941350b Creating 
+ Container oceanblue-s01-independent-test-run-116b1941350b Created 
+F                                                                        [100%]
+=================================== FAILURES ===================================
+______ test_migrated_schema_matches_model_types_indexes_and_foreign_keys _______
+
+    def test_migrated_schema_matches_model_types_indexes_and_foreign_keys():
+        with create_app().app_context():
+            with db.engine.connect() as connection:
+                differences = compare_metadata(MigrationContext.configure(connection), db.metadata)
+>           assert differences == []
+E           AssertionError: assert [('add_index'...), ...)], ...] == []
+E             
+E             Left contains 21 more items, first extra item: ('add_index', Index('ix_adiantamentos_funcionario_tenant_id', Column('tenant_id', Integer(), table=<adiantamentos_funcionario>, nullable=False)))
+E             Use -v to get more diff
+
+tests/test_schema.py:12: AssertionError
+---------------------------- Captured stderr setup -----------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+----------------------------- Captured stderr call -----------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.plugins] setting up autogenerate plugin alembic.autogenerate.schemas
+INFO  [alembic.runtime.plugins] setting up autogenerate plugin alembic.autogenerate.tables
+INFO  [alembic.runtime.plugins] setting up autogenerate plugin alembic.autogenerate.types
+INFO  [alembic.runtime.plugins] setting up autogenerate plugin alembic.autogenerate.constraints
+INFO  [alembic.runtime.plugins] setting up autogenerate plugin alembic.autogenerate.defaults
+INFO  [alembic.runtime.plugins] setting up autogenerate plugin alembic.autogenerate.comments
+INFO  [alembic.ddl.postgresql] Detected sequence named 'clientes_id_seq' as owned by integer column 'clientes(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'tenants_id_seq' as owned by integer column 'tenants(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'retornos_bancarios_boleto_id_seq' as owned by integer column 'retornos_bancarios_boleto(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'funcionarios_id_seq' as owned by integer column 'funcionarios(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'configuracoes_asaas_empresa_id_seq' as owned by integer column 'configuracoes_asaas_empresa(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'mensagens_cliente_id_seq' as owned by integer column 'mensagens_cliente(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'formas_pagamento_id_seq' as owned by integer column 'formas_pagamento(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'creditos_cashback_cliente_id_seq' as owned by integer column 'creditos_cashback_cliente(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'platform_owners_id_seq' as owned by integer column 'platform_owners(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'bancos_emissores_id_seq' as owned by integer column 'bancos_emissores(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'carteiras_cliente_id_seq' as owned by integer column 'carteiras_cliente(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'role_id_seq' as owned by integer column 'role(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'categorias_financeiras_id_seq' as owned by integer column 'categorias_financeiras(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'movimentos_carteira_cliente_id_seq' as owned by integer column 'movimentos_carteira_cliente(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'tipos_operacao_id_seq' as owned by integer column 'tipos_operacao(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'configuracoes_parcelamento_id_seq' as owned by integer column 'configuracoes_parcelamento(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'pagamentos_venda_id_seq' as owned by integer column 'pagamentos_venda(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'lancamentos_financeiros_id_seq' as owned by integer column 'lancamentos_financeiros(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'vendas_id_seq' as owned by integer column 'vendas(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'funcionarios_empresa_id_seq' as owned by integer column 'funcionarios_empresa(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'boletos_id_seq' as owned by integer column 'boletos(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'role_permission_id_seq' as owned by integer column 'role_permission(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'itens_venda_id_seq' as owned by integer column 'itens_venda(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'movimentos_estoque_id_seq' as owned by integer column 'movimentos_estoque(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'audit_logs_id_seq' as owned by integer column 'audit_logs(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'eventos_fiscais_nota_id_seq' as owned by integer column 'eventos_fiscais_nota(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'configuracoes_fiscais_empresa_id_seq' as owned by integer column 'configuracoes_fiscais_empresa(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'configuracoes_notificacao_estoque_id_seq' as owned by integer column 'configuracoes_notificacao_estoque(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'cupons_id_seq' as owned by integer column 'cupons(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'empresas_id_seq' as owned by integer column 'empresas(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'regras_juros_multa_id_seq' as owned by integer column 'regras_juros_multa(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'adiantamentos_funcionario_id_seq' as owned by integer column 'adiantamentos_funcionario(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'produtos_id_seq' as owned by integer column 'produtos(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'produtos_empresa_id_seq' as owned by integer column 'produtos_empresa(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'notas_fiscais_venda_id_seq' as owned by integer column 'notas_fiscais_venda(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'arquivos_boleto_id_seq' as owned by integer column 'arquivos_boleto(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'eventos_boleto_id_seq' as owned by integer column 'eventos_boleto(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'configuracoes_cliente_empresa_id_seq' as owned by integer column 'configuracoes_cliente_empresa(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'fechamentos_caixa_id_seq' as owned by integer column 'fechamentos_caixa(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'categorias_produto_id_seq' as owned by integer column 'categorias_produto(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'permissions_id_seq' as owned by integer column 'permissions(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'parcelas_boleto_id_seq' as owned by integer column 'parcelas_boleto(id)', assuming SERIAL and omitting
+INFO  [alembic.autogenerate.compare.constraints] Detected added index 'ix_adiantamentos_funcionario_tenant_id' on '('tenant_id',)'
+INFO  [alembic.autogenerate.compare.constraints] Detected added index 'ix_arquivos_boleto_tenant_id' on '('tenant_id',)'
+INFO  [alembic.autogenerate.compare.types] Detected type change from VARCHAR(length=20) to Enum('CNAB240', 'CNAB240_API', 'CNAB400', name='layoutarquivoboleto') on 'bancos_emissores.layout_arquivo'
+INFO  [alembic.autogenerate.compare.types] Detected type change from VARCHAR(length=20) to Enum('sandbox', 'producao', name='ambienteboleto') on 'bancos_emissores.ambiente'
+INFO  [alembic.autogenerate.compare.constraints] Detected added index 'ix_bancos_emissores_tenant_id' on '('tenant_id',)'
+INFO  [alembic.autogenerate.compare.types] Detected type change from VARCHAR(length=30) to Enum('PENDENTE', 'EMITIDO', 'VENCIDO', 'PARCIALMENTE_PAGO', 'PAGO', 'CANCELADO', 'ESTORNADO', 'BAIXA_MANUAL', name='statusboleto') on 'boletos.status'
+INFO  [alembic.autogenerate.compare.types] Detected type change from VARCHAR(length=30) to Enum('NAO_REGISTRADO', 'REGISTRO_SOLICITADO', 'REGISTRADO', 'REJEITADO', 'PAGO', 'BAIXADO', 'CANCELADO', name='statusbancarioboleto') on 'boletos.status_bancario'
+INFO  [alembic.autogenerate.compare.constraints] Detected added index 'ix_boletos_tenant_id' on '('tenant_id',)'
+INFO  [alembic.autogenerate.compare.constraints] Detected added foreign key (configuracao_parcelamento_id)(id) on table boletos
+INFO  [alembic.autogenerate.compare.constraints] Detected added index 'ix_configuracoes_asaas_empresa_tenant_id' on '('tenant_id',)'
+INFO  [alembic.autogenerate.compare.types] Detected type change from VARCHAR(length=20) to Enum('proporcional', 'manual', name='regradistribuicaoparcelamento') on 'configuracoes_parcelamento.regra_distribuicao'
+INFO  [alembic.autogenerate.compare.constraints] Detected added index 'ix_configuracoes_parcelamento_tenant_id' on '('tenant_id',)'
+INFO  [alembic.autogenerate.compare.types] Detected type change from VARCHAR(length=30) to Enum('EMISSAO', 'REGISTRO_SOLICITADO', 'REGISTRO_BANCARIO', 'REGISTRO_REJEITADO', 'WEBHOOK_BANCARIO', 'VENCIMENTO', 'PAGAMENTO', 'PAGAMENTO_PARCIAL', 'ESTORNO', 'BAIXA_MANUAL', 'RECALCULO_JUROS', 'ALTERACAO_REGRA', name='tipoeventoboleto') on 'eventos_boleto.tipo_evento'
+INFO  [alembic.autogenerate.compare.constraints] Detected added index 'ix_eventos_fiscais_nota_tenant_id' on '('tenant_id',)'
+INFO  [alembic.autogenerate.compare.types] Detected type change from VARCHAR(length=30) to Enum('NAO_ENVIADA', 'EM_PROCESSAMENTO', 'AUTORIZADA', 'REJEITADA', 'CANCELADA', 'INUTILIZADA', 'CONTINGENCIA', name='statusoficialnotafiscal') on 'notas_fiscais_venda.status_oficial'
+INFO  [alembic.autogenerate.compare.types] Detected type change from VARCHAR(length=30) to Enum('PENDENTE', 'EMITIDO', 'VENCIDO', 'PARCIALMENTE_PAGO', 'PAGO', 'CANCELADO', 'ESTORNADO', 'BAIXA_MANUAL', name='statusboleto') on 'parcelas_boleto.status'
+INFO  [alembic.autogenerate.compare.types] Detected type change from VARCHAR(length=20) to Enum('percentual', 'fixo', 'nenhum', name='tipomultaboleto') on 'regras_juros_multa.tipo_multa'
+INFO  [alembic.autogenerate.compare.types] Detected type change from VARCHAR(length=20) to Enum('diario', 'mensal', 'nenhum', name='tipojurosboleto') on 'regras_juros_multa.tipo_juros'
+INFO  [alembic.autogenerate.compare.types] Detected type change from VARCHAR(length=30) to Enum('valor_nominal', 'valor_restante', name='basecalculojurosmulta') on 'regras_juros_multa.base_calculo'
+INFO  [alembic.autogenerate.compare.constraints] Detected added index 'ix_regras_juros_multa_tenant_id' on '('tenant_id',)'
+INFO  [alembic.autogenerate.compare.constraints] Detected added index 'ix_retornos_bancarios_boleto_tenant_id' on '('tenant_id',)'
+------------------------------ Captured log call -------------------------------
+INFO     alembic.runtime.migration:migration.py:205 Context impl PostgresqlImpl.
+INFO     alembic.runtime.migration:migration.py:208 Will assume transactional DDL.
+INFO     alembic.runtime.plugins:plugins.py:121 setting up autogenerate plugin alembic.autogenerate.schemas
+INFO     alembic.runtime.plugins:plugins.py:121 setting up autogenerate plugin alembic.autogenerate.tables
+INFO     alembic.runtime.plugins:plugins.py:121 setting up autogenerate plugin alembic.autogenerate.types
+INFO     alembic.runtime.plugins:plugins.py:121 setting up autogenerate plugin alembic.autogenerate.constraints
+INFO     alembic.runtime.plugins:plugins.py:121 setting up autogenerate plugin alembic.autogenerate.defaults
+INFO     alembic.runtime.plugins:plugins.py:121 setting up autogenerate plugin alembic.autogenerate.comments
+INFO     alembic.ddl.postgresql:postgresql.py:234 Detected sequence named 'clientes_id_seq' as owned by integer column 'clientes(id)', assuming SERIAL and omitting
+INFO     alembic.ddl.postgresql:postgresql.py:234 Detected sequence named 'tenants_id_seq' as owned by integer column 'tenants(id)', assuming SERIAL and omitting
+INFO     alembic.ddl.postgresql:postgresql.py:234 Detected sequence named 'retornos_bancarios_boleto_id_seq' as owned by integer column 'retornos_bancarios_boleto(id)', assuming SERIAL and omitting
+INFO     alembic.ddl.postgresql:postgresql.py:234 Detected sequence named 'funcionarios_id_seq' as owned by integer column 'funcionarios(id)', assuming SERIAL and omitting
+INFO     alembic.ddl.postgresql:postgresql.py:234 Detected sequence named 'configuracoes_asaas_empresa_id_seq' as owned by integer column 'configuracoes_asaas_empresa(id)', assuming SERIAL and omitting
+INFO     alembic.ddl.postgresql:postgresql.py:234 Detected sequence named 'mensagens_cliente_id_seq' as owned by integer column 'mensagens_cliente(id)', assuming SERIAL and omitting
+INFO     alembic.ddl.postgresql:postgresql.py:234 Detected sequence named 'formas_pagamento_id_seq' as owned by integer column 'formas_pagamento(id)', assuming SERIAL and omitting
+INFO     alembic.ddl.postgresql:postgresql.py:234 Detected sequence named 'creditos_cashback_cliente_id_seq' as owned by integer column 'creditos_cashback_cliente(id)', assuming SERIAL and omitting
+INFO     alembic.ddl.postgresql:postgresql.py:234 Detected sequence named 'platform_owners_id_seq' as owned by integer column 'platform_owners(id)', assuming SERIAL and omitting
+INFO     alembic.ddl.postgresql:postgresql.py:234 Detected sequence named 'bancos_emissores_id_seq' as owned by integer column 'bancos_emissores(id)', assuming SERIAL and omitting
+INFO     alembic.ddl.postgresql:postgresql.py:234 Detected sequence named 'carteiras_cliente_id_seq' as owned by integer column 'carteiras_cliente(id)', assuming SERIAL and omitting
+INFO     alembic.ddl.postgresql:postgresql.py:234 Detected sequence named 'role_id_seq' as owned by integer column 'role(id)', assuming SERIAL and omitting
+INFO     alembic.ddl.postgresql:postgresql.py:234 Detected sequence named 'categorias_financeiras_id_seq' as owned by integer column 'categorias_financeiras(id)', assuming SERIAL and omitting
+INFO     alembic.ddl.postgresql:postgresql.py:234 Detected sequence named 'movimentos_carteira_cliente_id_seq' as owned by integer column 'movimentos_carteira_cliente(id)', assuming SERIAL and omitting
+INFO     alembic.ddl.postgresql:postgresql.py:234 Detected sequence named 'tipos_operacao_id_seq' as owned by integer column 'tipos_operacao(id)', assuming SERIAL and omitting
+INFO     alembic.ddl.postgresql:postgresql.py:234 Detected sequence named 'configuracoes_parcelamento_id_seq' as owned by integer column 'configuracoes_parcelamento(id)', assuming SERIAL and omitting
+INFO     alembic.ddl.postgresql:postgresql.py:234 Detected sequence named 'pagamentos_venda_id_seq' as owned by integer column 'pagamentos_venda(id)', assuming SERIAL and omitting
+INFO     alembic.ddl.postgresql:postgresql.py:234 Detected sequence named 'lancamentos_financeiros_id_seq' as owned by integer column 'lancamentos_financeiros(id)', assuming SERIAL and omitting
+INFO     alembic.ddl.postgresql:postgresql.py:234 Detected sequence named 'vendas_id_seq' as owned by integer column 'vendas(id)', assuming SERIAL and omitting
+INFO     alembic.ddl.postgresql:postgresql.py:234 Detected sequence named 'funcionarios_empresa_id_seq' as owned by integer column 'funcionarios_empresa(id)', assuming SERIAL and omitting
+INFO     alembic.ddl.postgresql:postgresql.py:234 Detected sequence named 'boletos_id_seq' as owned by integer column 'boletos(id)', assuming SERIAL and omitting
+INFO     alembic.ddl.postgresql:postgresql.py:234 Detected sequence named 'role_permission_id_seq' as owned by integer column 'role_permission(id)', assuming SERIAL and omitting
+INFO     alembic.ddl.postgresql:postgresql.py:234 Detected sequence named 'itens_venda_id_seq' as owned by integer column 'itens_venda(id)', assuming SERIAL and omitting
+INFO     alembic.ddl.postgresql:postgresql.py:234 Detected sequence named 'movimentos_estoque_id_seq' as owned by integer column 'movimentos_estoque(id)', assuming SERIAL and omitting
+INFO     alembic.ddl.postgresql:postgresql.py:234 Detected sequence named 'audit_logs_id_seq' as owned by integer column 'audit_logs(id)', assuming SERIAL and omitting
+INFO     alembic.ddl.postgresql:postgresql.py:234 Detected sequence named 'eventos_fiscais_nota_id_seq' as owned by integer column 'eventos_fiscais_nota(id)', assuming SERIAL and omitting
+INFO     alembic.ddl.postgresql:postgresql.py:234 Detected sequence named 'configuracoes_fiscais_empresa_id_seq' as owned by integer column 'configuracoes_fiscais_empresa(id)', assuming SERIAL and omitting
+INFO     alembic.ddl.postgresql:postgresql.py:234 Detected sequence named 'configuracoes_notificacao_estoque_id_seq' as owned by integer column 'configuracoes_notificacao_estoque(id)', assuming SERIAL and omitting
+INFO     alembic.ddl.postgresql:postgresql.py:234 Detected sequence named 'cupons_id_seq' as owned by integer column 'cupons(id)', assuming SERIAL and omitting
+INFO     alembic.ddl.postgresql:postgresql.py:234 Detected sequence named 'empresas_id_seq' as owned by integer column 'empresas(id)', assuming SERIAL and omitting
+INFO     alembic.ddl.postgresql:postgresql.py:234 Detected sequence named 'regras_juros_multa_id_seq' as owned by integer column 'regras_juros_multa(id)', assuming SERIAL and omitting
+INFO     alembic.ddl.postgresql:postgresql.py:234 Detected sequence named 'adiantamentos_funcionario_id_seq' as owned by integer column 'adiantamentos_funcionario(id)', assuming SERIAL and omitting
+INFO     alembic.ddl.postgresql:postgresql.py:234 Detected sequence named 'produtos_id_seq' as owned by integer column 'produtos(id)', assuming SERIAL and omitting
+INFO     alembic.ddl.postgresql:postgresql.py:234 Detected sequence named 'produtos_empresa_id_seq' as owned by integer column 'produtos_empresa(id)', assuming SERIAL and omitting
+INFO     alembic.ddl.postgresql:postgresql.py:234 Detected sequence named 'notas_fiscais_venda_id_seq' as owned by integer column 'notas_fiscais_venda(id)', assuming SERIAL and omitting
+INFO     alembic.ddl.postgresql:postgresql.py:234 Detected sequence named 'arquivos_boleto_id_seq' as owned by integer column 'arquivos_boleto(id)', assuming SERIAL and omitting
+INFO     alembic.ddl.postgresql:postgresql.py:234 Detected sequence named 'eventos_boleto_id_seq' as owned by integer column 'eventos_boleto(id)', assuming SERIAL and omitting
+INFO     alembic.ddl.postgresql:postgresql.py:234 Detected sequence named 'configuracoes_cliente_empresa_id_seq' as owned by integer column 'configuracoes_cliente_empresa(id)', assuming SERIAL and omitting
+INFO     alembic.ddl.postgresql:postgresql.py:234 Detected sequence named 'fechamentos_caixa_id_seq' as owned by integer column 'fechamentos_caixa(id)', assuming SERIAL and omitting
+INFO     alembic.ddl.postgresql:postgresql.py:234 Detected sequence named 'categorias_produto_id_seq' as owned by integer column 'categorias_produto(id)', assuming SERIAL and omitting
+INFO     alembic.ddl.postgresql:postgresql.py:234 Detected sequence named 'permissions_id_seq' as owned by integer column 'permissions(id)', assuming SERIAL and omitting
+INFO     alembic.ddl.postgresql:postgresql.py:234 Detected sequence named 'parcelas_boleto_id_seq' as owned by integer column 'parcelas_boleto(id)', assuming SERIAL and omitting
+INFO     alembic.autogenerate.compare.constraints:constraints.py:261 Detected added index 'ix_adiantamentos_funcionario_tenant_id' on '('tenant_id',)'
+INFO     alembic.autogenerate.compare.constraints:constraints.py:261 Detected added index 'ix_arquivos_boleto_tenant_id' on '('tenant_id',)'
+INFO     alembic.autogenerate.compare.types:types.py:121 Detected type change from VARCHAR(length=20) to Enum('CNAB240', 'CNAB240_API', 'CNAB400', name='layoutarquivoboleto') on 'bancos_emissores.layout_arquivo'
+INFO     alembic.autogenerate.compare.types:types.py:121 Detected type change from VARCHAR(length=20) to Enum('sandbox', 'producao', name='ambienteboleto') on 'bancos_emissores.ambiente'
+INFO     alembic.autogenerate.compare.constraints:constraints.py:261 Detected added index 'ix_bancos_emissores_tenant_id' on '('tenant_id',)'
+INFO     alembic.autogenerate.compare.types:types.py:121 Detected type change from VARCHAR(length=30) to Enum('PENDENTE', 'EMITIDO', 'VENCIDO', 'PARCIALMENTE_PAGO', 'PAGO', 'CANCELADO', 'ESTORNADO', 'BAIXA_MANUAL', name='statusboleto') on 'boletos.status'
+INFO     alembic.autogenerate.compare.types:types.py:121 Detected type change from VARCHAR(length=30) to Enum('NAO_REGISTRADO', 'REGISTRO_SOLICITADO', 'REGISTRADO', 'REJEITADO', 'PAGO', 'BAIXADO', 'CANCELADO', name='statusbancarioboleto') on 'boletos.status_bancario'
+INFO     alembic.autogenerate.compare.constraints:constraints.py:261 Detected added index 'ix_boletos_tenant_id' on '('tenant_id',)'
+INFO     alembic.autogenerate.compare.constraints:constraints.py:705 Detected added foreign key (configuracao_parcelamento_id)(id) on table boletos
+INFO     alembic.autogenerate.compare.constraints:constraints.py:261 Detected added index 'ix_configuracoes_asaas_empresa_tenant_id' on '('tenant_id',)'
+INFO     alembic.autogenerate.compare.types:types.py:121 Detected type change from VARCHAR(length=20) to Enum('proporcional', 'manual', name='regradistribuicaoparcelamento') on 'configuracoes_parcelamento.regra_distribuicao'
+INFO     alembic.autogenerate.compare.constraints:constraints.py:261 Detected added index 'ix_configuracoes_parcelamento_tenant_id' on '('tenant_id',)'
+INFO     alembic.autogenerate.compare.types:types.py:121 Detected type change from VARCHAR(length=30) to Enum('EMISSAO', 'REGISTRO_SOLICITADO', 'REGISTRO_BANCARIO', 'REGISTRO_REJEITADO', 'WEBHOOK_BANCARIO', 'VENCIMENTO', 'PAGAMENTO', 'PAGAMENTO_PARCIAL', 'ESTORNO', 'BAIXA_MANUAL', 'RECALCULO_JUROS', 'ALTERACAO_REGRA', name='tipoeventoboleto') on 'eventos_boleto.tipo_evento'
+INFO     alembic.autogenerate.compare.constraints:constraints.py:261 Detected added index 'ix_eventos_fiscais_nota_tenant_id' on '('tenant_id',)'
+INFO     alembic.autogenerate.compare.types:types.py:121 Detected type change from VARCHAR(length=30) to Enum('NAO_ENVIADA', 'EM_PROCESSAMENTO', 'AUTORIZADA', 'REJEITADA', 'CANCELADA', 'INUTILIZADA', 'CONTINGENCIA', name='statusoficialnotafiscal') on 'notas_fiscais_venda.status_oficial'
+INFO     alembic.autogenerate.compare.types:types.py:121 Detected type change from VARCHAR(length=30) to Enum('PENDENTE', 'EMITIDO', 'VENCIDO', 'PARCIALMENTE_PAGO', 'PAGO', 'CANCELADO', 'ESTORNADO', 'BAIXA_MANUAL', name='statusboleto') on 'parcelas_boleto.status'
+INFO     alembic.autogenerate.compare.types:types.py:121 Detected type change from VARCHAR(length=20) to Enum('percentual', 'fixo', 'nenhum', name='tipomultaboleto') on 'regras_juros_multa.tipo_multa'
+INFO     alembic.autogenerate.compare.types:types.py:121 Detected type change from VARCHAR(length=20) to Enum('diario', 'mensal', 'nenhum', name='tipojurosboleto') on 'regras_juros_multa.tipo_juros'
+INFO     alembic.autogenerate.compare.types:types.py:121 Detected type change from VARCHAR(length=30) to Enum('valor_nominal', 'valor_restante', name='basecalculojurosmulta') on 'regras_juros_multa.base_calculo'
+INFO     alembic.autogenerate.compare.constraints:constraints.py:261 Detected added index 'ix_regras_juros_multa_tenant_id' on '('tenant_id',)'
+INFO     alembic.autogenerate.compare.constraints:constraints.py:261 Detected added index 'ix_retornos_bancarios_boleto_tenant_id' on '('tenant_id',)'
+=========================== short test summary info ============================
+FAILED tests/test_schema.py::test_migrated_schema_matches_model_types_indexes_and_foreign_keys
+1 failed in 0.33s
+

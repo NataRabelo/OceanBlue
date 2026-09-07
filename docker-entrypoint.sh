@@ -8,6 +8,10 @@ import time
 
 from sqlalchemy import create_engine, text
 
+from app.config import get_config
+
+get_config().validate_runtime()
+
 database_url = os.environ.get("DATABASE_URL")
 if not database_url:
     sys.exit("DATABASE_URL obrigatoria")

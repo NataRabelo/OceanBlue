@@ -1,0 +1,114 @@
+#0 building with "desktop-linux" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile:
+#1 transferring dockerfile: 918B 0.0s done
+#1 DONE 0.2s
+
+#2 [internal] load metadata for docker.io/library/python:3.12.12-slim-bookworm@sha256:593bd06efe90efa80dc4eee3948be7c0fde4134606dd40d8dd8dbcade98e669c
+#2 DONE 0.2s
+
+#3 [internal] load .dockerignore
+#3 transferring context:
+#3 transferring context: 297B done
+#3 DONE 0.1s
+
+#4 [1/6] FROM docker.io/library/python:3.12.12-slim-bookworm@sha256:593bd06efe90efa80dc4eee3948be7c0fde4134606dd40d8dd8dbcade98e669c
+#4 resolve docker.io/library/python:3.12.12-slim-bookworm@sha256:593bd06efe90efa80dc4eee3948be7c0fde4134606dd40d8dd8dbcade98e669c 0.0s done
+#4 DONE 0.1s
+
+#5 [2/6] WORKDIR /app
+#5 CACHED
+
+#6 [internal] load build context
+#6 transferring context: 2.37MB 0.2s done
+#6 DONE 0.4s
+
+#7 [3/6] COPY requirements.txt .
+#7 DONE 1.3s
+
+#8 [4/6] RUN python -m pip install --no-cache-dir --require-hashes -r requirements.txt
+#8 1.969 Collecting alembic==1.19.2 (from -r requirements.txt (line 7))
+#8 2.137   Downloading alembic-1.19.2-py3-none-any.whl (267 kB)
+#8 2.328 Collecting blinker==1.9.0 (from -r requirements.txt (line 11))
+#8 2.370   Downloading blinker-1.9.0-py3-none-any.whl (8.5 kB)
+#8 2.424 Collecting click==8.5.0 (from -r requirements.txt (line 15))
+#8 2.461   Downloading click-8.5.0-py3-none-any.whl (125 kB)
+#8 2.515 Collecting et-xmlfile==2.0.0 (from -r requirements.txt (line 19))
+#8 2.560   Downloading et_xmlfile-2.0.0-py3-none-any.whl (18 kB)
+#8 2.619 Collecting flask==3.0.3 (from -r requirements.txt (line 23))
+#8 2.663   Downloading flask-3.0.3-py3-none-any.whl (101 kB)
+#8 2.727 Collecting flask-jwt-extended==4.7.1 (from -r requirements.txt (line 31))
+#8 2.768   Downloading Flask_JWT_Extended-4.7.1-py2.py3-none-any.whl (22 kB)
+#8 2.821 Collecting flask-migrate==4.0.7 (from -r requirements.txt (line 35))
+#8 2.868   Downloading Flask_Migrate-4.0.7-py3-none-any.whl (21 kB)
+#8 2.917 Collecting flask-sqlalchemy==3.1.1 (from -r requirements.txt (line 39))
+#8 2.964   Downloading flask_sqlalchemy-3.1.1-py3-none-any.whl (25 kB)
+#8 3.199 Collecting greenlet==3.5.5 (from -r requirements.txt (line 45))
+#8 3.238   Downloading greenlet-3.5.5-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl (621 kB)
+#8 3.308      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 621.4/621.4 kB 11.1 MB/s eta 0:00:00
+#8 3.387 Collecting gunicorn==21.2.0 (from -r requirements.txt (line 126))
+#8 3.425   Downloading gunicorn-21.2.0-py3-none-any.whl (80 kB)
+#8 3.482 Collecting itsdangerous==2.2.0 (from -r requirements.txt (line 130))
+#8 3.521   Downloading itsdangerous-2.2.0-py3-none-any.whl (16 kB)
+#8 3.577 Collecting jinja2==3.1.6 (from -r requirements.txt (line 134))
+#8 3.621   Downloading jinja2-3.1.6-py3-none-any.whl (134 kB)
+#8 3.679 Collecting mako==1.4.1 (from -r requirements.txt (line 138))
+#8 3.725   Downloading mako-1.4.1-py3-none-any.whl (80 kB)
+#8 3.817 Collecting markupsafe==3.0.3 (from -r requirements.txt (line 142))
+#8 3.857   Downloading markupsafe-3.0.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (22 kB)
+#8 3.937 Collecting marshmallow==3.19.0 (from -r requirements.txt (line 236))
+#8 3.981   Downloading marshmallow-3.19.0-py3-none-any.whl (49 kB)
+#8 4.032 Collecting openpyxl==3.1.5 (from -r requirements.txt (line 240))
+#8 4.070   Downloading openpyxl-3.1.5-py2.py3-none-any.whl (250 kB)
+#8 4.137 Collecting packaging==26.3 (from -r requirements.txt (line 244))
+#8 4.179   Downloading packaging-26.3-py3-none-any.whl (129 kB)
+#8 4.288 Collecting psycopg2-binary==2.9.9 (from -r requirements.txt (line 250))
+#8 4.330   Downloading psycopg2_binary-2.9.9-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (3.0 MB)
+#8 4.479      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.0/3.0 MB 20.9 MB/s eta 0:00:00
+#8 4.542 Collecting pyjwt==2.13.0 (from -r requirements.txt (line 324))
+#8 4.582   Downloading pyjwt-2.13.0-py3-none-any.whl (31 kB)
+#8 4.636 Collecting python-dotenv==1.0.1 (from -r requirements.txt (line 328))
+#8 4.677   Downloading python_dotenv-1.0.1-py3-none-any.whl (19 kB)
+#8 5.009 Collecting sqlalchemy==2.0.52 (from -r requirements.txt (line 332))
+#8 5.045   Downloading sqlalchemy-2.0.52-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (3.4 MB)
+#8 5.181      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.4/3.4 MB 25.2 MB/s eta 0:00:00
+#8 5.245 Collecting typing-extensions==4.16.0 (from -r requirements.txt (line 388))
+#8 5.285   Downloading typing_extensions-4.16.0-py3-none-any.whl (45 kB)
+#8 5.335 Collecting tzdata==2026.2 (from -r requirements.txt (line 394))
+#8 5.376   Downloading tzdata-2026.2-py2.py3-none-any.whl (349 kB)
+#8 5.457 Collecting werkzeug==3.1.8 (from -r requirements.txt (line 398))
+#8 5.496   Downloading werkzeug-3.1.8-py3-none-any.whl (226 kB)
+#8 5.660 Installing collected packages: tzdata, typing-extensions, python-dotenv, pyjwt, psycopg2-binary, packaging, markupsafe, itsdangerous, greenlet, et-xmlfile, click, blinker, werkzeug, sqlalchemy, openpyxl, marshmallow, mako, jinja2, gunicorn, flask, alembic, flask-sqlalchemy, flask-jwt-extended, flask-migrate
+#8 9.068 Successfully installed alembic-1.19.2 blinker-1.9.0 click-8.5.0 et-xmlfile-2.0.0 flask-3.0.3 flask-jwt-extended-4.7.1 flask-migrate-4.0.7 flask-sqlalchemy-3.1.1 greenlet-3.5.5 gunicorn-21.2.0 itsdangerous-2.2.0 jinja2-3.1.6 mako-1.4.1 markupsafe-3.0.3 marshmallow-3.19.0 openpyxl-3.1.5 packaging-26.3 psycopg2-binary-2.9.9 pyjwt-2.13.0 python-dotenv-1.0.1 sqlalchemy-2.0.52 typing-extensions-4.16.0 tzdata-2026.2 werkzeug-3.1.8
+#8 9.068 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+#8 9.296 
+#8 9.296 [notice] A new release of pip is available: 25.0.1 -> 26.2.1
+#8 9.296 [notice] To update, run: pip install --upgrade pip
+#8 DONE 9.6s
+
+#9 [5/6] COPY . .
+#9 DONE 0.3s
+
+#10 [6/6] RUN sed -i 's/\r$//' /app/docker-entrypoint.sh     && cp /app/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh     && chmod +x /usr/local/bin/docker-entrypoint.sh     && adduser --disabled-password --gecos "" appuser     && chown -R appuser:appuser /app
+#10 0.704 Adding user `appuser' ...
+#10 0.704 Adding new group `appuser' (1000) ...
+#10 0.920 Adding new user `appuser' (1000) with group `appuser (1000)' ...
+#10 1.188 Creating home directory `/home/appuser' ...
+#10 1.188 Copying files from `/etc/skel' ...
+#10 1.225 Adding new user `appuser' to supplemental / extra groups `users' ...
+#10 1.225 Adding user `appuser' to group `users' ...
+#10 DONE 5.1s
+
+#11 exporting to image
+#11 exporting layers
+#11 exporting layers 2.5s done
+#11 exporting manifest sha256:5fa6d4fe16607ed77d5ffea04c35fa602589ca0fb9feb7f49f2868f46bee4929 0.1s done
+#11 exporting config sha256:5bccf6b8d70357e34a4ac058770015665106b85e514883a28e7b5800fce5e390 0.1s done
+#11 exporting attestation manifest sha256:386f62cd4773e65d20226d9020e4dbff85bcc52ebbe784b6611bb1156515c93f 0.1s done
+#11 exporting manifest list sha256:42fc39713e3e37fb4081695750b41513e2fe29ee7670b0103190bea7d167efcb
+#11 exporting manifest list sha256:42fc39713e3e37fb4081695750b41513e2fe29ee7670b0103190bea7d167efcb 0.1s done
+#11 naming to docker.io/library/oceanblue-s01-final-production:latest done
+#11 unpacking to docker.io/library/oceanblue-s01-final-production:latest
+#11 unpacking to docker.io/library/oceanblue-s01-final-production:latest 1.7s done
+#11 DONE 4.5s

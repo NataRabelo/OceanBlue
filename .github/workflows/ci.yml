@@ -12,15 +12,19 @@ jobs:
       - uses: actions/checkout@v4
       - name: Build production from locked dependencies
         run: docker build -t oceanblue-production .
+      - name: Reject missing production configuration before connecting to database
+        run: sh scripts/validate_image.sh oceanblue-production
       - name: Install, validate all migrations and run full suite
         run: docker compose -f compose.test.yml up --build --abort-on-container-exit --exit-code-from test
       - name: Verify production entrypoint, Gunicorn and readiness
-        run: docker compose -f compose.test.yml --profile smoke up -d --build --wait --wait-timeout 120 smoke
+        run: |
+          docker compose -f compose.test.yml --profile smoke up -d --build --wait --wait-timeout 120 smoke
+          docker compose -f compose.test.yml --profile smoke exec -T smoke python -m scripts.validate_smoke
       - name: Collect evidence
         if: always()
         run: |
           mkdir -p artifacts
-          docker compose -f compose.test.yml logs --no-color > artifacts/verification.log
+          docker compose -f compose.test.yml --profile smoke logs --no-color > artifacts/verification.log
           docker compose -f compose.test.yml cp test:/app/coverage.xml artifacts/coverage.xml || true
           docker compose -f compose.test.yml cp test:/tmp/junit.xml artifacts/junit.xml || true
       - uses: actions/upload-artifact@v4

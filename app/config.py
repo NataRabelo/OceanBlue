@@ -84,8 +84,15 @@ class ProductionConfig(Config):
         if weak:
             raise RuntimeError("Segredos fracos em producao. Use pelo menos 32 caracteres para: " + ", ".join(weak))
 
-        if required["DATABASE_URL"].startswith("sqlite"):
-            raise RuntimeError("SQLite nao deve ser usado em producao. Configure DATABASE_URL para Postgres.")
+        from sqlalchemy.engine import make_url
+        from sqlalchemy.exc import ArgumentError
+
+        try:
+            database_url = make_url(required["DATABASE_URL"])
+            if database_url.get_backend_name() != "postgresql":
+                raise ValueError("Backend invalido")
+        except (ArgumentError, ValueError):
+            raise RuntimeError("DATABASE_URL deve ser uma URL PostgreSQL valida.") from None
 
 
 def get_config():
@@ -97,4 +104,7 @@ def get_config():
     if env == "production":
         return ProductionConfig
 
-    return DevelopmentConfig
+    if env == "development":
+        return DevelopmentConfig
+
+    raise RuntimeError("FLASK_ENV invalido; use development, testing ou production.")

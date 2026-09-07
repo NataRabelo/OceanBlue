@@ -1,0 +1,18 @@
+{
+  "python": "3.12.12 (main, Feb 24 2026, 20:29:11) [GCC 12.2.0]",
+  "platform": "Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.36",
+  "packages": {
+    "Flask": "3.0.3",
+    "Flask-SQLAlchemy": "3.1.1",
+    "Flask-Migrate": "4.0.7",
+    "SQLAlchemy": "2.0.52",
+    "alembic": "1.19.2",
+    "psycopg2-binary": "2.9.9",
+    "pytest": "8.3.5",
+    "pytest-cov": "6.1.1",
+    "coverage": "7.16.0",
+    "pip": "25.0.1",
+    "pip-tools": "7.4.1",
+    "gunicorn": "21.2.0"
+  }
+}

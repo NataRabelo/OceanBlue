@@ -13,6 +13,7 @@ RUN sed -i 's/\r$//' /app/docker-entrypoint.sh \
     && chown -R appuser:appuser /app
 
 ENV FLASK_APP=wsgi.py
+ENV FLASK_ENV=production
 
 HEALTHCHECK --interval=5s --timeout=5s --retries=6 CMD python -c "from urllib.request import urlopen; urlopen('http://127.0.0.1:5000/api/ready', timeout=4)"
 

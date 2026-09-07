@@ -6,6 +6,8 @@ from scripts.test_environment import configure_test_environment
 def main():
     configure_test_environment()
     from alembic.script import ScriptDirectory
+    from alembic.autogenerate import compare_metadata
+    from alembic.migration import MigrationContext
     from flask_migrate import downgrade, upgrade
     from sqlalchemy import inspect, text
 
@@ -41,6 +43,10 @@ def main():
         for table in db.metadata.tables.values():
             actual_columns = {column["name"] for column in inspect(db.engine).get_columns(table.name)}
             assert actual_columns == set(table.columns.keys()), table.name
+        with db.engine.connect() as connection:
+            differences = compare_metadata(MigrationContext.configure(connection), db.metadata)
+        assert not differences, differences
+        print("MODEL TYPES INDEXES FOREIGN KEYS OK", flush=True)
         print(json.dumps({"head": script.get_current_head(), "revisions": [revision.revision for revision in revisions], "tables": len(actual_tables), "upgrade_downgrade_upgrade": "OK"}), flush=True)
 
 

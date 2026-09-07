@@ -16,7 +16,7 @@ Sem `.env`, certificados, chaves externas ou banco existente:
 docker compose -f compose.test.yml up --build --abort-on-container-exit --exit-code-from test
 ```
 
-Cria PostgreSQL descartavel, instala o lock, executa `pip check`, verifica o inventario, percorre as 19 revisions, faz downgrade ate base, reaplica head, compara tabelas/colunas com modelos e executa todos os testes. Um tenant sentinela verifica preservacao no upgrade. O pytest mede linhas e ramificacoes de todo `app`, inclusive os modulos legados fiscal/bancario. O limite inicial do CI e 50% combinado; nao e meta final de cobertura do produto.
+Cria PostgreSQL descartavel, instala o lock, executa `pip check`, verifica o inventario, percorre as 20 revisions, faz downgrade ate base, reaplica head, compara tabelas/colunas, tipos, indices e chaves estrangeiras com modelos e executa todos os testes. Um tenant sentinela verifica preservacao no upgrade. O pytest mede linhas e ramificacoes de todo `app`, inclusive os modulos legados fiscal/bancario. O limite inicial do CI e 50% combinado; nao e meta final de cobertura do produto.
 
 O banco `oceanblue_test` usa `tmpfs`, rede interna e nenhuma porta publicada. As credenciais do compose sao exclusivas e descartaveis. Parar/recriar o banco perde seus dados. Os testes fazem TRUNCATE apenas nesse banco e usam schema migrado, nunca `create_all`. Nao execute contra copia de banco produtivo renomeada.
 
@@ -38,11 +38,21 @@ docker compose -f compose.test.yml cp test:/app/coverage.xml coverage.xml
 docker compose -f compose.test.yml cp test:/tmp/junit.xml junit.xml
 docker compose -f compose.test.yml logs --no-color
 docker compose -f compose.test.yml --profile smoke up -d --build --wait --wait-timeout 120 smoke
+docker compose -f compose.test.yml --profile smoke exec -T smoke python -m scripts.validate_smoke
 docker compose -f compose.test.yml --profile smoke ps
 docker compose -f compose.test.yml --profile smoke down -v
 ```
 
 O smoke inicia a imagem de producao com usuario sem privilegios, validacao de segredos, espera do banco, `flask db upgrade`, Gunicorn e `/api/ready`. Usa segredos artificiais e banco descartavel; nao publica servidor no host. O CI em `.github/workflows/ci.yml` executa esse caminho em push/PR e publica logs, JUnit e cobertura mesmo em falha. Nenhum deploy remoto e feito.
+
+A imagem assume `FLASK_ENV=production`; valores desconhecidos de `FLASK_ENV` interrompem a inicializacao. As quatro variaveis obrigatorias sao verificadas antes de aguardar o banco. Para repetir o gate negativo da imagem (shell POSIX, ou Git Bash no Windows):
+
+```sh
+docker build -t oceanblue-production .
+sh scripts/validate_image.sh oceanblue-production
+```
+
+A revision `3c4d5e6f7a8b` corrige nove indices de tenant, uma chave estrangeira de parcelamento e onze colunas VARCHAR que os modelos declaram como dez tipos ENUM. Upgrade e downgrade preservam os valores validos e os defaults anteriores. Dados legados com valores fora dos ENUMs ou referencias orfas devem ser corrigidos antes do upgrade: a migration falha transacionalmente, sem apagar ou normalizar dados silenciosamente. Os testes cobrem ida/volta com seis registros e rollback atomico de um valor invalido. A comparacao Alembic nao certifica server defaults, CHECKs ou todas as particularidades de ENUMs preexistentes.
 
 ## Desenvolvimento Python (Linux)
 

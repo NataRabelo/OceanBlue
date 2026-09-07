@@ -32,7 +32,6 @@ services:
       context: .
       dockerfile: Dockerfile
     environment:
-      FLASK_ENV: production
       DATABASE_URL: postgresql+psycopg2://oceanblue_test:isolated-test-only@db-test:5432/oceanblue_test
       SECRET_KEY: isolated-smoke-session-secret-32-characters
       JWT_SECRET_KEY: isolated-smoke-jwt-secret-32-characters

@@ -1,0 +1,14 @@
+ Container oceanblue-s01-final-db-test-1 Running 
+ Container oceanblue-s01-final-db-test-1 Waiting 
+ Container oceanblue-s01-final-db-test-1 Healthy 
+ Container oceanblue-s01-final-test-run-05c25132678c Creating 
+ Container oceanblue-s01-final-test-run-05c25132678c Created 
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/app/scripts/validate_migrations.py", line 54, in <module>
+    main()
+  File "/app/scripts/validate_migrations.py", line 20, in main
+    raise RuntimeError("Validacao exige oceanblue_test vazio; recrie o servico db-test.")
+RuntimeError: Validacao exige oceanblue_test vazio; recrie o servico db-test.
+
