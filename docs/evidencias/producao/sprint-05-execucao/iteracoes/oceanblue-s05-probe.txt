@@ -1,0 +1,26 @@
+ Network oceanblue-s05-dev_test Creating 
+ Network oceanblue-s05-dev_test Creating 
+ Network oceanblue-s05-dev_test Created 
+ Network oceanblue-s05-dev_test Created 
+ Container oceanblue-s05-dev-db-test-1 Creating 
+ Container oceanblue-s05-dev-db-test-1 Created 
+ Container oceanblue-s05-dev-db-test-1 Starting 
+ Container oceanblue-s05-dev-db-test-1 Started 
+ Container oceanblue-s05-dev-db-test-1 Waiting 
+ Container oceanblue-s05-dev-db-test-1 Healthy 
+ Container oceanblue-s05-probe Creating 
+ Container oceanblue-s05-probe Created 
+...........................................F............................ [ 57%]
+.....................................................                    [100%]
+=================================== FAILURES ===================================
+_________ test_commit_failure_does_not_send_notification_or_leave_sale _________
+tests/test_sprint03_transactions.py:434: in test_commit_failure_does_not_send_notification_or_leave_sale
+    assert calls == []
+E   AssertionError: assert [{'funcionari...3533337136)>}] == []
+E     
+E     Left contains one more item: {'funcionario_id': 1, 'tenant_id': 1, 'venda': <Venda (transient 126183533337136)>}
+E     Use -v to get more diff
+=========================== short test summary info ============================
+FAILED tests/test_sprint03_transactions.py::test_commit_failure_does_not_send_notification_or_leave_sale
+1 failed, 124 passed in 115.48s (0:01:55)
+

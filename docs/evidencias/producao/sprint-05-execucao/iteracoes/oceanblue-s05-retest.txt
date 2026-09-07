@@ -1,0 +1,25 @@
+time="2026-09-07T01:38:56-03:00" level=warning msg="Found orphan containers (oceanblue-s05-cycles, oceanblue-s05-probe) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up."
+ Container oceanblue-s05-dev-db-test-1 Running 
+ Container oceanblue-s05-dev-db-test-1 Waiting 
+ Container oceanblue-s05-dev-db-test-1 Healthy 
+ Container oceanblue-s05-retest Creating 
+ Container oceanblue-s05-retest Created 
+.................................F...................................... [ 63%]
+.........................................                                [100%]
+=================================== FAILURES ===================================
+______________ test_browser_advance_reversal_closure_and_privacy _______________
+tests/test_sprint05_browser.py:41: in test_browser_advance_reversal_closure_and_privacy
+    expect(page.locator("#ciclo-clientes")).to_contain_text("Cliente anonimizado")
+E   AssertionError: Locator expected to contain text 'Cliente anonimizado'
+E   Actual value: Nenhum registro. 
+E   Call log:
+E     - Expect "to_contain_text" with timeout 5000ms
+E     - waiting for locator("#ciclo-clientes")
+E       3 × locator resolved to <div id="ciclo-clientes">…</div>
+E         - unexpected value "Cliente #1 Pessoa privada - saldo 0.00Exportar dadosDescadastrar comunicacoesAnonimizarAcompanhar mensagens"
+E       6 × locator resolved to <div id="ciclo-clientes">Nenhum registro.</div>
+E         - unexpected value "Nenhum registro."
+=========================== short test summary info ============================
+FAILED tests/test_sprint05_browser.py::test_browser_advance_reversal_closure_and_privacy
+1 failed, 112 passed in 104.01s (0:01:44)
+

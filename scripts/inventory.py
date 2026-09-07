@@ -10,6 +10,7 @@ from scripts.test_environment import configure_test_environment
 
 
 REQUIREMENTS = {
+    "ciclos": "FIN-REL-05 Ciclos financeiros e privacidade",
     "health": "OPS-01 Disponibilidade",
     "auth": "AUTH-01 Autenticacao",
     "main": "UI-01 Navegacao operacional",

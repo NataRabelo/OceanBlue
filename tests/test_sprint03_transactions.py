@@ -417,12 +417,13 @@ def test_cancel_failure_restores_sale_stock_finance_and_idempotency(transaction_
 
 
 def test_commit_failure_does_not_send_notification_or_leave_sale(transaction_app, monkeypatch):
-    from app.services.cliente_service import ClienteService
+    from app.services.mensagem_fila_service import GatewayBloqueado
+    from app.models.db import MensagemCliente
     with transaction_app.app_context():
         record_id, product_id = stock_setup()
         payload = sale_payload(product_id)
         calls = []
-        monkeypatch.setattr(ClienteService, "enviar_email_venda_automatica", lambda **kwargs: calls.append(kwargs))
+        monkeypatch.setattr(GatewayBloqueado, "enviar", lambda *args: calls.append(args))
 
         def fail():
             raise RuntimeError("commit failure")
@@ -432,6 +433,7 @@ def test_commit_failure_does_not_send_notification_or_leave_sale(transaction_app
             with pytest.raises(RuntimeError):
                 PdvService.criar_venda(payload, 1, scope(), 1)
         assert calls == []
+        assert MensagemCliente.query.count() == 0
         assert db.session.get(ProdutoEmpresa, record_id).estoque_atual == 10
         assert Venda.query.count() == MovimentoEstoque.query.count() == OperacaoIdempotente.query.count() == 0
 

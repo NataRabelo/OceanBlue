@@ -1,4 +1,8 @@
 DEFAULT_PERMISSION_DEFINITIONS = [
+    {"codigo": "estornar_financeiro", "nome": "Estornar lancamentos financeiros"},
+    {"codigo": "reabrir_caixa", "nome": "Reabrir e ajustar caixa"},
+    {"codigo": "autorizar_adiantamento", "nome": "Autorizar e baixar adiantamentos"},
+    {"codigo": "gerenciar_privacidade_cliente", "nome": "Exportar e anonimizar clientes"},
     {"codigo": "visualizar_funcionario", "nome": "Visualizar funcionarios"},
     {"codigo": "criar_funcionario", "nome": "Criar funcionarios"},
     {"codigo": "editar_funcionario", "nome": "Editar funcionarios"},

@@ -158,13 +158,15 @@ function bindAdiantamentoForm() {
 
         try {
             const payload = montarPayloadAdiantamento();
-            const result = await requestAdiantamentoJson("/api/adiantamentos/", {
+            payload.idempotency_key = form.dataset.chave ||= crypto.randomUUID();
+            const result = await requestAdiantamentoJson("/api/adiantamentos/solicitar", {
                 method: "POST",
                 headers: getAdiantamentoHeaders(true),
                 body: JSON.stringify(payload)
             });
 
-            showAdiantamentoMessage(result.message || "Adiantamento registrado com sucesso.", "success");
+            showAdiantamentoMessage(result.message || "Solicitacao registrada. Autorize no painel de ciclos.", "success");
+            delete form.dataset.chave;
             fecharAdiantamentoModal("adiantamento-create-modal");
             resetAdiantamentoForm();
             await carregarAdiantamentoTudo();

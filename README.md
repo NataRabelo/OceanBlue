@@ -32,6 +32,8 @@ Veja [instalacao, testes e homologacao](docs/02-instalacao-e-ambiente/como-rodar
 
 ## Documentacao
 
+Ciclos financeiros, vales, cashback, mensagens e privacidade: [operacao da Sprint 5](docs/02-instalacao-e-ambiente/operacao-sprint-05.md) e [matriz de funcionalidades e testes](docs/04-modulos-e-funcionalidades/ciclos-financeiros-relacionamento.md).
+
 Autenticacao, isolamento, cotas e rotacao: [guia de seguranca da Sprint 2](docs/02-instalacao-e-ambiente/seguranca-sprint-02.md).
 
 A nova base documental da Sprint 1 esta em `docs/`. O relatorio executivo esta em `relatorio-sprint-1/resumo-executivo.md`.

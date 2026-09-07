@@ -21,7 +21,7 @@ def idempotent(function):
         if not isinstance(key, str) or not key.strip() or len(key) > 128:
             raise ValueError("Chave de idempotencia invalida.")
         operation = function.__name__
-        for field in ("venda_id", "item_id"):
+        for field in ("venda_id", "item_id", "lancamento_id", "fechamento_id", "adiantamento_id"):
             if field in arguments:
                 operation += f":{arguments[field]}"
         digest = hashlib.sha256(json.dumps(data, sort_keys=True, ensure_ascii=True, allow_nan=False).encode()).hexdigest()

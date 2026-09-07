@@ -1,0 +1,40 @@
+time="2026-09-07T01:35:54-03:00" level=warning msg="Found orphan containers (oceanblue-s05-probe) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up."
+ Container oceanblue-s05-dev-db-test-1 Running 
+ Container oceanblue-s05-dev-db-test-1 Waiting 
+ Container oceanblue-s05-dev-db-test-1 Healthy 
+ Container oceanblue-s05-cycles Creating 
+ Container oceanblue-s05-cycles Created 
+...........................................F............F..F.            [100%]
+=================================== FAILURES ===================================
+_ FluxoPdvFinanceiroTestCase.test_disparo_coletivo_envia_apenas_para_clientes_elegiveis _
+tests/test_fluxo_pdv_financeiro.py:1010: in test_disparo_coletivo_envia_apenas_para_clientes_elegiveis
+    resumo = ClienteService.enviar_mensagem_coletiva(
+app/services/transaction_service.py:49: in execute
+    result = function(*args, **kwargs)
+app/services/cliente_service.py:412: in enviar_mensagem_coletiva
+    mensagem = ClienteService._registrar_envio_mensagem_cliente(
+app/services/cliente_service.py:527: in _registrar_envio_mensagem_cliente
+    return MensagemFilaService.enfileirar(cliente.id, empresa_id, canal, assunto, conteudo,
+app/services/transaction_service.py:35: in execute
+    return function(*args, **kwargs)
+app/services/mensagem_fila_service.py:44: in enfileirar
+    raise ValueError("Informe chave de idempotencia de ate 128 caracteres.")
+E   ValueError: Informe chave de idempotencia de ate 128 caracteres.
+_ FluxoPdvFinanceiroTestCase.test_venda_com_cliente_envia_email_automatico_e_registra_cashback _
+tests/test_fluxo_pdv_financeiro.py:855: in test_venda_com_cliente_envia_email_automatico_e_registra_cashback
+    self.assertEqual(venda["email_venda"]["status"], "ENVIADO")
+E   AssertionError: 'PENDENTE' != 'ENVIADO'
+E   - PENDENTE
+E   + ENVIADO
+_ FluxoPdvFinanceiroTestCase.test_venda_permanece_finalizada_quando_email_automatico_falha _
+tests/test_fluxo_pdv_financeiro.py:958: in test_venda_permanece_finalizada_quando_email_automatico_falha
+    self.assertEqual(venda["email_venda"]["status"], "ERRO")
+E   AssertionError: 'PENDENTE' != 'ERRO'
+E   - PENDENTE
+E   + ERRO
+=========================== short test summary info ============================
+FAILED tests/test_fluxo_pdv_financeiro.py::FluxoPdvFinanceiroTestCase::test_disparo_coletivo_envia_apenas_para_clientes_elegiveis
+FAILED tests/test_fluxo_pdv_financeiro.py::FluxoPdvFinanceiroTestCase::test_venda_com_cliente_envia_email_automatico_e_registra_cashback
+FAILED tests/test_fluxo_pdv_financeiro.py::FluxoPdvFinanceiroTestCase::test_venda_permanece_finalizada_quando_email_automatico_falha
+3 failed, 58 passed in 34.40s
+

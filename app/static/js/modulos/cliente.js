@@ -142,6 +142,7 @@ function bindClienteAcoes() {
         try {
             const payload = {
                 empresa_id: document.getElementById("cliente-mensagem-empresa")?.value || "",
+                idempotency_key: event.target.dataset.chave ||= crypto.randomUUID(),
                 canal: document.getElementById("cliente-mensagem-canal")?.value || "",
                 assunto: (document.getElementById("cliente-mensagem-assunto")?.value || "").trim(),
                 conteudo: (document.getElementById("cliente-mensagem-conteudo")?.value || "").trim()
@@ -156,6 +157,7 @@ function bindClienteAcoes() {
             showClienteMessage(result.message || "Mensagem enviada com sucesso.", "success");
             fecharClienteModal("cliente-modal-mensagem");
             document.getElementById("cliente-form-mensagem")?.reset();
+            delete event.target.dataset.chave;
         } catch (error) {
             showClienteMessage(error.message || "Erro ao enviar mensagem.", "error");
         }
@@ -167,6 +169,7 @@ function bindClienteAcoes() {
         try {
             const payload = {
                 empresa_id: document.getElementById("cliente-coletivo-empresa")?.value || "",
+                idempotency_key: event.target.dataset.chave ||= crypto.randomUUID(),
                 canal: document.getElementById("cliente-coletivo-canal")?.value || "",
                 assunto: (document.getElementById("cliente-coletivo-assunto")?.value || "").trim(),
                 conteudo: (document.getElementById("cliente-coletivo-conteudo")?.value || "").trim()
@@ -185,6 +188,7 @@ function bindClienteAcoes() {
             showClienteMessage(mensagem, "success");
             fecharClienteModal("cliente-modal-disparo-coletivo");
             document.getElementById("cliente-form-disparo-coletivo")?.reset();
+            delete event.target.dataset.chave;
         } catch (error) {
             showClienteMessage(error.message || "Erro ao executar o disparo coletivo.", "error");
         }

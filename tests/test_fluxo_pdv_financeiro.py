@@ -29,6 +29,7 @@ from app.models.db import (
     TipoFinanceiro,
 )
 from app.repositorys.cliente_repository import ClienteRepository
+from app.services.mensagem_fila_service import MensagemFilaService, GatewaySimulado
 from app.security.password import hash_password
 from app.security.field_crypto import FieldCrypto
 from app.services.acesso_empresa_service import AcessoEmpresaService
@@ -852,12 +853,14 @@ class FluxoPdvFinanceiroTestCase(unittest.TestCase):
 
         self.assertEqual(venda["status"], StatusVenda.FINALIZADA.value)
         self.assertEqual(venda["cashback_gerado"], "0.75")
-        self.assertEqual(venda["email_venda"]["status"], "ENVIADO")
+        self.assertEqual(venda["email_venda"]["status"], "PENDENTE")
+        delivered = MensagemFilaService.entregar(mensagem.id, self.tenant.id, self.escopo, self.funcionario.id, GatewaySimulado())
+        self.assertEqual(delivered["status"], "ENVIADO")
         self.assertEqual(MensagemCliente.query.count(), 1)
         self.assertEqual(mensagem.status, StatusMensagemCliente.ENVIADO)
         self.assertIn("Comprovante da venda", mensagem.assunto)
         self.assertIn("Cashback gerado nesta compra", mensagem.conteudo)
-        self.assertEqual(mocked.call_count, 1)
+        self.assertEqual(mocked.call_count, 0)
 
     def test_template_html_do_email_de_venda_usa_identidade_oceanblue(self):
         cliente = ClienteService.criar(
@@ -955,11 +958,13 @@ class FluxoPdvFinanceiroTestCase(unittest.TestCase):
         mensagem = MensagemCliente.query.first()
 
         self.assertEqual(venda["status"], StatusVenda.FINALIZADA.value)
-        self.assertEqual(venda["email_venda"]["status"], "ERRO")
+        self.assertEqual(venda["email_venda"]["status"], "PENDENTE")
+        delivered = MensagemFilaService.entregar(mensagem.id, self.tenant.id, self.escopo, self.funcionario.id, GatewaySimulado("recusa"))
+        self.assertEqual(delivered["status"], "FALHOU")
         self.assertEqual(MensagemCliente.query.count(), 1)
         self.assertEqual(mensagem.status, StatusMensagemCliente.ERRO)
-        self.assertEqual(mensagem.erro, "SMTP indisponivel")
-        self.assertEqual(mocked.call_count, 1)
+        self.assertEqual(mensagem.erro, "Entrega recusada antes do aceite.")
+        self.assertEqual(mocked.call_count, 0)
 
     def test_disparo_coletivo_envia_apenas_para_clientes_elegiveis(self):
         ClienteService.criar(
@@ -1013,17 +1018,21 @@ class FluxoPdvFinanceiroTestCase(unittest.TestCase):
                     "canal": "EMAIL",
                     "assunto": "Campanha",
                     "conteudo": "Oferta especial para voce.",
+                    "idempotency_key": "campanha-sintetica",
                 },
                 self.tenant.id,
                 self.escopo,
                 self.funcionario.id,
             )
 
-        self.assertEqual(resumo["enviados"], 1)
+        self.assertEqual(resumo["enfileirados"], 1)
+        self.assertEqual(resumo["enviados"], 0)
+        delivered = MensagemFilaService.processar(self.tenant.id, self.escopo, self.funcionario.id, gateway=GatewaySimulado())
+        self.assertEqual([record["status"] for record in delivered], ["ENVIADO"])
         self.assertEqual(resumo["ignorados"], 2)
         self.assertEqual(resumo["erros"], 0)
         self.assertEqual(MensagemCliente.query.count(), 1)
-        self.assertEqual(mocked.call_count, 1)
+        self.assertEqual(mocked.call_count, 0)
 
     def test_alerta_email_estoque_dispara_ao_atingir_minimo(self):
         ClienteService.atualizar_configuracao_empresa(

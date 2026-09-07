@@ -1,0 +1,57 @@
+ Image oceanblue-s05-dev-test Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 574B 0.0s done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile.test
+#2 transferring dockerfile: 499B 0.0s done
+#2 DONE 0.1s
+
+#3 [internal] load metadata for docker.io/library/python:3.12.12-slim-bookworm@sha256:593bd06efe90efa80dc4eee3948be7c0fde4134606dd40d8dd8dbcade98e669c
+#3 DONE 0.2s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 311B done
+#4 DONE 0.0s
+
+#5 [1/7] FROM docker.io/library/python:3.12.12-slim-bookworm@sha256:593bd06efe90efa80dc4eee3948be7c0fde4134606dd40d8dd8dbcade98e669c
+#5 resolve docker.io/library/python:3.12.12-slim-bookworm@sha256:593bd06efe90efa80dc4eee3948be7c0fde4134606dd40d8dd8dbcade98e669c 0.0s done
+#5 DONE 0.1s
+
+#6 [internal] load build context
+#6 transferring context: 3.21MB 1.0s done
+#6 DONE 1.1s
+
+#7 [2/7] WORKDIR /app
+#7 CACHED
+
+#8 [3/7] COPY requirements-dev.txt .
+#8 CACHED
+
+#9 [4/7] RUN python -m pip install --no-cache-dir --require-hashes -r requirements-dev.txt
+#9 CACHED
+
+#10 [5/7] RUN python -m playwright install --with-deps chromium && chmod -R a+rX /opt/playwright
+#10 CACHED
+
+#11 [6/7] COPY . .
+#11 DONE 0.2s
+
+#12 [7/7] RUN useradd --create-home tester && chown -R tester:tester /app
+#12 DONE 2.1s
+
+#13 exporting to image
+#13 exporting layers
+#13 exporting layers 0.3s done
+#13 exporting manifest sha256:743e48076a35ad8ddd4eba0b97ac6124137e618bb5faded5982fb8ee675a4802 0.0s done
+#13 exporting config sha256:93c93ae40f41f43f1ac75accf778f4726264b512c14f95cba658686b20cf23bc 0.0s done
+#13 exporting attestation manifest sha256:3e991a7303cb97f8c4dfbb38608b48df61234086d62927e09b5bf4b1b688f05f 0.0s done
+#13 exporting manifest list sha256:f528df968a143ff4c31b66f0664317005ab5a0c4cd89e24d11994c2327546d8b 0.0s done
+#13 naming to docker.io/library/oceanblue-s05-dev-test:latest done
+#13 unpacking to docker.io/library/oceanblue-s05-dev-test:latest
+#13 unpacking to docker.io/library/oceanblue-s05-dev-test:latest 0.3s done
+#13 DONE 0.7s
+
+#14 resolving provenance for metadata file
+#14 DONE 0.0s
+ Image oceanblue-s05-dev-test Built 

@@ -23,6 +23,8 @@ from app.services.acesso_empresa_service import AcessoEmpresaService
 from app.services.tenant_bootstrap_service import TenantBootstrapService
 from app.services.time_service import TimeService
 from app.services.money_service import allocate_money
+from app.services.transaction_service import atomic_operation
+from app.services.idempotency_service import idempotent
 
 
 class FinanceiroService:
@@ -121,7 +123,7 @@ class FinanceiroService:
             AcessoEmpresaService.validar_empresa(empresa_id, escopo)
 
         periodo = max(int(periodo_dias or 30), 1)
-        data_fim = date.today()
+        data_fim = TimeService.today_br()
         data_inicio = data_fim - timedelta(days=periodo - 1)
 
         base_lancamentos = FinanceiroRepository.query_lancamentos(
@@ -452,6 +454,8 @@ class FinanceiroService:
         }
 
     @staticmethod
+    @atomic_operation
+    @idempotent
     def criar_lancamento_manual(data, tenant_id, escopo, funcionario_id):
         try:
             FinanceiroService._garantir_base_operacional(tenant_id)
@@ -529,7 +533,7 @@ class FinanceiroService:
                         descricao=descricao,
                         valor=FinanceiroService._to_decimal_value(pagamento.valor),
                         data_lancamento=TimeService.now_utc_naive(),
-                        data_competencia=date.today(),
+                        data_competencia=TimeService.today_br(),
                         observacao="Entrada automatica gerada pelo fechamento da venda no PDV.",
                     )
                 )
@@ -584,7 +588,7 @@ class FinanceiroService:
                         descricao=descricao,
                         valor=FinanceiroService._to_decimal_value(pagamento.valor),
                         data_lancamento=TimeService.now_utc_naive(),
-                        data_competencia=date.today(),
+                        data_competencia=TimeService.today_br(),
                         observacao="Saida automatica gerada pelo cancelamento da venda no PDV.",
                     )
                 )
@@ -653,7 +657,7 @@ class FinanceiroService:
                     descricao=descricao,
                     valor=valor_lancamento,
                     data_lancamento=TimeService.now_utc_naive(),
-                    data_competencia=date.today(),
+                    data_competencia=TimeService.today_br(),
                     observacao="Saida automatica gerada pelo cancelamento parcial de item no PDV.",
                 )
                 FinanceiroRepository.adicionar(estorno)
@@ -718,12 +722,13 @@ class FinanceiroService:
             raise
 
     @staticmethod
+    @atomic_operation
     def criar_fechamento(data, tenant_id, escopo, funcionario_id):
         try:
             FinanceiroService._garantir_base_operacional(tenant_id)
 
             empresa_id = FinanceiroService._to_int(data.get("empresa_id"), "Empresa")
-            data_fechamento = FinanceiroService._to_optional_date(data.get("data_fechamento")) or date.today()
+            data_fechamento = FinanceiroService._to_optional_date(data.get("data_fechamento")) or TimeService.today_br()
             valor_inicial = FinanceiroService._to_non_negative_decimal(data.get("valor_inicial"), "valor inicial")
             valor_final = FinanceiroService._to_non_negative_decimal(data.get("valor_final"), "valor final")
             observacao = (data.get("observacao") or "").strip() or None
@@ -757,6 +762,13 @@ class FinanceiroService:
                 data_referencia=data_fechamento,
                 valor_inicial=valor_inicial,
             )
+            from app.services.financeiro_ciclo_service import FinanceiroCicloService, audit
+            reconciliation = FinanceiroCicloService.conciliar(tenant_id, escopo, empresa_id,
+                data_fechamento.isoformat(), data_fechamento.isoformat())
+            if not reconciliation["conciliado"]:
+                raise ValueError("Divergencia PDV e financeiro impede fechar o caixa.")
+            fechamento.conciliacao = {"caixa": {key: str(value) for key, value in resumo.items()}, "pdv": reconciliation}
+            audit("CAIXA_CRIADO", fechamento, funcionario_id, {"conciliacao": fechamento.conciliacao})
             return FinanceiroService.serializar_fechamento(fechamento, resumo)
         except Exception:
             FinanceiroRepository.rollback()
@@ -765,7 +777,7 @@ class FinanceiroService:
     @staticmethod
     def calcular_resumo_caixa(tenant_id, escopo, empresa_id=None, data_referencia=None, valor_inicial=None):
         empresa_ids = AcessoEmpresaService.filtrar_empresa_ids(escopo)
-        data_ref = data_referencia or date.today()
+        data_ref = data_referencia or TimeService.today_br()
         valor_inicial_decimal = FinanceiroService._to_decimal_value(valor_inicial or 0)
 
         if empresa_id:
@@ -847,6 +859,9 @@ class FinanceiroService:
         saldo_esperado = FinanceiroService._to_decimal_value(resumo["saldo_esperado"])
 
         return {
+            "status": fechamento.status,
+            "revisao": fechamento.revisao,
+            "conciliacao": fechamento.conciliacao,
             "id": fechamento.id,
             "empresa_id": fechamento.empresa_id,
             "empresa_nome": fechamento.empresa.nome_fantasia if fechamento.empresa else None,
@@ -874,7 +889,7 @@ class FinanceiroService:
             empresa_id=empresa_id,
             data_inicio=data_inicio_obj,
             data_fim=data_fim_obj,
-            limite=1000,
+            limite=None,
         )
 
         total_entradas = Decimal("0.00")
@@ -994,43 +1009,18 @@ class FinanceiroService:
 
     @staticmethod
     def _to_int(value, field_name):
-        if value in (None, ""):
-            raise ValueError(f"{field_name} e obrigatorio.")
-
-        try:
-            return int(value)
-        except (TypeError, ValueError):
-            raise ValueError(f"{field_name} invalido.")
+        from app.services.money_service import positive_integer
+        return positive_integer(value, field_name)
 
     @staticmethod
     def _to_decimal(value, field_name):
-        if value in (None, ""):
-            raise ValueError(f"Informe {field_name}.")
-
-        try:
-            valor = Decimal(str(value).replace(",", "."))
-        except (InvalidOperation, ValueError):
-            raise ValueError(f"Valor invalido para {field_name}.")
-
-        if valor <= 0:
-            raise ValueError(f"{field_name.capitalize()} deve ser maior que zero.")
-
-        return valor.quantize(Decimal("0.01"))
+        from app.services.money_service import money
+        return money(value, field_name)
 
     @staticmethod
     def _to_non_negative_decimal(value, field_name):
-        if value in (None, ""):
-            return Decimal("0.00")
-
-        try:
-            valor = Decimal(str(value).replace(",", "."))
-        except (InvalidOperation, ValueError):
-            raise ValueError(f"Valor invalido para {field_name}.")
-
-        if valor < 0:
-            raise ValueError(f"{field_name.capitalize()} nao pode ser negativo.")
-
-        return valor.quantize(Decimal("0.01"))
+        from app.services.money_service import money
+        return money(0 if value in (None, "") else value, field_name, allow_zero=True)
 
     @staticmethod
     def _to_optional_date(value):

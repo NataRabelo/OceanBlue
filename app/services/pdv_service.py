@@ -12,7 +12,6 @@ from app.services.tenant_entitlement_service import TenantEntitlementService
 from app.services.tenant_bootstrap_service import TenantBootstrapService
 from app.services.time_service import TimeService
 from app.services.idempotency_service import idempotent
-from app.services.transaction_service import after_commit
 from app.services.cupom_service import CupomService
 
 
@@ -308,14 +307,9 @@ class PdvService:
             empresa_ids = AcessoEmpresaService.filtrar_empresa_ids(escopo)
             venda = PdvRepository.buscar_venda_por_id(venda.id, tenant_id, empresa_ids=empresa_ids)
             dados_venda = PdvService.serializar_venda(venda)
-            dados_venda["email_venda"] = {"status": "PENDENTE"}
-            def notify_sale():
-                notification = ClienteService.enviar_email_venda_automatica(
-                    venda=venda, tenant_id=tenant_id, funcionario_id=funcionario_id,
-                )
-                if not data.get("idempotency_key"):
-                    dados_venda["email_venda"] = notification
-            after_commit(notify_sale)
+            dados_venda["email_venda"] = ClienteService.enviar_email_venda_automatica(
+                venda=venda, tenant_id=tenant_id, funcionario_id=funcionario_id,
+            )
             return dados_venda
         except Exception:
             PdvRepository.rollback()

@@ -385,6 +385,7 @@ class Cliente(ModeloBase):
     __tablename__ = "clientes"
 
     nome = db.Column(db.String(150), nullable=False)
+    anonimizado_em = db.Column(db.DateTime, nullable=True)
     documento = db.Column(db.String(20), nullable=True)
     tipo_pessoa = db.Column(db.Enum(TipoPessoa), nullable=False, default=TipoPessoa.FISICA)
     email = db.Column(db.String(150), nullable=True)
@@ -669,6 +670,8 @@ class AdiantamentoFuncionario(ModeloBase):
     data_adiantamento = db.Column(db.Date, nullable=False, default=date.today)
     competencia = db.Column(db.Date, nullable=False, default=date.today)
     observacao = db.Column(db.Text, nullable=True)
+    status = db.Column(db.String(20), nullable=False, default="AUTORIZADO", server_default="AUTORIZADO")
+    revisao = db.Column(db.Integer, nullable=False, default=1, server_default="1")
 
     empresa = db.relationship("Empresa", backref=db.backref("adiantamentos_funcionario", lazy=True))
     funcionario = db.relationship("Funcionario", backref=db.backref("adiantamentos", lazy=True))
@@ -687,6 +690,7 @@ class AdiantamentoFuncionario(ModeloBase):
         CheckConstraint("valor_unitario IS NULL OR valor_unitario >= 0", name="ck_adiantamento_valor_unitario_non_negative"),
         CheckConstraint("valor_total >= 0", name="ck_adiantamento_valor_total_non_negative"),
         Index("ix_adiantamento_tenant_funcionario_competencia", "tenant_id", "funcionario_id", "competencia"),
+        CheckConstraint("status IN ('PENDENTE', 'AUTORIZADO', 'BAIXADO', 'CANCELADO', 'ESTORNADO') AND revisao > 0", name="ck_adiantamento_estado"),
     )
 
 
@@ -739,6 +743,8 @@ class MovimentoEstoque(ModeloBase):
 
 class Venda(ModeloBase):
     __tablename__ = "vendas"
+    cashback_processado = db.Column(db.Boolean, nullable=False, default=False, server_default="false")
+    cashback_payload = db.Column(db.String(64), nullable=True)
 
     empresa_id = db.Column(db.Integer, db.ForeignKey("empresas.id"), nullable=False)
     funcionario_id = db.Column(db.Integer, db.ForeignKey("funcionarios.id"), nullable=True)
@@ -1210,11 +1216,15 @@ class FechamentoCaixa(ModeloBase):
     valor_inicial = db.Column(db.Numeric(12, 2), nullable=False, default=0)
     valor_final = db.Column(db.Numeric(12, 2), nullable=False, default=0)
     observacao = db.Column(db.Text, nullable=True)
+    status = db.Column(db.String(20), nullable=False, default="FECHADO", server_default="FECHADO")
+    revisao = db.Column(db.Integer, nullable=False, default=1, server_default="1")
+    conciliacao = db.Column(db.JSON, nullable=True)
 
     empresa = db.relationship("Empresa", backref=db.backref("fechamentos_caixa", lazy=True))
     funcionario = db.relationship("Funcionario", backref=db.backref("fechamentos_caixa", lazy=True))
 
     __table_args__ = (
+        CheckConstraint("status IN ('FECHADO', 'REABERTO') AND revisao > 0", name="ck_fechamento_estado"),
         CheckConstraint(
             "valor_inicial NOT IN ('NaN'::numeric, 'Infinity'::numeric, '-Infinity'::numeric) "
             "AND valor_final NOT IN ('NaN'::numeric, 'Infinity'::numeric, '-Infinity'::numeric) ",
@@ -1423,6 +1433,11 @@ class MensagemCliente(ModeloBase):
     resposta_integracao = db.Column(db.Text, nullable=True)
     erro = db.Column(db.Text, nullable=True)
     enviado_em = db.Column(db.DateTime, nullable=True)
+    chave = db.Column(db.String(128), nullable=True)
+    payload_hash = db.Column(db.String(64), nullable=True)
+    estado = db.Column(db.String(20), nullable=False, default="PENDENTE", server_default="PENDENTE")
+    tentativas = db.Column(db.Integer, nullable=False, default=0, server_default="0")
+    proxima_tentativa = db.Column(db.DateTime, nullable=True)
 
     empresa = db.relationship("Empresa", backref=db.backref("mensagens_cliente", lazy=True))
     cliente = db.relationship("Cliente", backref=db.backref("mensagens", lazy=True))
@@ -1430,6 +1445,9 @@ class MensagemCliente(ModeloBase):
 
     __table_args__ = (
         Index("ix_mensagem_cliente_tenant_cliente_criado", "tenant_id", "cliente_id", "criado_em"),
+        UniqueConstraint("tenant_id", "empresa_id", "cliente_id", "chave", name="uq_mensagem_chave"),
+        CheckConstraint("estado IN ('PENDENTE', 'ENVIADO', 'FALHOU', 'INCERTO', 'CANCELADO', 'ESGOTADO')", name="ck_mensagem_estado"),
+        CheckConstraint("tentativas >= 0 AND tentativas <= 5", name="ck_mensagem_tentativas"),
     )
 
 

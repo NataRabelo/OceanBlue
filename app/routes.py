@@ -16,9 +16,11 @@ from app.controllers.platform_controller import platform_bp
 from app.controllers.produto_controller import produto_bp
 from app.controllers.role_controller import role_bp
 from app.health import health_bp
+from app.controllers.ciclos_controller import ciclos_bp
 
 
 def register_blueprints(app):
+    app.register_blueprint(ciclos_bp, url_prefix="/api")
     app.register_blueprint(health_bp, url_prefix="/api")
     app.register_blueprint(auth_bp)
     app.register_blueprint(main_bp)

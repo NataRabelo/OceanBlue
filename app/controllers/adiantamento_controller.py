@@ -75,6 +75,7 @@ def resumo():
 
 @adiantamento_bp.route("/", methods=["POST"])
 @permission_required("criar_adiantamento")
+@permission_required("autorizar_adiantamento")
 def criar():
     try:
         tenant_id = get_jwt().get("tenant_id")

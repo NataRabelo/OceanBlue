@@ -5,7 +5,7 @@ import ssl
 from email.message import EmailMessage
 from urllib import error, request
 
-from flask import render_template
+from flask import render_template, current_app
 
 from app.models.db import CanalMensagemCliente
 from app.security.field_crypto import FieldCrypto
@@ -20,6 +20,8 @@ class ComunicacaoService:
 
     @staticmethod
     def enviar(configuracao, canal, destinatario, assunto, conteudo, cliente=None, html_conteudo=None):
+        if not current_app.testing:
+            raise PreDeliveryError("Integracoes externas de comunicacao bloqueadas neste escopo.")
         canal_enum = ComunicacaoService._to_canal(canal)
         destino = (destinatario or "").strip()
         if not destino:

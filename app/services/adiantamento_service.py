@@ -7,6 +7,7 @@ from app.services.acesso_empresa_service import AcessoEmpresaService
 from app.services.estoque_service import EstoqueService
 from app.services.financeiro_service import FinanceiroService
 from app.services.tenant_bootstrap_service import TenantBootstrapService
+from app.services.time_service import TimeService
 
 
 from app.services.transaction_service import atomic_operation
@@ -102,11 +103,13 @@ class AdiantamentoService:
             empresa_ids=empresa_ids,
             empresa_id=empresa_id,
             competencia=competencia_date,
-            limite=1000,
+            limite=None,
         )
 
         totais_por_funcionario = {}
         for item in adiantamentos:
+            if item.status not in ("AUTORIZADO", "BAIXADO"):
+                continue
             atual = totais_por_funcionario.setdefault(
                 item.funcionario_id,
                 {
@@ -201,9 +204,10 @@ class AdiantamentoService:
             funcionario_id = AdiantamentoService._to_int(data.get("funcionario_id"), "Funcionario")
             tipo = AdiantamentoService._to_tipo_adiantamento(data.get("tipo_adiantamento"))
             forma_pagamento_id = AdiantamentoService._to_optional_int(data.get("forma_pagamento_id"))
-            data_adiantamento = AdiantamentoService._to_optional_date(data.get("data_adiantamento")) or date.today()
+            data_adiantamento = AdiantamentoService._to_optional_date(data.get("data_adiantamento")) or TimeService.today_br()
             competencia = AdiantamentoService._to_optional_competencia(data.get("competencia")) or AdiantamentoService._competencia_atual()
             observacao = (data.get("observacao") or "").strip() or None
+            pendente = data.get("solicitar") is True
 
             AcessoEmpresaService.validar_empresa(empresa_id, escopo)
             empresa_ids = AcessoEmpresaService.filtrar_empresa_ids(escopo)
@@ -245,7 +249,7 @@ class AdiantamentoService:
                 descricao = (data.get("descricao") or "").strip() or f"Vale em produto - {produto.nome}"
                 observacao_lancamento = observacao or "Saida automatica de vale em produto para desconto em folha."
 
-                movimento = EstoqueService.registrar_saida_por_adiantamento(
+                movimento = None if pendente else EstoqueService.registrar_saida_por_adiantamento(
                     tenant_id=tenant_id,
                     empresa_id=empresa_id,
                     produto_id=produto.id,
@@ -257,7 +261,7 @@ class AdiantamentoService:
                     persistir=False,
                 )
 
-            lancamento = FinanceiroService.registrar_saida_adiantamento(
+            lancamento = None if pendente else FinanceiroService.registrar_saida_adiantamento(
                 tenant_id=tenant_id,
                 empresa_id=empresa_id,
                 funcionario_id=funcionario.id,
@@ -270,6 +274,7 @@ class AdiantamentoService:
             )
 
             registro = AdiantamentoFuncionario(
+                status="PENDENTE" if pendente else "AUTORIZADO",
                 tenant_id=tenant_id,
                 empresa_id=empresa_id,
                 funcionario_id=funcionario.id,
@@ -288,6 +293,9 @@ class AdiantamentoService:
             )
             AdiantamentoRepository.adicionar(registro)
             AdiantamentoRepository.flush()
+            from app.services.financeiro_ciclo_service import audit
+            audit("ADIANTAMENTO_SOLICITADO" if pendente else "ADIANTAMENTO_AUTORIZADO", registro, responsavel_id,
+                {"valor": str(registro.valor_total), "status": registro.status})
             AdiantamentoRepository.salvar()
 
             if movimento and produto:
@@ -309,6 +317,8 @@ class AdiantamentoService:
     @staticmethod
     def serializar(item):
         return {
+            "status": item.status,
+            "revisao": item.revisao,
             "id": item.id,
             "empresa_id": item.empresa_id,
             "empresa_nome": item.empresa.nome_fantasia if item.empresa else None,
@@ -352,7 +362,7 @@ class AdiantamentoService:
 
     @staticmethod
     def _competencia_atual():
-        hoje = date.today()
+        hoje = TimeService.today_br()
         return date(hoje.year, hoje.month, 1)
 
     @staticmethod
@@ -364,53 +374,23 @@ class AdiantamentoService:
 
     @staticmethod
     def _to_int(value, field_name):
-        if value in (None, ""):
-            raise ValueError(f"{field_name} e obrigatorio.")
-
-        try:
-            return int(value)
-        except (TypeError, ValueError):
-            raise ValueError(f"{field_name} invalido.")
+        from app.services.money_service import positive_integer
+        return positive_integer(value, field_name)
 
     @staticmethod
     def _to_optional_int(value):
-        if value in (None, ""):
-            return None
-
-        try:
-            return int(value)
-        except (TypeError, ValueError):
-            raise ValueError("Valor numerico invalido.")
+        from app.services.money_service import positive_integer
+        return None if value in (None, "") else positive_integer(value, "Identificador")
 
     @staticmethod
     def _to_positive_int(value, field_name):
-        if value in (None, ""):
-            raise ValueError(f"Informe {field_name}.")
-
-        try:
-            numero = int(str(value).strip().replace(".", "").replace(",", ""))
-        except (TypeError, ValueError):
-            raise ValueError(f"Valor invalido para {field_name}.")
-
-        if numero <= 0:
-            raise ValueError(f"{field_name.capitalize()} deve ser maior que zero.")
-
-        return numero
+        from app.services.money_service import positive_integer
+        return positive_integer(value, field_name)
 
     @staticmethod
     def _to_decimal(value, field_name):
-        if value in (None, ""):
-            raise ValueError(f"Informe {field_name}.")
-
-        try:
-            numero = Decimal(str(value).replace(",", "."))
-        except (InvalidOperation, ValueError):
-            raise ValueError(f"Valor invalido para {field_name}.")
-
-        if numero <= 0:
-            raise ValueError(f"{field_name.capitalize()} deve ser maior que zero.")
-
-        return numero.quantize(Decimal("0.01"))
+        from app.services.money_service import money
+        return money(value, field_name)
 
     @staticmethod
     def _to_optional_date(value):

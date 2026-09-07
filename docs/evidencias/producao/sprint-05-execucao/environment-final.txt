@@ -1,0 +1,4 @@
+blueocean_api Exited (127) 7 hours ago
+blueocean_db Up 5 hours (healthy)
+wnr_triagem_api Restarting (3) 24 seconds ago
+wnr_triagem_db Up 5 hours

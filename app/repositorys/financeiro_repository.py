@@ -149,10 +149,11 @@ class FinanceiroRepository:
             joinedload(LancamentoFinanceiro.venda),
             joinedload(LancamentoFinanceiro.adiantamentos),
         )
-        return query.order_by(
+        query = query.order_by(
             LancamentoFinanceiro.data_lancamento.desc(),
             LancamentoFinanceiro.id.desc(),
-        ).limit(max(limite, 1)).all()
+        )
+        return query.limit(max(limite, 1)).all() if limite is not None else query.all()
 
     @staticmethod
     def query_lancamentos(

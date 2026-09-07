@@ -1,7 +1,12 @@
 from datetime import date, datetime, timedelta
 from decimal import Decimal, InvalidOperation
+import hashlib
+import json
 
 from flask import render_template
+from app.extensions import db
+from app.services.transaction_service import atomic_operation
+from app.services.money_service import positive_integer
 
 from app.models.db import (
     CanalMensagemCliente,
@@ -26,6 +31,7 @@ from app.services.money_service import allocate_money
 
 class ClienteService:
     @staticmethod
+    @atomic_operation
     def listar(tenant_id, escopo, busca=None):
         clientes = ClienteRepository.listar_clientes(tenant_id, busca=busca)
         houve_expiracao = False
@@ -37,6 +43,7 @@ class ClienteService:
         return [ClienteService.serializar_cliente(cliente) for cliente in clientes]
 
     @staticmethod
+    @atomic_operation
     def listar_para_pdv(tenant_id):
         clientes = ClienteRepository.listar_clientes_para_pdv(tenant_id)
         houve_expiracao = False
@@ -73,6 +80,7 @@ class ClienteService:
         }
 
     @staticmethod
+    @atomic_operation
     def criar(data, tenant_id):
         try:
             nome = (data.get("nome") or "").strip()
@@ -85,7 +93,7 @@ class ClienteService:
             tipo_pessoa = ClienteService._to_tipo_pessoa(data.get("tipo_pessoa"))
             aceita_email = ClienteService._to_bool(data.get("aceita_email", False))
             aceita_sms = ClienteService._to_bool(data.get("aceita_sms", False))
-            aceita_whatsapp = ClienteService._to_bool(data.get("aceita_whatsapp", True))
+            aceita_whatsapp = ClienteService._to_bool(data.get("aceita_whatsapp", False))
             ativo = ClienteService._to_bool(data.get("ativo", True))
 
             if not nome:
@@ -112,6 +120,7 @@ class ClienteService:
             ClienteRepository.adicionar(cliente)
             ClienteRepository.flush()
             ClienteService._obter_ou_criar_carteira(cliente.id, tenant_id)
+            ClienteService._auditar_consentimento(cliente, {}, "Cadastro")
             ClienteRepository.salvar()
 
             return ClienteRepository.buscar_cliente_por_id(cliente.id, tenant_id)
@@ -120,6 +129,7 @@ class ClienteService:
             raise
 
     @staticmethod
+    @atomic_operation
     def atualizar(cliente_id, data, tenant_id):
         try:
             cliente = ClienteRepository.buscar_cliente_por_id(cliente_id, tenant_id)
@@ -141,6 +151,9 @@ class ClienteService:
             if documento and ClienteRepository.buscar_cliente_por_documento(documento, tenant_id, ignorar_cliente_id=cliente.id):
                 raise ValueError("Ja existe um cliente com esse documento.")
 
+            if cliente.anonimizado_em:
+                raise ValueError("Cliente anonimizado nao pode ser reativado ou editado.")
+            consent_before = {field: getattr(cliente, field) for field in ("aceita_email", "aceita_sms", "aceita_whatsapp")}
             cliente.nome = nome
             cliente.documento = documento
             cliente.tipo_pessoa = tipo_pessoa
@@ -153,6 +166,7 @@ class ClienteService:
             cliente.aceita_sms = ClienteService._to_bool(data.get("aceita_sms", cliente.aceita_sms))
             cliente.aceita_whatsapp = ClienteService._to_bool(data.get("aceita_whatsapp", cliente.aceita_whatsapp))
             cliente.ativo = ClienteService._to_bool(data.get("ativo", cliente.ativo))
+            ClienteService._auditar_consentimento(cliente, consent_before, "Atualizacao cadastral")
 
             ClienteRepository.salvar()
             return ClienteRepository.buscar_cliente_por_id(cliente.id, tenant_id)
@@ -161,6 +175,7 @@ class ClienteService:
             raise
 
     @staticmethod
+    @atomic_operation
     def deletar(cliente_id, tenant_id):
         try:
             cliente = ClienteRepository.buscar_cliente_por_id(cliente_id, tenant_id)
@@ -174,6 +189,7 @@ class ClienteService:
             raise
 
     @staticmethod
+    @atomic_operation
     def obter(cliente_id, tenant_id):
         cliente = ClienteRepository.buscar_cliente_por_id(cliente_id, tenant_id)
         if not cliente:
@@ -184,6 +200,7 @@ class ClienteService:
         return ClienteService.serializar_cliente(cliente)
 
     @staticmethod
+    @atomic_operation
     def obter_carteira(cliente_id, tenant_id, escopo):
         empresa_ids = AcessoEmpresaService.filtrar_empresa_ids(escopo)
         cliente = ClienteRepository.buscar_cliente_por_id(cliente_id, tenant_id)
@@ -321,6 +338,7 @@ class ClienteService:
         }
 
     @staticmethod
+    @atomic_operation
     def enviar_mensagem(cliente_id, data, tenant_id, escopo, funcionario_id):
         try:
             cliente = ClienteRepository.buscar_cliente_por_id(cliente_id, tenant_id)
@@ -347,12 +365,14 @@ class ClienteService:
                 conteudo=conteudo,
                 tenant_id=tenant_id,
                 funcionario_id=funcionario_id,
+                chave=data.get("idempotency_key"),
             )
         except Exception:
             ClienteRepository.rollback()
             raise
 
     @staticmethod
+    @atomic_operation
     def enviar_mensagem_coletiva(data, tenant_id, escopo, funcionario_id):
         try:
             empresa_id = ClienteService._to_int(data.get("empresa_id"), "Empresa")
@@ -372,6 +392,7 @@ class ClienteService:
 
             clientes = ClienteRepository.listar_clientes_para_mensagem(tenant_id, cliente_ids=cliente_ids)
 
+            enfileirados = 0
             enviados = 0
             erros = 0
             ignorados = 0
@@ -403,9 +424,12 @@ class ClienteService:
                     destinatario=destinatario,
                     validar_opt_in=False,
                     propagar_erro=False,
+                    chave=data.get("idempotency_key"),
                 )
 
-                if mensagem["status"] == StatusMensagemCliente.ENVIADO.value:
+                if mensagem["status"] == "PENDENTE":
+                    enfileirados += 1
+                elif mensagem["status"] == StatusMensagemCliente.ENVIADO.value:
                     enviados += 1
                 else:
                     erros += 1
@@ -421,6 +445,7 @@ class ClienteService:
                 "canal": canal.value,
                 "total_clientes": len(clientes),
                 "enviados": enviados,
+                "enfileirados": enfileirados,
                 "erros": erros,
                 "ignorados": ignorados,
                 "detalhes": detalhes,
@@ -474,6 +499,7 @@ class ClienteService:
                 destinatario=destinatario,
                 validar_opt_in=False,
                 propagar_erro=False,
+                chave=f"venda:{venda.id}",
             )
             return {
                 "status": mensagem["status"],
@@ -481,13 +507,8 @@ class ClienteService:
                 "mensagem_id": mensagem["id"],
                 "erro": mensagem.get("erro"),
             }
-        except Exception as exc:
-            ClienteRepository.rollback()
-            return {
-                "status": "ERRO",
-                "destinatario": destinatario,
-                "erro": public_error(exc),
-            }
+        except Exception:
+            raise
 
     @staticmethod
     def _registrar_envio_mensagem_cliente(
@@ -503,49 +524,11 @@ class ClienteService:
         validar_opt_in=True,
         propagar_erro=True,
         html_conteudo=None,
+        chave=None,
     ):
-        canal_enum = ClienteService._to_canal(canal)
-        if validar_opt_in:
-            ClienteService._validar_opt_in(cliente, canal_enum)
-
-        destino = (destinatario or "").strip() or ClienteService._obter_destinatario_cliente(cliente, canal_enum)
-
-        log = MensagemCliente(
-            tenant_id=tenant_id,
-            empresa_id=empresa_id,
-            cliente_id=cliente.id,
-            funcionario_id=funcionario_id,
-            canal=canal_enum,
-            destinatario=destino,
-            assunto=assunto,
-            conteudo=conteudo,
-            status=StatusMensagemCliente.PENDENTE,
-        )
-        ClienteRepository.adicionar(log)
-        ClienteRepository.flush()
-
-        try:
-            resposta = ComunicacaoService.enviar(
-                configuracao=configuracao,
-                canal=canal_enum,
-                destinatario=destino,
-                assunto=assunto,
-                conteudo=conteudo,
-                cliente=cliente,
-                html_conteudo=html_conteudo,
-            )
-            log.status = StatusMensagemCliente.ENVIADO
-            log.resposta_integracao = (resposta or {}).get("resposta") if isinstance(resposta, dict) else None
-            log.enviado_em = TimeService.now_utc_naive()
-            ClienteRepository.salvar()
-        except Exception as exc:
-            log.status = StatusMensagemCliente.ERRO
-            log.erro = public_error(exc)
-            ClienteRepository.salvar()
-            if propagar_erro:
-                raise
-
-        return ClienteService.serializar_mensagem(log)
+        from app.services.mensagem_fila_service import MensagemFilaService
+        return MensagemFilaService.enfileirar(cliente.id, empresa_id, canal, assunto, conteudo,
+            chave, tenant_id, funcionario_id)
 
     @staticmethod
     def _montar_email_venda(venda, tenant_id):
@@ -674,8 +657,9 @@ class ClienteService:
         return pagamentos
 
     @staticmethod
+    @atomic_operation
     def _aplicar_expiracoes_cliente(cliente_id, tenant_id):
-        creditos_vencidos = ClienteRepository.listar_creditos_vencidos(cliente_id, tenant_id)
+        creditos_vencidos = ClienteRepository.listar_creditos_vencidos(cliente_id, tenant_id, TimeService.today_br())
         if not creditos_vencidos:
             return False
 
@@ -783,6 +767,7 @@ class ClienteService:
         }
 
     @staticmethod
+    @atomic_operation
     def processar_cashback_da_venda(
         venda,
         cliente_id,
@@ -792,7 +777,15 @@ class ClienteService:
         funcionario_id,
         cashback_ativado=True,
     ):
+        if venda.tenant_id != tenant_id or venda.empresa_id != empresa_id:
+            raise PermissionError("Venda indisponivel neste escopo.")
+        digest = hashlib.sha256(json.dumps([cliente_id, empresa_id, str(valor_cashback_utilizado), cashback_ativado]).encode()).hexdigest()
         configuracao = ClienteService._obter_ou_criar_configuracao_empresa(empresa_id, tenant_id)
+        if venda.cashback_processado:
+            if venda.cashback_payload != digest:
+                raise ValueError("Cashback ja processado; payload divergente ou venda historica.")
+            return {"cliente": venda.cliente, "configuracao": configuracao,
+                "cashback_utilizado": str(venda.cashback_utilizado), "cashback_gerado": str(venda.cashback_gerado)}
         preparacao = (
             ClienteService.preparar_uso_cashback(
                 cliente_id=cliente_id,
@@ -897,6 +890,8 @@ class ClienteService:
 
         venda.cashback_gerado = valor_gerado
         venda.cashback_percentual_aplicado = percentual_gerado
+        venda.cashback_processado = True
+        venda.cashback_payload = digest
 
         return {
             "cliente": cliente,
@@ -921,6 +916,12 @@ class ClienteService:
         for movimento in movimentos_debito:
             credito = movimento.credito
             valor = ClienteService._to_decimal_value(movimento.valor)
+            restored = sum((record.valor for record in MovimentoCarteiraCliente.query.filter_by(
+                tenant_id=tenant_id, venda_id=venda.id, credito_id=movimento.credito_id,
+                tipo=TipoMovimentoCarteiraCliente.ESTORNO).all()), Decimal("0.00"))
+            valor -= restored
+            if valor <= 0:
+                continue
             if credito:
                 credito.saldo_disponivel = (
                     ClienteService._to_decimal_value(credito.saldo_disponivel) + valor
@@ -944,7 +945,13 @@ class ClienteService:
             )
 
         credito_gerado = ClienteRepository.buscar_credito_por_venda_origem(venda.id, tenant_id)
+        ClienteService._aplicar_expiracoes_cliente(cliente.id, tenant_id)
         if not credito_gerado:
+            return
+        if credito_gerado.cancelado_em:
+            return
+        if credito_gerado.expirado_em and not ClienteService._credito_tem_consumo(credito_gerado, tenant_id):
+            credito_gerado.cancelado_em = TimeService.now_utc_naive()
             return
 
         saldo_credito = ClienteService._to_decimal_value(credito_gerado.saldo_disponivel)
@@ -1038,7 +1045,21 @@ class ClienteService:
                     data_movimento=TimeService.now_utc_naive(),
                 )
             )
+        ClienteRepository.flush()
+        ClienteService._aplicar_expiracoes_cliente(cliente.id, tenant_id)
         return valor
+
+    @staticmethod
+    def _credito_tem_consumo(credito, tenant_id):
+        debits = MovimentoCarteiraCliente.query.filter_by(tenant_id=tenant_id, credito_id=credito.id,
+            tipo=TipoMovimentoCarteiraCliente.DEBITO).all()
+        for debit in debits:
+            restored = sum((record.valor for record in MovimentoCarteiraCliente.query.filter_by(
+                tenant_id=tenant_id, credito_id=credito.id, venda_id=debit.venda_id,
+                tipo=TipoMovimentoCarteiraCliente.ESTORNO).all()), Decimal("0.00"))
+            if debit.valor > restored:
+                return True
+        return False
 
     @staticmethod
     def ajustar_cashback_gerado_por_cancelamento_item(venda, valor_cancelamento_liquido, tenant_id, funcionario_id):
@@ -1064,6 +1085,12 @@ class ClienteService:
             return Decimal("0.00")
 
         saldo_credito = ClienteService._to_decimal_value(credito.saldo_disponivel)
+        if credito.expirado_em and not ClienteService._credito_tem_consumo(credito, tenant_id):
+            credito.valor_original -= valor_estorno
+            venda.cashback_gerado -= valor_estorno
+            if credito.valor_original == 0:
+                credito.cancelado_em = TimeService.now_utc_naive()
+            return valor_estorno
         if saldo_credito < valor_estorno:
             raise ValueError("Nao e possivel cancelar o item porque o cashback gerado por esta venda ja foi utilizado.")
 
@@ -1140,12 +1167,8 @@ class ClienteService:
 
     @staticmethod
     def _to_int(value, field_name):
-        if value in (None, ""):
-            raise ValueError(f"{field_name} e obrigatorio.")
-        try:
-            return int(value)
-        except (TypeError, ValueError) as exc:
-            raise ValueError(f"{field_name} invalido.") from exc
+        from app.services.money_service import positive_integer
+        return positive_integer(value, field_name)
 
     @staticmethod
     def _to_positive_int(value, field_name):
@@ -1441,6 +1464,16 @@ class ClienteService:
             raise ValueError("Informe o endpoint HTTP do SMS para habilitar o canal.")
 
     @staticmethod
+    def _auditar_consentimento(cliente, before, source):
+        from flask import g, has_request_context
+        from app.services.cliente_privacidade_service import ClientePrivacidadeService
+        after = {field: getattr(cliente, field) for field in ("aceita_email", "aceita_sms", "aceita_whatsapp")}
+        if before != after:
+            actor = getattr(g, "auth_user", None) if has_request_context() else None
+            ClientePrivacidadeService.auditar(cliente, actor.id if actor else None, "CLIENTE_CONSENTIMENTO",
+                {"antes": before, "depois": after, "origem": source})
+
+    @staticmethod
     def serializar_cliente(cliente):
         carteira = getattr(cliente, "carteira", None)
         vendas = getattr(cliente, "vendas", []) or []
@@ -1566,7 +1599,9 @@ class ClienteService:
             "destinatario": item.destinatario,
             "assunto": item.assunto,
             "conteudo": item.conteudo,
-            "status": item.status.value if item.status else None,
+            "status": item.estado,
+            "tentativas": item.tentativas,
+            "proxima_tentativa": TimeService.serialize_utc_iso(item.proxima_tentativa),
             "erro": item.erro,
             "resposta_integracao": item.resposta_integracao,
             "funcionario_nome": item.funcionario.nome if item.funcionario else None,

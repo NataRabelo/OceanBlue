@@ -203,7 +203,7 @@ class AdiantamentoRepository:
         if competencia is not None:
             query = query.filter(AdiantamentoFuncionario.competencia == competencia)
 
-        return query.limit(max(limite, 1)).all()
+        return query.limit(max(limite, 1)).all() if limite is not None else query.all()
 
     @staticmethod
     def buscar_por_id(adiantamento_id, tenant_id, empresa_ids=None):

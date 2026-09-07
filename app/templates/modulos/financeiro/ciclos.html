@@ -1,0 +1,44 @@
+{% extends "bases/base.html" %}
+{% block title %}OceanBlue - Ciclos e conciliacao{% endblock %}
+{% block styles %}<link rel="stylesheet" href="{{ url_for('static', filename='css/modulos/ciclos.css') }}">{% endblock %}
+{% block content %}
+{% set modulo_name = "Ciclos e conciliacao" %}
+{% include "componentes/header_subpages.html" %}
+<main class="page-shell cycle-page space-y-6">
+    <h1 class="text-3xl font-bold">Ciclos e conciliacao</h1>
+    <p>Reversoes preservam o historico. Escolha a empresa e informe o motivo de cada ajuste.</p>
+    <label>Empresa <select id="ciclo-empresa" class="form-input"></select></label>
+    <button id="ciclo-atualizar" class="btn-primary">Atualizar registros</button>
+    <label>Motivo <input id="ciclo-motivo" minlength="5" maxlength="500" class="form-input" placeholder="Motivo do ajuste ou solicitacao do cliente"></label>
+    <p id="ciclo-status" role="status" aria-live="polite"></p>
+    <section class="space-y-3">
+        <h2 class="text-xl font-bold">Financeiro e fechamento</h2>
+        <button id="ciclo-conciliar" class="btn-primary">Conciliar PDV e financeiro</button>
+        <div id="ciclo-conciliacao"></div>
+        <div id="ciclo-lancamentos"></div>
+        <label>Valor inicial para novo fechamento <input id="ciclo-inicial" inputmode="decimal" value="0.00" class="form-input"></label>
+        <label>Valor final contado <input id="ciclo-final" inputmode="decimal" value="0.00" class="form-input"></label>
+        <div id="ciclo-fechamentos"></div>
+    </section>
+    <section class="space-y-3">
+        <h2 class="text-xl font-bold">Adiantamentos e folha</h2>
+        <form id="ciclo-solicitacao" class="space-y-2">
+            <label>Funcionario <select id="ciclo-funcionario" class="form-input"></select></label>
+            <label>Valor em dinheiro <input id="ciclo-valor" inputmode="decimal" required class="form-input"></label>
+            <button type="submit" class="btn-primary">Solicitar adiantamento</button>
+        </form>
+        <div id="ciclo-adiantamentos"></div>
+        <button id="ciclo-folha" class="btn-primary">Relatorio de folha</button>
+        <div id="ciclo-resumo"></div>
+    </section>
+    <section class="space-y-3">
+        <h2 class="text-xl font-bold">Clientes e comunicacoes</h2>
+        <p>Adaptadores externos bloqueados. Mensagens sem confirmacao exigem conciliacao; nao sao reenviadas.</p>
+        <button id="ciclo-processar" class="btn-primary">Processar pendencias</button>
+        <button id="ciclo-expirar" class="btn-primary">Aplicar expiracoes de cashback</button>
+        <div id="ciclo-clientes"></div>
+        <div id="ciclo-mensagens"></div>
+    </section>
+</main>
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', filename='js/modulos/ciclos.js') }}"></script>{% endblock %}

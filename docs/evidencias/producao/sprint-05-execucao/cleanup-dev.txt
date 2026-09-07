@@ -1,0 +1,34 @@
+ Container oceanblue-s05-probe Stopping 
+ Container oceanblue-s05-cycles Stopping 
+ Container oceanblue-s05-expanded Stopping 
+ Container oceanblue-s05-retest Stopping 
+ Container oceanblue-s05-probe Stopped 
+ Container oceanblue-s05-expanded Stopped 
+ Container oceanblue-s05-probe Removing 
+ Container oceanblue-s05-expanded Removing 
+ Container oceanblue-s05-retest Stopped 
+ Container oceanblue-s05-retest Removing 
+ Container oceanblue-s05-cycles Stopped 
+ Container oceanblue-s05-cycles Removing 
+ Container oceanblue-s05-expanded Removed 
+ Container oceanblue-s05-cycles Removed 
+ Container oceanblue-s05-retest Removed 
+ Container oceanblue-s05-probe Removed 
+ Container oceanblue-s05-dev-db-test-1 Stopping 
+ Container oceanblue-s05-dev-db-test-1 Stopped 
+ Container oceanblue-s05-dev-db-test-1 Removing 
+ Container oceanblue-s05-dev-db-test-1 Removed 
+ Container oceanblue-s05-probe Stopping 
+ Container oceanblue-s05-expanded Stopping 
+ Container oceanblue-s05-cycles Stopping 
+ Container oceanblue-s05-retest Stopping 
+ Container oceanblue-s05-expanded Error Error while Stopping
+ Container oceanblue-s05-expanded Removed 
+ Container oceanblue-s05-probe Error Error while Stopping
+ Container oceanblue-s05-probe Removed 
+ Container oceanblue-s05-retest Error Error while Stopping
+ Container oceanblue-s05-retest Removed 
+ Container oceanblue-s05-cycles Error Error while Stopping
+ Container oceanblue-s05-cycles Removed 
+ Network oceanblue-s05-dev_test Removing 
+ Network oceanblue-s05-dev_test Removed 

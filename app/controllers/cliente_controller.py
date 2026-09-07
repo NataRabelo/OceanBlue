@@ -135,7 +135,7 @@ def enviar_mensagem(cliente_id):
         mensagem = ClienteService.enviar_mensagem(cliente_id, data, tenant_id, escopo, funcionario_id)
         return jsonify({
             "success": True,
-            "message": "Mensagem enviada com sucesso.",
+            "message": "Mensagem registrada na fila; entrega ainda nao confirmada.",
             "data": mensagem,
         }), 201
     except Exception as e:
@@ -154,8 +154,8 @@ def enviar_mensagem_coletiva():
         return jsonify({
             "success": True,
             "message": (
-                "Disparo coletivo concluido. "
-                f"{resumo['enviados']} enviados, {resumo['ignorados']} ignorados e {resumo['erros']} com erro."
+                "Fila coletiva registrada. "
+                f"{resumo['enfileirados']} pendentes, {resumo['ignorados']} ignorados e {resumo['erros']} com erro."
             ),
             "data": resumo,
         }), 201
