@@ -2,6 +2,7 @@ from app.extensions import db
 from app.models.db import AdiantamentoFuncionario, ProdutoEmpresa, TipoAdiantamentoFuncionario, TipoMovimentoEstoque, MotivoMovimentoEstoque
 from app.services.acesso_empresa_service import AcessoEmpresaService
 from app.services.adiantamento_service import AdiantamentoService
+from app.repositorys.adiantamento_repository import AdiantamentoRepository
 from app.services.estoque_service import EstoqueService
 from app.services.financeiro_service import FinanceiroService
 from app.services.financeiro_ciclo_service import FinanceiroCicloService, audit, motivo
@@ -32,8 +33,8 @@ class AdiantamentoCicloService:
         before = record.status
         action = data.get("acao")
         if action == "autorizar" and before == "PENDENTE":
-            if not record.funcionario.ativo:
-                raise ValueError("Funcionario inativo.")
+            if not AdiantamentoRepository.buscar_vinculo_funcionario(record.funcionario_id, tenant_id, record.empresa_id):
+                raise ValueError("Funcionario inativo ou sem vinculo ativo com a empresa.")
             if record.tipo_adiantamento == TipoAdiantamentoFuncionario.PRODUTO:
                 movement = EstoqueService.registrar_saida_por_adiantamento(tenant_id=tenant_id,
                     empresa_id=record.empresa_id, produto_id=record.produto_id, quantidade=record.quantidade,

@@ -1,0 +1,14 @@
+ M .gitattributes
+ M app/services/adiantamento_ciclo_service.py
+ M app/services/mensagem_fila_service.py
+ M app/services/money_service.py
+ M docs/02-instalacao-e-ambiente/operacao-sprint-05.md
+ M docs/04-modulos-e-funcionalidades/ciclos-financeiros-relacionamento.md
+ M docs/04-modulos-e-funcionalidades/inventario-requisito-rota-servico-teste.csv
+?? Dockerfile.validation
+?? docs/evidencias/producao/sprint-05-validacao.md
+?? docs/evidencias/producao/sprint-05-validacao/
+?? migrations/versions/9c0d1e2f3a4b_sprint05_validation.py
+?? scripts/validate_sprint05_adversarial.ps1
+?? tests/test_sprint05_adversarial.py
+?? tests/test_sprint05_browser_adversarial.py

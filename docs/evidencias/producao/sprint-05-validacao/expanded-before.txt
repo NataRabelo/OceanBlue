@@ -1,0 +1,367 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.12, pytest-8.3.5, pluggy-1.6.0
+rootdir: /app
+configfile: pytest.ini
+plugins: cov-6.1.1
+collected 48 items
+
+tests/test_sprint05_adversarial.py FFFFFF............................... [ 77%]
+........F..                                                              [100%]
+
+=================================== FAILURES ===================================
+__________________ test_rounded_money_cannot_overflow_storage __________________
+
+    def test_rounded_money_cannot_overflow_storage():
+>       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_sprint05_adversarial.py:30: Failed
+---------------------------- Captured stderr setup -----------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+_____________ test_ledger_reversal_marker_cannot_be_forged[False] ______________
+
+transaction_app = <Flask 'app'>, reversed_first = False
+
+    @pytest.mark.parametrize("reversed_first", [False, True])
+    def test_ledger_reversal_marker_cannot_be_forged(transaction_app, reversed_first):
+        with transaction_app.app_context():
+            source = manual_entry()
+            if reversed_first:
+                FinanceiroCicloService.estornar(source["id"], {"motivo": "Correcao formal"}, 1, scope(), 1)
+            db.session.remove()
+>           with pytest.raises(DBAPIError):
+E           Failed: DID NOT RAISE <class 'sqlalchemy.exc.DBAPIError'>
+
+tests/test_sprint05_adversarial.py:41: Failed
+______________ test_ledger_reversal_marker_cannot_be_forged[True] ______________
+
+transaction_app = <Flask 'app'>, reversed_first = True
+
+    @pytest.mark.parametrize("reversed_first", [False, True])
+    def test_ledger_reversal_marker_cannot_be_forged(transaction_app, reversed_first):
+        with transaction_app.app_context():
+            source = manual_entry()
+            if reversed_first:
+                FinanceiroCicloService.estornar(source["id"], {"motivo": "Correcao formal"}, 1, scope(), 1)
+            db.session.remove()
+>           with pytest.raises(DBAPIError):
+E           Failed: DID NOT RAISE <class 'sqlalchemy.exc.DBAPIError'>
+
+tests/test_sprint05_adversarial.py:41: Failed
+_____________ test_advance_approval_rechecks_employee_company_link _____________
+
+transaction_app = <Flask 'app'>
+
+    def test_advance_approval_rechecks_employee_company_link(transaction_app):
+        with transaction_app.app_context():
+            record = AdiantamentoCicloService.solicitar(advance_payload(), 1, scope(), 1)
+            FuncionarioEmpresa.query.filter_by(tenant_id=1, funcionario_id=1, empresa_id=1).delete()
+            db.session.commit()
+>           with pytest.raises(ValueError):
+E           Failed: DID NOT RAISE <class 'ValueError'>
+
+tests/test_sprint05_adversarial.py:52: Failed
+______ test_privacy_committed_after_claim_prevents_transport[unsubscribe] ______
+
+transaction_app = <Flask 'app'>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x77a8f01cbfe0>
+privacy_action = 'unsubscribe'
+
+    @pytest.mark.parametrize("privacy_action", ["unsubscribe", "anonymize"])
+    def test_privacy_committed_after_claim_prevents_transport(transaction_app, monkeypatch, privacy_action):
+        with transaction_app.app_context():
+            customer_id = client_setup()
+            message = enqueue(customer_id)
+            commit = db.session.commit
+            commits = []
+    
+            def privacy():
+                with transaction_app.app_context():
+                    if privacy_action == "unsubscribe":
+                        ClientePrivacidadeService.consentir(customer_id,
+                            {"motivo": "Descadastro concorrente", "aceita_email": False}, 1, scope(), 1)
+                    else:
+                        ClientePrivacidadeService.anonimizar(customer_id, {"motivo": "Pedido concorrente"}, 1, scope(), 1)
+    
+            def interleave_commit():
+                commit()
+                commits.append(True)
+                if len(commits) == 1:
+                    with ThreadPoolExecutor(max_workers=1) as executor:
+                        executor.submit(privacy).result(timeout=10)
+    
+            gateway = GatewaySimulado()
+            with monkeypatch.context() as patcher:
+                patcher.setattr(db.session, "commit", interleave_commit)
+                result = MensagemFilaService.entregar(message["id"], 1, scope(), 1, gateway)
+>           assert not gateway.aceites, result
+E           AssertionError: {'assunto': 'Novidade', 'canal': 'EMAIL', 'cliente_id': 1, 'conteudo': 'Conteudo privado', ...}
+E           assert not {1}
+E            +  where {1} = <app.services.mensagem_fila_service.GatewaySimulado object at 0x77a8f00f26c0>.aceites
+
+tests/test_sprint05_adversarial.py:84: AssertionError
+_______ test_privacy_committed_after_claim_prevents_transport[anonymize] _______
+
+transaction_app = <Flask 'app'>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x77a8efe858b0>
+privacy_action = 'anonymize'
+
+    @pytest.mark.parametrize("privacy_action", ["unsubscribe", "anonymize"])
+    def test_privacy_committed_after_claim_prevents_transport(transaction_app, monkeypatch, privacy_action):
+        with transaction_app.app_context():
+            customer_id = client_setup()
+            message = enqueue(customer_id)
+            commit = db.session.commit
+            commits = []
+    
+            def privacy():
+                with transaction_app.app_context():
+                    if privacy_action == "unsubscribe":
+                        ClientePrivacidadeService.consentir(customer_id,
+                            {"motivo": "Descadastro concorrente", "aceita_email": False}, 1, scope(), 1)
+                    else:
+                        ClientePrivacidadeService.anonimizar(customer_id, {"motivo": "Pedido concorrente"}, 1, scope(), 1)
+    
+            def interleave_commit():
+                commit()
+                commits.append(True)
+                if len(commits) == 1:
+                    with ThreadPoolExecutor(max_workers=1) as executor:
+                        executor.submit(privacy).result(timeout=10)
+    
+            gateway = GatewaySimulado()
+            with monkeypatch.context() as patcher:
+                patcher.setattr(db.session, "commit", interleave_commit)
+                result = MensagemFilaService.entregar(message["id"], 1, scope(), 1, gateway)
+>           assert not gateway.aceites, result
+E           AssertionError: {'assunto': None, 'canal': 'EMAIL', 'cliente_id': 1, 'conteudo': 'Conteudo removido por anonimizacao.', ...}
+E           assert not {1}
+E            +  where {1} = <app.services.mensagem_fila_service.GatewaySimulado object at 0x77a8f27b1880>.aceites
+
+tests/test_sprint05_adversarial.py:84: AssertionError
+_______________ test_reconciliation_over_1000_and_local_midnight _______________
+
+self = <sqlalchemy.engine.base.Connection object at 0x77a8ee8425d0>
+dialect = <sqlalchemy.dialects.postgresql.psycopg2.PGDialect_psycopg2 object at 0x77a8eff54830>
+context = <sqlalchemy.dialects.postgresql.psycopg2.PGExecutionContext_psycopg2 object at 0x77a8f0145ca0>
+statement = <sqlalchemy.dialects.postgresql.base.PGCompiler object at 0x77a8f0146c60>
+parameters = [{'atualizado_em': datetime.datetime(2026, 9, 7, 5, 10, 12, 892706), 'cancelado_em': None, 'cancelado_por_funcionario_id': None, 'cashback_ativado': True, ...}]
+
+    def _exec_single_context(
+        self,
+        dialect: Dialect,
+        context: ExecutionContext,
+        statement: Union[str, Compiled],
+        parameters: Optional[_AnyMultiExecuteParams],
+    ) -> CursorResult[Any]:
+        """continue the _execute_context() method for a single DBAPI
+        cursor.execute() or cursor.executemany() call.
+    
+        """
+        if dialect.bind_typing is BindTyping.SETINPUTSIZES:
+            generic_setinputsizes = context._prepare_set_input_sizes()
+    
+            if generic_setinputsizes:
+                try:
+                    dialect.do_set_input_sizes(
+                        context.cursor, generic_setinputsizes, context
+                    )
+                except BaseException as e:
+                    self._handle_dbapi_exception(
+                        e, str(statement), parameters, None, context
+                    )
+    
+        cursor, str_statement, parameters = (
+            context.cursor,
+            context.statement,
+            context.parameters,
+        )
+    
+        effective_parameters: Optional[_AnyExecuteParams]
+    
+        if not context.executemany:
+            effective_parameters = parameters[0]
+        else:
+            effective_parameters = parameters
+    
+        if self._has_events or self.engine._has_events:
+            for fn in self.dispatch.before_cursor_execute:
+                str_statement, effective_parameters = fn(
+                    self,
+                    cursor,
+                    str_statement,
+                    effective_parameters,
+                    context,
+                    context.executemany,
+                )
+    
+        if self._echo:
+            self._log_info(str_statement)
+    
+            stats = context._get_cache_stats()
+    
+            if not self.engine.hide_parameters:
+                self._log_info(
+                    "[%s] %r",
+                    stats,
+                    sql_util._repr_params(
+                        effective_parameters,
+                        batches=10,
+                        ismulti=context.executemany,
+                    ),
+                )
+            else:
+                self._log_info(
+                    "[%s] [SQL parameters hidden due to hide_parameters=True]",
+                    stats,
+                )
+    
+        evt_handled: bool = False
+        try:
+            if context.execute_style is ExecuteStyle.EXECUTEMANY:
+                effective_parameters = cast(
+                    "_CoreMultiExecuteParams", effective_parameters
+                )
+                if self.dialect._has_events:
+                    for fn in self.dialect.dispatch.do_executemany:
+                        if fn(
+                            cursor,
+                            str_statement,
+                            effective_parameters,
+                            context,
+                        ):
+                            evt_handled = True
+                            break
+                if not evt_handled:
+                    self.dialect.do_executemany(
+                        cursor,
+                        str_statement,
+                        effective_parameters,
+                        context,
+                    )
+            elif not effective_parameters and context.no_parameters:
+                if self.dialect._has_events:
+                    for fn in self.dialect.dispatch.do_execute_no_params:
+                        if fn(cursor, str_statement, context):
+                            evt_handled = True
+                            break
+                if not evt_handled:
+                    self.dialect.do_execute_no_params(
+                        cursor, str_statement, context
+                    )
+            else:
+                effective_parameters = cast(
+                    "_CoreSingleExecuteParams", effective_parameters
+                )
+                if self.dialect._has_events:
+                    for fn in self.dialect.dispatch.do_execute:
+                        if fn(
+                            cursor,
+                            str_statement,
+                            effective_parameters,
+                            context,
+                        ):
+                            evt_handled = True
+                            break
+                if not evt_handled:
+>                   self.dialect.do_execute(
+                        cursor, str_statement, effective_parameters, context
+                    )
+
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <sqlalchemy.dialects.postgresql.psycopg2.PGDialect_psycopg2 object at 0x77a8eff54830>
+cursor = <cursor object at 0x77a8f03e71f0; closed: -1>
+statement = 'INSERT INTO vendas (cashback_processado, cashback_payload, empresa_id, funcionario_id, cliente_id, tipo_operacao_id, ...%(cancelado_em)s, %(data_venda)s, %(observacao)s, %(criado_em)s, %(atualizado_em)s, %(tenant_id)s) RETURNING vendas.id'
+parameters = {'atualizado_em': datetime.datetime(2026, 9, 7, 5, 10, 12, 892706), 'cancelado_em': None, 'cancelado_por_funcionario_id': None, 'cashback_ativado': True, ...}
+context = <sqlalchemy.dialects.postgresql.psycopg2.PGExecutionContext_psycopg2 object at 0x77a8f0145ca0>
+
+    def do_execute(self, cursor, statement, parameters, context=None):
+>       cursor.execute(statement, parameters)
+E       psycopg2.errors.CheckViolation: Data da venda fora do mes corrente
+E       CONTEXT:  PL/pgSQL function ocean_quota() line 18 at RAISE
+
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: CheckViolation
+
+The above exception was the direct cause of the following exception:
+
+transaction_app = <Flask 'app'>
+
+    def test_reconciliation_over_1000_and_local_midnight(transaction_app):
+        with transaction_app.app_context():
+            _, product_id = stock_setup(2)
+            sale = PdvService.criar_venda(sale_payload(product_id), 1, scope(), 1)
+            original = db.session.get(Venda, sale["id"])
+            original.data_venda = datetime(2026, 1, 2, 3)
+            entry = LancamentoFinanceiro.query.one()
+            for number in range(1001):
+                clone = Venda(tenant_id=1, empresa_id=1, tipo_operacao_id=original.tipo_operacao_id,
+                    numero_unico=f"bulk-{number}", total=Decimal("0.01"), subtotal=Decimal("0.01"),
+                    data_venda=datetime(2026, 1, 2, 3) if number < 1000 else datetime(2026, 1, 2, 2, 59, 59))
+                db.session.add(clone)
+>               db.session.flush()
+
+tests/test_sprint05_adversarial.py:239: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/scoping.py:923: in flush
+    return self._proxied.flush(objects=objects)
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/session.py:4353: in flush
+    self._flush(objects)
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/session.py:4488: in _flush
+    with util.safe_reraise():
+/usr/local/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py:122: in __exit__
+    raise exc_value.with_traceback(exc_tb)
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/session.py:4449: in _flush
+    flush_context.execute()
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/unitofwork.py:465: in execute
+    rec.execute(self)
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/unitofwork.py:641: in execute
+    util.preloaded.orm_persistence.save_obj(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/persistence.py:94: in save_obj
+    _emit_insert_statements(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/persistence.py:1234: in _emit_insert_statements
+    result = connection.execute(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1421: in execute
+    return meth(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/sql/elements.py:526: in _execute_on_connection
+    return connection._execute_clauseelement(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1643: in _execute_clauseelement
+    ret = self._execute_context(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1848: in _execute_context
+    return self._exec_single_context(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1988: in _exec_single_context
+    self._handle_dbapi_exception(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2365: in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <sqlalchemy.dialects.postgresql.psycopg2.PGDialect_psycopg2 object at 0x77a8eff54830>
+cursor = <cursor object at 0x77a8f03e71f0; closed: -1>
+statement = 'INSERT INTO vendas (cashback_processado, cashback_payload, empresa_id, funcionario_id, cliente_id, tipo_operacao_id, ...%(cancelado_em)s, %(data_venda)s, %(observacao)s, %(criado_em)s, %(atualizado_em)s, %(tenant_id)s) RETURNING vendas.id'
+parameters = {'atualizado_em': datetime.datetime(2026, 9, 7, 5, 10, 12, 892706), 'cancelado_em': None, 'cancelado_por_funcionario_id': None, 'cashback_ativado': True, ...}
+context = <sqlalchemy.dialects.postgresql.psycopg2.PGExecutionContext_psycopg2 object at 0x77a8f0145ca0>
+
+    def do_execute(self, cursor, statement, parameters, context=None):
+>       cursor.execute(statement, parameters)
+E       sqlalchemy.exc.IntegrityError: (psycopg2.errors.CheckViolation) Data da venda fora do mes corrente
+E       CONTEXT:  PL/pgSQL function ocean_quota() line 18 at RAISE
+E       
+E       [SQL: INSERT INTO vendas (cashback_processado, cashback_payload, empresa_id, funcionario_id, cliente_id, tipo_operacao_id, cupom_id, cancelado_por_funcionario_id, numero_unico, status, modalidade_preco, subtotal, desconto, cashback_ativado, cashback_utilizado, cashback_gerado, cashback_percentual_aplicado, valor_cancelado, total, cancelado_em, data_venda, observacao, criado_em, atualizado_em, tenant_id) VALUES (%(cashback_processado)s, %(cashback_payload)s, %(empresa_id)s, %(funcionario_id)s, %(cliente_id)s, %(tipo_operacao_id)s, %(cupom_id)s, %(cancelado_por_funcionario_id)s, %(numero_unico)s, %(status)s, %(modalidade_preco)s, %(subtotal)s, %(desconto)s, %(cashback_ativado)s, %(cashback_utilizado)s, %(cashback_gerado)s, %(cashback_percentual_aplicado)s, %(valor_cancelado)s, %(total)s, %(cancelado_em)s, %(data_venda)s, %(observacao)s, %(criado_em)s, %(atualizado_em)s, %(tenant_id)s) RETURNING vendas.id]
+E       [parameters: {'cashback_processado': False, 'cashback_payload': None, 'empresa_id': 1, 'funcionario_id': None, 'cliente_id': None, 'tipo_operacao_id': 1, 'cupom_id': None, 'cancelado_por_funcionario_id': None, 'numero_unico': 'bulk-0', 'status': 'ABERTA', 'modalidade_preco': 'VAREJO', 'subtotal': Decimal('0.01'), 'desconto': 0, 'cashback_ativado': True, 'cashback_utilizado': 0, 'cashback_gerado': 0, 'cashback_percentual_aplicado': 0, 'valor_cancelado': 0, 'total': Decimal('0.01'), 'cancelado_em': None, 'data_venda': datetime.datetime(2026, 1, 2, 3, 0), 'observacao': None, 'criado_em': datetime.datetime(2026, 9, 7, 5, 10, 12, 892702), 'atualizado_em': datetime.datetime(2026, 9, 7, 5, 10, 12, 892706), 'tenant_id': 1}]
+E       (Background on this error at: https://sqlalche.me/e/20/gkpj)
+
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: IntegrityError
+----------------- generated xml file: /tmp/expanded-before.xml -----------------
+=========================== short test summary info ============================
+FAILED tests/test_sprint05_adversarial.py::test_rounded_money_cannot_overflow_storage
+FAILED tests/test_sprint05_adversarial.py::test_ledger_reversal_marker_cannot_be_forged[False]
+FAILED tests/test_sprint05_adversarial.py::test_ledger_reversal_marker_cannot_be_forged[True]
+FAILED tests/test_sprint05_adversarial.py::test_advance_approval_rechecks_employee_company_link
+FAILED tests/test_sprint05_adversarial.py::test_privacy_committed_after_claim_prevents_transport[unsubscribe]
+FAILED tests/test_sprint05_adversarial.py::test_privacy_committed_after_claim_prevents_transport[anonymize]
+FAILED tests/test_sprint05_adversarial.py::test_reconciliation_over_1000_and_local_midnight
+======================== 7 failed, 41 passed in 49.57s =========================

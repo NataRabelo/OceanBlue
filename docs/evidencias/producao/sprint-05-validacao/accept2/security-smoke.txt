@@ -1,0 +1,1 @@
+{"database_down": false, "health": 200, "ready": 200, "forged_proxy_login": 403, "login_fails_closed": false}

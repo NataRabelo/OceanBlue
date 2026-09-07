@@ -1,0 +1,42 @@
+[
+  {
+    "images": [
+      "sha256:ccab7b4eaebd49afa5a70ce9dd29ebec76d3a3c711704149d641c0acf37fb477",
+      "sha256:896e64670d1cf36bd15ae5b97784fed1ff564de6b98cbeaadaca9d8fa74529b1"
+    ],
+    "branches_covered": 1510,
+    "lines_valid": 11476,
+    "source_production": "Verified 278 files against smoke image.",
+    "errors": 0,
+    "skipped": 0,
+    "seconds": "1251.375",
+    "failures": 0,
+    "browser_cases": 6,
+    "lines_covered": 8709,
+    "tests": 547,
+    "round": "accept1",
+    "cleanup": "Zero containers and networks for oceanblue-s05-audit-accept1.",
+    "source_test": "Verified 278 files against test image.",
+    "branches_valid": 2592
+  },
+  {
+    "images": [
+      "sha256:f1cd3cbdbcb4a110f1ecb391e3017c516ae17f0f2835a951d7d7c14de1e4c8ef",
+      "sha256:fec7f968f6fd76de90c35c3f4892459840f14282324d3d17e79daf34166faaad"
+    ],
+    "branches_covered": 1510,
+    "lines_valid": 11476,
+    "source_production": "Verified 278 files against smoke image.",
+    "errors": 0,
+    "skipped": 0,
+    "seconds": "1246.519",
+    "failures": 0,
+    "browser_cases": 6,
+    "lines_covered": 8709,
+    "tests": 547,
+    "round": "accept2",
+    "cleanup": "Zero containers and networks for oceanblue-s05-audit-accept2.",
+    "source_test": "Verified 278 files against test image.",
+    "branches_valid": 2592
+  }
+]

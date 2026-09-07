@@ -7,7 +7,7 @@ def money(value, field, allow_zero=False):
         if not result.is_finite() or abs(result) >= Decimal("10000000000"):
             raise ValueError()
         result = result.quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
-        if result < 0 or (result == 0 and not allow_zero):
+        if result >= Decimal("10000000000") or result < 0 or (result == 0 and not allow_zero):
             raise ValueError()
     except (ValueError, InvalidOperation):
         raise ValueError(f"Valor invalido para {field}.")

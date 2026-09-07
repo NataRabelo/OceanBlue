@@ -55,3 +55,12 @@ operacional por produto, nao o livro financeiro; use fluxo e conciliacao para ap
 
 WhatsApp, SMTP externo, SMS externo, boleto real e emissao fiscal real nao fazem parte desta homologacao.
 Adaptadores e simuladores nao demonstram entrega final, leitura, autorizacao bancaria ou fiscal.
+
+## Validacao independente
+
+A matriz de ataques, reproducoes antes/depois, reconciliacao, isolamento e gates das duas rodadas
+esta em [sprint-05-validacao.md](../evidencias/producao/sprint-05-validacao.md).
+`test_sprint05_adversarial.py` acrescenta 81 casos e `test_sprint05_browser_adversarial.py` acrescenta
+um E2E com resposta perdida e replay. O runner independente e `scripts/validate_sprint05_adversarial.ps1`.
+As cinco correcoes reproduzidas abrangem consentimento/permissao entre claim e transporte,
+marcador de reversao do ledger, vinculo de vale na autorizacao e overflow apos arredondamento.

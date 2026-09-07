@@ -1,0 +1,49 @@
+[
+    {
+        "Name": "oceanblue-s05-audit-accept1_test",
+        "Id": "94f566c1c7c321aed149debebbf88004c50e37af0c16d18e7e41465faad36ccf",
+        "Created": "2026-09-07T05:21:30.596267861Z",
+        "Scope": "local",
+        "Driver": "bridge",
+        "EnableIPv4": true,
+        "EnableIPv6": false,
+        "IPAM": {
+            "Driver": "default",
+            "Options": null,
+            "Config": [
+                {
+                    "Subnet": "172.21.0.0/16",
+                    "Gateway": "172.21.0.1"
+                }
+            ]
+        },
+        "Internal": true,
+        "Attachable": false,
+        "Ingress": false,
+        "ConfigFrom": {
+            "Network": ""
+        },
+        "ConfigOnly": false,
+        "Options": {
+            "com.docker.network.enable_ipv4": "true",
+            "com.docker.network.enable_ipv6": "false"
+        },
+        "Labels": {
+            "com.docker.compose.config-hash": "30d8e65ed0c4a2f785f8657919740954598e47bde56b439ee5e15251f3e55189",
+            "com.docker.compose.network": "test",
+            "com.docker.compose.project": "oceanblue-s05-audit-accept1",
+            "com.docker.compose.version": "5.5.0"
+        },
+        "Containers": {},
+        "Status": {
+            "IPAM": {
+                "Subnets": {
+                    "172.21.0.0/16": {
+                        "IPsInUse": 3,
+                        "DynamicIPsAvailable": 65533
+                    }
+                }
+            }
+        }
+    }
+]

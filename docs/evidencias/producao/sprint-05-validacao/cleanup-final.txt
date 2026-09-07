@@ -1,0 +1,10 @@
+blueocean_api Exited (127) 7 hours ago
+blueocean_db Up 5 hours (healthy)
+wnr_triagem_api Restarting (3) 40 seconds ago
+wnr_triagem_db Up 5 hours
+bridge
+host
+none
+pdv_blueocean_network
+wnr_triagem_default
+Confirmed zero containers/networks for every audit project and probe; preexisting resources preserved.

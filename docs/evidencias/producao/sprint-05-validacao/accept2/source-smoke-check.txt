@@ -1,0 +1,1 @@
+Verified 278 files against smoke image.

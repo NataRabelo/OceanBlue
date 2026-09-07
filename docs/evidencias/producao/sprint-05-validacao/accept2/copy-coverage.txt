@@ -1,0 +1,2 @@
+ oceanblue-s05-audit-accept2-test-1 Copying oceanblue-s05-audit-accept2-test-1:/app/coverage.xml to C:\Users\Rabel\.codex\worktrees\6add\OceanBlue\docs\evidencias\producao\sprint-05-validacao\accept2\coverage.xml
+ oceanblue-s05-audit-accept2-test-1 Copied oceanblue-s05-audit-accept2-test-1:/app/coverage.xml to C:\Users\Rabel\.codex\worktrees\6add\OceanBlue\docs\evidencias\producao\sprint-05-validacao\accept2\coverage.xml

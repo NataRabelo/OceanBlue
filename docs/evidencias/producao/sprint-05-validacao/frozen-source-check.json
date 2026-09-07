@@ -1,0 +1,6 @@
+{
+  "method": "SHA256 of source bytes after CRLF-to-LF normalization on both sides; original frozen byte hashes preserved separately",
+  "commit": "df6eed4c8f863cbc398c5887011389e4a062da11",
+  "verified": 273,
+  "content_mismatches": 0
+}

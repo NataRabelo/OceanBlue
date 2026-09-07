@@ -104,6 +104,18 @@ chamar o adaptador. Crash antes do envio ou depois do aceite mantem INCERTO: pri
 em detrimento de entrega automatica. Investigacao operacional deve preservar os registros; a Sprint
 nao oferece transicao de INCERTO de volta a PENDENTE e nao promete exactly-once fora do banco.
 
+Depois do claim persistido, o worker readquire o bloqueio transacional do tenant e relê cadastro,
+contato, permissao atual do operador e acesso a empresa. Descadastro ou anonimizacao confirmados
+nesse intervalo cancelam a entrega sem transporte. Permissao revogada interrompe a tentativa,
+conservando INCERTO para investigacao. O bloqueio permanece ate o resultado do transporte: um
+descadastro concorrente espera uma tentativa ja iniciada terminar antes de confirmar sua alteracao.
+Essa serializacao favorece integridade e pode aumentar latencia por tenant; o adaptador continua bloqueado.
+
+A migration de validacao `9c0d1e2f3a4b` exige contrapartida integral ao confirmar o marcador de
+estorno e impede desfaze-lo diretamente. O teste e diferido ate o commit para permitir a gravacao
+atomica da origem e sua contrapartida. Vales pendentes revalidam o vinculo ativo do beneficiario
+com a empresa na autorizacao. Valores que arredondam para fora de Numeric(12,2) sao recusados.
+
 O adaptador padrao e bloqueado. Simuladores deterministas de sucesso, recusa e timeout so podem ser
 injetados em ambiente de testes. O transporte anterior tambem recusa chamadas fora de testing.
 Nenhuma configuracao SMTP, WhatsApp, SMS, boleto ou Nota Fiscal habilita provedores reais nesta entrega.

@@ -1,0 +1,22 @@
+{
+  "test_browser_sale_split_retry_partial_full_reprint[True]": {
+    "version": "140.0.7339.16",
+    "errors": [],
+    "external_requests": []
+  },
+  "test_browser_coupon_create_and_alert_history_retry": {
+    "version": "140.0.7339.16",
+    "errors": [],
+    "external_requests": []
+  },
+  "test_browser_coupon_minimum_exact_cents_and_split_payment": {
+    "version": "140.0.7339.16",
+    "errors": [],
+    "external_requests": []
+  },
+  "test_browser_sale_split_retry_partial_full_reprint[False]": {
+    "version": "140.0.7339.16",
+    "errors": [],
+    "external_requests": []
+  }
+}

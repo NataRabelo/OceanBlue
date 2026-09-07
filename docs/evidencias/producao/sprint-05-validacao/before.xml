@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="6" skipped="0" tests="6" time="6.138" timestamp="2026-09-07T05:06:11.523626+00:00" hostname="90d0f7289e9e"><testcase classname="tests.test_sprint05_adversarial" name="test_rounded_money_cannot_overflow_storage" time="0.778"><failure message="Failed: DID NOT RAISE &lt;class 'ValueError'&gt;">def test_rounded_money_cannot_overflow_storage():
+&gt;       with pytest.raises(ValueError):
+E       Failed: DID NOT RAISE &lt;class 'ValueError'&gt;
+
+tests/test_sprint05_adversarial.py:28: Failed</failure></testcase><testcase classname="tests.test_sprint05_adversarial" name="test_ledger_reversal_marker_cannot_be_forged[False]" time="1.393"><failure message="Failed: DID NOT RAISE &lt;class 'sqlalchemy.exc.DBAPIError'&gt;">transaction_app = &lt;Flask 'app'&gt;, reversed_first = False
+
+    @pytest.mark.parametrize("reversed_first", [False, True])
+    def test_ledger_reversal_marker_cannot_be_forged(transaction_app, reversed_first):
+        with transaction_app.app_context():
+            source = manual_entry()
+            if reversed_first:
+                FinanceiroCicloService.estornar(source["id"], {"motivo": "Correcao formal"}, 1, scope(), 1)
+            db.session.remove()
+&gt;           with pytest.raises(DBAPIError):
+E           Failed: DID NOT RAISE &lt;class 'sqlalchemy.exc.DBAPIError'&gt;
+
+tests/test_sprint05_adversarial.py:39: Failed</failure></testcase><testcase classname="tests.test_sprint05_adversarial" name="test_ledger_reversal_marker_cannot_be_forged[True]" time="0.969"><failure message="Failed: DID NOT RAISE &lt;class 'sqlalchemy.exc.DBAPIError'&gt;">transaction_app = &lt;Flask 'app'&gt;, reversed_first = True
+
+    @pytest.mark.parametrize("reversed_first", [False, True])
+    def test_ledger_reversal_marker_cannot_be_forged(transaction_app, reversed_first):
+        with transaction_app.app_context():
+            source = manual_entry()
+            if reversed_first:
+                FinanceiroCicloService.estornar(source["id"], {"motivo": "Correcao formal"}, 1, scope(), 1)
+            db.session.remove()
+&gt;           with pytest.raises(DBAPIError):
+E           Failed: DID NOT RAISE &lt;class 'sqlalchemy.exc.DBAPIError'&gt;
+
+tests/test_sprint05_adversarial.py:39: Failed</failure></testcase><testcase classname="tests.test_sprint05_adversarial" name="test_advance_approval_rechecks_employee_company_link" time="0.875"><failure message="Failed: DID NOT RAISE &lt;class 'ValueError'&gt;">transaction_app = &lt;Flask 'app'&gt;
+
+    def test_advance_approval_rechecks_employee_company_link(transaction_app):
+        with transaction_app.app_context():
+            record = AdiantamentoCicloService.solicitar(advance_payload(), 1, scope(), 1)
+            FuncionarioEmpresa.query.filter_by(tenant_id=1, funcionario_id=1, empresa_id=1).delete()
+            db.session.commit()
+&gt;           with pytest.raises(ValueError):
+E           Failed: DID NOT RAISE &lt;class 'ValueError'&gt;
+
+tests/test_sprint05_adversarial.py:50: Failed</failure></testcase><testcase classname="tests.test_sprint05_adversarial" name="test_privacy_committed_after_claim_prevents_transport[unsubscribe]" time="0.997"><failure message="AssertionError: {'assunto': 'Novidade', 'canal': 'EMAIL', 'cliente_id': 1, 'conteudo': 'Conteudo privado', ...}&#10;assert not {1}&#10; +  where {1} = &lt;app.services.mensagem_fila_service.GatewaySimulado object at 0x7ef37732ce90&gt;.aceites">transaction_app = &lt;Flask 'app'&gt;
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7ef377bea720&gt;
+privacy_action = 'unsubscribe'
+
+    @pytest.mark.parametrize("privacy_action", ["unsubscribe", "anonymize"])
+    def test_privacy_committed_after_claim_prevents_transport(transaction_app, monkeypatch, privacy_action):
+        with transaction_app.app_context():
+            customer_id = client_setup()
+            message = enqueue(customer_id)
+            commit = db.session.commit
+            commits = []
+    
+            def privacy():
+                with transaction_app.app_context():
+                    if privacy_action == "unsubscribe":
+                        ClientePrivacidadeService.consentir(customer_id,
+                            {"motivo": "Descadastro concorrente", "aceita_email": False}, 1, scope(), 1)
+                    else:
+                        ClientePrivacidadeService.anonimizar(customer_id, {"motivo": "Pedido concorrente"}, 1, scope(), 1)
+    
+            def interleave_commit():
+                commit()
+                commits.append(True)
+                if len(commits) == 1:
+                    with ThreadPoolExecutor(max_workers=1) as executor:
+                        executor.submit(privacy).result(timeout=10)
+    
+            gateway = GatewaySimulado()
+            with monkeypatch.context() as patcher:
+                patcher.setattr(db.session, "commit", interleave_commit)
+                result = MensagemFilaService.entregar(message["id"], 1, scope(), 1, gateway)
+&gt;           assert not gateway.aceites, result
+E           AssertionError: {'assunto': 'Novidade', 'canal': 'EMAIL', 'cliente_id': 1, 'conteudo': 'Conteudo privado', ...}
+E           assert not {1}
+E            +  where {1} = &lt;app.services.mensagem_fila_service.GatewaySimulado object at 0x7ef37732ce90&gt;.aceites
+
+tests/test_sprint05_adversarial.py:82: AssertionError</failure></testcase><testcase classname="tests.test_sprint05_adversarial" name="test_privacy_committed_after_claim_prevents_transport[anonymize]" time="0.859"><failure message="AssertionError: {'assunto': None, 'canal': 'EMAIL', 'cliente_id': 1, 'conteudo': 'Conteudo removido por anonimizacao.', ...}&#10;assert not {1}&#10; +  where {1} = &lt;app.services.mensagem_fila_service.GatewaySimulado object at 0x7ef377b9e780&gt;.aceites">transaction_app = &lt;Flask 'app'&gt;
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x7ef3773d0890&gt;
+privacy_action = 'anonymize'
+
+    @pytest.mark.parametrize("privacy_action", ["unsubscribe", "anonymize"])
+    def test_privacy_committed_after_claim_prevents_transport(transaction_app, monkeypatch, privacy_action):
+        with transaction_app.app_context():
+            customer_id = client_setup()
+            message = enqueue(customer_id)
+            commit = db.session.commit
+            commits = []
+    
+            def privacy():
+                with transaction_app.app_context():
+                    if privacy_action == "unsubscribe":
+                        ClientePrivacidadeService.consentir(customer_id,
+                            {"motivo": "Descadastro concorrente", "aceita_email": False}, 1, scope(), 1)
+                    else:
+                        ClientePrivacidadeService.anonimizar(customer_id, {"motivo": "Pedido concorrente"}, 1, scope(), 1)
+    
+            def interleave_commit():
+                commit()
+                commits.append(True)
+                if len(commits) == 1:
+                    with ThreadPoolExecutor(max_workers=1) as executor:
+                        executor.submit(privacy).result(timeout=10)
+    
+            gateway = GatewaySimulado()
+            with monkeypatch.context() as patcher:
+                patcher.setattr(db.session, "commit", interleave_commit)
+                result = MensagemFilaService.entregar(message["id"], 1, scope(), 1, gateway)
+&gt;           assert not gateway.aceites, result
+E           AssertionError: {'assunto': None, 'canal': 'EMAIL', 'cliente_id': 1, 'conteudo': 'Conteudo removido por anonimizacao.', ...}
+E           assert not {1}
+E            +  where {1} = &lt;app.services.mensagem_fila_service.GatewaySimulado object at 0x7ef377b9e780&gt;.aceites
+
+tests/test_sprint05_adversarial.py:82: AssertionError</failure></testcase></testsuite></testsuites>

@@ -1,0 +1,90 @@
+ Network oceanblue-s05-audit-round2_test Creating 
+ Network oceanblue-s05-audit-round2_test Creating 
+ Network oceanblue-s05-audit-round2_test Created 
+ Network oceanblue-s05-audit-round2_test Created 
+ Container oceanblue-s05-audit-round2-db-test-1 Creating 
+ Container oceanblue-s05-audit-round2-db-test-1 Created 
+ Container oceanblue-s05-audit-round2-test-1 Creating 
+ Container oceanblue-s05-audit-round2-test-1 Created 
+Attaching to db-test-1, test-1
+ Container oceanblue-s05-audit-round2-db-test-1 Starting 
+ Container oceanblue-s05-audit-round2-db-test-1 Started 
+ Container oceanblue-s05-audit-round2-db-test-1 Waiting 
+db-test-1  | The files belonging to this database system will be owned by user "postgres".
+db-test-1  | This user must also own the server process.
+db-test-1  | 
+db-test-1  | The database cluster will be initialized with locale "en_US.utf8".
+db-test-1  | The default database encoding has accordingly been set to "UTF8".
+db-test-1  | The default text search configuration will be set to "english".
+db-test-1  | 
+db-test-1  | Data page checksums are disabled.
+db-test-1  | 
+db-test-1  | fixing permissions on existing directory /var/lib/postgresql/data ... ok
+db-test-1  | creating subdirectories ... ok
+db-test-1  | selecting dynamic shared memory implementation ... posix
+db-test-1  | selecting default max_connections ... 100
+db-test-1  | selecting default shared_buffers ... 128MB
+db-test-1  | selecting default time zone ... Etc/UTC
+db-test-1  | creating configuration files ... ok
+db-test-1  | running bootstrap script ... ok
+db-test-1  | performing post-bootstrap initialization ... ok
+db-test-1  | initdb: warning: enabling "trust" authentication for local connections
+db-test-1  | syncing data to disk ... ok
+db-test-1  | initdb: hint: You can change this by editing pg_hba.conf or using the option -A, or --auth-local and --auth-host, the next time you run initdb.
+db-test-1  | 
+db-test-1  | 
+db-test-1  | Success. You can now start the database server using:
+db-test-1  | 
+db-test-1  |     pg_ctl -D /var/lib/postgresql/data -l logfile start
+db-test-1  | 
+db-test-1  | waiting for server to start....2026-09-07 05:18:39.131 UTC [49] LOG:  starting PostgreSQL 16.12 (Debian 16.12-1.pgdg13+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit
+db-test-1  | 2026-09-07 05:18:39.136 UTC [49] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+db-test-1  | 2026-09-07 05:18:39.140 UTC [52] LOG:  database system was shut down at 2026-09-07 05:18:39 UTC
+db-test-1  | 2026-09-07 05:18:39.144 UTC [49] LOG:  database system is ready to accept connections
+db-test-1  |  done
+db-test-1  | server started
+db-test-1  | CREATE DATABASE
+db-test-1  | 
+db-test-1  | 
+db-test-1  | /usr/local/bin/docker-entrypoint.sh: ignoring /docker-entrypoint-initdb.d/*
+db-test-1  | 
+db-test-1  | waiting for server to shut down....2026-09-07 05:18:39.299 UTC [49] LOG:  received fast shutdown request
+db-test-1  | 2026-09-07 05:18:39.299 UTC [49] LOG:  aborting any active transactions
+db-test-1  | 2026-09-07 05:18:39.301 UTC [49] LOG:  background worker "logical replication launcher" (PID 55) exited with exit code 1
+db-test-1  | 2026-09-07 05:18:39.301 UTC [50] LOG:  shutting down
+db-test-1  | 2026-09-07 05:18:39.301 UTC [50] LOG:  checkpoint starting: shutdown immediate
+db-test-1  | 2026-09-07 05:18:39.309 UTC [50] LOG:  checkpoint complete: wrote 926 buffers (5.7%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.007 s, sync=0.001 s, total=0.008 s; sync files=301, longest=0.001 s, average=0.000 s; distance=4273 kB, estimate=4273 kB; lsn=0/191F0F0, redo lsn=0/191F0F0
+db-test-1  | 2026-09-07 05:18:39.316 UTC [49] LOG:  database system is shut down
+db-test-1  |  done
+db-test-1  | server stopped
+db-test-1  | 
+db-test-1  | PostgreSQL init process complete; ready for start up.
+db-test-1  | 
+db-test-1  | 2026-09-07 05:18:39.418 UTC [1] LOG:  starting PostgreSQL 16.12 (Debian 16.12-1.pgdg13+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit
+db-test-1  | 2026-09-07 05:18:39.419 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+db-test-1  | 2026-09-07 05:18:39.419 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+db-test-1  | 2026-09-07 05:18:39.423 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+db-test-1  | 2026-09-07 05:18:39.425 UTC [65] LOG:  database system was shut down at 2026-09-07 05:18:39 UTC
+db-test-1  | 2026-09-07 05:18:39.431 UTC [1] LOG:  database system is ready to accept connections
+ Container oceanblue-s05-audit-round2-db-test-1 Healthy 
+ Container oceanblue-s05-audit-round2-test-1 Starting 
+ Container oceanblue-s05-audit-round2-test-1 Started 
+test-1     | No broken requirements found.
+test-1     | Inventario desatualizado; execute python -m scripts.inventory.
+
+[Ktest-1 exited with code 1
+ Compose Stopping Aborting on container exit...
+ Container oceanblue-s05-audit-round2-test-1 Stopping 
+ Container oceanblue-s05-audit-round2-test-1 Stopped 
+ Container oceanblue-s05-audit-round2-db-test-1 Stopping 
+db-test-1  | 2026-09-07 05:18:43.414 UTC [1] LOG:  received fast shutdown request
+db-test-1  | 2026-09-07 05:18:43.415 UTC [1] LOG:  aborting any active transactions
+db-test-1  | 2026-09-07 05:18:43.417 UTC [1] LOG:  background worker "logical replication launcher" (PID 68) exited with exit code 1
+db-test-1  | 2026-09-07 05:18:43.417 UTC [63] LOG:  shutting down
+db-test-1  | 2026-09-07 05:18:43.418 UTC [63] LOG:  checkpoint starting: shutdown immediate
+db-test-1  | 2026-09-07 05:18:43.419 UTC [63] LOG:  checkpoint complete: wrote 4 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.001 s, sync=0.001 s, total=0.002 s; sync files=3, longest=0.001 s, average=0.001 s; distance=0 kB, estimate=0 kB; lsn=0/191F168, redo lsn=0/191F168
+db-test-1  | 2026-09-07 05:18:43.423 UTC [1] LOG:  database system is shut down
+ Container oceanblue-s05-audit-round2-db-test-1 Stopped 
+
+[Kdb-test-1 exited with code 0
+

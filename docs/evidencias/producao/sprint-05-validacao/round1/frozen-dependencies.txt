@@ -1,0 +1,2 @@
+oceanblue-s05-accept-smoke sha256:b2d581913deed102e29c0843665662e6d3ce1fe92319b89b70212360baf4c52f; dependency locks and canonical Dockerfiles unchanged.
+oceanblue-s05-accept-test sha256:911e78aca5b6e2fe786fe5afa31c75323e3295aa74c0cdeccfe5f2de684ce2b6; dependency locks and canonical Dockerfiles unchanged.

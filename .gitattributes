@@ -7,4 +7,5 @@ docs/evidencias/producao/sprint-03-validacao/* -text -whitespace
 docs/evidencias/producao/sprint-04-execucao/** -text -whitespace
 docs/evidencias/producao/sprint-04-validacao/** -text -whitespace
 docs/evidencias/producao/sprint-05-execucao/** -text -whitespace
+docs/evidencias/producao/sprint-05-validacao/** -text -whitespace
 app/static/vendor/* -text -whitespace

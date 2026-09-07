@@ -116,6 +116,24 @@ class MensagemFilaService:
             record.erro = "Envio sem confirmacao; exige conciliacao."
             audit("MENSAGEM_TENTATIVA", record, funcionario_id, {"tentativa": record.tentativas})
             db.session.commit()
+            db.session.execute(db.text("SELECT pg_advisory_xact_lock(7202, :tenant)"), {"tenant": tenant_id})
+            db.session.expire_all()
+            if funcionario_id is not None:
+                escopo = AcessoEmpresaService.obter_escopo(funcionario_id, tenant_id)
+                if not AcessoEmpresaService.possui_permissao(escopo, "enviar_mensagem_cliente"):
+                    raise PermissionError("Permissao de envio revogada.")
+            record = MensagemCliente.query.filter_by(id=mensagem_id, tenant_id=tenant_id).populate_existing().with_for_update().one()
+            cliente = Cliente.query.filter_by(id=record.cliente_id, tenant_id=tenant_id).populate_existing().one()
+            AcessoEmpresaService.validar_empresa(record.empresa_id, escopo)
+            try:
+                ClienteService._validar_opt_in(cliente, record.canal)
+                if not cliente.ativo or cliente.anonimizado_em or ClienteService._obter_destinatario_cliente(cliente, record.canal) != record.destinatario:
+                    raise ValueError("Contato alterado ou cliente inativo.")
+            except ValueError:
+                record.estado = "CANCELADO"
+                record.erro = "Consentimento ou contato indisponivel."
+                db.session.commit()
+                return ClienteService.serializar_mensagem(record)
             try:
                 transport.enviar(record)
                 record.estado = "ENVIADO"

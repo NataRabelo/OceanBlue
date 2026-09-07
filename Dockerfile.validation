@@ -1,0 +1,14 @@
+FROM oceanblue-s05-accept-test AS test
+USER root
+COPY . .
+RUN chown -R tester:tester /app
+USER tester
+
+FROM oceanblue-s05-accept-smoke AS production
+USER root
+COPY . .
+RUN sed -i 's/\r$//' /app/docker-entrypoint.sh \
+    && cp /app/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh \
+    && chmod +x /usr/local/bin/docker-entrypoint.sh \
+    && chown -R appuser:appuser /app
+USER appuser

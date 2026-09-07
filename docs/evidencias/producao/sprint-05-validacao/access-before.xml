@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="3" time="7.557" timestamp="2026-09-07T05:11:28.929724+00:00" hostname="90d0f7289e9e"><testcase classname="tests.test_sprint05_adversarial" name="test_reconciliation_over_1000_and_local_midnight" time="5.381" /><testcase classname="tests.test_sprint05_adversarial" name="test_message_history_respects_company_scope_http" time="1.106" /><testcase classname="tests.test_sprint05_adversarial" name="test_send_revalidates_permission_after_claim" time="0.988"><failure message="Failed: DID NOT RAISE &lt;class 'PermissionError'&gt;">transaction_app = &lt;Flask 'app'&gt;
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x70fad57ecc50&gt;
+
+    def test_send_revalidates_permission_after_claim(transaction_app, monkeypatch):
+        with transaction_app.app_context():
+            message = enqueue(client_setup())
+            commits = []
+            commit = db.session.commit
+    
+            def revoke():
+                with transaction_app.app_context():
+                    permission = Permission.query.filter_by(tenant_id=1, codigo="enviar_mensagem_cliente").one()
+                    RolePermission.query.filter_by(tenant_id=1, permission_id=permission.id).delete()
+                    db.session.commit()
+    
+            def interleave_commit():
+                commit()
+                commits.append(True)
+                if len(commits) == 1:
+                    with ThreadPoolExecutor(max_workers=1) as executor:
+                        executor.submit(revoke).result(timeout=10)
+    
+            gateway = GatewaySimulado()
+            with monkeypatch.context() as patcher:
+                patcher.setattr(db.session, "commit", interleave_commit)
+&gt;               with pytest.raises(PermissionError):
+E               Failed: DID NOT RAISE &lt;class 'PermissionError'&gt;
+
+tests/test_sprint05_adversarial.py:291: Failed</failure></testcase></testsuite></testsuites>

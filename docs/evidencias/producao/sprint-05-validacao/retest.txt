@@ -1,0 +1,14 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.12, pytest-8.3.5, pluggy-1.6.0
+rootdir: /app
+configfile: pytest.ini
+plugins: cov-6.1.1
+collected 101 items
+
+tests/test_sprint05_adversarial.py ..................................... [ 36%]
+.............                                                            [ 49%]
+tests/test_sprint05_cycles.py .......................................... [ 91%]
+.........                                                                [100%]
+
+--------------------- generated xml file: /tmp/retest.xml ----------------------
+======================== 101 passed in 95.01s (0:01:35) ========================

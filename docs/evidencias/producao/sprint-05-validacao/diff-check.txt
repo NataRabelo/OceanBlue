@@ -1,0 +1,7 @@
+warning: in the working copy of '.gitattributes', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'app/services/adiantamento_ciclo_service.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'app/services/mensagem_fila_service.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'app/services/money_service.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/02-instalacao-e-ambiente/operacao-sprint-05.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/04-modulos-e-funcionalidades/ciclos-financeiros-relacionamento.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/04-modulos-e-funcionalidades/inventario-requisito-rota-servico-teste.csv', LF will be replaced by CRLF the next time Git touches it

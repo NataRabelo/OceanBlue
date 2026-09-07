@@ -1,0 +1,1 @@
+49e9cb70dbff094eff1fc60a2c254b954fd08567c2ddd1698babe9e30edf9d94  ../sprint-05-validacao.md

@@ -1,0 +1,45 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.12, pytest-8.3.5, pluggy-1.6.0
+rootdir: /app
+configfile: pytest.ini
+plugins: cov-6.1.1
+collected 50 items / 47 deselected / 3 selected
+
+tests/test_sprint05_adversarial.py ..F                                   [100%]
+
+=================================== FAILURES ===================================
+_________________ test_send_revalidates_permission_after_claim _________________
+
+transaction_app = <Flask 'app'>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x70fad57ecc50>
+
+    def test_send_revalidates_permission_after_claim(transaction_app, monkeypatch):
+        with transaction_app.app_context():
+            message = enqueue(client_setup())
+            commits = []
+            commit = db.session.commit
+    
+            def revoke():
+                with transaction_app.app_context():
+                    permission = Permission.query.filter_by(tenant_id=1, codigo="enviar_mensagem_cliente").one()
+                    RolePermission.query.filter_by(tenant_id=1, permission_id=permission.id).delete()
+                    db.session.commit()
+    
+            def interleave_commit():
+                commit()
+                commits.append(True)
+                if len(commits) == 1:
+                    with ThreadPoolExecutor(max_workers=1) as executor:
+                        executor.submit(revoke).result(timeout=10)
+    
+            gateway = GatewaySimulado()
+            with monkeypatch.context() as patcher:
+                patcher.setattr(db.session, "commit", interleave_commit)
+>               with pytest.raises(PermissionError):
+E               Failed: DID NOT RAISE <class 'PermissionError'>
+
+tests/test_sprint05_adversarial.py:291: Failed
+------------------ generated xml file: /tmp/access-before.xml ------------------
+=========================== short test summary info ============================
+FAILED tests/test_sprint05_adversarial.py::test_send_revalidates_permission_after_claim
+================== 1 failed, 2 passed, 47 deselected in 7.56s ==================

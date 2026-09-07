@@ -1,0 +1,64 @@
+[
+    {
+        "Name": "oceanblue-s05-audit_test",
+        "Id": "af00bccf75d9df7fe0da275797ec883625521e8c4d4e1077ecd88488eefec507",
+        "Created": "2026-09-07T05:06:04.64049463Z",
+        "Scope": "local",
+        "Driver": "bridge",
+        "EnableIPv4": true,
+        "EnableIPv6": false,
+        "IPAM": {
+            "Driver": "default",
+            "Options": null,
+            "Config": [
+                {
+                    "Subnet": "172.20.0.0/16",
+                    "Gateway": "172.20.0.1"
+                }
+            ]
+        },
+        "Internal": true,
+        "Attachable": false,
+        "Ingress": false,
+        "ConfigFrom": {
+            "Network": ""
+        },
+        "ConfigOnly": false,
+        "Options": {
+            "com.docker.network.enable_ipv4": "true",
+            "com.docker.network.enable_ipv6": "false"
+        },
+        "Labels": {
+            "com.docker.compose.config-hash": "a0e3bf3f3cd5181de7a9a8d9a195129dc7b1f799f2462a64dd0ecd0194fe67f1",
+            "com.docker.compose.network": "test",
+            "com.docker.compose.project": "oceanblue-s05-audit",
+            "com.docker.compose.version": "5.5.0"
+        },
+        "Containers": {
+            "90d0f7289e9e227b1ed6816f8c298ba7991c795174e99087ca70130bc6753bd8": {
+                "Name": "oceanblue-s05-probe",
+                "EndpointID": "1ae64fd4e78ef3bbf2d1ee49818cac4149aeebf04352af3bb3d12ef31d567cdf",
+                "MacAddress": "9a:e7:d5:a4:7e:b0",
+                "IPv4Address": "172.20.0.3/16",
+                "IPv6Address": ""
+            },
+            "ee27e21c4ec8632ea34fba17906c52ceb6e92d576085521e97f1bcdab2bd6641": {
+                "Name": "oceanblue-s05-audit-db-test-1",
+                "EndpointID": "358390f9451ff5d3317a08be641f7f249fd47b1f1441d9c973bfb6fb1bf4a585",
+                "MacAddress": "b6:2c:f1:ed:52:a8",
+                "IPv4Address": "172.20.0.2/16",
+                "IPv6Address": ""
+            }
+        },
+        "Status": {
+            "IPAM": {
+                "Subnets": {
+                    "172.20.0.0/16": {
+                        "IPsInUse": 5,
+                        "DynamicIPsAvailable": 65531
+                    }
+                }
+            }
+        }
+    }
+]
