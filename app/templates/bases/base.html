@@ -11,8 +11,8 @@
   <meta name="theme-color" content="#0f172a">
   <meta name="msapplication-TileColor" content="#0f172a">
 
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="{{ url_for('static', filename='vendor/tailwind.css') }}">
+  <script src="{{ url_for('static', filename='vendor/lucide.min.js') }}"></script>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/core/core.css') }}">
   <script>
     window.__tenantThemeConfig = {{ tenant_theme_config|tojson }};

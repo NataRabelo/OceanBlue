@@ -10,6 +10,45 @@ from app.services.time_service import TimeService
 estoque_bp = Blueprint("estoque", __name__)
 
 
+@estoque_bp.route("/notificacoes/historico", methods=["GET"])
+@permission_required("gerenciar_alerta_estoque")
+def historico_alertas():
+    from app.services.alerta_service import AlertaService
+    try:
+        tenant_id = get_jwt()["tenant_id"]
+        escopo = AcessoEmpresaService.obter_escopo(int(get_jwt_identity()), tenant_id)
+        empresa_id = request.args.get("empresa_id", type=int)
+        return jsonify(success=True, data=AlertaService.historico(tenant_id, escopo, empresa_id))
+    except Exception as error:
+        return jsonify(success=False, message=public_error(error)), 400
+
+
+@estoque_bp.route("/notificacoes/processar", methods=["POST"])
+@permission_required("gerenciar_alerta_estoque")
+def processar_alertas():
+    from app.services.alerta_service import AlertaService
+    try:
+        tenant_id = get_jwt()["tenant_id"]
+        escopo = AcessoEmpresaService.obter_escopo(int(get_jwt_identity()), tenant_id)
+        data = request.get_json(silent=True) or {}
+        empresa_id = int(data.get("empresa_id") or 0)
+        return jsonify(success=True, data=AlertaService.rotina(tenant_id, empresa_id, escopo))
+    except Exception as error:
+        return jsonify(success=False, message=public_error(error)), 400
+
+
+@estoque_bp.route("/notificacoes/<int:entrega_id>/retentar", methods=["POST"])
+@permission_required("gerenciar_alerta_estoque")
+def retentar_alerta(entrega_id):
+    from app.services.alerta_service import AlertaService
+    try:
+        tenant_id = get_jwt()["tenant_id"]
+        escopo = AcessoEmpresaService.obter_escopo(int(get_jwt_identity()), tenant_id)
+        return jsonify(success=True, data=AlertaService.retentar(entrega_id, tenant_id, escopo))
+    except Exception as error:
+        return jsonify(success=False, message=public_error(error)), 400
+
+
 def _serializar_movimento(item):
     return {
         "id": item.id,

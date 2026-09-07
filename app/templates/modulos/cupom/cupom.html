@@ -100,7 +100,9 @@ min-h-screen flex flex-col bg-slate-950 text-white
             </button>
         </div>
 
-        <form id="form-cadastro" class="px-6 py-6 space-y-5">
+        <form id="form-cadastro" class="px-6 py-6 space-y-5 max-h-[75vh] overflow-y-auto">
+            {% set prefix = "cadastro" %}
+            {% include "modulos/cupom/regras.html" %}
             <div>
                 <label for="cadastro-nome" class="block text-sm font-medium text-slate-300 mb-2">Nome</label>
                 <input id="cadastro-nome" name="nome" type="text" required maxlength="100"
@@ -174,7 +176,9 @@ min-h-screen flex flex-col bg-slate-950 text-white
             </button>
         </div>
 
-        <form id="form-edicao" class="px-6 py-6 space-y-5">
+        <form id="form-edicao" class="px-6 py-6 space-y-5 max-h-[75vh] overflow-y-auto">
+            {% set prefix = "edicao" %}
+            {% include "modulos/cupom/regras.html" %}
             <div>
                 <label for="edicao-nome" class="block text-sm font-medium text-slate-300 mb-2">Nome</label>
                 <input id="edicao-nome" name="nome" type="text" required maxlength="100"

@@ -50,7 +50,8 @@ class CupomRepository:
 
     @staticmethod
     def salvar():
-        db.session.commit()
+        from app.services.transaction_service import save
+        save()
 
     @staticmethod
     def rollback():

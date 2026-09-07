@@ -1,0 +1,11 @@
+{
+  "name": "oceanblue-ui-assets",
+  "private": true,
+  "scripts": {
+    "build:ui": "tailwindcss -i app/static/css/tailwind.input.css -o app/static/vendor/tailwind.css --content \"./app/templates/**/*.html,./app/static/js/**/*.js\" --minify && node scripts/copy_icons.cjs"
+  },
+  "devDependencies": {
+    "lucide": "0.468.0",
+    "tailwindcss": "3.4.17"
+  }
+}

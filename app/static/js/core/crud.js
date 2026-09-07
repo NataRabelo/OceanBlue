@@ -428,11 +428,11 @@ window.CrudPage = class CrudPage {
     }
 
     async openCreateModal() {
+        this.clearForm(this.config.formCreateId);
         if (typeof this.config.beforeOpenCreateModal === "function") {
             await this.config.beforeOpenCreateModal();
         }
 
-        this.clearForm(this.config.formCreateId);
         this.openModal(this.config.modalCreateId);
     }
 

@@ -1,0 +1,11 @@
+<fieldset class="grid grid-cols-2 gap-3">
+    <legend class="font-semibold">Periodo, segmento e limites</legend>
+    <label>Inicio (opcional)<input id="{{ prefix }}-data_inicio" name="data_inicio" type="date" class="w-full bg-slate-950 p-2"></label>
+    <label>Empresa<select id="{{ prefix }}-empresa_id" name="empresa_id" class="w-full bg-slate-950 p-2"><option value="">Todas</option></select></label>
+    <label>Cliente<select id="{{ prefix }}-cliente_id" name="cliente_id" class="w-full bg-slate-950 p-2"><option value="">Todos</option></select></label>
+    <label>Usos totais<input id="{{ prefix }}-limite_usos" name="limite_usos" type="number" min="1" step="1" placeholder="Sem limite" class="w-full bg-slate-950 p-2"></label>
+    <label>Usos por cliente<input id="{{ prefix }}-limite_por_cliente" name="limite_por_cliente" type="number" min="1" step="1" placeholder="Sem limite" class="w-full bg-slate-950 p-2"></label>
+    <label>Subtotal minimo (R$)<input id="{{ prefix }}-valor_minimo" name="valor_minimo" type="number" min="0" step="0.01" class="w-full bg-slate-950 p-2"></label>
+    <label>Desconto maximo (R$)<input id="{{ prefix }}-desconto_maximo" name="desconto_maximo" type="number" min="0.01" step="0.01" placeholder="Sem limite" class="w-full bg-slate-950 p-2"></label>
+    <p class="col-span-2 text-sm">Cancelamentos preservam o uso historico do cupom. A empresa fica fixa apos o cadastro.</p>
+</fieldset>

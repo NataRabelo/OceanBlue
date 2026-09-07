@@ -1,0 +1,2 @@
+2026-09-07 03:32:07,695 ERROR [app] Falha interna: OperationalError
+{"database_down": true, "health": 200, "ready": 503, "forged_proxy_login": 403, "login_fails_closed": true}

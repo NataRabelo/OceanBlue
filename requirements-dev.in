@@ -1,4 +1,5 @@
 -r requirements.in
+playwright==1.55.0
 pytest==8.3.5
 pytest-cov==6.1.1
 pip-tools==7.4.1

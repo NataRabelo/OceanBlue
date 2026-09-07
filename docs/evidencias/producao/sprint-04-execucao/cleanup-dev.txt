@@ -1,0 +1,34 @@
+ Container oceanblue-s04-dev-run Stopping 
+ Container oceanblue-s04-ui-diagnosis Stopping 
+ Container oceanblue-s04-browser-run Stopping 
+ Container oceanblue-s04-retest2 Stopping 
+ Container oceanblue-s04-dev-run Stopped 
+ Container oceanblue-s04-browser-run Stopped 
+ Container oceanblue-s04-dev-run Removing 
+ Container oceanblue-s04-browser-run Removing 
+ Container oceanblue-s04-retest2 Stopped 
+ Container oceanblue-s04-retest2 Removing 
+ Container oceanblue-s04-ui-diagnosis Stopped 
+ Container oceanblue-s04-ui-diagnosis Removing 
+ Container oceanblue-s04-dev-run Removed 
+ Container oceanblue-s04-browser-run Removed 
+ Container oceanblue-s04-ui-diagnosis Removed 
+ Container oceanblue-s04-retest2 Removed 
+ Container oceanblue-s04-dev-db-test-1 Stopping 
+ Container oceanblue-s04-dev-db-test-1 Stopped 
+ Container oceanblue-s04-dev-db-test-1 Removing 
+ Container oceanblue-s04-dev-db-test-1 Removed 
+ Container oceanblue-s04-dev-run Stopping 
+ Container oceanblue-s04-retest2 Stopping 
+ Container oceanblue-s04-ui-diagnosis Stopping 
+ Container oceanblue-s04-browser-run Stopping 
+ Container oceanblue-s04-dev-run Error Error while Stopping
+ Container oceanblue-s04-dev-run Removed 
+ Container oceanblue-s04-ui-diagnosis Error Error while Stopping
+ Container oceanblue-s04-ui-diagnosis Removed 
+ Container oceanblue-s04-retest2 Error Error while Stopping
+ Container oceanblue-s04-retest2 Removed 
+ Container oceanblue-s04-browser-run Error Error while Stopping
+ Container oceanblue-s04-browser-run Removed 
+ Network oceanblue-s04-dev_test Removing 
+ Network oceanblue-s04-dev_test Removed 

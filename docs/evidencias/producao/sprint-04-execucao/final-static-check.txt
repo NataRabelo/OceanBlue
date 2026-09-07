@@ -1,0 +1,1 @@
+Staged whitespace gate OK; 257 manifest files rechecked against tested image.

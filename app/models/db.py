@@ -624,6 +624,13 @@ class Cupom(ModeloBase):
     nome = db.Column(db.String(100), nullable=False)
     codigo = db.Column(db.String(60), nullable=False)
     data_validade = db.Column(db.Date, nullable=False)
+    data_inicio = db.Column(db.Date, nullable=True)
+    empresa_id = db.Column(db.Integer, db.ForeignKey("empresas.id"), nullable=True)
+    cliente_id = db.Column(db.Integer, db.ForeignKey("clientes.id"), nullable=True)
+    limite_usos = db.Column(db.Integer, nullable=True)
+    limite_por_cliente = db.Column(db.Integer, nullable=True)
+    valor_minimo = db.Column(db.Numeric(12, 2), nullable=False, default=0, server_default="0")
+    desconto_maximo = db.Column(db.Numeric(12, 2), nullable=True)
     tipo_desconto = db.Column(db.Enum(TipoDesconto), nullable=False)
     valor_desconto = db.Column(db.Numeric(12, 2), nullable=False)
     ativo = db.Column(db.Boolean, nullable=False, default=True)
@@ -632,10 +639,16 @@ class Cupom(ModeloBase):
 
     __table_args__ = (
         CheckConstraint(
-            "valor_desconto NOT IN ('NaN'::numeric, 'Infinity'::numeric, '-Infinity'::numeric) ",
+            "valor_desconto NOT IN ('NaN'::numeric, 'Infinity'::numeric, '-Infinity'::numeric) "
+            "AND valor_minimo NOT IN ('NaN'::numeric, 'Infinity'::numeric, '-Infinity'::numeric) "
+            "AND desconto_maximo NOT IN ('NaN'::numeric, 'Infinity'::numeric, '-Infinity'::numeric)",
             name="ck_cupons_finite",
         ),
         UniqueConstraint("tenant_id", "codigo", name="uq_cupom_tenant_codigo"),
+        CheckConstraint("data_inicio IS NULL OR data_inicio <= data_validade", name="ck_cupom_periodo"),
+        CheckConstraint("limite_usos IS NULL OR limite_usos > 0", name="ck_cupom_usos"),
+        CheckConstraint("limite_por_cliente IS NULL OR limite_por_cliente > 0", name="ck_cupom_cliente_usos"),
+        CheckConstraint("valor_minimo >= 0 AND valor_minimo < 10000000000 AND (desconto_maximo IS NULL OR (desconto_maximo > 0 AND desconto_maximo < 10000000000)) AND valor_desconto > 0 AND (tipo_desconto <> 'PERCENTUAL' OR valor_desconto <= 100)", name="ck_cupom_valores"),
     )
 
 
@@ -1437,4 +1450,24 @@ class ConfiguracaoNotificacaoEstoque(ModeloBase):
     __table_args__ = (
         UniqueConstraint("tenant_id", name="uq_config_notificacao_estoque_tenant"),
         CheckConstraint("dias_vencimento_alerta >= 1", name="ck_config_notificacao_dias_positive"),
+    )
+
+
+class EntregaAlerta(ModeloBase):
+    __tablename__ = "entregas_alerta"
+
+    empresa_id = db.Column(db.Integer, db.ForeignKey("empresas.id"), nullable=False)
+    chave = db.Column(db.String(180), nullable=False)
+    destinatario = db.Column(db.String(160), nullable=False)
+    assunto = db.Column(db.String(160), nullable=False)
+    conteudo = db.Column(db.Text, nullable=False)
+    status = db.Column(db.String(20), nullable=False, default="PENDENTE")
+    tentativas = db.Column(db.Integer, nullable=False, default=0)
+    erro = db.Column(db.String(200), nullable=True)
+    enviado_em = db.Column(db.DateTime, nullable=True)
+
+    __table_args__ = (
+        UniqueConstraint("tenant_id", "empresa_id", "chave", "destinatario", name="uq_entrega_alerta_destino"),
+        CheckConstraint("status IN ('PENDENTE', 'ENVIADO', 'FALHOU', 'INCERTO')", name="ck_entrega_alerta_status"),
+        CheckConstraint("tentativas >= 0", name="ck_entrega_alerta_tentativas"),
     )

@@ -21,6 +21,8 @@ DEFAULT_PERMISSION_DEFINITIONS = [
     {"codigo": "excluir_permission", "nome": "Excluir permissions"},
     {"codigo": "visualizar_pdv", "nome": "Visualizar PDV"},
     {"codigo": "registrar_venda", "nome": "Registrar vendas"},
+    {"codigo": "aplicar_desconto", "nome": "Aplicar desconto manual ate 10%"},
+    {"codigo": "autorizar_desconto", "nome": "Autorizar desconto manual ate 100%"},
     {"codigo": "cancelar_venda", "nome": "Cancelar vendas"},
     {"codigo": "cancelar_item_venda", "nome": "Cancelar itens de venda"},
     {"codigo": "visualizar_cupom", "nome": "Visualizar cupons"},
@@ -57,6 +59,18 @@ PERMISSION_GROUP_DEFINITIONS = [
         "titulo": "PDV",
         "descricao": "Atendimento no caixa, vendas e cupons promocionais.",
         "permissions": [
+            {
+                "codigo": "aplicar_desconto",
+                "titulo": "Desconto ate 10%",
+                "descricao": "Permite desconto manual limitado a 10% do subtotal.",
+                "depends_on": ["visualizar_pdv", "registrar_venda"],
+            },
+            {
+                "codigo": "autorizar_desconto",
+                "titulo": "Desconto ate 100%",
+                "descricao": "Autoriza desconto manual acima de 10%, limitado ao subtotal.",
+                "depends_on": ["visualizar_pdv", "registrar_venda", "aplicar_desconto"],
+            },
             {
                 "codigo": "visualizar_pdv",
                 "titulo": "Geral",

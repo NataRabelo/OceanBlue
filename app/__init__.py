@@ -338,6 +338,8 @@ def register_context_processors(app: Flask) -> None:
 
 
 def register_commands(app: Flask) -> None:
+    from app.cli.alertas import register_alert_commands
+    register_alert_commands(app)
     from app.cli.security import register_security_commands
     register_security_commands(app)
     @app.cli.command("seed")

@@ -104,7 +104,7 @@ class EstoqueService:
     def listar_notificacoes(tenant_id, escopo, empresa_id=None, dias_vencimento=30):
         configuracao = EstoqueService._obter_ou_criar_configuracao(tenant_id)
         registros = EstoqueService.listar_saldos(tenant_id, escopo, empresa_id=empresa_id)
-        hoje = date.today()
+        hoje = TimeService.today_br()
         dias_alerta = max(
             int(dias_vencimento or configuracao.dias_vencimento_alerta or 30),
             1,
@@ -182,7 +182,13 @@ class EstoqueService:
             )
             configuracao.email_habilitado = EstoqueService._to_bool(data.get("email_habilitado", False))
             configuracao.email_destinatarios = EstoqueService._normalizar_destinatarios(data.get("email_destinatarios"))
-            configuracao.whatsapp_habilitado = EstoqueService._to_bool(data.get("whatsapp_habilitado", False))
+            if configuracao.email_habilitado:
+                destinos = EstoqueService._listar_destinatarios(configuracao.email_destinatarios)
+                if not destinos or any(len(destino) > 160 or "@" not in destino for destino in destinos):
+                    raise ValueError("Informe destinatarios de email validos para habilitar alertas.")
+            if EstoqueService._to_bool(data.get("whatsapp_habilitado", False)):
+                raise ValueError("WhatsApp desativado neste escopo; utilize email.")
+            configuracao.whatsapp_habilitado = False
             configuracao.whatsapp_destinatarios = EstoqueService._normalizar_destinatarios(data.get("whatsapp_destinatarios"))
             configuracao.resumo_diario = EstoqueService._to_bool(data.get("resumo_diario", False))
 
@@ -291,118 +297,17 @@ class EstoqueService:
             "dias_vencimento_alerta": int(configuracao.dias_vencimento_alerta or 30),
             "email_habilitado": bool(configuracao.email_habilitado),
             "email_destinatarios": configuracao.email_destinatarios or "",
-            "whatsapp_habilitado": bool(configuracao.whatsapp_habilitado),
+            "whatsapp_habilitado": False,
             "whatsapp_destinatarios": configuracao.whatsapp_destinatarios or "",
             "resumo_diario": bool(configuracao.resumo_diario),
             "possui_dispatch_email": True,
-            "possui_dispatch_whatsapp": True,
+            "possui_dispatch_whatsapp": False,
         }
 
     @staticmethod
     def processar_alertas_por_produtos(tenant_id, empresa_id, produto_ids):
-        if db.session.info.get("atomic_operation"):
-            after_commit(lambda: EstoqueService.processar_alertas_por_produtos(tenant_id, empresa_id, produto_ids))
-            return
-        ids_unicos = []
-        for produto_id in produto_ids or []:
-            produto_id_int = EstoqueService._to_optional_int(produto_id, "Produto")
-            if produto_id_int and produto_id_int not in ids_unicos:
-                ids_unicos.append(produto_id_int)
-
-        if not ids_unicos:
-            return {"itens_processados": 0, "emails_enviados": 0}
-
-        configuracao_alerta = EstoqueService._obter_ou_criar_configuracao(tenant_id)
-        houve_alteracao = False
-        emails_enviados = 0
-
-        try:
-            for produto_id in ids_unicos:
-                produto_empresa = EstoqueRepository.buscar_produto_empresa(produto_id, empresa_id, tenant_id)
-                if not produto_empresa or not produto_empresa.ativo:
-                    continue
-
-                alterado, email_enviado = EstoqueService._processar_alerta_email_produto(
-                    tenant_id=tenant_id,
-                    configuracao_alerta=configuracao_alerta,
-                    produto_empresa=produto_empresa,
-                )
-                houve_alteracao = houve_alteracao or alterado
-                emails_enviados += int(bool(email_enviado))
-
-            if houve_alteracao:
-                EstoqueRepository.salvar()
-        except Exception as exc:
-            EstoqueRepository.rollback()
-            current_app.logger.warning("Falha ao processar alerta de estoque por email: %s", exc)
-
-        return {
-            "itens_processados": len(ids_unicos),
-            "emails_enviados": emails_enviados,
-        }
-
-    @staticmethod
-    def _processar_alerta_email_produto(tenant_id, configuracao_alerta, produto_empresa):
-        status_alerta = EstoqueService._determinar_status_alerta_email(produto_empresa, configuracao_alerta)
-        agora = TimeService.now_utc_naive()
-
-        if status_alerta is None:
-            if produto_empresa.ultimo_alerta_estoque_status or produto_empresa.ultimo_alerta_estoque_em:
-                produto_empresa.ultimo_alerta_estoque_status = None
-                produto_empresa.ultimo_alerta_estoque_em = None
-                EstoqueRepository.adicionar(produto_empresa)
-                return True, False
-            return False, False
-
-        if not configuracao_alerta.email_habilitado:
-            return False, False
-
-        destinatarios = EstoqueService._listar_destinatarios(configuracao_alerta.email_destinatarios)
-        if not destinatarios:
-            return False, False
-
-        if not EstoqueService._pode_disparar_alerta_email(produto_empresa, status_alerta, agora):
-            return False, False
-
-        configuracao_email = ClienteService.obter_modelo_configuracao_empresa(produto_empresa.empresa_id, tenant_id)
-        if not EstoqueService._configuracao_email_operacional_valida(configuracao_email):
-            return False, False
-
-        assunto, conteudo, html_conteudo = EstoqueService._montar_email_alerta_estoque(
-            produto_empresa,
-            status_alerta,
-            agora,
-        )
-        houve_envio = False
-
-        for destinatario in destinatarios:
-            try:
-                ComunicacaoService.enviar(
-                    configuracao=configuracao_email,
-                    canal=CanalMensagemCliente.EMAIL,
-                    destinatario=destinatario,
-                    assunto=assunto,
-                    conteudo=conteudo,
-                    cliente=None,
-                    html_conteudo=html_conteudo,
-                )
-                houve_envio = True
-            except Exception as exc:
-                current_app.logger.warning(
-                    "Falha ao enviar alerta de estoque para %s (%s / empresa %s): %s",
-                    destinatario,
-                    getattr(produto_empresa.produto, "nome", produto_empresa.produto_id),
-                    produto_empresa.empresa_id,
-                    exc,
-                )
-
-        if not houve_envio:
-            return False, False
-
-        produto_empresa.ultimo_alerta_estoque_status = status_alerta
-        produto_empresa.ultimo_alerta_estoque_em = agora
-        EstoqueRepository.adicionar(produto_empresa)
-        return True, True
+        from app.services.alerta_service import AlertaService
+        return AlertaService.produtos(tenant_id, empresa_id, produto_ids)
 
     @staticmethod
     def _determinar_status_alerta_email(produto_empresa, configuracao_alerta):

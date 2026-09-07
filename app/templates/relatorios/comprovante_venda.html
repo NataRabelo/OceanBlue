@@ -88,6 +88,14 @@
             <td class="text-right">R$ {{ venda.desconto }}</td>
         </tr>
         <tr>
+            <td>Cashback utilizado / gerado</td>
+            <td class="text-right">R$ {{ venda.cashback_utilizado }} / R$ {{ venda.cashback_gerado }}</td>
+        </tr>
+        <tr>
+            <td>Valor cancelado (inclui cashback restituido)</td>
+            <td class="text-right">R$ {{ venda.valor_cancelado }}</td>
+        </tr>
+        <tr>
             <td><strong>Total</strong></td>
             <td class="text-right"><strong>R$ {{ venda.total }}</strong></td>
         </tr>

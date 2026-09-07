@@ -1,5 +1,5 @@
 from datetime import date
-from decimal import Decimal, InvalidOperation
+from decimal import Decimal, InvalidOperation, ROUND_HALF_UP
 from uuid import uuid4
 
 from app.models.db import ItemVenda, ModalidadePrecoVenda, PagamentoVenda, StatusVenda, TipoDesconto, Venda
@@ -13,6 +13,7 @@ from app.services.tenant_bootstrap_service import TenantBootstrapService
 from app.services.time_service import TimeService
 from app.services.idempotency_service import idempotent
 from app.services.transaction_service import after_commit
+from app.services.cupom_service import CupomService
 
 
 from app.services.transaction_service import atomic_operation
@@ -45,17 +46,8 @@ class PdvService:
                 {"id": forma.id, "nome": forma.nome}
                 for forma in formas_pagamento
             ],
-            "cupons": [
-                {
-                    "id": cupom.id,
-                    "nome": cupom.nome,
-                    "codigo": cupom.codigo,
-                    "data_validade": cupom.data_validade.isoformat(),
-                    "tipo_desconto": cupom.tipo_desconto.value,
-                    "valor_desconto": str(PdvService._to_decimal_value(cupom.valor_desconto)),
-                }
-                for cupom in cupons
-            ],
+            "cupons": [CupomService.serializar(cupom) for cupom in cupons],
+            "limite_desconto_percentual": PdvService.limite_desconto(escopo),
             "clientes": clientes,
         }
 
@@ -139,7 +131,7 @@ class PdvService:
             cashback_ativado = PdvService._to_bool(data.get("cashback_ativado", True), default=True)
             cashback_utilizado = PdvService._to_optional_decimal(data.get("cashback_utilizado"), "cashback utilizado") or Decimal("0.00")
             observacao = (data.get("observacao") or "").strip() or None
-            cupom_codigo = (data.get("cupom_codigo") or "").strip() or None
+            cupom_codigo = (data.get("cupom_codigo") or "").strip().upper() or None
             itens_payload = data.get("itens") or []
             pagamentos_payload = data.get("pagamentos") or []
 
@@ -154,18 +146,22 @@ class PdvService:
 
             itens_compilados = []
             subtotal = Decimal("0.00")
-
+            quantidades_produto = {}
+            itens_normalizados = []
             for item_data in itens_payload:
                 produto_id = PdvService._to_int(item_data.get("produto_id"), "Produto")
                 quantidade = PdvService._to_positive_int(item_data.get("quantidade"), "quantidade")
+                itens_normalizados.append((produto_id, quantidade))
+                quantidades_produto[produto_id] = quantidades_produto.get(produto_id, 0) + quantidade
 
+            for produto_id, quantidade in itens_normalizados:
                 produto_empresa = PdvRepository.buscar_produto_empresa(produto_id, empresa_id, tenant_id)
                 if not produto_empresa or not produto_empresa.ativo or not produto_empresa.produto.ativo:
                     raise ValueError("Um dos produtos informados nao esta disponivel para venda.")
 
                 precificacao_item = PdvService._resolver_precificacao_item(
                     produto_empresa=produto_empresa,
-                    quantidade=quantidade,
+                    quantidade=quantidades_produto[produto_id],
                     modalidade_solicitada=modalidade_preco,
                 )
                 valor_unitario = precificacao_item["valor_unitario"]
@@ -181,7 +177,12 @@ class PdvService:
                     "modalidade_preco_aplicada": precificacao_item["modalidade_aplicada"],
                 })
 
+            limite_desconto = PdvService.limite_desconto(escopo)
+            if desconto_manual > (subtotal * Decimal(limite_desconto) / 100).quantize(Decimal("0.01"), rounding=ROUND_HALF_UP):
+                raise PermissionError(f"Desconto manual excede a autorizacao de {limite_desconto}%.")
             cupom = PdvService._validar_cupom(cupom_codigo, tenant_id)
+            if cupom:
+                CupomService.validar_uso(cupom, tenant_id, empresa_id, cliente_id, subtotal)
             desconto_cupom = PdvService._calcular_desconto_cupom(cupom, subtotal)
             desconto_total = (desconto_manual + desconto_cupom).quantize(Decimal("0.01"))
 
@@ -335,15 +336,20 @@ class PdvService:
             if venda.status != StatusVenda.FINALIZADA:
                 raise ValueError("Somente vendas finalizadas podem ser canceladas.")
 
-            if any(int(getattr(item, "quantidade_cancelada", 0) or 0) > 0 for item in venda.itens):
-                raise ValueError("Esta venda ja possui cancelamentos parciais. Finalize o processo pelos itens restantes.")
-
             configuracao = ClienteService.obter_modelo_configuracao_empresa(venda.empresa_id, tenant_id)
             PdvService._validar_janela_cancelamento(
                 data_base=venda.data_venda,
                 limite_horas=configuracao.cancelamento_venda_limite_horas,
                 mensagem="A janela de cancelamento da venda expirou para esta empresa.",
             )
+
+            if any(int(item.quantidade_cancelada or 0) > 0 for item in venda.itens):
+                for item in sorted(venda.itens, key=lambda record: record.id):
+                    restante = int(item.quantidade) - int(item.quantidade_cancelada or 0)
+                    if restante:
+                        PdvService.cancelar_item_venda(venda.id, item.id,
+                            {"quantidade": restante, "motivo": data.get("motivo")}, tenant_id, escopo, funcionario_id)
+                return PdvService.serializar_venda(venda)
 
             motivo = (data.get("motivo") or "").strip() or "Cancelamento manual realizado pelo operador."
             venda.cancelado_em = TimeService.now_utc_naive()
@@ -535,7 +541,6 @@ class PdvService:
         configuracao = ClienteService.obter_modelo_configuracao_empresa(venda.empresa_id, venda.tenant_id)
         permite_cancelamento = (
             venda.status == StatusVenda.FINALIZADA
-            and not any(int(getattr(item, "quantidade_cancelada", 0) or 0) > 0 for item in venda.itens)
             and PdvService._esta_dentro_janela_cancelamento(venda.data_venda, configuracao.cancelamento_venda_limite_horas)
         )
         permite_cancelar_itens = (
@@ -638,13 +643,20 @@ class PdvService:
 
         valor_desconto = PdvService._to_decimal_value(cupom.valor_desconto)
         if cupom.tipo_desconto == TipoDesconto.PERCENTUAL:
-            return ((subtotal * valor_desconto) / Decimal("100")).quantize(Decimal("0.01"))
+            valor_desconto = ((subtotal * valor_desconto) / Decimal("100")).quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
+        return min(valor_desconto, subtotal, cupom.desconto_maximo if cupom.desconto_maximo is not None else subtotal)
 
-        return min(valor_desconto, subtotal).quantize(Decimal("0.01"))
+    @staticmethod
+    def limite_desconto(escopo):
+        if AcessoEmpresaService.possui_permissao(escopo, "autorizar_desconto"):
+            return 100
+        return 10 if AcessoEmpresaService.possui_permissao(escopo, "aplicar_desconto") else 0
 
     @staticmethod
     def _validar_pagamentos(pagamentos_payload, tenant_id, total_esperado):
         if PdvService._to_decimal_value(total_esperado) <= Decimal("0.00"):
+            if pagamentos_payload:
+                raise ValueError("Venda com total zero nao deve receber pagamentos.")
             return []
 
         if not pagamentos_payload:
@@ -668,6 +680,8 @@ class PdvService:
         for pagamento in pagamentos_payload:
             forma_pagamento_id = PdvService._to_int(pagamento.get("forma_pagamento_id"), "Forma de pagamento")
             valor = PdvService._to_decimal(pagamento.get("valor"), "valor do pagamento")
+            if valor <= 0:
+                raise ValueError("Pagamento deve representar pelo menos um centavo.")
             comprovante = (pagamento.get("comprovante") or "").strip() or None
 
             pagamentos_compilados.append({
@@ -809,7 +823,7 @@ class PdvService:
         if not valor.is_finite() or valor <= 0 or valor >= Decimal("10000000000"):
             raise ValueError(f"{field_name.capitalize()} deve ser maior que zero.")
 
-        return valor.quantize(Decimal("0.01"))
+        return valor.quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
 
     @staticmethod
     def _to_optional_decimal(value, field_name):
@@ -824,7 +838,7 @@ class PdvService:
         if not valor.is_finite() or valor < 0 or valor >= Decimal("10000000000"):
             raise ValueError(f"{field_name.capitalize()} nao pode ser negativo.")
 
-        return valor.quantize(Decimal("0.01"))
+        return valor.quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
 
     @staticmethod
     def _to_decimal_value(value):

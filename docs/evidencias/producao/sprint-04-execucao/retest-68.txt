@@ -1,0 +1,8 @@
+time="2026-09-07T00:17:12-03:00" level=warning msg="Found orphan containers (oceanblue-s04-ui-diagnosis, oceanblue-s04-browser-run, oceanblue-s04-dev-run) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up."
+ Container oceanblue-s04-dev-db-test-1 Running 
+ Container oceanblue-s04-dev-db-test-1 Waiting 
+ Container oceanblue-s04-dev-db-test-1 Healthy 
+ Container oceanblue-s04-retest2 Creating 
+ Container oceanblue-s04-retest2 Created 
+....................................................................     [100%]
+68 passed in 103.73s (0:01:43)

@@ -58,6 +58,11 @@ document.addEventListener("DOMContentLoaded", async () => {
 async function carregarAuxiliares() {
     const result = await requestJson("/api/pdv/auxiliares", { method: "GET" });
     pdvPage.auxiliares = result.data || pdvPage.auxiliares;
+    const descontoInput = document.getElementById("pdv-desconto-manual");
+    if (descontoInput) {
+        descontoInput.disabled = !pdvPage.auxiliares.limite_desconto_percentual;
+        descontoInput.title = `Autorizacao de desconto: ${pdvPage.auxiliares.limite_desconto_percentual || 0}%`;
+    }
 }
 
 async function carregarDadosPdv() {
@@ -1221,6 +1226,9 @@ function abrirModalVenda(vendaId, focarCancelamento) {
                             <div class="flex flex-col items-end gap-3">
                                 <strong class="text-white">${formatCurrency(item.valor_total)}</strong>
                                 ${Boolean(window.__uiFlags?.can_cancel_sale_items) && item.permite_cancelamento ? `
+                                    <label>Quantidade a devolver
+                                        <input id="pdv-devolver-${item.id}" type="number" min="1" max="${item.quantidade_disponivel_cancelamento}" step="1" value="1" class="w-20 bg-slate-900 px-2 py-1">
+                                    </label>
                                     <button type="button"
                                         class="inline-flex items-center justify-center gap-2 rounded-xl bg-amber-400/10 border border-amber-400/20 text-amber-300 hover:bg-amber-400/20 text-xs font-semibold px-3 py-2 transition"
                                         onclick="cancelarItemVenda(${item.id})">
@@ -1282,7 +1290,8 @@ async function cancelarItemVenda(itemId) {
     pdvPage.cancelamentosPendentes ??= {};
     const operation = `${pdvPage.vendaSelecionada.id}:${itemId}`;
     const motivoAtual = (document.getElementById("pdv-sale-cancel-reason")?.value || "").trim();
-    pdvPage.cancelamentosPendentes[operation] ??= { motivo: motivoAtual, idempotency_key: crypto.randomUUID() };
+    const quantidade = document.getElementById(`pdv-devolver-${itemId}`)?.value || "1";
+    pdvPage.cancelamentosPendentes[operation] ??= { motivo: motivoAtual, quantidade, idempotency_key: crypto.randomUUID() };
 
     try {
         const motivo = (document.getElementById("pdv-sale-cancel-reason")?.value || "").trim();
@@ -1572,12 +1581,18 @@ function obterCupomSelecionado() {
 
 function calcularDescontoCupom(cupom, subtotal) {
     if (!cupom) return 0;
-
+    const hoje = new Intl.DateTimeFormat("en-CA", { timeZone: "America/Sao_Paulo" }).format(new Date());
+    if ((cupom.empresa_id && String(cupom.empresa_id) !== String(pdvPage.empresaId))
+        || (cupom.cliente_id && String(cupom.cliente_id) !== String(pdvPage.clienteId))
+        || (cupom.data_inicio && cupom.data_inicio > hoje) || cupom.data_validade < hoje
+        || (cupom.limite_usos && cupom.usos >= cupom.limite_usos)
+        || subtotal < parseCurrencyValue(cupom.valor_minimo || "0")) return 0;
     const valor = parseCurrencyValue(cupom.valor_desconto);
-    if (cupom.tipo_desconto === "PERCENTUAL") {
-        return subtotal * (valor / 100);
-    }
-    return Math.min(valor, subtotal);
+    const descontoCentavos = cupom.tipo_desconto === "PERCENTUAL"
+        ? Math.round(Math.round(subtotal * 100) * Math.round(valor * 100) / 10000)
+        : Math.round(valor * 100);
+    const limite = cupom.desconto_maximo ? parseCurrencyValue(cupom.desconto_maximo) : subtotal;
+    return Math.min(descontoCentavos, Math.round(subtotal * 100), Math.round(limite * 100)) / 100;
 }
 
 function resetPayments() {

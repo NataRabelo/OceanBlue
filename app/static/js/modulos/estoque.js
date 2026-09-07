@@ -42,6 +42,17 @@ window.estoquePage = {
 };
 
 document.addEventListener("DOMContentLoaded", async () => {
+    document.getElementById("alertas-atualizar")?.addEventListener("click", carregarHistoricoAlertas);
+    document.getElementById("alertas-executar")?.addEventListener("click", async () => {
+        try {
+            const empresaId = document.getElementById("filtro-empresa")?.value;
+            if (!empresaId) throw new Error("Selecione uma empresa.");
+            await requestJson("/api/estoque/notificacoes/processar", {
+                method: "POST", headers: getAuthHeaders(true), body: JSON.stringify({ empresa_id: empresaId })
+            });
+            await carregarHistoricoAlertas();
+        } catch (error) { showMessage(error.message, "error"); }
+    });
     bindModalClose();
     bindFilters();
     bindMovementForm();
@@ -63,6 +74,37 @@ document.addEventListener("DOMContentLoaded", async () => {
         lucide.createIcons();
     }
 });
+
+async function carregarHistoricoAlertas() {
+    const container = document.getElementById("alertas-historico");
+    if (!container) return;
+    try {
+        const empresaId = document.getElementById("filtro-empresa")?.value;
+        if (!empresaId) throw new Error("Selecione uma empresa.");
+        const result = await requestJson(`/api/estoque/notificacoes/historico?empresa_id=${encodeURIComponent(empresaId)}`, { method: "GET" });
+        container.replaceChildren();
+        for (const entrega of result.data) {
+            const row = document.createElement("div");
+            row.textContent = `${entrega.assunto} — ${entrega.destinatario} — ${entrega.status} — ${entrega.tentativas} tentativa(s). ${entrega.erro || ""}`;
+            if (["FALHOU", "PENDENTE"].includes(entrega.status)) {
+                const button = document.createElement("button");
+                button.type = "button";
+                button.textContent = "Tentar novamente";
+                button.className = "ml-3 rounded bg-sky-500 px-3 py-2";
+                button.addEventListener("click", async () => {
+                    button.disabled = true;
+                    try {
+                        await requestJson(`/api/estoque/notificacoes/${entrega.id}/retentar`, { method: "POST", headers: getAuthHeaders(true), body: "{}" });
+                        await carregarHistoricoAlertas();
+                    } catch (error) { showMessage(error.message, "error"); button.disabled = false; }
+                });
+                row.append(button);
+            }
+            container.append(row);
+        }
+        if (!result.data.length) container.textContent = "Nenhuma entrega registrada.";
+    } catch (error) { showMessage(error.message, "error"); }
+}
 
 function estoqueNeedsAuxiliares() {
     return Boolean(

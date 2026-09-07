@@ -32,17 +32,7 @@ class ComunicacaoService:
             )
 
         if canal_enum == CanalMensagemCliente.WHATSAPP:
-            return ComunicacaoService._enviar_webhook(
-                configuracao=configuracao,
-                canal=canal_enum,
-                destinatario=destino,
-                assunto=assunto,
-                conteudo=conteudo,
-                remetente=configuracao.whatsapp_remetente,
-                endpoint=configuracao.whatsapp_api_url,
-                token=FieldCrypto.decrypt(configuracao.whatsapp_token),
-                cliente=cliente,
-            )
+            raise ValueError("WhatsApp desativado neste escopo; utilize email.")
 
         return ComunicacaoService._enviar_webhook(
             configuracao=configuracao,

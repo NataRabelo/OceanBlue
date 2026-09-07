@@ -1,0 +1,106 @@
+time="2026-09-07T00:10:10-03:00" level=warning msg="Found orphan containers (oceanblue-s04-dev-run) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up."
+ Container oceanblue-s04-dev-db-test-1 Running 
+ Container oceanblue-s04-dev-db-test-1 Waiting 
+ Container oceanblue-s04-dev-db-test-1 Healthy 
+ Container oceanblue-s04-dev-test-run-96d02559cf45 Creating 
+ Container oceanblue-s04-dev-test-run-96d02559cf45 Created 
+..................................F.................F...                 [100%]
+=================================== FAILURES ===================================
+______ test_sale_enforces_coupon_period_company_minimum_identity[rules1] _______
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   psycopg2.errors.CheckViolation: Escopo imutavel
+E   CONTEXT:  PL/pgSQL function ocean_integrity() line 10 at RAISE
+
+The above exception was the direct cause of the following exception:
+tests/test_sprint04_operations.py:128: in test_sale_enforces_coupon_period_company_minimum_identity
+    coupon(**rules)
+tests/test_sprint04_operations.py:26: in coupon
+    return CupomService.criar({"nome": "Campanha", "codigo": "CAMPANHA", "tipo_desconto": "PERCENTUAL",
+app/services/transaction_service.py:49: in execute
+    result = function(*args, **kwargs)
+app/services/cupom_service.py:49: in criar
+    CupomRepository.salvar()
+app/repositorys/cupom_repository.py:54: in salvar
+    save()
+app/services/transaction_service.py:12: in save
+    db.session.flush()
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/scoping.py:923: in flush
+    return self._proxied.flush(objects=objects)
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/session.py:4353: in flush
+    self._flush(objects)
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/session.py:4488: in _flush
+    with util.safe_reraise():
+/usr/local/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py:122: in __exit__
+    raise exc_value.with_traceback(exc_tb)
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/session.py:4449: in _flush
+    flush_context.execute()
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/unitofwork.py:465: in execute
+    rec.execute(self)
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/unitofwork.py:641: in execute
+    util.preloaded.orm_persistence.save_obj(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/persistence.py:86: in save_obj
+    _emit_update_statements(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/orm/persistence.py:913: in _emit_update_statements
+    c = connection.execute(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1421: in execute
+    return meth(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/sql/elements.py:526: in _execute_on_connection
+    return connection._execute_clauseelement(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1643: in _execute_clauseelement
+    ret = self._execute_context(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1848: in _execute_context
+    return self._exec_single_context(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1988: in _exec_single_context
+    self._handle_dbapi_exception(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2365: in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   sqlalchemy.exc.IntegrityError: (psycopg2.errors.CheckViolation) Escopo imutavel
+E   CONTEXT:  PL/pgSQL function ocean_integrity() line 10 at RAISE
+E   
+E   [SQL: UPDATE cupons SET empresa_id=%(empresa_id)s, atualizado_em=%(atualizado_em)s WHERE cupons.id = %(cupons_id)s]
+E   [parameters: {'empresa_id': 2, 'atualizado_em': datetime.datetime(2026, 9, 7, 3, 10, 57, 487653), 'cupons_id': 1}]
+E   (Background on this error at: https://sqlalche.me/e/20/gkpj)
+_______ test_coupon_database_guards[desconto_maximo-'Infinity'::numeric] _______
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   psycopg2.errors.NumericValueOutOfRange: numeric field overflow
+E   DETAIL:  A field with precision 12, scale 2 cannot hold an infinite value.
+
+The above exception was the direct cause of the following exception:
+tests/test_sprint04_operations.py:333: in test_coupon_database_guards
+    connection.execute(text(f"UPDATE cupons SET {column}={value}"))
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1421: in execute
+    return meth(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/sql/elements.py:526: in _execute_on_connection
+    return connection._execute_clauseelement(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1643: in _execute_clauseelement
+    ret = self._execute_context(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1848: in _execute_context
+    return self._exec_single_context(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1988: in _exec_single_context
+    self._handle_dbapi_exception(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2365: in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1969: in _exec_single_context
+    self.dialect.do_execute(
+/usr/local/lib/python3.12/site-packages/sqlalchemy/engine/default.py:952: in do_execute
+    cursor.execute(statement, parameters)
+E   sqlalchemy.exc.DataError: (psycopg2.errors.NumericValueOutOfRange) numeric field overflow
+E   DETAIL:  A field with precision 12, scale 2 cannot hold an infinite value.
+E   
+E   [SQL: UPDATE cupons SET desconto_maximo='Infinity'::numeric]
+E   (Background on this error at: https://sqlalche.me/e/20/9h9h)
+=========================== short test summary info ============================
+FAILED tests/test_sprint04_operations.py::test_sale_enforces_coupon_period_company_minimum_identity[rules1]
+FAILED tests/test_sprint04_operations.py::test_coupon_database_guards[desconto_maximo-'Infinity'::numeric]
+2 failed, 54 passed in 64.64s (0:01:04)
+

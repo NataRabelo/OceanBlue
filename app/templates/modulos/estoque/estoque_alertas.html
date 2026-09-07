@@ -90,6 +90,16 @@ min-h-screen flex flex-col bg-slate-950 text-white
 </main>
 
 {% if ui_flags.can_manage_stock_alerts %}
+<section class="page-shell mb-8" aria-label="Historico de entregas">
+    <h2 class="text-lg font-semibold">Historico de entregas de alertas</h2>
+    <p>Selecione uma empresa. A rotina verifica estoque e validade e envia um resumo por dia quando habilitado.</p>
+    <button type="button" id="alertas-executar" class="rounded-xl bg-sky-500 px-5 py-3">Executar rotina</button>
+    <button type="button" id="alertas-atualizar" class="rounded-xl bg-slate-700 px-5 py-3">Atualizar historico</button>
+    <div id="alertas-historico" class="space-y-3 mt-4" aria-live="polite"></div>
+</section>
+{% endif %}
+
+{% if ui_flags.can_manage_stock_alerts %}
 <div id="estoque-alert-settings-modal"
     class="modal-overlay hidden fixed inset-0 z-50 bg-slate-950/75 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="w-full max-w-3xl bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl overflow-hidden">
@@ -113,7 +123,7 @@ min-h-screen flex flex-col bg-slate-950 text-white
 
                 <label class="flex items-center gap-3 rounded-xl border border-slate-800 bg-slate-950/60 px-4 py-3">
                     <input id="alert-resumo-diario" type="checkbox" class="rounded border-slate-700 bg-slate-900 text-sky-500 focus:ring-sky-500">
-                    <span class="text-sm text-slate-200">Preparar rotina de resumo diario</span>
+                    <span class="text-sm text-slate-200">Enviar resumo diario ao executar a rotina de alertas</span>
                 </label>
 
                 <label class="flex items-center gap-3 rounded-xl border border-slate-800 bg-slate-950/60 px-4 py-3">
@@ -139,7 +149,7 @@ min-h-screen flex flex-col bg-slate-950 text-white
 
                 <label class="flex items-center gap-3 rounded-xl border border-slate-800 bg-slate-950/60 px-4 py-3 md:col-span-2">
                     <input id="alert-email-habilitado" type="checkbox" class="rounded border-slate-700 bg-slate-900 text-sky-500 focus:ring-sky-500">
-                    <span class="text-sm text-slate-200">Habilitar preparo de disparo por email</span>
+                    <span class="text-sm text-slate-200">Habilitar envio por email com historico</span>
                 </label>
 
                 <div class="md:col-span-2">
@@ -150,15 +160,10 @@ min-h-screen flex flex-col bg-slate-950 text-white
                 </div>
 
                 <label class="flex items-center gap-3 rounded-xl border border-slate-800 bg-slate-950/60 px-4 py-3 md:col-span-2">
-                    <input id="alert-whatsapp-habilitado" type="checkbox" class="rounded border-slate-700 bg-slate-900 text-sky-500 focus:ring-sky-500">
-                    <span class="text-sm text-slate-200">Habilitar preparo de disparo por WhatsApp</span>
+                    <span class="text-sm text-slate-200">WhatsApp desativado neste escopo. Utilize email.</span>
                 </label>
 
                 <div class="md:col-span-2">
-                    <label for="alert-whatsapp-destinatarios" class="block text-sm font-medium text-slate-300 mb-2">Destinatarios por WhatsApp</label>
-                    <textarea id="alert-whatsapp-destinatarios" rows="3"
-                        class="w-full bg-slate-950 border border-slate-800 focus:border-sky-500 focus:ring-2 focus:ring-sky-500/20 rounded-xl px-4 py-3 text-white placeholder:text-slate-500 outline-none transition resize-none"
-                        placeholder="Um numero por linha, com DDD"></textarea>
                 </div>
             </div>
 

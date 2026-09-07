@@ -69,7 +69,7 @@ class ClienteService:
                 for empresa in empresas
             ],
             "tipos_pessoa": [item.value for item in TipoPessoa],
-            "canais_mensagem": [item.value for item in CanalMensagemCliente],
+            "canais_mensagem": [item.value for item in CanalMensagemCliente if item != CanalMensagemCliente.WHATSAPP],
         }
 
     @staticmethod
@@ -872,7 +872,7 @@ class ClienteService:
                         venda_origem_id=venda.id,
                         valor_original=valor_gerado,
                         saldo_disponivel=valor_gerado,
-                        data_expiracao=date.today() + timedelta(days=int(configuracao.cashback_validade_dias or 30)),
+                        data_expiracao=TimeService.today_br() + timedelta(days=int(configuracao.cashback_validade_dias or 30)),
                         observacao=f"Cashback gerado automaticamente pela venda {venda.numero_unico}.",
                     )
                     carteira.saldo_disponivel = (
@@ -1356,7 +1356,9 @@ class ClienteService:
             configuracao.smtp_senha = FieldCrypto.encrypt(smtp_senha) if encrypt_sensitive else smtp_senha
         configuracao.smtp_tls = ClienteService._to_bool(data.get("smtp_tls", configuracao.smtp_tls))
         configuracao.smtp_ssl = ClienteService._to_bool(data.get("smtp_ssl", configuracao.smtp_ssl))
-        configuracao.whatsapp_habilitado = ClienteService._to_bool(data.get("whatsapp_habilitado", configuracao.whatsapp_habilitado))
+        if ClienteService._to_bool(data.get("whatsapp_habilitado", False)):
+            raise ValueError("WhatsApp desativado neste escopo; utilize email.")
+        configuracao.whatsapp_habilitado = False
         configuracao.whatsapp_api_url = ClienteService._normalizar_url(data.get("whatsapp_api_url", configuracao.whatsapp_api_url))
         if "whatsapp_token" in data:
             whatsapp_token = (data.get("whatsapp_token") or "").strip() or None
@@ -1540,7 +1542,7 @@ class ClienteService:
             "smtp_senha_configurada": bool(configuracao.smtp_senha),
             "smtp_tls": bool(configuracao.smtp_tls),
             "smtp_ssl": bool(configuracao.smtp_ssl),
-            "whatsapp_habilitado": bool(configuracao.whatsapp_habilitado),
+            "whatsapp_habilitado": False,
             "whatsapp_api_url": configuracao.whatsapp_api_url or "",
             "whatsapp_token": "",
             "whatsapp_token_configurado": bool(configuracao.whatsapp_token),

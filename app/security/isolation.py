@@ -3,7 +3,7 @@ from sqlalchemy import event, inspect
 from sqlalchemy.orm import Session, with_loader_criteria
 
 from app.extensions import db
-from app.models.db import Boleto, Empresa, NotaFiscalVenda, Tenant, Venda
+from app.models.db import Boleto, Cupom, Empresa, NotaFiscalVenda, Tenant, Venda
 
 
 def current_scope():
@@ -22,7 +22,7 @@ def criteria(model, scope):
         if model is Empresa:
             expressions.append(model.id.in_(company_ids))
         elif hasattr(model, "empresa_id"):
-            expressions.append(model.empresa_id.in_(company_ids))
+            expressions.append(db.or_(model.empresa_id.is_(None), model.empresa_id.in_(company_ids)) if model is Cupom else model.empresa_id.in_(company_ids))
     for field, parent in (("boleto_id", Boleto), ("venda_id", Venda), ("nota_id", NotaFiscalVenda)):
         if hasattr(model, field):
             parent_query = db.select(parent.id).where(parent.tenant_id == tenant_id)

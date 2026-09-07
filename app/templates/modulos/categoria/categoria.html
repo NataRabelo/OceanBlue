@@ -233,7 +233,7 @@ min-h-screen flex flex-col bg-slate-950 text-white
 {% endblock %}
 
 {% block scripts %}
-<script src="https://unpkg.com/lucide@latest"></script>
+<script src="{{ url_for('static', filename='vendor/lucide.min.js') }}"></script>
 <script src="{{ url_for('static', filename='js/core/crud.js') }}"></script>
 <script src="{{ url_for('static', filename='js/modulos/categoria.js') }}"></script>
 {% endblock %}

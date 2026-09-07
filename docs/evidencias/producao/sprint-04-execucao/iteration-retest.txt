@@ -1,0 +1,31 @@
+time="2026-09-07T00:13:27-03:00" level=warning msg="Found orphan containers (oceanblue-s04-browser-run, oceanblue-s04-dev-run) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up."
+ Container oceanblue-s04-dev-db-test-1 Running 
+ Container oceanblue-s04-dev-db-test-1 Waiting 
+ Container oceanblue-s04-dev-db-test-1 Healthy 
+ Container oceanblue-s04-dev-test-run-067b379c211d Creating 
+ Container oceanblue-s04-dev-test-run-067b379c211d Created 
+............................................................F....F       [100%]
+=================================== FAILURES ===================================
+___________ test_pending_alert_survives_worker_loss_and_cli_retries ____________
+tests/test_sprint04_operations.py:379: in test_pending_alert_survives_worker_loss_and_cli_retries
+    assert len(delivered) == EntregaAlerta.query.count() == 4
+E   AssertionError: assert 4 == 6
+E    +  where 4 = len([{'assunto': 'Resumo diario de estoque OceanBlue', 'canal': <CanalMensagemCliente.EMAIL: 'EMAIL'>, 'configuracao': <Co...1\nProduto: Produto\nStatus: abaixo do minimo\nEstoque atual: 1\nEstoque minimo: 2\nGerado em: 07/09/2026 00:14', ...}])
+E    +  and   6 = count()
+E    +    where count = <flask_sqlalchemy.query.Query object at 0x7f1ef6f00320>.count
+E    +      where <flask_sqlalchemy.query.Query object at 0x7f1ef6f00320> = EntregaAlerta.query
+______________ test_browser_coupon_create_and_alert_history_retry ______________
+tests/test_sprint04_browser.py:185: in test_browser_coupon_create_and_alert_history_retry
+    expect(page.locator("#modal-cadastro")).to_be_hidden()
+E   AssertionError: Locator expected to be hidden
+E   Actual value: visible 
+E   Call log:
+E     - Expect "to_be_hidden" with timeout 5000ms
+E     - waiting for locator("#modal-cadastro")
+E       9 × locator resolved to <div id="modal-cadastro" class="modal-overlay fixed inset-0 z-50 bg-slate-950/75 backdrop-blur-sm flex items-center justify-center p-4">…</div>
+E         - unexpected value "visible"
+=========================== short test summary info ============================
+FAILED tests/test_sprint04_operations.py::test_pending_alert_survives_worker_loss_and_cli_retries
+FAILED tests/test_sprint04_browser.py::test_browser_coupon_create_and_alert_history_retry
+2 failed, 64 passed in 114.49s (0:01:54)
+
