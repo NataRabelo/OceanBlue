@@ -1,0 +1,2 @@
+ oceanblue-s07-independent-rc2-regression-test-1 Copying oceanblue-s07-independent-rc2-regression-test-1:/tmp/junit.xml to C:\Users\Rabel\.codex\worktrees\4b57\OceanBlue\.release-work\oceanblue-s07-independent-rc2\regression\junit.xml
+ oceanblue-s07-independent-rc2-regression-test-1 Copied oceanblue-s07-independent-rc2-regression-test-1:/tmp/junit.xml to C:\Users\Rabel\.codex\worktrees\4b57\OceanBlue\.release-work\oceanblue-s07-independent-rc2\regression\junit.xml

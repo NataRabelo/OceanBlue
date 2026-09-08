@@ -1,0 +1,5 @@
+Exception: C:\Users\Rabel\.codex\worktrees\4b57\OceanBlue\scripts\operational_snapshot.ps1:248
+Line |
+ 248 |  … qualMap $manifest.files $actual)) { throw 'Snapshot hash mismatch.' }
+     |                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | Snapshot hash mismatch.

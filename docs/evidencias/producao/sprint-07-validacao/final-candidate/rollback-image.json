@@ -1,0 +1,5 @@
+{
+  "image_id": "sha256:86ac0d8367a1e4d1fdf50955f9118bafee3373afe31049ea64bfe45cb2de2ea5",
+  "source": "git archive of runtime paths, rebuilt from pinned Sprint 6 source; historical evidence and test traces omitted",
+  "base_commit": "7b0c97f87ec8cf1a9584c389717383c457bc764f"
+}

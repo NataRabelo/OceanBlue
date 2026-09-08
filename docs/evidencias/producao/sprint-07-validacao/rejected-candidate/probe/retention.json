@@ -1,0 +1,12 @@
+{
+  "retained": [
+    "build.txt",
+    "cleanup.txt",
+    "copy-junit.txt",
+    "db-start.txt",
+    "junit.xml",
+    "probe.txt"
+  ],
+  "omitted": [],
+  "reason": "Raw diagnostic files remain in ignored .release-work; successful binary traces, HTML and synthetic dumps are not duplicated in Git."
+}

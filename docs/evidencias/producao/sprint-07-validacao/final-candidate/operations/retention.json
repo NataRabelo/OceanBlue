@@ -1,0 +1,87 @@
+{
+  "retained": [
+    "backup-live-refused.txt",
+    "backup.txt",
+    "cleanup-check.txt",
+    "cleanup-restore.txt",
+    "cleanup-source.txt",
+    "database-down.txt",
+    "database-recovered.txt",
+    "database-return.txt",
+    "database-stop.txt",
+    "final-source-logs.txt",
+    "full-storage-start.txt",
+    "full-storage-stop.txt",
+    "full-storage.txt",
+    "http-load.json",
+    "https-recovered.txt",
+    "https.txt",
+    "incomplete-restore.txt",
+    "load-start.txt",
+    "load-stop.txt",
+    "migration-downgrade.txt",
+    "network.json",
+    "nonempty-refused.txt",
+    "proof-logs.txt",
+    "proxy-app-health.txt",
+    "proxy-down.txt",
+    "proxy-return.txt",
+    "proxy-stop.txt",
+    "read-only.txt",
+    "recovery-measurements.json",
+    "restore-create.txt",
+    "restore-database.txt",
+    "restore-smoke.txt",
+    "restore-start.txt",
+    "restore-stop.txt",
+    "restore-storage.txt",
+    "restore.txt",
+    "rollback-db-down.txt",
+    "rollback-db-return.txt",
+    "rollback-db-stop.txt",
+    "rollback-recovered.txt",
+    "rollback-smoke.txt",
+    "rollback-start.txt",
+    "rollback-stop.txt",
+    "seed.txt",
+    "snapshot/manifest.json",
+    "source-create.txt",
+    "source-database.txt",
+    "source-start.txt",
+    "stop-writers.txt",
+    "tag-oceanblue-s07-independent-rc2-ops-restore.txt",
+    "tag-oceanblue-s07-independent-rc2-ops.txt",
+    "tampered-refused.txt",
+    "tls.txt",
+    "trusted-manifest-sha256.txt",
+    "worker-killed.txt"
+  ],
+  "omitted": [
+    {
+      "path": "snapshot/database.dump",
+      "size": 295091,
+      "sha256": "d02590b5f15961f292d8414edc845798a70bdf40eb9bae607e89d8514b1342f4"
+    },
+    {
+      "path": "snapshot/instance/storage/tenants/1/receipts/proof.txt",
+      "size": 48,
+      "sha256": "5d3d8ada1aec31e045f7f403923f87cf862009f1642a212f904ad1d99dee9b0b"
+    },
+    {
+      "path": "tampered/database.dump",
+      "size": 295111,
+      "sha256": "c8eb8a18b5c59ea2e39f0313140f2f1c2e31683b4de26a8aad3bc58ce824b9bd"
+    },
+    {
+      "path": "tampered/instance/storage/tenants/1/receipts/proof.txt",
+      "size": 48,
+      "sha256": "5d3d8ada1aec31e045f7f403923f87cf862009f1642a212f904ad1d99dee9b0b"
+    },
+    {
+      "path": "tampered/manifest.json",
+      "size": 5903,
+      "sha256": "65bf3138bc91011443b326446e31701b0ca0058b2c381f67f28d5e94401680d6"
+    }
+  ],
+  "reason": "Raw diagnostic files remain in ignored .release-work; successful binary traces, HTML and synthetic dumps are not duplicated in Git."
+}

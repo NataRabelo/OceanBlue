@@ -1,0 +1,4 @@
+ Container oceanblue-s07-independent-rc2-ops-proxy-1 Stopping 
+ Container oceanblue-s07-independent-rc2-ops-proxy-1 Stopped 
+ Container oceanblue-s07-independent-rc2-ops-smoke-1 Stopping 
+ Container oceanblue-s07-independent-rc2-ops-smoke-1 Stopped 

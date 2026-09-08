@@ -1,0 +1,53 @@
+{
+  "assets": [
+    {
+      "url": "http://127.0.0.1:8765/static/vendor/tailwind.css",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8765/static/css/core/core.css",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8765/static/vendor/lucide.min.js",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8765/static/css/core/operational.css",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8765/static/css/modulos/ciclos.css",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8765/static/js/core/decimal-input.js",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8765/static/js/core/security.js",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8765/static/js/core/input-mask.js",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8765/static/js/core/theme.js",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8765/static/js/header/header.js",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8765/static/js/modulos/ciclos.js",
+      "status": 200
+    }
+  ],
+  "external_requests": [],
+  "failed_requests": [
+    "http://127.0.0.1:8765/api/financeiro/lancamentos?empresa_id=1"
+  ],
+  "axe_violations": []
+}

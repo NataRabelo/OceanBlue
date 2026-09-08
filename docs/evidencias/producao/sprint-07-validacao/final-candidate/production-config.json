@@ -1,0 +1,12 @@
+{
+  "version": "2.1.0-rc.1",
+  "production_config_sha256": "faef83e44680a45d3b96004ef244af133d2ad63c385d0a9d6f4651259898995d",
+  "flags_fail_closed": true,
+  "immutable_image_configuration_required": true,
+  "rootless_readonly": true,
+  "private_database_and_application": true,
+  "runtime_migrations_disabled": true,
+  "proxy_trust_matches_network": true,
+  "persistent_database_and_files": true,
+  "scope": "Static deployment contract. Installed TLS, secrets, volume durability and operator readiness require installation acceptance."
+}

@@ -1,0 +1,57 @@
+[
+    {
+        "Name": "oceanblue-s07-independent-regression_test",
+        "Id": "f3d606ee6ee35444c050819657db96e8c00966edab9e43b84c9fb70d6ebfcf32",
+        "Created": "2026-09-07T21:47:24.153222286Z",
+        "Scope": "local",
+        "Driver": "bridge",
+        "EnableIPv4": true,
+        "EnableIPv6": false,
+        "IPAM": {
+            "Driver": "default",
+            "Options": null,
+            "Config": [
+                {
+                    "Subnet": "172.20.0.0/16",
+                    "Gateway": "172.20.0.1"
+                }
+            ]
+        },
+        "Internal": true,
+        "Attachable": false,
+        "Ingress": false,
+        "ConfigFrom": {
+            "Network": ""
+        },
+        "ConfigOnly": false,
+        "Options": {
+            "com.docker.network.enable_ipv4": "true",
+            "com.docker.network.enable_ipv6": "false"
+        },
+        "Labels": {
+            "com.docker.compose.config-hash": "901eccb62f246351896c9ed25582dc5a1144288e5edc36146cce0b81499c8d2f",
+            "com.docker.compose.network": "test",
+            "com.docker.compose.project": "oceanblue-s07-independent-regression",
+            "com.docker.compose.version": "5.5.0"
+        },
+        "Containers": {
+            "f495ff2ba311d8d2fddcfa189918d7f3a13f84f0346854d72affd57a97aaeba7": {
+                "Name": "oceanblue-s07-independent-regression-smoke-1",
+                "EndpointID": "d9b1c2dccbc6c11f64c29a81c4b987673517d9578f88392ca5de477d87f20649",
+                "MacAddress": "9e:6a:1e:7c:16:6f",
+                "IPv4Address": "172.20.0.3/16",
+                "IPv6Address": ""
+            }
+        },
+        "Status": {
+            "IPAM": {
+                "Subnets": {
+                    "172.20.0.0/16": {
+                        "IPsInUse": 4,
+                        "DynamicIPsAvailable": 65532
+                    }
+                }
+            }
+        }
+    }
+]

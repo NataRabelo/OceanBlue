@@ -1,0 +1,61 @@
+ Image oceanblue-s07-timeout-probe-test Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 594B 0.0s done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile.test
+#2 transferring dockerfile: 514B 0.1s done
+#2 DONE 0.1s
+
+#3 [internal] load metadata for docker.io/library/python:3.12.12-slim-bookworm@sha256:593bd06efe90efa80dc4eee3948be7c0fde4134606dd40d8dd8dbcade98e669c
+#3 DONE 0.4s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 334B 0.0s done
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 DONE 0.0s
+
+#6 [1/7] FROM docker.io/library/python:3.12.12-slim-bookworm@sha256:593bd06efe90efa80dc4eee3948be7c0fde4134606dd40d8dd8dbcade98e669c
+#6 resolve docker.io/library/python:3.12.12-slim-bookworm@sha256:593bd06efe90efa80dc4eee3948be7c0fde4134606dd40d8dd8dbcade98e669c 0.1s done
+#6 DONE 0.1s
+
+#5 [internal] load build context
+#5 transferring context: 50.13kB 0.3s done
+#5 DONE 0.3s
+
+#7 [2/7] WORKDIR /app
+#7 CACHED
+
+#8 [3/7] COPY requirements-dev.txt .
+#8 CACHED
+
+#9 [4/7] RUN python -m pip install --no-cache-dir --require-hashes -r requirements-dev.txt
+#9 CACHED
+
+#10 [5/7] RUN python -m playwright install --with-deps chromium firefox webkit && chmod -R a+rX /opt/playwright
+#10 CACHED
+
+#11 [6/7] COPY . .
+#11 DONE 1.3s
+
+#12 [7/7] RUN useradd --create-home tester && chown -R tester:tester /app
+#12 DONE 5.7s
+
+#13 exporting to image
+#13 exporting layers
+#13 exporting layers 0.5s done
+#13 exporting manifest sha256:89b06fab0374f29e7e5c2a2fd209a0d344e889e8bc449c47f28db54177a1e3ce 0.0s done
+#13 exporting config sha256:d52fedf3b6a08da31aeb63107e52f74a5d0cf043b46f479e69f5186d61610fa2 0.0s done
+#13 exporting attestation manifest sha256:fdffba5581bf692d2d0c2239bf396c19e5dc6eb89c239706563eb49d0fa705e2
+#13 exporting attestation manifest sha256:fdffba5581bf692d2d0c2239bf396c19e5dc6eb89c239706563eb49d0fa705e2 0.0s done
+#13 exporting manifest list sha256:b3443004838c847c80d77e727e797f60d1d4d8188c24158b27269652ad25e15c 0.0s done
+#13 naming to docker.io/library/oceanblue-s07-timeout-probe-test:latest done
+#13 unpacking to docker.io/library/oceanblue-s07-timeout-probe-test:latest
+#13 unpacking to docker.io/library/oceanblue-s07-timeout-probe-test:latest 0.6s done
+#13 DONE 1.4s
+
+#14 resolving provenance for metadata file
+#14 DONE 0.1s
+ Image oceanblue-s07-timeout-probe-test Built 

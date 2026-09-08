@@ -1,0 +1,1 @@
+{"fault": "SIGKILL Gunicorn worker", "recovery_seconds": 1.0440276250010356, "previous_pid": 9, "replacement_pids": ["43"]}

@@ -1,0 +1,38 @@
+{
+  "decision": "rejected",
+  "project": "oceanblue-s07-independent",
+  "reason": "The independent retest did not satisfy the zero-failure gate under severe host resource saturation.",
+  "first_full_run": {
+    "tests": 868,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "retest": {
+    "tests": 868,
+    "passed": 864,
+    "failures": 4,
+    "errors": 0,
+    "skipped": 0,
+    "junit_sha256": "180fb352c5a603409334a80721f2579d42120358097d0817911dca0fcd60cbb1",
+    "coverage_sha256": "d3a92bbb93813b034a5db05c29895fcac168cd7a4741ec3c7218bd6eb031e154",
+    "pipeline_sha256": "cff6eb56ec48ee05655027fc2c9ea5ed32dce1f882e7fb2d7585d836dc283056"
+  },
+  "observations": [
+    "One concurrent audit timing gate exceeded 15 seconds without functional errors.",
+    "Three browser waits timed out while the requested pages returned HTTP 200 and retained no JavaScript, HTTP, Axe or external-network error.",
+    "Gunicorn worker timeout/SIGKILL events coincided with approximately 653 MiB of free host memory."
+  ],
+  "focal_probe": {
+    "project": "oceanblue-s07-timeout-probe",
+    "same_four_node_ids": true,
+    "original_time_limits": true,
+    "tests": 4,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "duration_seconds": 104.026,
+    "junit_sha256": "2c2753c19026708bc04f3cc21afebaa1574ae4ccfe2b09fe93700f40f0500767"
+  },
+  "disposition": "The probe supports environmental saturation as the cause but does not rehabilitate the rejected retest. No retry automation, timeout increase, assertion relaxation, source change or test change was used. A fresh candidate had to pass the complete sequence."
+}

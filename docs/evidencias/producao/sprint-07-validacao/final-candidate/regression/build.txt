@@ -1,0 +1,104 @@
+ Image oceanblue-s07-independent-rc2-regression-smoke Building 
+ Image oceanblue-s07-independent-rc2-regression-test Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 1.15kB 0.0s done
+#1 DONE 0.0s
+
+#2 [smoke internal] load build definition from Dockerfile
+#2 transferring dockerfile: 1.17kB 0.0s done
+#2 DONE 0.1s
+
+#3 [test internal] load build definition from Dockerfile.test
+#3 transferring dockerfile: 514B 0.1s done
+#3 DONE 0.1s
+
+#4 [smoke internal] load metadata for docker.io/library/python:3.12.12-slim-bookworm@sha256:593bd06efe90efa80dc4eee3948be7c0fde4134606dd40d8dd8dbcade98e669c
+#4 DONE 0.3s
+
+#5 [test internal] load .dockerignore
+#5 transferring context: 334B 0.0s done
+#5 DONE 0.1s
+
+#6 [test internal] load build context
+#6 DONE 0.0s
+
+#7 [test 1/6] FROM docker.io/library/python:3.12.12-slim-bookworm@sha256:593bd06efe90efa80dc4eee3948be7c0fde4134606dd40d8dd8dbcade98e669c
+#7 resolve docker.io/library/python:3.12.12-slim-bookworm@sha256:593bd06efe90efa80dc4eee3948be7c0fde4134606dd40d8dd8dbcade98e669c 0.1s done
+#7 resolve docker.io/library/python:3.12.12-slim-bookworm@sha256:593bd06efe90efa80dc4eee3948be7c0fde4134606dd40d8dd8dbcade98e669c 0.1s done
+#7 DONE 0.1s
+
+#6 [smoke internal] load build context
+#6 transferring context: 24.89kB 0.1s done
+#6 DONE 0.6s
+
+#8 [smoke 3/6] COPY requirements.txt .
+#8 CACHED
+
+#9 [test 3/7] COPY requirements-dev.txt .
+#9 CACHED
+
+#10 [smoke 2/6] WORKDIR /app
+#10 CACHED
+
+#11 [test 5/7] RUN python -m playwright install --with-deps chromium firefox webkit && chmod -R a+rX /opt/playwright
+#11 CACHED
+
+#12 [test 4/7] RUN python -m pip install --no-cache-dir --require-hashes -r requirements-dev.txt
+#12 CACHED
+
+#13 [test 6/7] COPY . .
+#13 CACHED
+
+#14 [smoke 4/6] RUN python -m pip install --no-cache-dir --require-hashes -r requirements.txt
+#14 CACHED
+
+#15 [test 7/7] RUN useradd --create-home tester && chown -R tester:tester /app
+#15 CACHED
+
+#16 [test] exporting to image
+#16 exporting layers 0.0s done
+#16 exporting manifest sha256:8c7928dbafa7b78da0ef5cea664ecd6b60a23d836aeab6fe8c38450dd5acbc4e 0.1s done
+#16 exporting config sha256:5073f038ff0272300193705d874dc9237c546ed86df6230ff1dc335f8630eb5c
+#16 exporting config sha256:5073f038ff0272300193705d874dc9237c546ed86df6230ff1dc335f8630eb5c 0.1s done
+#16 exporting attestation manifest sha256:ed62648e35c8730fad3b8d347d3ac2063660a773504776d19a8f161b860ffb42
+#16 exporting attestation manifest sha256:ed62648e35c8730fad3b8d347d3ac2063660a773504776d19a8f161b860ffb42 0.1s done
+#16 exporting manifest list sha256:4b6774671c8ea9509ee0123dd75612c103c9e682461132734d9643bfb34b4d24 0.1s done
+#16 naming to docker.io/library/oceanblue-s07-independent-rc2-regression-test:latest 0.0s done
+#16 unpacking to docker.io/library/oceanblue-s07-independent-rc2-regression-test:latest 0.0s done
+#16 DONE 0.5s
+
+#17 [smoke 5/6] COPY . .
+#17 ...
+
+#18 [test] resolving provenance for metadata file
+#18 DONE 0.1s
+
+#17 [smoke 5/6] COPY . .
+#17 DONE 1.4s
+
+#19 [smoke 6/6] RUN sed -i 's/\r$//' /app/docker-entrypoint.sh     && cp /app/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh     && chmod +x /usr/local/bin/docker-entrypoint.sh     && adduser --disabled-password --gecos "" appuser     && mkdir -p /app/instance/storage     && chown -R appuser:appuser /app/instance     && chmod 700 /app/instance /app/instance/storage
+#19 2.304 Adding user `appuser' ...
+#19 2.304 Adding new group `appuser' (1000) ...
+#19 2.371 Adding new user `appuser' (1000) with group `appuser (1000)' ...
+#19 2.488 Creating home directory `/home/appuser' ...
+#19 2.488 Copying files from `/etc/skel' ...
+#19 2.539 Adding new user `appuser' to supplemental / extra groups `users' ...
+#19 2.539 Adding user `appuser' to group `users' ...
+#19 DONE 2.7s
+
+#20 [smoke] exporting to image
+#20 exporting layers 0.4s done
+#20 exporting manifest sha256:f5656968e58db23f9609063d2ebb68693d704fa0ce4b1dc5167759dfe7a287f5 0.0s done
+#20 exporting config sha256:ea118117b5de8db275e19c563048a7985611769c389a501d23d37218927ce5d9 0.0s done
+#20 exporting attestation manifest sha256:59275dc1d07e42234b0d611b9209cebacf6a22e5150f03a27e9718092a717ea5
+#20 exporting attestation manifest sha256:59275dc1d07e42234b0d611b9209cebacf6a22e5150f03a27e9718092a717ea5 0.0s done
+#20 exporting manifest list sha256:e6f1cdea7c838e139f74370cfc6b306d7446e93a152cbb599bd884c69256152c 0.0s done
+#20 naming to docker.io/library/oceanblue-s07-independent-rc2-regression-smoke:latest done
+#20 unpacking to docker.io/library/oceanblue-s07-independent-rc2-regression-smoke:latest
+#20 unpacking to docker.io/library/oceanblue-s07-independent-rc2-regression-smoke:latest 0.3s done
+#20 DONE 1.0s
+
+#21 [smoke] resolving provenance for metadata file
+#21 DONE 0.0s
+ Image oceanblue-s07-independent-rc2-regression-test Built 
+ Image oceanblue-s07-independent-rc2-regression-smoke Built 

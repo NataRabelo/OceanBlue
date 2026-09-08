@@ -1,0 +1,11 @@
+{
+  "raw_sha256": "fe3eed9f5b8cbb711d39f258d9b764108469058ce7167bb6e78d0b8e213b46e3",
+  "testEngine": {
+    "name": "axe-core",
+    "version": "4.10.3"
+  },
+  "url": "http://127.0.0.1:8765/api/estoque/view",
+  "passed_rule_count": 26,
+  "incomplete_rule_count": 1,
+  "violations": []
+}

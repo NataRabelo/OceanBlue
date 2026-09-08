@@ -1,0 +1,57 @@
+[
+    {
+        "Name": "oceanblue-s07-independent-rc2-retest_test",
+        "Id": "86ece78fcc8f3cd5bd4a773abf3a494bebdfa81b837ffe5c47ece5c295e15c25",
+        "Created": "2026-09-08T04:18:46.047843473Z",
+        "Scope": "local",
+        "Driver": "bridge",
+        "EnableIPv4": true,
+        "EnableIPv6": false,
+        "IPAM": {
+            "Driver": "default",
+            "Options": null,
+            "Config": [
+                {
+                    "Subnet": "172.20.0.0/16",
+                    "Gateway": "172.20.0.1"
+                }
+            ]
+        },
+        "Internal": true,
+        "Attachable": false,
+        "Ingress": false,
+        "ConfigFrom": {
+            "Network": ""
+        },
+        "ConfigOnly": false,
+        "Options": {
+            "com.docker.network.enable_ipv4": "true",
+            "com.docker.network.enable_ipv6": "false"
+        },
+        "Labels": {
+            "com.docker.compose.config-hash": "f38bfd8ef8ddcbfcc32e377bea88c90d9459f92a8f875e7d286700d7afbde0bb",
+            "com.docker.compose.network": "test",
+            "com.docker.compose.project": "oceanblue-s07-independent-rc2-retest",
+            "com.docker.compose.version": "5.5.0"
+        },
+        "Containers": {
+            "18bb6a9eaedd4facef6c7cce2efbe28a1fa6c13b84cd70a7f0336a1446464958": {
+                "Name": "oceanblue-s07-independent-rc2-retest-smoke-1",
+                "EndpointID": "076367136d84b68c3aa2f25193ab09a29a2309e0e8d560b6a60439182c5e2cb7",
+                "MacAddress": "5e:0c:b3:38:42:ca",
+                "IPv4Address": "172.20.0.3/16",
+                "IPv6Address": ""
+            }
+        },
+        "Status": {
+            "IPAM": {
+                "Subnets": {
+                    "172.20.0.0/16": {
+                        "IPsInUse": 4,
+                        "DynamicIPsAvailable": 65532
+                    }
+                }
+            }
+        }
+    }
+]

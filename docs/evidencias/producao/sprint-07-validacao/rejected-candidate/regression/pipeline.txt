@@ -1,0 +1,685 @@
+ Network oceanblue-s07-independent-regression_test Creating 
+ Network oceanblue-s07-independent-regression_test Creating 
+ Network oceanblue-s07-independent-regression_test Created 
+ Network oceanblue-s07-independent-regression_test Created 
+ Container oceanblue-s07-independent-regression-db-test-1 Creating 
+ Container oceanblue-s07-independent-regression-db-test-1 Created 
+ Container oceanblue-s07-independent-regression-test-1 Creating 
+ Container oceanblue-s07-independent-regression-test-1 Created 
+Attaching to db-test-1, test-1
+ Container oceanblue-s07-independent-regression-db-test-1 Starting 
+ Container oceanblue-s07-independent-regression-db-test-1 Started 
+ Container oceanblue-s07-independent-regression-db-test-1 Waiting 
+db-test-1  | The files belonging to this database system will be owned by user "postgres".
+db-test-1  | This user must also own the server process.
+db-test-1  | 
+db-test-1  | The database cluster will be initialized with locale "en_US.utf8".
+db-test-1  | The default database encoding has accordingly been set to "UTF8".
+db-test-1  | The default text search configuration will be set to "english".
+db-test-1  | 
+db-test-1  | Data page checksums are disabled.
+db-test-1  | 
+db-test-1  | fixing permissions on existing directory /var/lib/postgresql/data ... ok
+db-test-1  | creating subdirectories ... ok
+db-test-1  | selecting dynamic shared memory implementation ... posix
+db-test-1  | selecting default max_connections ... 100
+db-test-1  | selecting default shared_buffers ... 128MB
+db-test-1  | selecting default time zone ... Etc/UTC
+db-test-1  | creating configuration files ... ok
+db-test-1  | running bootstrap script ... ok
+db-test-1  | performing post-bootstrap initialization ... ok
+db-test-1  | syncing data to disk ... ok
+db-test-1  | 
+db-test-1  | 
+db-test-1  | Success. You can now start the database server using:
+db-test-1  | 
+db-test-1  |     pg_ctl -D /var/lib/postgresql/data -l logfile start
+db-test-1  | 
+db-test-1  | initdb: warning: enabling "trust" authentication for local connections
+db-test-1  | initdb: hint: You can change this by editing pg_hba.conf or using the option -A, or --auth-local and --auth-host, the next time you run initdb.
+db-test-1  | waiting for server to start....2026-09-07 21:47:26.329 UTC [49] LOG:  starting PostgreSQL 16.12 (Debian 16.12-1.pgdg13+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit
+db-test-1  | 2026-09-07 21:47:26.336 UTC [49] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+db-test-1  | 2026-09-07 21:47:26.340 UTC [52] LOG:  database system was shut down at 2026-09-07 21:47:26 UTC
+db-test-1  | 2026-09-07 21:47:26.345 UTC [49] LOG:  database system is ready to accept connections
+db-test-1  |  done
+db-test-1  | server started
+db-test-1  | CREATE DATABASE
+db-test-1  | 
+db-test-1  | 
+db-test-1  | /usr/local/bin/docker-entrypoint.sh: ignoring /docker-entrypoint-initdb.d/*
+db-test-1  | 
+db-test-1  | waiting for server to shut down....2026-09-07 21:47:26.580 UTC [49] LOG:  received fast shutdown request
+db-test-1  | 2026-09-07 21:47:26.580 UTC [49] LOG:  aborting any active transactions
+db-test-1  | 2026-09-07 21:47:26.582 UTC [49] LOG:  background worker "logical replication launcher" (PID 55) exited with exit code 1
+db-test-1  | 2026-09-07 21:47:26.585 UTC [50] LOG:  shutting down
+db-test-1  | 2026-09-07 21:47:26.585 UTC [50] LOG:  checkpoint starting: shutdown immediate
+db-test-1  | 2026-09-07 21:47:26.600 UTC [50] LOG:  checkpoint complete: wrote 926 buffers (5.7%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.015 s, sync=0.001 s, total=0.016 s; sync files=301, longest=0.001 s, average=0.000 s; distance=4273 kB, estimate=4273 kB; lsn=0/191F0F0, redo lsn=0/191F0F0
+db-test-1  | 2026-09-07 21:47:26.606 UTC [49] LOG:  database system is shut down
+db-test-1  |  done
+db-test-1  | server stopped
+db-test-1  | 
+db-test-1  | PostgreSQL init process complete; ready for start up.
+db-test-1  | 
+db-test-1  | 2026-09-07 21:47:26.703 UTC [1] LOG:  starting PostgreSQL 16.12 (Debian 16.12-1.pgdg13+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit
+db-test-1  | 2026-09-07 21:47:26.705 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+db-test-1  | 2026-09-07 21:47:26.706 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+db-test-1  | 2026-09-07 21:47:26.710 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+db-test-1  | 2026-09-07 21:47:26.713 UTC [65] LOG:  database system was shut down at 2026-09-07 21:47:26 UTC
+db-test-1  | 2026-09-07 21:47:26.716 UTC [1] LOG:  database system is ready to accept connections
+ Container oceanblue-s07-independent-regression-db-test-1 Healthy 
+ Container oceanblue-s07-independent-regression-test-1 Starting 
+ Container oceanblue-s07-independent-regression-test-1 Started 
+test-1     | No broken requirements found.
+test-1     | Inventario OK: 165 rotas
+test-1     | INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+test-1     | INFO  [alembic.runtime.migration] Will assume transactional DDL.
+test-1     | INFO  [alembic.runtime.migration] Running upgrade  -> 1150177c20ca, initial
+test-1     | UPGRADE OK 1150177c20ca
+test-1     | INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+test-1     | INFO  [alembic.runtime.migration] Will assume transactional DDL.
+test-1     | INFO  [alembic.runtime.migration] Running upgrade 1150177c20ca -> 7f3c1a2b9d4e, add roles and permissions
+test-1     | UPGRADE OK 7f3c1a2b9d4e
+test-1     | INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+test-1     | INFO  [alembic.runtime.migration] Will assume transactional DDL.
+test-1     | INFO  [alembic.runtime.migration] Running upgrade 7f3c1a2b9d4e -> 9d1dca4d2bc5, v2
+test-1     | UPGRADE OK 9d1dca4d2bc5
+test-1     | INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+test-1     | INFO  [alembic.runtime.migration] Will assume transactional DDL.
+test-1     | INFO  [alembic.runtime.migration] Running upgrade 9d1dca4d2bc5 -> c3a1f9d4e8b2, convert quantities to integer
+test-1     | UPGRADE OK c3a1f9d4e8b2
+test-1     | INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+test-1     | INFO  [alembic.runtime.migration] Will assume transactional DDL.
+test-1     | INFO  [alembic.runtime.migration] Running upgrade c3a1f9d4e8b2 -> 4b2d8b0f6c11, add platform owners
+test-1     | UPGRADE OK 4b2d8b0f6c11
+test-1     | INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+test-1     | INFO  [alembic.runtime.migration] Will assume transactional DDL.
+test-1     | INFO  [alembic.runtime.migration] Running upgrade 4b2d8b0f6c11 -> 8f6e4c2a1b9d, add pdv financeiro permissions and defaults
+test-1     | UPGRADE OK 8f6e4c2a1b9d
+test-1     | INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+test-1     | INFO  [alembic.runtime.migration] Will assume transactional DDL.
+test-1     | INFO  [alembic.runtime.migration] Running upgrade 8f6e4c2a1b9d -> b7c9d1e2f3a4, add cupons adiantamentos validade salario
+test-1     | UPGRADE OK b7c9d1e2f3a4
+test-1     | INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+test-1     | INFO  [alembic.runtime.migration] Will assume transactional DDL.
+test-1     | INFO  [alembic.runtime.migration] Running upgrade b7c9d1e2f3a4 -> d4e5f6a7b8c9, add empresa visual mode
+test-1     | UPGRADE OK d4e5f6a7b8c9
+test-1     | INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+test-1     | INFO  [alembic.runtime.migration] Will assume transactional DDL.
+test-1     | INFO  [alembic.runtime.migration] Running upgrade d4e5f6a7b8c9 -> e6f7a8b9c0d1, add stock alert settings
+test-1     | UPGRADE OK e6f7a8b9c0d1
+test-1     | INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+test-1     | INFO  [alembic.runtime.migration] Will assume transactional DDL.
+test-1     | INFO  [alembic.runtime.migration] Running upgrade e6f7a8b9c0d1 -> f2b4c6d8e9f1, add client wallet messaging and reversal controls
+test-1     | UPGRADE OK f2b4c6d8e9f1
+test-1     | INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+test-1     | INFO  [alembic.runtime.migration] Will assume transactional DDL.
+test-1     | INFO  [alembic.runtime.migration] Running upgrade 8f6e4c2a1b9d -> f9d0e1a2b3c4, add boleto financeiro models
+test-1     | UPGRADE OK f9d0e1a2b3c4
+test-1     | INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+test-1     | INFO  [alembic.runtime.migration] Will assume transactional DDL.
+test-1     | INFO  [alembic.runtime.migration] Running upgrade f2b4c6d8e9f1 -> a1b2c3d4e5f6, add stock alert dispatch tracking
+test-1     | UPGRADE OK a1b2c3d4e5f6
+test-1     | INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+test-1     | INFO  [alembic.runtime.migration] Will assume transactional DDL.
+test-1     | INFO  [alembic.runtime.migration] Running upgrade a1b2c3d4e5f6 -> b3c4d5e6f7a8, add cashback sale controls
+test-1     | UPGRADE OK b3c4d5e6f7a8
+test-1     | INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+test-1     | INFO  [alembic.runtime.migration] Will assume transactional DDL.
+test-1     | INFO  [alembic.runtime.migration] Running upgrade f2b4c6d8e9f1 -> a4f1c8d2e7b9, add wholesale pricing and fiscal foundation
+test-1     | UPGRADE OK a4f1c8d2e7b9
+test-1     | INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+test-1     | INFO  [alembic.runtime.migration] Will assume transactional DDL.
+test-1     | INFO  [alembic.runtime.migration] Running upgrade a4f1c8d2e7b9, b3c4d5e6f7a8 -> c9d8e7f6a5b4, merge cashback and fiscal heads
+test-1     | UPGRADE OK c9d8e7f6a5b4
+test-1     | INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+test-1     | INFO  [alembic.runtime.migration] Will assume transactional DDL.
+test-1     | INFO  [alembic.runtime.migration] Running upgrade c9d8e7f6a5b4 -> 0f6a8c2d4e9b, add audit and saas limits
+test-1     | UPGRADE OK 0f6a8c2d4e9b
+test-1     | INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+test-1     | INFO  [alembic.runtime.migration] Will assume transactional DDL.
+test-1     | INFO  [alembic.runtime.migration] Running upgrade 0f6a8c2d4e9b, f9d0e1a2b3c4 -> ea3d60221646, merge migration heads
+test-1     | UPGRADE OK ea3d60221646
+test-1     | INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+test-1     | INFO  [alembic.runtime.migration] Will assume transactional DDL.
+test-1     | INFO  [alembic.runtime.migration] Running upgrade ea3d60221646 -> 1a2b3c4d5e6f, add sprint3 boleto and fiscal external status
+test-1     | UPGRADE OK 1a2b3c4d5e6f
+test-1     | INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+test-1     | INFO  [alembic.runtime.migration] Will assume transactional DDL.
+test-1     | INFO  [alembic.runtime.migration] Running upgrade 1a2b3c4d5e6f -> 2b3c4d5e6f7a, add sprint4 asaas and focus real configs
+test-1     | UPGRADE OK 2b3c4d5e6f7a
+test-1     | INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+test-1     | INFO  [alembic.runtime.migration] Will assume transactional DDL.
+test-1     | INFO  [alembic.runtime.migration] Running upgrade 2b3c4d5e6f7a -> 3c4d5e6f7a8b, Align migrated types, tenant indexes and installment foreign key with models.
+test-1     | UPGRADE OK 3c4d5e6f7a8b
+test-1     | INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+test-1     | INFO  [alembic.runtime.migration] Will assume transactional DDL.
+test-1     | INFO  [alembic.runtime.migration] Running upgrade 3c4d5e6f7a8b -> 4d5e6f7a8b9c, Shared authentication state, tenant integrity, SaaS quotas and access audit.
+test-1     | UPGRADE OK 4d5e6f7a8b9c
+test-1     | INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+test-1     | INFO  [alembic.runtime.migration] Will assume transactional DDL.
+test-1     | INFO  [alembic.runtime.migration] Running upgrade 4d5e6f7a8b9c -> 5e6f7a8b9c0d
+test-1     | UPGRADE OK 5e6f7a8b9c0d
+test-1     | INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+test-1     | INFO  [alembic.runtime.migration] Will assume transactional DDL.
+test-1     | INFO  [alembic.runtime.migration] Running upgrade 5e6f7a8b9c0d -> 6f7a8b9c0d1e
+test-1     | UPGRADE OK 6f7a8b9c0d1e
+test-1     | INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+test-1     | INFO  [alembic.runtime.migration] Will assume transactional DDL.
+test-1     | INFO  [alembic.runtime.migration] Running upgrade 6f7a8b9c0d1e -> 7a8b9c0d1e2f
+test-1     | UPGRADE OK 7a8b9c0d1e2f
+test-1     | INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+test-1     | INFO  [alembic.runtime.migration] Will assume transactional DDL.
+test-1     | INFO  [alembic.runtime.migration] Running upgrade 7a8b9c0d1e2f -> 8b9c0d1e2f3a
+test-1     | UPGRADE OK 8b9c0d1e2f3a
+test-1     | INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+test-1     | INFO  [alembic.runtime.migration] Will assume transactional DDL.
+test-1     | INFO  [alembic.runtime.migration] Running upgrade 8b9c0d1e2f3a -> 9c0d1e2f3a4b
+test-1     | UPGRADE OK 9c0d1e2f3a4b
+test-1     | INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+test-1     | INFO  [alembic.runtime.migration] Will assume transactional DDL.
+test-1     | INFO  [alembic.runtime.migration] Running upgrade 9c0d1e2f3a4b -> a0d1e2f3a4b5
+test-1     | UPGRADE OK a0d1e2f3a4b5
+test-1     | INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+test-1     | INFO  [alembic.runtime.migration] Will assume transactional DDL.
+test-1     | INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+test-1     | INFO  [alembic.runtime.migration] Will assume transactional DDL.
+test-1     | INFO  [alembic.runtime.migration] Running downgrade a0d1e2f3a4b5 -> 9c0d1e2f3a4b
+test-1     | INFO  [alembic.runtime.migration] Running downgrade 9c0d1e2f3a4b -> 8b9c0d1e2f3a
+test-1     | INFO  [alembic.runtime.migration] Running downgrade 8b9c0d1e2f3a -> 7a8b9c0d1e2f
+test-1     | INFO  [alembic.runtime.migration] Running downgrade 7a8b9c0d1e2f -> 6f7a8b9c0d1e
+test-1     | INFO  [alembic.runtime.migration] Running downgrade 6f7a8b9c0d1e -> 5e6f7a8b9c0d
+test-1     | INFO  [alembic.runtime.migration] Running downgrade 5e6f7a8b9c0d -> 4d5e6f7a8b9c
+test-1     | INFO  [alembic.runtime.migration] Running downgrade 4d5e6f7a8b9c -> 3c4d5e6f7a8b, Shared authentication state, tenant integrity, SaaS quotas and access audit.
+test-1     | INFO  [alembic.runtime.migration] Running downgrade 3c4d5e6f7a8b -> 2b3c4d5e6f7a, Align migrated types, tenant indexes and installment foreign key with models.
+test-1     | INFO  [alembic.runtime.migration] Running downgrade 2b3c4d5e6f7a -> 1a2b3c4d5e6f, add sprint4 asaas and focus real configs
+test-1     | INFO  [alembic.runtime.migration] Running downgrade 1a2b3c4d5e6f -> ea3d60221646, add sprint3 boleto and fiscal external status
+test-1     | INFO  [alembic.runtime.migration] Running downgrade ea3d60221646 -> 0f6a8c2d4e9b, f9d0e1a2b3c4, merge migration heads
+test-1     | INFO  [alembic.runtime.migration] Running downgrade 0f6a8c2d4e9b -> c9d8e7f6a5b4, add audit and saas limits
+test-1     | INFO  [alembic.runtime.migration] Running downgrade c9d8e7f6a5b4 -> a4f1c8d2e7b9, b3c4d5e6f7a8, merge cashback and fiscal heads
+test-1     | INFO  [alembic.runtime.migration] Running downgrade a4f1c8d2e7b9 -> f2b4c6d8e9f1, add wholesale pricing and fiscal foundation
+test-1     | INFO  [alembic.runtime.migration] Running downgrade b3c4d5e6f7a8 -> a1b2c3d4e5f6, add cashback sale controls
+test-1     | INFO  [alembic.runtime.migration] Running downgrade a1b2c3d4e5f6 -> f2b4c6d8e9f1, add stock alert dispatch tracking
+test-1     | INFO  [alembic.runtime.migration] Running downgrade f9d0e1a2b3c4 -> 8f6e4c2a1b9d, add boleto financeiro models
+test-1     | INFO  [alembic.runtime.migration] Running downgrade f2b4c6d8e9f1 -> e6f7a8b9c0d1, add client wallet messaging and reversal controls
+test-1     | INFO  [alembic.runtime.migration] Running downgrade e6f7a8b9c0d1 -> d4e5f6a7b8c9, add stock alert settings
+test-1     | INFO  [alembic.runtime.migration] Running downgrade d4e5f6a7b8c9 -> b7c9d1e2f3a4, add empresa visual mode
+test-1     | INFO  [alembic.runtime.migration] Running downgrade b7c9d1e2f3a4 -> 8f6e4c2a1b9d, add cupons adiantamentos validade salario
+test-1     | INFO  [alembic.runtime.migration] Running downgrade 8f6e4c2a1b9d -> 4b2d8b0f6c11, add pdv financeiro permissions and defaults
+test-1     | INFO  [alembic.runtime.migration] Running downgrade 4b2d8b0f6c11 -> c3a1f9d4e8b2, add platform owners
+test-1     | INFO  [alembic.runtime.migration] Running downgrade c3a1f9d4e8b2 -> 9d1dca4d2bc5, convert quantities to integer
+test-1     | INFO  [alembic.runtime.migration] Running downgrade 9d1dca4d2bc5 -> 7f3c1a2b9d4e, v2
+test-1     | INFO  [alembic.runtime.migration] Running downgrade 7f3c1a2b9d4e -> 1150177c20ca, add roles and permissions
+test-1     | INFO  [alembic.runtime.migration] Running downgrade 1150177c20ca -> , initial
+test-1     | DOWNGRADE BASE OK
+test-1     | INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+test-1     | INFO  [alembic.runtime.migration] Will assume transactional DDL.
+test-1     | INFO  [alembic.runtime.migration] Running upgrade  -> 1150177c20ca, initial
+test-1     | INFO  [alembic.runtime.migration] Running upgrade 1150177c20ca -> 7f3c1a2b9d4e, add roles and permissions
+test-1     | INFO  [alembic.runtime.migration] Running upgrade 7f3c1a2b9d4e -> 9d1dca4d2bc5, v2
+test-1     | INFO  [alembic.runtime.migration] Running upgrade 9d1dca4d2bc5 -> c3a1f9d4e8b2, convert quantities to integer
+test-1     | INFO  [alembic.runtime.migration] Running upgrade c3a1f9d4e8b2 -> 4b2d8b0f6c11, add platform owners
+test-1     | INFO  [alembic.runtime.migration] Running upgrade 4b2d8b0f6c11 -> 8f6e4c2a1b9d, add pdv financeiro permissions and defaults
+test-1     | INFO  [alembic.runtime.migration] Running upgrade 8f6e4c2a1b9d -> b7c9d1e2f3a4, add cupons adiantamentos validade salario
+test-1     | INFO  [alembic.runtime.migration] Running upgrade b7c9d1e2f3a4 -> d4e5f6a7b8c9, add empresa visual mode
+test-1     | INFO  [alembic.runtime.migration] Running upgrade d4e5f6a7b8c9 -> e6f7a8b9c0d1, add stock alert settings
+test-1     | INFO  [alembic.runtime.migration] Running upgrade e6f7a8b9c0d1 -> f2b4c6d8e9f1, add client wallet messaging and reversal controls
+test-1     | INFO  [alembic.runtime.migration] Running upgrade 8f6e4c2a1b9d -> f9d0e1a2b3c4, add boleto financeiro models
+test-1     | INFO  [alembic.runtime.migration] Running upgrade f2b4c6d8e9f1 -> a1b2c3d4e5f6, add stock alert dispatch tracking
+test-1     | INFO  [alembic.runtime.migration] Running upgrade a1b2c3d4e5f6 -> b3c4d5e6f7a8, add cashback sale controls
+test-1     | INFO  [alembic.runtime.migration] Running upgrade f2b4c6d8e9f1 -> a4f1c8d2e7b9, add wholesale pricing and fiscal foundation
+test-1     | INFO  [alembic.runtime.migration] Running upgrade a4f1c8d2e7b9, b3c4d5e6f7a8 -> c9d8e7f6a5b4, merge cashback and fiscal heads
+test-1     | INFO  [alembic.runtime.migration] Running upgrade c9d8e7f6a5b4 -> 0f6a8c2d4e9b, add audit and saas limits
+test-1     | INFO  [alembic.runtime.migration] Running upgrade 0f6a8c2d4e9b, f9d0e1a2b3c4 -> ea3d60221646, merge migration heads
+test-1     | INFO  [alembic.runtime.migration] Running upgrade ea3d60221646 -> 1a2b3c4d5e6f, add sprint3 boleto and fiscal external status
+test-1     | INFO  [alembic.runtime.migration] Running upgrade 1a2b3c4d5e6f -> 2b3c4d5e6f7a, add sprint4 asaas and focus real configs
+test-1     | INFO  [alembic.runtime.migration] Running upgrade 2b3c4d5e6f7a -> 3c4d5e6f7a8b, Align migrated types, tenant indexes and installment foreign key with models.
+test-1     | INFO  [alembic.runtime.migration] Running upgrade 3c4d5e6f7a8b -> 4d5e6f7a8b9c, Shared authentication state, tenant integrity, SaaS quotas and access audit.
+test-1     | INFO  [alembic.runtime.migration] Running upgrade 4d5e6f7a8b9c -> 5e6f7a8b9c0d
+test-1     | INFO  [alembic.runtime.migration] Running upgrade 5e6f7a8b9c0d -> 6f7a8b9c0d1e
+test-1     | INFO  [alembic.runtime.migration] Running upgrade 6f7a8b9c0d1e -> 7a8b9c0d1e2f
+test-1     | INFO  [alembic.runtime.migration] Running upgrade 7a8b9c0d1e2f -> 8b9c0d1e2f3a
+test-1     | INFO  [alembic.runtime.migration] Running upgrade 8b9c0d1e2f3a -> 9c0d1e2f3a4b
+test-1     | INFO  [alembic.runtime.migration] Running upgrade 9c0d1e2f3a4b -> a0d1e2f3a4b5
+test-1     | INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+test-1     | INFO  [alembic.runtime.migration] Will assume transactional DDL.
+test-1     | INFO  [alembic.runtime.plugins] setting up autogenerate plugin alembic.autogenerate.schemas
+test-1     | INFO  [alembic.runtime.plugins] setting up autogenerate plugin alembic.autogenerate.tables
+test-1     | INFO  [alembic.runtime.plugins] setting up autogenerate plugin alembic.autogenerate.types
+test-1     | INFO  [alembic.runtime.plugins] setting up autogenerate plugin alembic.autogenerate.constraints
+test-1     | INFO  [alembic.runtime.plugins] setting up autogenerate plugin alembic.autogenerate.defaults
+test-1     | INFO  [alembic.runtime.plugins] setting up autogenerate plugin alembic.autogenerate.comments
+test-1     | INFO  [alembic.ddl.postgresql] Detected sequence named 'cupons_id_seq' as owned by integer column 'cupons(id)', assuming SERIAL and omitting
+test-1     | INFO  [alembic.ddl.postgresql] Detected sequence named 'itens_venda_id_seq' as owned by integer column 'itens_venda(id)', assuming SERIAL and omitting
+test-1     | INFO  [alembic.ddl.postgresql] Detected sequence named 'clientes_id_seq' as owned by integer column 'clientes(id)', assuming SERIAL and omitting
+test-1     | INFO  [alembic.ddl.postgresql] Detected sequence named 'platform_owners_id_seq' as owned by integer column 'platform_owners(id)', assuming SERIAL and omitting
+test-1     | INFO  [alembic.ddl.postgresql] Detected sequence named 'formas_pagamento_id_seq' as owned by integer column 'formas_pagamento(id)', assuming SERIAL and omitting
+test-1     | INFO  [alembic.ddl.postgresql] Detected sequence named 'lancamentos_financeiros_id_seq' as owned by integer column 'lancamentos_financeiros(id)', assuming SERIAL and omitting
+test-1     | INFO  [alembic.ddl.postgresql] Detected sequence named 'boletos_id_seq' as owned by integer column 'boletos(id)', assuming SERIAL and omitting
+test-1     | INFO  [alembic.ddl.postgresql] Detected sequence named 'movimentos_carteira_cliente_id_seq' as owned by integer column 'movimentos_carteira_cliente(id)', assuming SERIAL and omitting
+test-1     | INFO  [alembic.ddl.postgresql] Detected sequence named 'mensagens_cliente_id_seq' as owned by integer column 'mensagens_cliente(id)', assuming SERIAL and omitting
+test-1     | INFO  [alembic.ddl.postgresql] Detected sequence named 'movimentos_estoque_id_seq' as owned by integer column 'movimentos_estoque(id)', assuming SERIAL and omitting
+test-1     | INFO  [alembic.ddl.postgresql] Detected sequence named 'bancos_emissores_id_seq' as owned by integer column 'bancos_emissores(id)', assuming SERIAL and omitting
+test-1     | INFO  [alembic.ddl.postgresql] Detected sequence named 'tenants_id_seq' as owned by integer column 'tenants(id)', assuming SERIAL and omitting
+test-1     | INFO  [alembic.ddl.postgresql] Detected sequence named 'produtos_empresa_id_seq' as owned by integer column 'produtos_empresa(id)', assuming SERIAL and omitting
+test-1     | INFO  [alembic.ddl.postgresql] Detected sequence named 'notas_fiscais_venda_id_seq' as owned by integer column 'notas_fiscais_venda(id)', assuming SERIAL and omitting
+test-1     | INFO  [alembic.ddl.postgresql] Detected sequence named 'produtos_id_seq' as owned by integer column 'produtos(id)', assuming SERIAL and omitting
+test-1     | INFO  [alembic.ddl.postgresql] Detected sequence named 'tipos_operacao_id_seq' as owned by integer column 'tipos_operacao(id)', assuming SERIAL and omitting
+test-1     | INFO  [alembic.ddl.postgresql] Detected sequence named 'regras_juros_multa_id_seq' as owned by integer column 'regras_juros_multa(id)', assuming SERIAL and omitting
+test-1     | INFO  [alembic.ddl.postgresql] Detected sequence named 'categorias_produto_id_seq' as owned by integer column 'categorias_produto(id)', assuming SERIAL and omitting
+test-1     | INFO  [alembic.ddl.postgresql] Detected sequence named 'audit_logs_id_seq' as owned by integer column 'audit_logs(id)', assuming SERIAL and omitting
+test-1     | INFO  [alembic.ddl.postgresql] Detected sequence named 'vendas_id_seq' as owned by integer column 'vendas(id)', assuming SERIAL and omitting
+test-1     | INFO  [alembic.ddl.postgresql] Detected sequence named 'pagamentos_venda_id_seq' as owned by integer column 'pagamentos_venda(id)', assuming SERIAL and omitting
+test-1     | INFO  [alembic.ddl.postgresql] Detected sequence named 'role_id_seq' as owned by integer column 'role(id)', assuming SERIAL and omitting
+test-1     | INFO  [alembic.ddl.postgresql] Detected sequence named 'entregas_alerta_id_seq' as owned by integer column 'entregas_alerta(id)', assuming SERIAL and omitting
+test-1     | INFO  [alembic.ddl.postgresql] Detected sequence named 'configuracoes_notificacao_estoque_id_seq' as owned by integer column 'configuracoes_notificacao_estoque(id)', assuming SERIAL and omitting
+test-1     | INFO  [alembic.ddl.postgresql] Detected sequence named 'eventos_fiscais_nota_id_seq' as owned by integer column 'eventos_fiscais_nota(id)', assuming SERIAL and omitting
+test-1     | INFO  [alembic.ddl.postgresql] Detected sequence named 'role_permission_id_seq' as owned by integer column 'role_permission(id)', assuming SERIAL and omitting
+test-1     | INFO  [alembic.ddl.postgresql] Detected sequence named 'retornos_bancarios_boleto_id_seq' as owned by integer column 'retornos_bancarios_boleto(id)', assuming SERIAL and omitting
+test-1     | INFO  [alembic.ddl.postgresql] Detected sequence named 'operacoes_idempotentes_id_seq' as owned by integer column 'operacoes_idempotentes(id)', assuming SERIAL and omitting
+test-1     | INFO  [alembic.ddl.postgresql] Detected sequence named 'funcionarios_id_seq' as owned by integer column 'funcionarios(id)', assuming SERIAL and omitting
+test-1     | INFO  [alembic.ddl.postgresql] Detected sequence named 'fechamentos_caixa_id_seq' as owned by integer column 'fechamentos_caixa(id)', assuming SERIAL and omitting
+test-1     | INFO  [alembic.ddl.postgresql] Detected sequence named 'parcelas_boleto_id_seq' as owned by integer column 'parcelas_boleto(id)', assuming SERIAL and omitting
+test-1     | INFO  [alembic.ddl.postgresql] Detected sequence named 'arquivos_boleto_id_seq' as owned by integer column 'arquivos_boleto(id)', assuming SERIAL and omitting
+test-1     | INFO  [alembic.ddl.postgresql] Detected sequence named 'configuracoes_parcelamento_id_seq' as owned by integer column 'configuracoes_parcelamento(id)', assuming SERIAL and omitting
+test-1     | INFO  [alembic.ddl.postgresql] Detected sequence named 'empresas_id_seq' as owned by integer column 'empresas(id)', assuming SERIAL and omitting
+test-1     | INFO  [alembic.ddl.postgresql] Detected sequence named 'configuracoes_asaas_empresa_id_seq' as owned by integer column 'configuracoes_asaas_empresa(id)', assuming SERIAL and omitting
+test-1     | INFO  [alembic.ddl.postgresql] Detected sequence named 'categorias_financeiras_id_seq' as owned by integer column 'categorias_financeiras(id)', assuming SERIAL and omitting
+test-1     | INFO  [alembic.ddl.postgresql] Detected sequence named 'configuracoes_fiscais_empresa_id_seq' as owned by integer column 'configuracoes_fiscais_empresa(id)', assuming SERIAL and omitting
+test-1     | INFO  [alembic.ddl.postgresql] Detected sequence named 'funcionarios_empresa_id_seq' as owned by integer column 'funcionarios_empresa(id)', assuming SERIAL and omitting
+test-1     | INFO  [alembic.ddl.postgresql] Detected sequence named 'carteiras_cliente_id_seq' as owned by integer column 'carteiras_cliente(id)', assuming SERIAL and omitting
+test-1     | INFO  [alembic.ddl.postgresql] Detected sequence named 'adiantamentos_funcionario_id_seq' as owned by integer column 'adiantamentos_funcionario(id)', assuming SERIAL and omitting
+test-1     | INFO  [alembic.ddl.postgresql] Detected sequence named 'creditos_cashback_cliente_id_seq' as owned by integer column 'creditos_cashback_cliente(id)', assuming SERIAL and omitting
+test-1     | INFO  [alembic.ddl.postgresql] Detected sequence named 'configuracoes_cliente_empresa_id_seq' as owned by integer column 'configuracoes_cliente_empresa(id)', assuming SERIAL and omitting
+test-1     | INFO  [alembic.ddl.postgresql] Detected sequence named 'permissions_id_seq' as owned by integer column 'permissions(id)', assuming SERIAL and omitting
+test-1     | INFO  [alembic.ddl.postgresql] Detected sequence named 'eventos_boleto_id_seq' as owned by integer column 'eventos_boleto(id)', assuming SERIAL and omitting
+test-1     | MODEL TYPES INDEXES FOREIGN KEYS OK
+test-1     | {"head": "a0d1e2f3a4b5", "revisions": ["1150177c20ca", "7f3c1a2b9d4e", "9d1dca4d2bc5", "c3a1f9d4e8b2", "4b2d8b0f6c11", "8f6e4c2a1b9d", "b7c9d1e2f3a4", "d4e5f6a7b8c9", "e6f7a8b9c0d1", "f2b4c6d8e9f1", "f9d0e1a2b3c4", "a1b2c3d4e5f6", "b3c4d5e6f7a8", "a4f1c8d2e7b9", "c9d8e7f6a5b4", "0f6a8c2d4e9b", "ea3d60221646", "1a2b3c4d5e6f", "2b3c4d5e6f7a", "3c4d5e6f7a8b", "4d5e6f7a8b9c", "5e6f7a8b9c0d", "6f7a8b9c0d1e", "7a8b9c0d1e2f", "8b9c0d1e2f3a", "9c0d1e2f3a4b", "a0d1e2f3a4b5"], "tables": 47, "upgrade_downgrade_upgrade": "OK"}
+test-1     | ============================= test session starts ==============================
+test-1     | platform linux -- Python 3.12.12, pytest-9.0.3, pluggy-1.6.0
+test-1     | rootdir: /app
+test-1     | configfile: pytest.ini
+test-1     | testpaths: tests
+test-1     | plugins: cov-6.1.1
+test-1     | collected 868 items
+test-1     | 
+test-1     | tests/test_boleto_service.py ...                                         [  0%]
+test-1     | tests/test_fluxo_pdv_financeiro.py ............................          [  3%]
+test-1     | tests/test_import_export.py ...                                          [  3%]
+test-1     | tests/test_integracoes_sprint4.py ..                                     [  4%]
+test-1     | tests/test_permission_hierarchy.py ...                                   [  4%]
+test-1     | tests/test_permissions_security.py ........                              [  5%]
+test-1     | tests/test_produto_service.py ...                                        [  5%]
+test-1     | tests/test_release_candidate.py .........                                [  6%]
+test-1     | tests/test_runtime.py ..........                                         [  7%]
+db-test-1  | 2026-09-07 21:48:13.931 UTC [266] ERROR:  invalid input value for enum layoutarquivoboleto: "INVALID"
+db-test-1  | 2026-09-07 21:48:13.931 UTC [266] STATEMENT:  ALTER TABLE bancos_emissores ALTER COLUMN layout_arquivo TYPE layoutarquivoboleto USING layout_arquivo::layoutarquivoboleto
+test-1     | tests/test_schema.py ...                                                 [  8%]
+test-1     | tests/test_security_headers.py .....                                     [  8%]
+test-1     | tests/test_sprint02_adversarial.py .........................             [ 11%]
+db-test-1  | 2026-09-07 21:49:05.250 UTC [526] ERROR:  Referencia de outro tenant
+db-test-1  | 2026-09-07 21:49:05.250 UTC [526] CONTEXT:  PL/pgSQL function ocean_integrity() line 26 at RAISE
+db-test-1  | 2026-09-07 21:49:05.250 UTC [526] STATEMENT:  INSERT INTO produtos_empresa (produto_id, empresa_id, estoque_atual, estoque_minimo, valor_compra, valor_venda, valor_varejo, valor_atacado, quantidade_minima_atacado, data_validade, ultimo_alerta_estoque_status, ultimo_alerta_estoque_em, ativo, criado_em, atualizado_em, tenant_id) VALUES (1, 3, 0, 0, 0, 0, 0, 0, 1, NULL, NULL, NULL, true, '2026-09-07T21:49:05.224744'::timestamp, '2026-09-07T21:49:05.224753'::timestamp, 1) RETURNING produtos_empresa.id
+db-test-1  | 2026-09-07 21:49:05.261 UTC [526] ERROR:  Referencia de outro tenant
+db-test-1  | 2026-09-07 21:49:05.261 UTC [526] CONTEXT:  PL/pgSQL function ocean_integrity() line 26 at RAISE
+db-test-1  | 2026-09-07 21:49:05.261 UTC [526] STATEMENT:  UPDATE funcionarios SET role_id=3, atualizado_em='2026-09-07T21:49:05.260256'::timestamp WHERE funcionarios.id = 1
+db-test-1  | 2026-09-07 21:49:07.535 UTC [546] ERROR:  saas_quota atingida
+db-test-1  | 2026-09-07 21:49:07.535 UTC [546] CONTEXT:  PL/pgSQL function ocean_quota() line 25 at RAISE
+db-test-1  | 2026-09-07 21:49:07.535 UTC [546] STATEMENT:  INSERT INTO produtos (categoria_id, criado_por_funcionario_id, nome, descricao, possui_ncm, ncm, codigo_barras, ativo, criado_em, atualizado_em, tenant_id) VALUES (NULL, NULL, 'Race 1', NULL, false, NULL, NULL, true, '2026-09-07T21:49:07.532857'::timestamp, '2026-09-07T21:49:07.532867'::timestamp, 1) RETURNING produtos.id
+db-test-1  | 2026-09-07 21:49:07.539 UTC [545] ERROR:  saas_quota atingida
+db-test-1  | 2026-09-07 21:49:07.539 UTC [545] CONTEXT:  PL/pgSQL function ocean_quota() line 25 at RAISE
+db-test-1  | 2026-09-07 21:49:07.539 UTC [545] STATEMENT:  INSERT INTO produtos (categoria_id, criado_por_funcionario_id, nome, descricao, possui_ncm, ncm, codigo_barras, ativo, criado_em, atualizado_em, tenant_id) VALUES (NULL, NULL, 'Race 2', NULL, false, NULL, NULL, true, '2026-09-07T21:49:07.533565'::timestamp, '2026-09-07T21:49:07.533581'::timestamp, 1) RETURNING produtos.id
+db-test-1  | 2026-09-07 21:49:07.540 UTC [548] ERROR:  saas_quota atingida
+db-test-1  | 2026-09-07 21:49:07.540 UTC [548] CONTEXT:  PL/pgSQL function ocean_quota() line 25 at RAISE
+db-test-1  | 2026-09-07 21:49:07.540 UTC [548] STATEMENT:  INSERT INTO produtos (categoria_id, criado_por_funcionario_id, nome, descricao, possui_ncm, ncm, codigo_barras, ativo, criado_em, atualizado_em, tenant_id) VALUES (NULL, NULL, 'Race 4', NULL, false, NULL, NULL, true, '2026-09-07T21:49:07.537201'::timestamp, '2026-09-07T21:49:07.537215'::timestamp, 1) RETURNING produtos.id
+db-test-1  | 2026-09-07 21:49:07.543 UTC [547] ERROR:  saas_quota atingida
+db-test-1  | 2026-09-07 21:49:07.543 UTC [547] CONTEXT:  PL/pgSQL function ocean_quota() line 25 at RAISE
+db-test-1  | 2026-09-07 21:49:07.543 UTC [547] STATEMENT:  INSERT INTO produtos (categoria_id, criado_por_funcionario_id, nome, descricao, possui_ncm, ncm, codigo_barras, ativo, criado_em, atualizado_em, tenant_id) VALUES (NULL, NULL, 'Race 3', NULL, false, NULL, NULL, true, '2026-09-07T21:49:07.536157'::timestamp, '2026-09-07T21:49:07.536173'::timestamp, 1) RETURNING produtos.id
+db-test-1  | 2026-09-07 21:49:07.545 UTC [549] ERROR:  saas_quota atingida
+db-test-1  | 2026-09-07 21:49:07.545 UTC [549] CONTEXT:  PL/pgSQL function ocean_quota() line 25 at RAISE
+db-test-1  | 2026-09-07 21:49:07.545 UTC [549] STATEMENT:  INSERT INTO produtos (categoria_id, criado_por_funcionario_id, nome, descricao, possui_ncm, ncm, codigo_barras, ativo, criado_em, atualizado_em, tenant_id) VALUES (NULL, NULL, 'Race 5', NULL, false, NULL, NULL, true, '2026-09-07T21:49:07.539024'::timestamp, '2026-09-07T21:49:07.539033'::timestamp, 1) RETURNING produtos.id
+db-test-1  | 2026-09-07 21:49:08.635 UTC [550] ERROR:  saas_quota atingida
+db-test-1  | 2026-09-07 21:49:08.635 UTC [550] CONTEXT:  PL/pgSQL function ocean_quota() line 25 at RAISE
+db-test-1  | 2026-09-07 21:49:08.635 UTC [550] STATEMENT:  INSERT INTO empresas (cnpj, razao_social, nome_fantasia, tipo_empresa, visual_modo, ativo, criado_em, atualizado_em, tenant_id) VALUES ('race-5', 'Race', 'Race 5', 'FILIAL', 'MODERNO', true, '2026-09-07T21:49:08.635116'::timestamp, '2026-09-07T21:49:08.635126'::timestamp, 1) RETURNING empresas.id
+db-test-1  | 2026-09-07 21:49:08.640 UTC [551] ERROR:  saas_quota atingida
+db-test-1  | 2026-09-07 21:49:08.640 UTC [551] CONTEXT:  PL/pgSQL function ocean_quota() line 25 at RAISE
+db-test-1  | 2026-09-07 21:49:08.640 UTC [551] STATEMENT:  INSERT INTO empresas (cnpj, razao_social, nome_fantasia, tipo_empresa, visual_modo, ativo, criado_em, atualizado_em, tenant_id) VALUES ('race-3', 'Race', 'Race 3', 'FILIAL', 'MODERNO', true, '2026-09-07T21:49:08.636860'::timestamp, '2026-09-07T21:49:08.636876'::timestamp, 1) RETURNING empresas.id
+db-test-1  | 2026-09-07 21:49:08.642 UTC [552] ERROR:  saas_quota atingida
+db-test-1  | 2026-09-07 21:49:08.642 UTC [552] CONTEXT:  PL/pgSQL function ocean_quota() line 25 at RAISE
+db-test-1  | 2026-09-07 21:49:08.642 UTC [552] STATEMENT:  INSERT INTO empresas (cnpj, razao_social, nome_fantasia, tipo_empresa, visual_modo, ativo, criado_em, atualizado_em, tenant_id) VALUES ('race-4', 'Race', 'Race 4', 'FILIAL', 'MODERNO', true, '2026-09-07T21:49:08.639792'::timestamp, '2026-09-07T21:49:08.639800'::timestamp, 1) RETURNING empresas.id
+db-test-1  | 2026-09-07 21:49:08.663 UTC [553] ERROR:  saas_quota atingida
+db-test-1  | 2026-09-07 21:49:08.663 UTC [553] CONTEXT:  PL/pgSQL function ocean_quota() line 25 at RAISE
+db-test-1  | 2026-09-07 21:49:08.663 UTC [553] STATEMENT:  INSERT INTO empresas (cnpj, razao_social, nome_fantasia, tipo_empresa, visual_modo, ativo, criado_em, atualizado_em, tenant_id) VALUES ('race-1', 'Race', 'Race 1', 'FILIAL', 'MODERNO', true, '2026-09-07T21:49:08.660328'::timestamp, '2026-09-07T21:49:08.660340'::timestamp, 1) RETURNING empresas.id
+db-test-1  | 2026-09-07 21:49:08.668 UTC [554] ERROR:  saas_quota atingida
+db-test-1  | 2026-09-07 21:49:08.668 UTC [554] CONTEXT:  PL/pgSQL function ocean_quota() line 25 at RAISE
+db-test-1  | 2026-09-07 21:49:08.668 UTC [554] STATEMENT:  INSERT INTO empresas (cnpj, razao_social, nome_fantasia, tipo_empresa, visual_modo, ativo, criado_em, atualizado_em, tenant_id) VALUES ('race-2', 'Race', 'Race 2', 'FILIAL', 'MODERNO', true, '2026-09-07T21:49:08.664792'::timestamp, '2026-09-07T21:49:08.664802'::timestamp, 1) RETURNING empresas.id
+db-test-1  | 2026-09-07 21:49:10.119 UTC [562] ERROR:  saas_quota atingida
+db-test-1  | 2026-09-07 21:49:10.119 UTC [562] CONTEXT:  PL/pgSQL function ocean_quota() line 25 at RAISE
+db-test-1  | 2026-09-07 21:49:10.119 UTC [562] STATEMENT:  INSERT INTO funcionarios (role_id, nome, cpf, usuario, senha_hash, session_version, salario, meta, ativo, criado_em, atualizado_em, tenant_id) VALUES (1, 'Race 4', 'race-4', 'race-4', 'scrypt:32768:8:1$wWMhsbDbv9vjSvp3$16770a6ca2d0cb9673c05e297bdcac6a57aa40d8be7ce0a6446d9c4eccfb9ff584337208c07bfe3fb52c70f4a98d4a7e3d45b08a083ca13ea5b1bb583d8aa879', 1, 0, 0, true, '2026-09-07T21:49:10.118135'::timestamp, '2026-09-07T21:49:10.118162'::timestamp, 1) RETURNING funcionarios.id
+db-test-1  | 2026-09-07 21:49:10.143 UTC [562] ERROR:  saas_quota atingida
+db-test-1  | 2026-09-07 21:49:10.143 UTC [562] CONTEXT:  PL/pgSQL function ocean_quota() line 25 at RAISE
+db-test-1  | 2026-09-07 21:49:10.143 UTC [562] STATEMENT:  INSERT INTO funcionarios (role_id, nome, cpf, usuario, senha_hash, session_version, salario, meta, ativo, criado_em, atualizado_em, tenant_id) VALUES (1, 'Race 2', 'race-2', 'race-2', 'scrypt:32768:8:1$oDVo3mgyXGzYlyDd$e3d3f73e501d1f6139273b8b80a45d167db1409023f6641d50532b6368ac136eb5d6b37ff0f83f215bbc520b0b8b8a68dd3f4321e2c96d52fb1bdd955f1b835a', 1, 0, 0, true, '2026-09-07T21:49:10.141995'::timestamp, '2026-09-07T21:49:10.142104'::timestamp, 1) RETURNING funcionarios.id
+db-test-1  | 2026-09-07 21:49:10.147 UTC [563] ERROR:  saas_quota atingida
+db-test-1  | 2026-09-07 21:49:10.147 UTC [563] CONTEXT:  PL/pgSQL function ocean_quota() line 25 at RAISE
+db-test-1  | 2026-09-07 21:49:10.147 UTC [563] STATEMENT:  INSERT INTO funcionarios (role_id, nome, cpf, usuario, senha_hash, session_version, salario, meta, ativo, criado_em, atualizado_em, tenant_id) VALUES (1, 'Race 3', 'race-3', 'race-3', 'scrypt:32768:8:1$hWjU7xiHpqDMfZ1c$e0b51db9414b0d5649ce8f65dd0e1b40021a7984b89159e7b0d51d654c64ba0c47de0a23dca9dc052f247e645e4070d8b84d8c3baa897c209fc76cf64551fd61', 1, 0, 0, true, '2026-09-07T21:49:10.138657'::timestamp, '2026-09-07T21:49:10.138681'::timestamp, 1) RETURNING funcionarios.id
+db-test-1  | 2026-09-07 21:49:10.158 UTC [564] ERROR:  saas_quota atingida
+db-test-1  | 2026-09-07 21:49:10.158 UTC [564] CONTEXT:  PL/pgSQL function ocean_quota() line 25 at RAISE
+db-test-1  | 2026-09-07 21:49:10.158 UTC [564] STATEMENT:  INSERT INTO funcionarios (role_id, nome, cpf, usuario, senha_hash, session_version, salario, meta, ativo, criado_em, atualizado_em, tenant_id) VALUES (1, 'Race 1', 'race-1', 'race-1', 'scrypt:32768:8:1$MoL67BwLmYRE2GzJ$4062517cde59607640300d64bb4fc0d86ae99d9c660f0516d83c800ced29c0c63783b36f99167a3026e69e7d5364265f618f0a823c5f5cbfe48cb681972bcd34', 1, 0, 0, true, '2026-09-07T21:49:10.152946'::timestamp, '2026-09-07T21:49:10.152957'::timestamp, 1) RETURNING funcionarios.id
+db-test-1  | 2026-09-07 21:49:10.162 UTC [565] ERROR:  saas_quota atingida
+db-test-1  | 2026-09-07 21:49:10.162 UTC [565] CONTEXT:  PL/pgSQL function ocean_quota() line 25 at RAISE
+db-test-1  | 2026-09-07 21:49:10.162 UTC [565] STATEMENT:  INSERT INTO funcionarios (role_id, nome, cpf, usuario, senha_hash, session_version, salario, meta, ativo, criado_em, atualizado_em, tenant_id) VALUES (1, 'Race 5', 'race-5', 'race-5', 'scrypt:32768:8:1$9qMyFzPvi9njET0Q$c844137b60635da089a65c8ed1a41bc9a24414d70508380821550f7800541c32825d810c7731a783c77fc5c47fe823b23bb04913514b9b6edab50821d38d9ded', 1, 0, 0, true, '2026-09-07T21:49:10.156977'::timestamp, '2026-09-07T21:49:10.156989'::timestamp, 1) RETURNING funcionarios.id
+db-test-1  | 2026-09-07 21:49:15.751 UTC [586] ERROR:  saas_quota atingida
+db-test-1  | 2026-09-07 21:49:15.751 UTC [586] CONTEXT:  PL/pgSQL function ocean_quota() line 25 at RAISE
+db-test-1  | 2026-09-07 21:49:15.751 UTC [586] STATEMENT:  INSERT INTO produtos (categoria_id, criado_por_funcionario_id, nome, descricao, possui_ncm, ncm, codigo_barras, ativo, criado_em, atualizado_em, tenant_id) VALUES (NULL, 1, 'Imported 2', NULL, false, NULL, '2000010000029', true, '2026-09-07T21:49:15.750605'::timestamp, '2026-09-07T21:49:15.750614'::timestamp, 1) RETURNING produtos.id
+db-test-1  | 2026-09-07 21:49:15.787 UTC [586] ERROR:  saas_quota atingida
+db-test-1  | 2026-09-07 21:49:15.787 UTC [586] CONTEXT:  PL/pgSQL function ocean_quota() line 25 at RAISE
+db-test-1  | 2026-09-07 21:49:15.787 UTC [586] STATEMENT:  INSERT INTO produtos (categoria_id, criado_por_funcionario_id, nome, descricao, possui_ncm, ncm, codigo_barras, ativo, criado_em, atualizado_em, tenant_id) VALUES (NULL, 1, 'Imported 2', NULL, false, NULL, '2000010000029', true, '2026-09-07T21:49:15.786854'::timestamp, '2026-09-07T21:49:15.786862'::timestamp, 1) RETURNING produtos.id
+db-test-1  | 2026-09-07 21:49:17.430 UTC [595] ERROR:  saas_quota atingida
+db-test-1  | 2026-09-07 21:49:17.430 UTC [595] CONTEXT:  PL/pgSQL function ocean_quota() line 25 at RAISE
+db-test-1  | 2026-09-07 21:49:17.430 UTC [595] STATEMENT:  INSERT INTO funcionarios (role_id, nome, cpf, usuario, senha_hash, session_version, salario, meta, ativo, criado_em, atualizado_em, tenant_id) VALUES (2, 'Imported 2', '11122233342', 'imported-2', 'scrypt:32768:8:1$mU9LS5vCOUDQN1hw$046edf4fd2ad3ca139b2894916ba19ab2b762574c7d5ce8238b1fa4d28ad19a32eb0a6076629ecae192b4c07d533202011318adbbdefdfc981674203ddfa7f98', 1, 0.00, 0.00, true, '2026-09-07T21:49:17.428533'::timestamp, '2026-09-07T21:49:17.428548'::timestamp, 1) RETURNING funcionarios.id
+db-test-1  | 2026-09-07 21:49:17.619 UTC [595] ERROR:  saas_quota atingida
+db-test-1  | 2026-09-07 21:49:17.619 UTC [595] CONTEXT:  PL/pgSQL function ocean_quota() line 25 at RAISE
+db-test-1  | 2026-09-07 21:49:17.619 UTC [595] STATEMENT:  INSERT INTO funcionarios (role_id, nome, cpf, usuario, senha_hash, session_version, salario, meta, ativo, criado_em, atualizado_em, tenant_id) VALUES (2, 'Imported 2', '11122233342', 'imported-2', 'scrypt:32768:8:1$f49FB1tki2Y4Xlqt$fa17c4247088e6ab3fd8bb200831db5bcc871d7616dfe839ac06314da2916f87f32c59879a78759b8045fd98bbc020842385da9815225560512f137a89d9a378', 1, 0.00, 0.00, true, '2026-09-07T21:49:17.617280'::timestamp, '2026-09-07T21:49:17.617294'::timestamp, 1) RETURNING funcionarios.id
+db-test-1  | 2026-09-07 21:49:20.075 UTC [618] ERROR:  saas_quota atingida
+db-test-1  | 2026-09-07 21:49:20.075 UTC [618] CONTEXT:  PL/pgSQL function ocean_quota() line 25 at RAISE
+db-test-1  | 2026-09-07 21:49:20.075 UTC [618] STATEMENT:  INSERT INTO vendas (cashback_processado, cashback_payload, empresa_id, funcionario_id, cliente_id, tipo_operacao_id, cupom_id, cancelado_por_funcionario_id, numero_unico, status, modalidade_preco, subtotal, desconto, cashback_ativado, cashback_utilizado, cashback_gerado, cashback_percentual_aplicado, valor_cancelado, total, cancelado_em, data_venda, observacao, criado_em, atualizado_em, tenant_id) VALUES (false, NULL, 1, NULL, NULL, 1, NULL, NULL, 'race-3', 'ABERTA', 'VAREJO', 0, 0, true, 0, 0, 0, 0, 0, NULL, '2026-09-07T21:49:20.068616'::timestamp, NULL, '2026-09-07T21:49:20.068632'::timestamp, '2026-09-07T21:49:20.068641'::timestamp, 1) RETURNING vendas.id
+db-test-1  | 2026-09-07 21:49:20.080 UTC [616] ERROR:  saas_quota atingida
+db-test-1  | 2026-09-07 21:49:20.080 UTC [616] CONTEXT:  PL/pgSQL function ocean_quota() line 25 at RAISE
+db-test-1  | 2026-09-07 21:49:20.080 UTC [616] STATEMENT:  INSERT INTO vendas (cashback_processado, cashback_payload, empresa_id, funcionario_id, cliente_id, tipo_operacao_id, cupom_id, cancelado_por_funcionario_id, numero_unico, status, modalidade_preco, subtotal, desconto, cashback_ativado, cashback_utilizado, cashback_gerado, cashback_percentual_aplicado, valor_cancelado, total, cancelado_em, data_venda, observacao, criado_em, atualizado_em, tenant_id) VALUES (false, NULL, 1, NULL, NULL, 1, NULL, NULL, 'race-1', 'ABERTA', 'VAREJO', 0, 0, true, 0, 0, 0, 0, 0, NULL, '2026-09-07T21:49:20.067240'::timestamp, NULL, '2026-09-07T21:49:20.067259'::timestamp, '2026-09-07T21:49:20.067267'::timestamp, 1) RETURNING vendas.id
+db-test-1  | 2026-09-07 21:49:20.082 UTC [617] ERROR:  saas_quota atingida
+db-test-1  | 2026-09-07 21:49:20.082 UTC [617] CONTEXT:  PL/pgSQL function ocean_quota() line 25 at RAISE
+db-test-1  | 2026-09-07 21:49:20.082 UTC [617] STATEMENT:  INSERT INTO vendas (cashback_processado, cashback_payload, empresa_id, funcionario_id, cliente_id, tipo_operacao_id, cupom_id, cancelado_por_funcionario_id, numero_unico, status, modalidade_preco, subtotal, desconto, cashback_ativado, cashback_utilizado, cashback_gerado, cashback_percentual_aplicado, valor_cancelado, total, cancelado_em, data_venda, observacao, criado_em, atualizado_em, tenant_id) VALUES (false, NULL, 1, NULL, NULL, 1, NULL, NULL, 'race-2', 'ABERTA', 'VAREJO', 0, 0, true, 0, 0, 0, 0, 0, NULL, '2026-09-07T21:49:20.069911'::timestamp, NULL, '2026-09-07T21:49:20.069927'::timestamp, '2026-09-07T21:49:20.069935'::timestamp, 1) RETURNING vendas.id
+db-test-1  | 2026-09-07 21:49:20.085 UTC [619] ERROR:  saas_quota atingida
+db-test-1  | 2026-09-07 21:49:20.085 UTC [619] CONTEXT:  PL/pgSQL function ocean_quota() line 25 at RAISE
+db-test-1  | 2026-09-07 21:49:20.085 UTC [619] STATEMENT:  INSERT INTO vendas (cashback_processado, cashback_payload, empresa_id, funcionario_id, cliente_id, tipo_operacao_id, cupom_id, cancelado_por_funcionario_id, numero_unico, status, modalidade_preco, subtotal, desconto, cashback_ativado, cashback_utilizado, cashback_gerado, cashback_percentual_aplicado, valor_cancelado, total, cancelado_em, data_venda, observacao, criado_em, atualizado_em, tenant_id) VALUES (false, NULL, 1, NULL, NULL, 1, NULL, NULL, 'race-4', 'ABERTA', 'VAREJO', 0, 0, true, 0, 0, 0, 0, 0, NULL, '2026-09-07T21:49:20.075585'::timestamp, NULL, '2026-09-07T21:49:20.075596'::timestamp, '2026-09-07T21:49:20.075602'::timestamp, 1) RETURNING vendas.id
+db-test-1  | 2026-09-07 21:49:20.099 UTC [607] ERROR:  Referencia de outro tenant
+db-test-1  | 2026-09-07 21:49:20.099 UTC [607] CONTEXT:  PL/pgSQL function ocean_integrity() line 26 at RAISE
+db-test-1  | 2026-09-07 21:49:20.099 UTC [607] STATEMENT:  INSERT INTO pagamentos_venda (venda_id, forma_pagamento_id, valor, comprovante, criado_em, atualizado_em, tenant_id) VALUES (1, 1, 0, NULL, '2026-09-07T21:49:20.098168'::timestamp, '2026-09-07T21:49:20.098181'::timestamp, 2) RETURNING pagamentos_venda.id
+db-test-1  | 2026-09-07 21:49:21.550 UTC [620] ERROR:  Referencia de outra empresa
+db-test-1  | 2026-09-07 21:49:21.550 UTC [620] CONTEXT:  PL/pgSQL function ocean_integrity() line 30 at RAISE
+db-test-1  | 2026-09-07 21:49:21.550 UTC [620] STATEMENT:  INSERT INTO configuracoes_parcelamento (empresa_id, banco_emissor_id, numero_min_parcelas, numero_max_parcelas, intervalo_dias_padrao, permite_intervalo_customizado, dia_fixo_vencimento, valor_minimo_por_parcela, regra_distribuicao, arredondamento_ultima_parcela, ativo, criado_em, atualizado_em, tenant_id) VALUES (2, 1, 1, 3, 30, false, NULL, 0, 'proporcional', true, true, '2026-09-07T21:49:21.549659'::timestamp, '2026-09-07T21:49:21.549670'::timestamp, 1) RETURNING configuracoes_parcelamento.id
+test-1     | tests/test_sprint02_security.py ........................................ [ 16%]
+db-test-1  | 2026-09-07 21:49:50.444 UTC [755] ERROR:  Referencia de outro tenant
+db-test-1  | 2026-09-07 21:49:50.444 UTC [755] CONTEXT:  PL/pgSQL function ocean_integrity() line 26 at RAISE
+db-test-1  | 2026-09-07 21:49:50.444 UTC [755] STATEMENT:  UPDATE "funcionarios" SET id = id
+test-1     | ....                                                                     [ 16%]
+test-1     | tests/test_sprint03_adversarial.py ..................................... [ 21%]
+db-test-1  | 2026-09-07 21:50:58.044 UTC [1073] ERROR:  numeric field overflow
+db-test-1  | 2026-09-07 21:50:58.044 UTC [1073] DETAIL:  A field with precision 12, scale 2 must round to an absolute value less than 10^10.
+db-test-1  | 2026-09-07 21:50:58.044 UTC [1073] STATEMENT:  INSERT INTO produtos_empresa (produto_id, empresa_id, estoque_atual, estoque_minimo, valor_compra, valor_venda, valor_varejo, valor_atacado, quantidade_minima_atacado, data_validade, ultimo_alerta_estoque_status, ultimo_alerta_estoque_em, ativo, criado_em, atualizado_em, tenant_id) VALUES (1, 1, 0, 0, 0.00, 10000000000.00, 10000000000.00, 0.00, 1, NULL, NULL, NULL, true, '2026-09-07T21:50:58.037835'::timestamp, '2026-09-07T21:50:58.037845'::timestamp, 1) RETURNING produtos_empresa.id
+test-1     | ................                                                         [ 22%]
+db-test-1  | 2026-09-07 21:51:21.076 UTC [1169] ERROR:  new row for relation "produtos_empresa" violates check constraint "ck_produtos_empresa_finite"
+db-test-1  | 2026-09-07 21:51:21.076 UTC [1169] DETAIL:  Failing row contains (1, 1, 9, 0, NaN, 10.00, t, 1, 2026-09-07 21:51:20.368271, 2026-09-07 21:51:20.994327, 1, null, null, null, 10.00, 8.00, 1).
+db-test-1  | 2026-09-07 21:51:21.076 UTC [1169] STATEMENT:  UPDATE produtos_empresa SET valor_compra = 'NaN'::numeric
+db-test-1  | 2026-09-07 21:51:22.781 UTC [1178] ERROR:  new row for relation "funcionarios" violates check constraint "ck_funcionarios_finite"
+db-test-1  | 2026-09-07 21:51:22.781 UTC [1178] DETAIL:  Failing row contains (Admin, 12345678901, same-user, scrypt:32768:8:1$TFlEPEV2jqrqQIOo$f4f3c742ffc99847423e3aae7f1f32..., t, 1, 2026-09-07 21:51:21.687439, 2026-09-07 21:51:21.687451, 1, 1, NaN, 0.00, 1).
+db-test-1  | 2026-09-07 21:51:22.781 UTC [1178] STATEMENT:  UPDATE funcionarios SET salario = 'NaN'::numeric
+db-test-1  | 2026-09-07 21:51:24.141 UTC [1187] ERROR:  new row for relation "vendas" violates check constraint "ck_vendas_finite"
+db-test-1  | 2026-09-07 21:51:24.141 UTC [1187] DETAIL:  Failing row contains (1, 1, 1, null, VEN-1-20260907215124-C7A2ED, FINALIZADA, 10.00, 0.00, NaN, 2026-09-07 21:51:24.013919, null, 1, 2026-09-07 21:51:24.016262, 2026-09-07 21:51:24.072255, 1, null, null, 0.00, 0.00, 0.00, 0.00, null, t, VAREJO, t, 2ea09ed3fe6ab7ad8a2c4b598bb8076d2edb9e553ac26190e53f7a29ddf8afe6).
+db-test-1  | 2026-09-07 21:51:24.141 UTC [1187] STATEMENT:  UPDATE vendas SET total = 'NaN'::numeric
+db-test-1  | 2026-09-07 21:51:25.586 UTC [1196] ERROR:  new row for relation "pagamentos_venda" violates check constraint "ck_pagamentos_venda_finite"
+db-test-1  | 2026-09-07 21:51:25.586 UTC [1196] DETAIL:  Failing row contains (1, 1, NaN, null, 1, 2026-09-07 21:51:25.43035, 2026-09-07 21:51:25.430357, 1).
+db-test-1  | 2026-09-07 21:51:25.586 UTC [1196] STATEMENT:  UPDATE pagamentos_venda SET valor = 'NaN'::numeric
+db-test-1  | 2026-09-07 21:51:26.978 UTC [1197] ERROR:  new row for relation "itens_venda" violates check constraint "ck_itens_venda_finite"
+db-test-1  | 2026-09-07 21:51:26.978 UTC [1197] DETAIL:  Failing row contains (1, 1, 1, NaN, 10.00, 1, 2026-09-07 21:51:26.861044, 2026-09-07 21:51:26.861051, 1, null, 0, 0.00, null, null, VAREJO).
+db-test-1  | 2026-09-07 21:51:26.978 UTC [1197] STATEMENT:  UPDATE itens_venda SET valor_unitario = 'NaN'::numeric
+db-test-1  | 2026-09-07 21:51:28.383 UTC [1206] ERROR:  Use reversao formal para ajustar lancamentos
+db-test-1  | 2026-09-07 21:51:28.383 UTC [1206] CONTEXT:  PL/pgSQL function ocean_preserve_ledger() line 6 at RAISE
+db-test-1  | 2026-09-07 21:51:28.383 UTC [1206] STATEMENT:  UPDATE lancamentos_financeiros SET valor = 'NaN'::numeric
+db-test-1  | 2026-09-07 21:51:29.733 UTC [1215] ERROR:  new row for relation "movimentos_estoque" violates check constraint "ck_movimentos_estoque_finite"
+db-test-1  | 2026-09-07 21:51:29.733 UTC [1215] DETAIL:  Failing row contains (1, 1, 1, 1, SAIDA, VENDA, 1, NaN, 10.00, Baixa automatica por venda do PDV., 2026-09-07 21:51:29.644743, 1, 2026-09-07 21:51:29.646634, 2026-09-07 21:51:29.646641, 1, 1, null, f, null, null, null).
+db-test-1  | 2026-09-07 21:51:29.733 UTC [1215] STATEMENT:  UPDATE movimentos_estoque SET valor_unitario = 'NaN'::numeric
+db-test-1  | 2026-09-07 21:51:31.968 UTC [1216] ERROR:  check constraint "ck_produtos_empresa_finite" of relation "produtos_empresa" is violated by some row
+db-test-1  | 2026-09-07 21:51:31.968 UTC [1216] STATEMENT:  ALTER TABLE produtos_empresa ADD CONSTRAINT ck_produtos_empresa_finite CHECK (valor_compra NOT IN ('NaN'::numeric, 'Infinity'::numeric, '-Infinity'::numeric) AND valor_venda NOT IN ('NaN'::numeric, 'Infinity'::numeric, '-Infinity'::numeric) AND valor_varejo NOT IN ('NaN'::numeric, 'Infinity'::numeric, '-Infinity'::numeric) AND valor_atacado NOT IN ('NaN'::numeric, 'Infinity'::numeric, '-Infinity'::numeric))
+db-test-1  | 2026-09-07 21:51:33.538 UTC [1228] ERROR:  check constraint "ck_vendas_finite" of relation "vendas" is violated by some row
+db-test-1  | 2026-09-07 21:51:33.538 UTC [1228] STATEMENT:  ALTER TABLE vendas ADD CONSTRAINT ck_vendas_finite CHECK (subtotal NOT IN ('NaN'::numeric, 'Infinity'::numeric, '-Infinity'::numeric) AND desconto NOT IN ('NaN'::numeric, 'Infinity'::numeric, '-Infinity'::numeric) AND cashback_utilizado NOT IN ('NaN'::numeric, 'Infinity'::numeric, '-Infinity'::numeric) AND cashback_gerado NOT IN ('NaN'::numeric, 'Infinity'::numeric, '-Infinity'::numeric) AND cashback_percentual_aplicado NOT IN ('NaN'::numeric, 'Infinity'::numeric, '-Infinity'::numeric) AND valor_cancelado NOT IN ('NaN'::numeric, 'Infinity'::numeric, '-Infinity'::numeric) AND total NOT IN ('NaN'::numeric, 'Infinity'::numeric, '-Infinity'::numeric))
+test-1     | tests/test_sprint03_database.py ..........                               [ 24%]
+db-test-1  | 2026-09-07 21:51:47.749 UTC [1304] ERROR:  saas_quota atingida
+db-test-1  | 2026-09-07 21:51:47.749 UTC [1304] CONTEXT:  PL/pgSQL function ocean_quota() line 25 at RAISE
+db-test-1  | 2026-09-07 21:51:47.749 UTC [1304] STATEMENT:  INSERT INTO produtos (categoria_id, criado_por_funcionario_id, nome, descricao, possui_ncm, ncm, codigo_barras, ativo, criado_em, atualizado_em, tenant_id) VALUES (1, 1, 'Importado', NULL, false, NULL, '2000010000029', true, '2026-09-07T21:51:47.744789'::timestamp, '2026-09-07T21:51:47.744800'::timestamp, 1) RETURNING produtos.id
+test-1     | tests/test_sprint03_faults.py ...........                                [ 25%]
+db-test-1  | 2026-09-07 21:52:26.138 UTC [63] LOG:  checkpoint starting: time
+test-1     | tests/test_sprint03_transactions.py .................................... [ 29%]
+db-test-1  | 2026-09-07 21:52:43.595 UTC [1573] ERROR:  saas_quota atingida
+db-test-1  | 2026-09-07 21:52:43.595 UTC [1573] CONTEXT:  PL/pgSQL function ocean_quota() line 25 at RAISE
+db-test-1  | 2026-09-07 21:52:43.595 UTC [1573] STATEMENT:  INSERT INTO produtos (categoria_id, criado_por_funcionario_id, nome, descricao, possui_ncm, ncm, codigo_barras, ativo, criado_em, atualizado_em, tenant_id) VALUES (2, 1, 'Import 0', NULL, false, NULL, '2000010000029', true, '2026-09-07T21:52:43.593117'::timestamp, '2026-09-07T21:52:43.593124'::timestamp, 1) RETURNING produtos.id
+db-test-1  | 2026-09-07 21:53:05.336 UTC [1672] ERROR:  could not create unique index "uq_mov_estoque_saida_item"
+db-test-1  | 2026-09-07 21:53:05.336 UTC [1672] DETAIL:  Key (tenant_id, item_venda_id)=(1, 1) is duplicated.
+db-test-1  | 2026-09-07 21:53:05.336 UTC [1672] STATEMENT:  CREATE UNIQUE INDEX uq_mov_estoque_saida_item ON movimentos_estoque (tenant_id, item_venda_id) WHERE item_venda_id IS NOT NULL AND tipo_movimento = 'SAIDA' AND motivo = 'VENDA'
+test-1     | ...............                                                          [ 31%]
+test-1     | tests/test_sprint04_adversarial.py ..................................... [ 35%]
+db-test-1  | 2026-09-07 21:54:20.099 UTC [2017] LOG:  unexpected EOF on client connection with an open transaction
+db-test-1  | 2026-09-07 21:54:20.150 UTC [63] LOG:  checkpoint complete: wrote 937 buffers (5.7%); 0 WAL file(s) added, 0 removed, 9 recycled; write=110.449 s, sync=2.845 s, total=114.017 s; sync files=158358, longest=0.005 s, average=0.001 s; distance=146930 kB, estimate=146930 kB; lsn=0/DA90A28, redo lsn=0/A89BA10
+db-test-1  | 2026-09-07 21:54:23.491 UTC [2035] LOG:  unexpected EOF on client connection with an open transaction
+db-test-1  | 2026-09-07 21:54:26.413 UTC [2045] LOG:  unexpected EOF on client connection with an open transaction
+test-1     | ..........                                                               [ 36%]
+test-1     | tests/test_sprint04_browser.py ...                                       [ 36%]
+test-1     | tests/test_sprint04_browser_adversarial.py .                             [ 37%]
+db-test-1  | 2026-09-07 21:57:26.142 UTC [63] LOG:  checkpoint starting: time
+test-1     | tests/test_sprint04_operations.py ...................................... [ 41%]
+db-test-1  | 2026-09-07 21:58:03.887 UTC [2899] ERROR:  new row for relation "cupons" violates check constraint "ck_cupom_valores"
+db-test-1  | 2026-09-07 21:58:03.887 UTC [2899] DETAIL:  Failing row contains (Campanha, CAMPANHA, 2026-09-14, PERCENTUAL, 10.00, t, 1, 2026-09-07 21:58:03.876378, 2026-09-07 21:58:03.876385, 1, 1, null, null, null, null, null, NaN, null).
+db-test-1  | 2026-09-07 21:58:03.887 UTC [2899] STATEMENT:  UPDATE cupons SET valor_minimo='NaN'::numeric
+db-test-1  | 2026-09-07 21:58:05.048 UTC [2908] ERROR:  numeric field overflow
+db-test-1  | 2026-09-07 21:58:05.048 UTC [2908] DETAIL:  A field with precision 12, scale 2 cannot hold an infinite value.
+db-test-1  | 2026-09-07 21:58:05.048 UTC [2908] STATEMENT:  UPDATE cupons SET desconto_maximo='Infinity'::numeric
+db-test-1  | 2026-09-07 21:58:06.463 UTC [2909] ERROR:  new row for relation "cupons" violates check constraint "ck_cupom_usos"
+db-test-1  | 2026-09-07 21:58:06.463 UTC [2909] DETAIL:  Failing row contains (Campanha, CAMPANHA, 2026-09-14, PERCENTUAL, 10.00, t, 1, 2026-09-07 21:58:06.453832, 2026-09-07 21:58:06.453841, 1, 1, null, null, null, 0, null, 0.00, null).
+db-test-1  | 2026-09-07 21:58:06.463 UTC [2909] STATEMENT:  UPDATE cupons SET limite_usos=0
+db-test-1  | 2026-09-07 21:58:07.804 UTC [2918] ERROR:  Escopo imutavel
+db-test-1  | 2026-09-07 21:58:07.804 UTC [2918] CONTEXT:  PL/pgSQL function ocean_integrity() line 10 at RAISE
+db-test-1  | 2026-09-07 21:58:07.804 UTC [2918] STATEMENT:  UPDATE cupons SET empresa_id=3
+db-test-1  | 2026-09-07 21:58:09.443 UTC [2927] ERROR:  check constraint "ck_cupom_valores" of relation "cupons" is violated by some row
+db-test-1  | 2026-09-07 21:58:09.443 UTC [2927] STATEMENT:  ALTER TABLE cupons ADD CONSTRAINT ck_cupom_valores CHECK (valor_minimo >= 0 AND valor_minimo < 10000000000 AND (desconto_maximo IS NULL OR (desconto_maximo > 0 AND desconto_maximo < 10000000000)) AND valor_desconto > 0 AND (tipo_desconto <> 'PERCENTUAL' OR valor_desconto <= 100))
+db-test-1  | 2026-09-07 21:58:24.461 UTC [63] LOG:  checkpoint complete: wrote 392 buffers (2.4%); 0 WAL file(s) added, 0 removed, 5 recycled; write=56.963 s, sync=0.618 s, total=58.322 s; sync files=42188, longest=0.005 s, average=0.001 s; distance=77214 kB, estimate=139958 kB; lsn=0/10BF5590, redo lsn=0/F403270
+test-1     | .................................                                        [ 45%]
+db-test-1  | 2026-09-07 21:58:30.706 UTC [3026] ERROR:  Reversao exige contrapartida integral
+db-test-1  | 2026-09-07 21:58:30.706 UTC [3026] CONTEXT:  PL/pgSQL function ocean_validate_reversal_marker() line 13 at RAISE
+db-test-1  | 2026-09-07 21:58:30.706 UTC [3026] STATEMENT:  COMMIT
+db-test-1  | 2026-09-07 21:58:31.956 UTC [3034] ERROR:  Reversao financeira nao pode ser desfeita
+db-test-1  | 2026-09-07 21:58:31.956 UTC [3034] CONTEXT:  PL/pgSQL function ocean_validate_reversal_marker() line 5 at RAISE
+db-test-1  | 2026-09-07 21:58:31.956 UTC [3034] STATEMENT:  COMMIT
+test-1     | tests/test_sprint05_adversarial.py ..................................... [ 49%]
+db-test-1  | 2026-09-07 21:59:57.355 UTC [3422] ERROR:  Use reversao formal para ajustar lancamentos
+db-test-1  | 2026-09-07 21:59:57.355 UTC [3422] CONTEXT:  PL/pgSQL function ocean_preserve_ledger() line 6 at RAISE
+db-test-1  | 2026-09-07 21:59:57.355 UTC [3422] STATEMENT:  UPDATE lancamentos_financeiros SET valor=99 WHERE id=1
+db-test-1  | 2026-09-07 21:59:58.874 UTC [3424] ERROR:  Use reversao formal para ajustar lancamentos
+db-test-1  | 2026-09-07 21:59:58.874 UTC [3424] CONTEXT:  PL/pgSQL function ocean_preserve_ledger() line 6 at RAISE
+db-test-1  | 2026-09-07 21:59:58.874 UTC [3424] STATEMENT:  UPDATE lancamentos_financeiros SET tipo='SAIDA' WHERE id=1
+db-test-1  | 2026-09-07 22:00:00.216 UTC [3433] ERROR:  Use reversao formal para ajustar lancamentos
+db-test-1  | 2026-09-07 22:00:00.216 UTC [3433] CONTEXT:  PL/pgSQL function ocean_preserve_ledger() line 6 at RAISE
+db-test-1  | 2026-09-07 22:00:00.216 UTC [3433] STATEMENT:  UPDATE lancamentos_financeiros SET empresa_id=2 WHERE id=1
+db-test-1  | 2026-09-07 22:00:01.732 UTC [3443] ERROR:  Use reversao formal para ajustar lancamentos
+db-test-1  | 2026-09-07 22:00:01.732 UTC [3443] CONTEXT:  PL/pgSQL function ocean_preserve_ledger() line 6 at RAISE
+db-test-1  | 2026-09-07 22:00:01.732 UTC [3443] STATEMENT:  UPDATE lancamentos_financeiros SET tenant_id=2 WHERE id=1
+db-test-1  | 2026-09-07 22:00:03.100 UTC [3444] ERROR:  Use reversao formal para ajustar lancamentos
+db-test-1  | 2026-09-07 22:00:03.100 UTC [3444] CONTEXT:  PL/pgSQL function ocean_preserve_ledger() line 6 at RAISE
+db-test-1  | 2026-09-07 22:00:03.100 UTC [3444] STATEMENT:  UPDATE lancamentos_financeiros SET descricao='alterado' WHERE id=1
+db-test-1  | 2026-09-07 22:00:04.453 UTC [3453] ERROR:  Use reversao formal para ajustar lancamentos
+db-test-1  | 2026-09-07 22:00:04.453 UTC [3453] CONTEXT:  PL/pgSQL function ocean_preserve_ledger() line 6 at RAISE
+db-test-1  | 2026-09-07 22:00:04.453 UTC [3453] STATEMENT:  UPDATE lancamentos_financeiros SET data_lancamento=now() WHERE id=1
+db-test-1  | 2026-09-07 22:00:05.766 UTC [3462] ERROR:  Use reversao formal para ajustar lancamentos
+db-test-1  | 2026-09-07 22:00:05.766 UTC [3462] CONTEXT:  PL/pgSQL function ocean_preserve_ledger() line 6 at RAISE
+db-test-1  | 2026-09-07 22:00:05.766 UTC [3462] STATEMENT:  UPDATE lancamentos_financeiros SET lancamento_origem_id=id WHERE id=1
+db-test-1  | 2026-09-07 22:00:07.537 UTC [3463] ERROR:  Use reversao formal para ajustar lancamentos
+db-test-1  | 2026-09-07 22:00:07.537 UTC [3463] CONTEXT:  PL/pgSQL function ocean_preserve_ledger() line 6 at RAISE
+db-test-1  | 2026-09-07 22:00:07.537 UTC [3463] STATEMENT:  UPDATE lancamentos_financeiros SET funcionario_id=NULL WHERE id=1
+test-1     | ............................................                             [ 54%]
+test-1     | tests/test_sprint05_browser.py .                                         [ 54%]
+test-1     | tests/test_sprint05_browser_adversarial.py .                             [ 54%]
+db-test-1  | 2026-09-07 22:01:40.831 UTC [3858] ERROR:  Historico financeiro nao pode ser excluido
+db-test-1  | 2026-09-07 22:01:40.831 UTC [3858] CONTEXT:  PL/pgSQL function ocean_preserve_ledger() line 3 at RAISE
+db-test-1  | 2026-09-07 22:01:40.831 UTC [3858] STATEMENT:  DELETE FROM lancamentos_financeiros
+db-test-1  | 2026-09-07 22:01:42.065 UTC [3867] ERROR:  Use reversao formal para ajustar lancamentos
+db-test-1  | 2026-09-07 22:01:42.065 UTC [3867] CONTEXT:  PL/pgSQL function ocean_preserve_ledger() line 6 at RAISE
+db-test-1  | 2026-09-07 22:01:42.065 UTC [3867] STATEMENT:  UPDATE lancamentos_financeiros SET valor=99
+test-1     | tests/test_sprint05_cycles.py .......................................... [ 59%]
+db-test-1  | 2026-09-07 22:02:26.254 UTC [63] LOG:  checkpoint starting: time
+test-1     | .........                                                                [ 60%]
+db-test-1  | 2026-09-07 22:03:26.568 UTC [63] LOG:  checkpoint complete: wrote 414 buffers (2.5%); 0 WAL file(s) added, 0 removed, 7 recycled; write=56.187 s, sync=2.726 s, total=60.315 s; sync files=78351, longest=0.007 s, average=0.001 s; distance=110609 kB, estimate=137023 kB; lsn=0/168DE880, redo lsn=0/160079D8
+test-1     | tests/test_sprint06_browser.py ......                                    [ 61%]
+db-test-1  | 2026-09-07 22:07:27.184 UTC [63] LOG:  checkpoint starting: time
+db-test-1  | 2026-09-07 22:08:03.919 UTC [63] LOG:  checkpoint complete: wrote 154 buffers (0.9%); 0 WAL file(s) added, 0 removed, 1 recycled; write=34.647 s, sync=1.399 s, total=36.739 s; sync files=10252, longest=0.005 s, average=0.001 s; distance=18088 kB, estimate=125130 kB; lsn=0/174169F8, redo lsn=0/171B1B70
+test-1     | tests/test_sprint06_browser_adversarial.py ....................          [ 63%]
+test-1     | tests/test_sprint06_data_adversarial.py ................................ [ 67%]
+db-test-1  | 2026-09-07 22:10:35.053 UTC [5985] ERROR:  permission denied for table audit_logs
+db-test-1  | 2026-09-07 22:10:35.053 UTC [5985] STATEMENT:  UPDATE audit_logs SET action='FORGED'
+db-test-1  | 2026-09-07 22:10:35.054 UTC [5985] ERROR:  permission denied for table audit_logs
+db-test-1  | 2026-09-07 22:10:35.054 UTC [5985] STATEMENT:  DELETE FROM audit_logs
+db-test-1  | 2026-09-07 22:10:35.056 UTC [5985] ERROR:  permission denied for table audit_logs
+db-test-1  | 2026-09-07 22:10:35.056 UTC [5985] STATEMENT:  TRUNCATE audit_logs
+test-1     | ........................................................................ [ 75%]
+test-1     | ..                                                                       [ 75%]
+db-test-1  | 2026-09-07 22:11:19.499 UTC [6190] ERROR:  canceling statement due to lock timeout
+db-test-1  | 2026-09-07 22:11:19.499 UTC [6190] STATEMENT:  ALTER TABLE audit_logs ADD COLUMN request_id VARCHAR(32) DEFAULT NULLIF(current_setting('ocean.request_id', true), '')
+db-test-1  | 2026-09-07 22:11:24.877 UTC [6216] ERROR:  canceling statement due to lock timeout at character 30
+db-test-1  | 2026-09-07 22:11:24.877 UTC [6216] STATEMENT:  SELECT EXISTS (SELECT 1 FROM audit_logs WHERE request_id IS NOT NULL)
+test-1     | tests/test_sprint06_load_adversarial.py .....                            [ 76%]
+db-test-1  | 2026-09-07 22:11:46.369 UTC [6308] ERROR:  permission denied for schema public at character 14
+db-test-1  | 2026-09-07 22:11:46.369 UTC [6308] STATEMENT:  CREATE TABLE forbidden (id int)
+db-test-1  | 2026-09-07 22:11:46.371 UTC [6308] ERROR:  permission denied for table tenants
+db-test-1  | 2026-09-07 22:11:46.371 UTC [6308] STATEMENT:  TRUNCATE tenants CASCADE
+db-test-1  | 2026-09-07 22:11:46.372 UTC [6308] ERROR:  permission denied for table audit_logs
+db-test-1  | 2026-09-07 22:11:46.372 UTC [6308] STATEMENT:  DELETE FROM audit_logs
+db-test-1  | 2026-09-07 22:11:46.374 UTC [6308] ERROR:  permission denied for table alembic_version
+db-test-1  | 2026-09-07 22:11:46.374 UTC [6308] STATEMENT:  UPDATE alembic_version SET version_num='fake'
+test-1     | tests/test_sprint06_operations.py .........................              [ 79%]
+test-1     | tests/test_sprint06_security_adversarial.py ............................ [ 82%]
+test-1     | .....................                                                    [ 85%]
+db-test-1  | 2026-09-07 22:12:27.465 UTC [63] LOG:  checkpoint starting: time
+test-1     | tests/test_sprint07_audit.py .............................               [ 88%]
+db-test-1  | 2026-09-07 22:13:23.746 UTC [63] LOG:  checkpoint complete: wrote 287 buffers (1.8%); 0 WAL file(s) added, 0 removed, 5 recycled; write=47.329 s, sync=8.294 s, total=56.281 s; sync files=57243, longest=0.251 s, average=0.001 s; distance=80250 kB, estimate=120642 kB; lsn=0/1C5AF688, redo lsn=0/1C0103B8
+db-test-1  | 2026-09-07 22:17:27.113 UTC [63] LOG:  checkpoint starting: time
+db-test-1  | 2026-09-07 22:18:05.383 UTC [63] LOG:  checkpoint complete: wrote 193 buffers (1.2%); 0 WAL file(s) added, 0 removed, 0 recycled; write=37.036 s, sync=0.910 s, total=38.271 s; sync files=9047, longest=0.010 s, average=0.001 s; distance=14123 kB, estimate=109990 kB; lsn=0/1D03C3A0, redo lsn=0/1CDDAFD8
+db-test-1  | 2026-09-07 22:22:27.133 UTC [63] LOG:  checkpoint starting: time
+db-test-1  | 2026-09-07 22:22:57.092 UTC [63] LOG:  checkpoint complete: wrote 120 buffers (0.7%); 0 WAL file(s) added, 0 removed, 1 recycled; write=28.611 s, sync=1.190 s, total=29.962 s; sync files=7843, longest=0.083 s, average=0.001 s; distance=10535 kB, estimate=100044 kB; lsn=0/1D9B3160, redo lsn=0/1D824F88
+db-test-1  | 2026-09-07 22:23:58.024 UTC [9121] LOG:  skipping analyze of "permissions" --- lock not available
+db-test-1  | 2026-09-07 22:23:58.024 UTC [9121] LOG:  skipping analyze of "role_permission" --- lock not available
+db-test-1  | 2026-09-07 22:23:58.024 UTC [9121] LOG:  skipping analyze of "audit_logs" --- lock not available
+test-1     | tests/test_sprint07_browser.py ......................................... [ 93%]
+db-test-1  | 2026-09-07 22:27:27.491 UTC [63] LOG:  checkpoint starting: time
+db-test-1  | 2026-09-07 22:28:00.484 UTC [63] LOG:  checkpoint complete: wrote 228 buffers (1.4%); 0 WAL file(s) added, 0 removed, 1 recycled; write=31.847 s, sync=0.896 s, total=32.999 s; sync files=8443, longest=0.005 s, average=0.001 s; distance=10765 kB, estimate=91116 kB; lsn=0/1E3C7C60, redo lsn=0/1E2A86B0
+db-test-1  | 2026-09-07 22:32:27.900 UTC [63] LOG:  checkpoint starting: time
+db-test-1  | 2026-09-07 22:32:56.954 UTC [63] LOG:  checkpoint complete: wrote 114 buffers (0.7%); 0 WAL file(s) added, 0 removed, 0 recycled; write=28.199 s, sync=0.698 s, total=29.057 s; sync files=6085, longest=0.002 s, average=0.001 s; distance=7878 kB, estimate=82793 kB; lsn=0/1EB3E2E0, redo lsn=0/1EA5A108
+db-test-1  | 2026-09-07 22:37:27.495 UTC [63] LOG:  checkpoint starting: time
+db-test-1  | 2026-09-07 22:37:57.647 UTC [63] LOG:  checkpoint complete: wrote 106 buffers (0.6%); 0 WAL file(s) added, 1 removed, 0 recycled; write=28.458 s, sync=1.499 s, total=30.157 s; sync files=5436, longest=0.383 s, average=0.001 s; distance=6672 kB, estimate=75181 kB; lsn=0/1F1C3E08, redo lsn=0/1F0DE3E0
+db-test-1  | 2026-09-07 22:42:27.883 UTC [63] LOG:  checkpoint starting: time
+db-test-1  | 2026-09-07 22:43:00.637 UTC [63] LOG:  checkpoint complete: wrote 106 buffers (0.6%); 0 WAL file(s) added, 0 removed, 0 recycled; write=29.324 s, sync=3.369 s, total=32.756 s; sync files=5734, longest=0.154 s, average=0.001 s; distance=6900 kB, estimate=68352 kB; lsn=0/1F8F4330, redo lsn=0/1F79B488
+test-1     | ...............................                                          [ 96%]
+test-1     | tests/test_startup.py .............................                      [100%]
+test-1     | 
+test-1     | ---------------------- generated xml file: /tmp/junit.xml ----------------------
+test-1     | ================================ tests coverage ================================
+test-1     | _______________ coverage: platform linux, python 3.12.12-final-0 _______________
+test-1     | 
+test-1     | Name                                          Stmts   Miss Branch BrPart  Cover   Missing
+test-1     | -----------------------------------------------------------------------------------------
+test-1     | app/__init__.py                                 130      4     28      3    96%   171-172, 182, 385
+test-1     | app/cli/ciclos.py                                16      6      2      0    56%   14-19
+test-1     | app/cli/security.py                              45     10     16      0    77%   45-50, 54-57
+test-1     | app/config.py                                   107     22     34      8    73%   41, 99, 106, 108, 110, 118-120, 122, 126-133, 142-148
+test-1     | app/controllers/adiantamento_controller.py       64     15      0      0    77%   28-29, 52-53, 72-73, 80-93
+test-1     | app/controllers/auth_controller.py              120      7     26      4    92%   104-105, 129, 138-139, 148-149
+test-1     | app/controllers/boleto_controller.py            229    139      2      0    39%   24-33, 40-49, 56-64, 81-82, 89-97, 104-112, 119-127, 134-144, 151-159, 166-173, 180-187, 194-202, 214-222, 231-239, 246-254, 261-269
+test-1     | app/controllers/categoria_controller.py          52      4      0      0    92%   55-56, 67, 79
+test-1     | app/controllers/ciclos_controller.py             75     13      2      0    81%   27, 53-58, 94, 100-105
+test-1     | app/controllers/cliente_controller.py           166     32      0      0    81%   28-29, 42-43, 58-59, 69, 84, 97, 111, 130-142, 148-163, 175-176, 201, 219
+test-1     | app/controllers/cupom_controller.py              49     17      0      0    65%   24-25, 41-42, 48-58, 64-69
+test-1     | app/controllers/estoque_controller.py           181     26      0      0    86%   36-37, 133-134, 152-153, 169-170, 193-194, 210-211, 227-228, 241, 276-277, 302-315
+test-1     | app/controllers/financeiro_controller.py        142     59      0      0    58%   43-44, 63-64, 89-90, 96-109, 128-129, 135-148, 154-170, 176-201, 207-224
+test-1     | app/controllers/fiscal_controller.py            138     54      6      0    58%   28-29, 35-47, 53-65, 78-79, 85-101, 107-123, 134-135, 153, 167, 180-181
+test-1     | app/controllers/funcionario_controller.py        67      7      0      0    90%   36-37, 59-60, 70-71, 141
+test-1     | app/controllers/import_export_controller.py      90     23      4      1    74%   28, 42-44, 57-59, 67-70, 79-81, 89-93, 102-104, 131-133
+test-1     | app/controllers/main_controller.py              109     37     20      7    63%   24-29, 34-35, 47-51, 56, 66, 74, 78-80, 89, 98-103, 113, 117-119, 129, 133-135, 145, 149-151
+test-1     | app/controllers/pdv_controller.py               122     19      8      1    83%   29-30, 44, 48-49, 55-73, 95-96
+test-1     | app/controllers/permission_controller.py         49     11      0      0    78%   38-39, 45-61, 72, 93
+test-1     | app/controllers/platform_controller.py           77     33      0      0    57%   23-24, 40-43, 49-56, 62-69, 78, 81-82, 88-95
+test-1     | app/controllers/produto_controller.py            70      6      0      0    91%   56-57, 77-78, 130, 169
+test-1     | app/controllers/role_controller.py               69      6      2      0    92%   71-72, 86-87, 120, 141
+test-1     | app/models/db.py                                880      1      2      1    99%   543
+test-1     | app/operations.py                               117      3     38      2    97%   78, 82->84, 130-131
+test-1     | app/repositorys/adiantamento_repository.py       80      9     24      9    83%   31, 53, 78, 80->83, 103, 106, 164, 195, 201, 227
+test-1     | app/repositorys/boleto_repository.py            114     66     38      4    34%   20-27, 31-34, 38, 47-54, 58-64, 68-73, 77-84, 88, 105, 107, 109-110, 112, 117-126, 130, 134-141, 145-152, 156-165, 169-177, 181, 185, 189, 193
+test-1     | app/repositorys/categoria_repository.py          22      3      0      0    86%   32, 36-37
+test-1     | app/repositorys/cliente_repository.py           118     23     24      7    73%   42, 75-91, 123, 147, 156, 255->257, 276, 282-292, 325-328, 340-349
+test-1     | app/repositorys/cupom_repository.py              29      2      2      1    90%   39, 49
+test-1     | app/repositorys/estoque_repository.py            79      7     26      9    85%   60, 86, 122, 144, 147, 166, 227, 232->235, 235->238
+test-1     | app/repositorys/financeiro_repository.py        101      6     28      7    90%   50, 171, 177, 200, 226, 231->234, 234->237, 241
+test-1     | app/repositorys/fiscal_repository.py             54      7     10      4    80%   22, 66, 72-75, 117, 134
+test-1     | app/repositorys/funcionario_repository.py        79      8     12      1    86%   120, 131, 188->191, 195-210
+test-1     | app/repositorys/import_export_repository.py     125     16     32     14    81%   31, 39, 43, 67, 91, 118, 129, 186, 189, 197, 213, 255, 279, 303, 325, 329
+test-1     | app/repositorys/pdv_repository.py                84     10     18      7    81%   39, 108, 130, 146, 171, 201, 207-210, 235
+test-1     | app/repositorys/permission_repository.py         30      8      2      0    69%   29-37, 41, 52, 56, 60
+test-1     | app/repositorys/platform_repository.py           62      5      2      0    92%   18, 22, 54, 100, 150
+test-1     | app/repositorys/produto_repository.py            70      3     16      3    93%   42, 49, 111
+test-1     | app/repositorys/role_repository.py               43      2      6      1    94%   63, 76
+test-1     | app/security/decorators.py                       81      9     18      3    88%   69-70, 86-88, 109-110, 118-119
+test-1     | app/security/errors.py                           21      1      8      1    93%   14
+test-1     | app/security/field_crypto.py                     60      4     20      4    90%   18, 39, 43, 51
+test-1     | app/security/isolation.py                        59      3     36      3    94%   55, 58, 64
+test-1     | app/security/jwt.py                              49      9     16      2    80%   50-56, 65, 68-69, 75
+test-1     | app/security/outbound.py                         28      1      8      1    94%   11
+test-1     | app/security/password.py                         10      1      4      1    86%   8
+test-1     | app/security/permissions.py                      61      4     24      1    94%   525-526, 546-547
+test-1     | app/security/rate_limit.py                       24      3      2      1    85%   16, 33-34
+test-1     | app/security/secrets.py                          24      6     12      4    72%   10, 20, 23, 27, 29-30
+test-1     | app/seeds/seed.py                                71     46     18      1    31%   38-151
+test-1     | app/services/acesso_empresa_service.py           44      2     12      2    93%   24, 37
+test-1     | app/services/adiantamento_ciclo_service.py       59      2     20      2    95%   28, 32
+test-1     | app/services/adiantamento_service.py            205     22     42      9    87%   34, 128, 135, 221, 244, 348-350, 360, 372-373, 400-403, 415-417, 426-429
+test-1     | app/services/alerta_service.py                  123      5     34      6    93%   19, 49, 56->62, 60-61, 74, 133->139
+test-1     | app/services/audit_service.py                    22      1      6      1    93%   31
+test-1     | app/services/auth_service.py                     63      3     18      3    93%   21, 35, 74
+test-1     | app/services/banco_emissor_service.py           162    140     44      0    11%   18-101, 106-165, 170-250, 255, 280, 299, 319-322, 326-332
+test-1     | app/services/boleto_provider.py                 144     54     20      4    60%   39, 42, 45, 64-66, 77->80, 100-103, 119-122, 149, 166-170, 177-193, 209-211, 219-247, 261-264, 274, 282-288
+test-1     | app/services/boleto_service.py                  400    243    118     16    34%   36-48, 52-78, 82-87, 109-113, 130-134, 151-155, 176, 189-194, 198-264, 271, 274, 276, 304-305, 309-311, 315-337, 341-383, 387-413, 417-436, 443, 448, 472, 485-487, 496, 498, 500, 513->526, 516-517, 522-524, 546, 559-589, 593, 658-663, 667-675, 681-682, 687, 690-691, 695-699
+test-1     | app/services/calculo_juros_multa_service.py      49     49     16      0     0%   1-75
+test-1     | app/services/categoria_service.py                47      7     12      3    83%   39-44, 55, 63
+test-1     | app/services/cliente_privacidade_service.py      77      3     28      4    93%   17, 28, 34, 69->89
+test-1     | app/services/cliente_service.py                 830    142    276     71    78%   41, 53, 100, 103, 127-129, 149, 152, 156-172, 185-186, 194-200, 305-307, 322, 346, 356, 386, 391, 432-436, 453-455, 481, 556, 567->575, 575->585, 622, 671, 693->695, 713, 716, 722, 724->738, 746->758, 749, 752, 759, 781, 815, 825, 858->891, 917-932, 952, 957-967, 990, 1012, 1027->1031, 1057-1061, 1073, 1085, 1091->1093, 1095, 1129, 1145, 1148, 1156-1157, 1165-1166, 1176, 1179-1180, 1182, 1188, 1191-1192, 1194, 1200, 1203-1204, 1206, 1209, 1218-1219, 1225-1228, 1383, 1387-1388, 1393-1394, 1407-1410, 1421, 1423, 1425, 1428-1438, 1445, 1447, 1452, 1456, 1458, 1461, 1464, 1471->exit
+test-1     | app/services/comunicacao_service.py             126     54     38     11    54%   24, 28, 43, 58, 61, 63, 71-115, 124-127, 137, 150, 154-162, 181, 184, 203->206, 219-224, 233-234
+test-1     | app/services/cupom_service.py                   191     46     74     12    77%   58-95, 103, 107-108, 118, 142, 145, 148, 154, 160-161, 167, 172-173, 178, 182-183, 233, 256, 259, 265-266
+test-1     | app/services/estoque_service.py                 478     77    172     52    79%   164, 172, 189, 206, 257, 260, 324, 335, 346, 406, 444->447, 462, 483, 497->500, 515, 518->523, 520->523, 542->544, 558->561, 565, 586-587, 594-597, 605, 611, 614, 626, 658-660, 675->678, 681, 695, 698-701, 719, 724, 726, 730, 734, 738, 740->753, 744, 751, 764, 794, 797, 803-804, 810-811, 816-818, 822-823, 826, 828, 840, 846, 850-851, 854, 861, 872-873, 878, 883, 893, 900-901, 903, 909, 918-931, 938-940
+test-1     | app/services/financeiro_ciclo_service.py         95      7     24      8    87%   19, 32, 36->41, 61, 63, 94, 109, 115
+test-1     | app/services/financeiro_service.py              384     34    110     27    88%   483, 489, 492, 496, 514-516, 527, 531->534, 552, 555, 567, 582->585, 585->588, 607, 610, 626, 639, 654->657, 677, 681, 703, 707, 726, 731, 754, 801, 937->940, 1004-1006, 1012-1013, 1019, 1043-1044, 1053-1054, 1063
+test-1     | app/services/fiscal_provider.py                 160     29     26      6    78%   40, 43, 46, 71-75, 78-84, 155->160, 158->160, 182-186, 196, 209, 274, 285, 293-297
+test-1     | app/services/fiscal_service.py                  502    114    112     38    72%   67-73, 84, 87->94, 127, 129, 141->145, 152-154, 168, 172->185, 203-205, 213, 218->230, 234, 237-241, 283-284, 291-293, 302-307, 319-328, 339-344, 352-357, 364, 372, 376, 379-380, 385-386, 388, 482-503, 513, 527, 542, 546, 563, 565, 569, 615-618, 654-657, 724, 730, 734-735, 741, 745-746, 751, 755-756, 759, 768->770, 775->777, 783-785
+test-1     | app/services/funcionario_service.py             237     34    102     33    80%   26->47, 49->21, 56-57, 58->54, 86, 88, 90, 92, 95, 97, 100, 103, 107, 111, 164, 166, 168, 170, 172, 180, 188, 192, 196, 211, 242->exit, 269, 272, 275, 295, 300, 305, 313, 323-324, 327, 335-336
+test-1     | app/services/idempotency_service.py              33      1     12      1    96%   22
+test-1     | app/services/import_export_service.py           633     44    192     32    91%   266, 270, 280, 282, 304, 395, 400, 405, 408, 409->421, 514, 525, 545, 593, 595, 841-842, 936, 947, 950, 983, 998, 1012, 1039, 1047, 1063, 1070, 1080-1083, 1088-1089, 1092, 1105, 1108, 1110, 1116-1119, 1126-1127, 1134-1135, 1145-1146
+test-1     | app/services/mensagem_fila_service.py           140     14     34     10    86%   44, 47, 50, 54, 82, 91, 97, 108-113, 121->125, 131
+test-1     | app/services/money_service.py                    35      1     12      1    96%   32
+test-1     | app/services/parcelamento_service.py             74     74     24      0     0%   1-93
+test-1     | app/services/pdv_service.py                     448     46    144     31    87%   60, 81, 89, 113, 144, 150, 165, 195, 203, 337, 349->347, 409, 413, 429, 431, 446->448, 622-624, 633, 646->648, 664, 676, 724, 758, 765, 773-776, 786-787, 792, 813, 817-818, 832-833, 836, 847-848, 859, 862-864, 870-871, 873, 880
+test-1     | app/services/permission_service.py               76     43     22      2    36%   19-45, 54-73, 85-89, 96-102
+test-1     | app/services/platform_service.py                276    112     78     25    57%   29-31, 41, 44, 83-85, 89-111, 115-139, 145, 148-189, 195, 200, 208, 217, 231-233, 243, 245, 247, 250, 271, 273, 275, 277, 279, 282, 285, 345-346, 348-349, 388, 409-411, 425-428, 432-435, 441-442, 449, 452-455, 460, 466-471, 475-481
+test-1     | app/services/produto_service.py                 265     32     92     23    83%   72, 78, 87, 173, 176, 182, 186-188, 196, 199, 210, 213, 221, 233, 265, 283, 289, 310-311, 330, 339, 347, 356-359, 373-376, 406, 411
+test-1     | app/services/role_service.py                    124     21     48     17    77%   28, 30, 33, 35, 77, 79, 82, 84, 106, 119-123, 131, 134, 139, 147, 152, 158, 168, 172
+test-1     | app/services/saas_plan_service.py                32      3      8      3    85%   41, 49, 51
+test-1     | app/services/tenant_bootstrap_service.py         71      0     28      1    99%   119->111
+test-1     | app/services/tenant_entitlement_service.py       41      4     12      4    85%   15, 24, 43, 61
+test-1     | app/services/time_service.py                     43      2     10      2    92%   41, 60
+test-1     | app/services/transaction_service.py              53      4     20      5    88%   20, 34, 44, 53, 59->66
+test-1     | app/utils/helpers.py                             14     14      4      0     0%   1-17
+test-1     | -----------------------------------------------------------------------------------------
+test-1     | TOTAL                                         11700   2299   2672    581    77%
+test-1     | 
+test-1     | 19 files skipped due to complete coverage.
+test-1     | Coverage XML written to file coverage.xml
+test-1     | Required test coverage of 50% reached. Total coverage: 77.25%
+test-1     | ======================= 868 passed in 3377.89s (0:56:17) =======================
+
+[Ktest-1 exited with code 0
+ Compose Stopping Aborting on container exit...
+ Container oceanblue-s07-independent-regression-test-1 Stopping 
+ Container oceanblue-s07-independent-regression-test-1 Stopped 
+ Container oceanblue-s07-independent-regression-db-test-1 Stopping 
+db-test-1  | 2026-09-07 22:44:03.300 UTC [1] LOG:  received fast shutdown request
+db-test-1  | 2026-09-07 22:44:03.305 UTC [1] LOG:  aborting any active transactions
+db-test-1  | 2026-09-07 22:44:03.319 UTC [1] LOG:  background worker "logical replication launcher" (PID 68) exited with exit code 1
+db-test-1  | 2026-09-07 22:44:03.322 UTC [63] LOG:  shutting down
+db-test-1  | 2026-09-07 22:44:03.323 UTC [63] LOG:  checkpoint starting: shutdown immediate
+db-test-1  | 2026-09-07 22:44:03.817 UTC [63] LOG:  checkpoint complete: wrote 125 buffers (0.8%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.034 s, sync=0.327 s, total=0.495 s; sync files=53, longest=0.001 s, average=0.001 s; distance=1379 kB, estimate=61655 kB; lsn=0/1F8F43E0, redo lsn=0/1F8F43E0
+db-test-1  | 2026-09-07 22:44:03.845 UTC [1] LOG:  database system is shut down
+ Container oceanblue-s07-independent-regression-db-test-1 Stopped 
+
+[Kdb-test-1 exited with code 0

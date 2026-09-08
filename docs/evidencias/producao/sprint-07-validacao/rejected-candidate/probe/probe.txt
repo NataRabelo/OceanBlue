@@ -1,0 +1,14 @@
+ Container oceanblue-s07-timeout-probe-test Creating 
+ Container oceanblue-s07-timeout-probe-test Created 
+============================= test session starts ==============================
+platform linux -- Python 3.12.12, pytest-9.0.3, pluggy-1.6.0
+rootdir: /app
+configfile: pytest.ini
+plugins: cov-6.1.1
+collected 4 items
+
+tests/test_sprint06_load_adversarial.py .                                [ 25%]
+tests/test_sprint07_browser.py ...                                       [100%]
+
+------------------- generated xml file: /tmp/probe-junit.xml -------------------
+======================== 4 passed in 104.04s (0:01:44) =========================

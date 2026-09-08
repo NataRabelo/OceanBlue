@@ -1,0 +1,1 @@
+TLS VERIFIED with certificate validation; trusted proxy 200; direct forged headers 403; fiscal/boleto/metrics 404; HSTS and request ID present.

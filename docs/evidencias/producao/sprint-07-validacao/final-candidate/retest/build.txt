@@ -1,0 +1,97 @@
+ Image oceanblue-s07-independent-rc2-retest-test Building 
+ Image oceanblue-s07-independent-rc2-retest-smoke Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 1.14kB 0.0s done
+#1 DONE 0.0s
+
+#2 [test internal] load build definition from Dockerfile.test
+#2 transferring dockerfile: 514B 0.0s done
+#2 DONE 0.1s
+
+#3 [smoke internal] load build definition from Dockerfile
+#3 transferring dockerfile: 1.17kB 0.0s done
+#3 DONE 0.1s
+
+#4 [smoke internal] load metadata for docker.io/library/python:3.12.12-slim-bookworm@sha256:593bd06efe90efa80dc4eee3948be7c0fde4134606dd40d8dd8dbcade98e669c
+#4 DONE 0.3s
+
+#5 [smoke internal] load .dockerignore
+#5 transferring context:
+#5 transferring context: 334B 0.0s done
+#5 DONE 0.4s
+
+#6 [test internal] load build context
+#6 DONE 0.0s
+
+#7 [test 1/6] FROM docker.io/library/python:3.12.12-slim-bookworm@sha256:593bd06efe90efa80dc4eee3948be7c0fde4134606dd40d8dd8dbcade98e669c
+#7 resolve docker.io/library/python:3.12.12-slim-bookworm@sha256:593bd06efe90efa80dc4eee3948be7c0fde4134606dd40d8dd8dbcade98e669c 0.1s done
+#7 resolve docker.io/library/python:3.12.12-slim-bookworm@sha256:593bd06efe90efa80dc4eee3948be7c0fde4134606dd40d8dd8dbcade98e669c 0.1s done
+#7 DONE 0.1s
+
+#6 [test internal] load build context
+#6 transferring context: 24.89kB 0.1s done
+#6 DONE 0.2s
+
+#8 [smoke 4/6] RUN python -m pip install --no-cache-dir --require-hashes -r requirements.txt
+#8 CACHED
+
+#9 [smoke 5/6] COPY . .
+#9 CACHED
+
+#10 [smoke 2/6] WORKDIR /app
+#10 CACHED
+
+#11 [smoke 3/6] COPY requirements.txt .
+#11 CACHED
+
+#12 [smoke 6/6] RUN sed -i 's/\r$//' /app/docker-entrypoint.sh     && cp /app/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh     && chmod +x /usr/local/bin/docker-entrypoint.sh     && adduser --disabled-password --gecos "" appuser     && mkdir -p /app/instance/storage     && chown -R appuser:appuser /app/instance     && chmod 700 /app/instance /app/instance/storage
+#12 CACHED
+
+#10 [test 2/6] WORKDIR /app
+#10 CACHED
+
+#13 [test 4/7] RUN python -m pip install --no-cache-dir --require-hashes -r requirements-dev.txt
+#13 CACHED
+
+#14 [test 5/7] RUN python -m playwright install --with-deps chromium firefox webkit && chmod -R a+rX /opt/playwright
+#14 CACHED
+
+#15 [test 3/7] COPY requirements-dev.txt .
+#15 CACHED
+
+#16 [test 6/7] COPY . .
+#16 CACHED
+
+#17 [test 7/7] RUN useradd --create-home tester && chown -R tester:tester /app
+#17 CACHED
+
+#18 [smoke] exporting to image
+#18 exporting layers 0.0s done
+#18 exporting manifest sha256:2b8837fd5c16a7c724cd4468195784f210a9e3674ea01cb709799fd4a64423ae 0.1s done
+#18 exporting config sha256:e7537d058264384eafa70bc9c2ca2ae7fab76093c997a3f177dca129ddb8525b
+#18 exporting config sha256:e7537d058264384eafa70bc9c2ca2ae7fab76093c997a3f177dca129ddb8525b 0.1s done
+#18 exporting attestation manifest sha256:ae34341b75bc62668696038779c3519c801420eb349e163dc8536fc4abe7e1e0
+#18 exporting attestation manifest sha256:ae34341b75bc62668696038779c3519c801420eb349e163dc8536fc4abe7e1e0 0.1s done
+#18 exporting manifest list sha256:a08f3c2abc67b4fcb016cd46d8dd938d55136662517ead42a240fb0f99ddfb82
+#18 exporting manifest list sha256:a08f3c2abc67b4fcb016cd46d8dd938d55136662517ead42a240fb0f99ddfb82 0.1s done
+#18 naming to docker.io/library/oceanblue-s07-independent-rc2-retest-smoke:latest 0.0s done
+#18 unpacking to docker.io/library/oceanblue-s07-independent-rc2-retest-smoke:latest 0.0s done
+#18 DONE 0.6s
+
+#19 [test] exporting to image
+#19 exporting layers 0.0s done
+#19 exporting manifest sha256:4e9883d953ec1059f32a72b63d9214e8fd50aaba13cee91c5461efe8ad8caf18 0.1s done
+#19 exporting config sha256:e0bf9ed921ae4f09f326d675588ea8876b3c0a8928c807fea9898db3a3bb418c 0.1s done
+#19 exporting attestation manifest sha256:01d55d92ad01637b7334a8df14e889a9f62889e5316fca95307c605a819d37cb 0.1s done
+#19 exporting manifest list sha256:a99acf93c306f9e0af16a16e6b06704d99b1bed448ad433630c521e31512aaff 0.1s done
+#19 naming to docker.io/library/oceanblue-s07-independent-rc2-retest-test:latest 0.0s done
+#19 unpacking to docker.io/library/oceanblue-s07-independent-rc2-retest-test:latest 0.0s done
+#19 DONE 0.6s
+
+#20 [smoke] resolving provenance for metadata file
+#20 DONE 0.1s
+
+#21 [test] resolving provenance for metadata file
+#21 DONE 0.0s
+ Image oceanblue-s07-independent-rc2-retest-test Built 
+ Image oceanblue-s07-independent-rc2-retest-smoke Built 

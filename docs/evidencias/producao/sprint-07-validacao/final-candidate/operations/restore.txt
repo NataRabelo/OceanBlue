@@ -1,0 +1,1 @@
+RESTORE VERIFIED: compatible schema, database transaction committed only after storage verification; all table/sequence fingerprints and file SHA-256 match.

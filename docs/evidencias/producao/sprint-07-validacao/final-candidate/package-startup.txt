@@ -1,0 +1,2 @@
+{"timestamp": "2026-09-08T05:26:30.896011+00:00", "level": "INFO", "event": "http_request", "error_type": null, "request_id": "e668fa3b632a06e8fef63a27ab3fb18d", "route": "/api/health", "method": "GET", "status": 200, "duration_ms": 0.12}
+ARCHIVE WSGI STARTUP AND HEALTH VERIFIED WITHOUT DATABASE OR EXTERNAL NETWORK

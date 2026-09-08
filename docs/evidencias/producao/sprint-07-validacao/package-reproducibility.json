@@ -1,0 +1,14 @@
+{
+  "scope": "Completed Sprint 7 independent evidence set and deterministic source archive",
+  "initial_assemble_sha256": "bf53f83c5d2352d0c28a1c11672cb7b522815c73541f3ee858b1c608c2a360f2",
+  "sealed_archive_sha256": "3aafe423cb3aafae30c1a72660a87fe033cb2b1b8d895fd495dde2b971ce00f4",
+  "sealed_archive_size": 5418303,
+  "regenerations_compared": 3,
+  "byte_identical_after_evidence_closure": true,
+  "source_members": 812,
+  "hashed_evidence_files": 459,
+  "verification": "All archive members and evidence hashes verified after regeneration",
+  "sealed_archive_smoke": "WSGI import and /api/health 200 in a newly built container with network none and no database",
+  "sealed_archive_smoke_image_id": "sha256:f96742bbb8ee2a54d4f038d1af6d5fb3cc48bc27faae6867227b7a5af37d2bee",
+  "note": "The first assemble archive had 810 members. The completed evidence set added package-startup.txt and package-image-id.txt after that archive was built. Repackaging the closed set therefore produced 812 members; three subsequent generations were byte-identical."
+}

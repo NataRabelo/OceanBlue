@@ -1,0 +1,6 @@
+Exception: C:\Users\Rabel\.codex\worktrees\4b57\OceanBlue\scripts\operational_snapshot.ps1:195
+Line |
+ 195 |  … nt -ne 0) { throw 'Restore requires a new empty database, without use …
+     |                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | Restore requires a new empty database, without user objects in any
+     | schema.

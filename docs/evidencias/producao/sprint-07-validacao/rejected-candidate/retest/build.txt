@@ -1,0 +1,113 @@
+ Image oceanblue-s07-independent-retest-test Building 
+ Image oceanblue-s07-independent-retest-smoke Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 1.12kB 0.0s done
+#1 DONE 0.0s
+
+#2 [test internal] load build definition from Dockerfile.test
+#2 transferring dockerfile:
+#2 transferring dockerfile: 514B 0.1s done
+#2 DONE 0.3s
+
+#3 [smoke internal] load build definition from Dockerfile
+#3 transferring dockerfile: 1.17kB 0.1s done
+#3 DONE 0.3s
+
+#4 [test internal] load metadata for docker.io/library/python:3.12.12-slim-bookworm@sha256:593bd06efe90efa80dc4eee3948be7c0fde4134606dd40d8dd8dbcade98e669c
+#4 DONE 0.6s
+
+#5 [smoke internal] load .dockerignore
+#5 transferring context: 334B 0.1s done
+#5 DONE 0.1s
+
+#6 [smoke 1/7] FROM docker.io/library/python:3.12.12-slim-bookworm@sha256:593bd06efe90efa80dc4eee3948be7c0fde4134606dd40d8dd8dbcade98e669c
+#6 resolve docker.io/library/python:3.12.12-slim-bookworm@sha256:593bd06efe90efa80dc4eee3948be7c0fde4134606dd40d8dd8dbcade98e669c 0.1s done
+#6 DONE 0.1s
+
+#7 [test internal] load build context
+#7 transferring context: 49.48kB 0.2s done
+#7 transferring context: 49.48kB 0.2s done
+#7 DONE 0.3s
+
+#8 [test 3/7] COPY requirements-dev.txt .
+#8 CACHED
+
+#9 [test 4/7] RUN python -m pip install --no-cache-dir --require-hashes -r requirements-dev.txt
+#9 CACHED
+
+#10 [test 2/7] WORKDIR /app
+#10 CACHED
+
+#11 [test 5/7] RUN python -m playwright install --with-deps chromium firefox webkit && chmod -R a+rX /opt/playwright
+#11 CACHED
+
+#12 [smoke 3/6] COPY requirements.txt .
+#12 CACHED
+
+#10 [smoke 2/7] WORKDIR /app
+#10 CACHED
+
+#13 [smoke 4/6] RUN python -m pip install --no-cache-dir --require-hashes -r requirements.txt
+#13 CACHED
+
+#14 [smoke 5/6] COPY . .
+#14 DONE 0.9s
+
+#15 [test 6/7] COPY . .
+#15 DONE 0.9s
+
+#16 [test 7/7] RUN useradd --create-home tester && chown -R tester:tester /app
+#16 ...
+
+#17 [smoke 6/6] RUN sed -i 's/\r$//' /app/docker-entrypoint.sh     && cp /app/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh     && chmod +x /usr/local/bin/docker-entrypoint.sh     && adduser --disabled-password --gecos "" appuser     && mkdir -p /app/instance/storage     && chown -R appuser:appuser /app/instance     && chmod 700 /app/instance /app/instance/storage
+#17 4.121 Adding user `appuser' ...
+#17 4.121 Adding new group `appuser' (1000) ...
+#17 4.331 Adding new user `appuser' (1000) with group `appuser (1000)' ...
+#17 4.596 Creating home directory `/home/appuser' ...
+#17 4.596 Copying files from `/etc/skel' ...
+#17 4.806 Adding new user `appuser' to supplemental / extra groups `users' ...
+#17 4.806 Adding user `appuser' to group `users' ...
+#17 DONE 5.1s
+
+#18 [smoke] exporting to image
+#18 exporting layers
+#18 exporting layers 1.4s done
+#18 exporting manifest sha256:02236850acbe955cfc45eeadd1dc7cf90ffc8096b53ee70107697803e61eae62 0.1s done
+#18 exporting config sha256:803be5d56d97b8a98fb800ae414cfb3c61e3b99ec3e94bb7568501fb17e28a50
+#18 exporting config sha256:803be5d56d97b8a98fb800ae414cfb3c61e3b99ec3e94bb7568501fb17e28a50 0.1s done
+#18 exporting attestation manifest sha256:2749dcae991fb6029bea6d0b4871e038c01232a30ac96afdc984d58a972d47c6
+#18 exporting attestation manifest sha256:2749dcae991fb6029bea6d0b4871e038c01232a30ac96afdc984d58a972d47c6 0.1s done
+#18 exporting manifest list sha256:d342cc5a3dc0b4b81704c31023e50afb94e057bafdd4b4bdba335c8c755071cc
+#18 exporting manifest list sha256:d342cc5a3dc0b4b81704c31023e50afb94e057bafdd4b4bdba335c8c755071cc 0.1s done
+#18 naming to docker.io/library/oceanblue-s07-independent-retest-smoke:latest done
+#18 unpacking to docker.io/library/oceanblue-s07-independent-retest-smoke:latest
+#18 unpacking to docker.io/library/oceanblue-s07-independent-retest-smoke:latest 0.8s done
+#18 DONE 2.8s
+
+#16 [test 7/7] RUN useradd --create-home tester && chown -R tester:tester /app
+#16 ...
+
+#19 [smoke] resolving provenance for metadata file
+#19 DONE 0.2s
+
+#16 [test 7/7] RUN useradd --create-home tester && chown -R tester:tester /app
+#16 DONE 10.8s
+
+#20 [test] exporting to image
+#20 exporting layers 1.0s done
+#20 exporting manifest sha256:b28105e70ec031d9283e7ad2ff5d8904213af7395132d0b7208c8c126553b18d 0.1s done
+#20 exporting config sha256:0be1c32068967adace1db756320256390db326b3b86916391da1d88858bd4a42
+#20 exporting config sha256:0be1c32068967adace1db756320256390db326b3b86916391da1d88858bd4a42 0.0s done
+#20 exporting attestation manifest sha256:b18f557784069e3a9d7c1eba509ffb075e6c5e168c34e7f8a918f2d3be951d3d
+#20 exporting attestation manifest sha256:b18f557784069e3a9d7c1eba509ffb075e6c5e168c34e7f8a918f2d3be951d3d 0.0s done
+#20 exporting manifest list sha256:0116d9f24e744a6e053ce1e9bce85a50cd908c7276041404ee932fe8d8644365 0.1s done
+#20 naming to docker.io/library/oceanblue-s07-independent-retest-test:latest
+#20 naming to docker.io/library/oceanblue-s07-independent-retest-test:latest done
+#20 unpacking to docker.io/library/oceanblue-s07-independent-retest-test:latest
+#20 unpacking to docker.io/library/oceanblue-s07-independent-retest-test:latest 0.5s done
+#20 DONE 2.0s
+
+#21 [test] resolving provenance for metadata file
+#21 DONE 0.1s
+ Image oceanblue-s07-independent-retest-test Built 
+ Image oceanblue-s07-independent-retest-smoke Built 
