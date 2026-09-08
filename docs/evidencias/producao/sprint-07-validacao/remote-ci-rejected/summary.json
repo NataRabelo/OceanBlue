@@ -1,0 +1,94 @@
+{
+  "recorded_at": "2026-09-08T04:51:41-03:00",
+  "decision": {
+    "remote_run": "RED",
+    "local_fix": "READY_FOR_REMOTE_REVALIDATION",
+    "release": "NO_GO_UNTIL_FULL_REMOTE_GREEN",
+    "remote_rerun_performed": false,
+    "previous_release_artifact": "SUPERSEDED",
+    "rebuilt_release_artifact": "READY_FOR_REMOTE_REVALIDATION"
+  },
+  "rejected_remote_run": {
+    "run_id": 34249332707,
+    "job_id": 102139451180,
+    "commit": "7a88e3b8779b3886d5694b5504a50d12952dca0f",
+    "tests": 868,
+    "passed": 867,
+    "failures": 1,
+    "errors": 1,
+    "skipped": 0,
+    "duration_seconds": 2552.223,
+    "affected_node_id": "tests/test_sprint07_browser.py::test_all_screens_navigation_accessibility_responsive[webkit-stock-sales-768]",
+    "failure": "Navigation failed because page crashed during wait_for_load_state(\"networkidle\") at /api/estoque/view.",
+    "teardown_error": "Page.screenshot: Target crashed.",
+    "functional_findings_before_crash": {
+      "axe_violations": 0,
+      "http_errors": 0,
+      "javascript_errors": 0,
+      "business_rule_errors": 0
+    },
+    "evidence": {
+      "run-34249332707/junit.xml": "7b1e1cae0e18b4c27bccbd15b120499cc198d7a817afcee82ebd89e7e2c71b81",
+      "run-34249332707/verification.log": "4b2140a47b6593acb4350af410c1e6c9cb6bf5625b1c1b60c7873078a3113b3a"
+    }
+  },
+  "diagnosis": {
+    "confirmed_proximate_cause": "The WebKit page process crashed.",
+    "corrected_structural_risk": "The test service had no explicit shared-memory budget and received Docker's 64 MiB default while running the long-lived real-browser matrix.",
+    "limitation": "The remote runner supplied no process dump or kernel OOM event, so the exact WebKit allocator or internal limit is not claimed as proven.",
+    "browser_fixture_scope": "module",
+    "browser_fixture_changed": false,
+    "browser_test_head_blob": "d7fab6be90d0858d8bb8aa8f25aa9d722736851d",
+    "browser_test_sha256": "a03853b010255d9f57f8095994c1e7dba31616df7ae6bced252f0267ea2ec979"
+  },
+  "fix": {
+    "compose_test_shm_before_bytes": 67108864,
+    "compose_test_shm_after": "1gb",
+    "compose_test_shm_after_bytes": 1073741824,
+    "workflow_contract_assertion_added": true,
+    "retry_added": false,
+    "timeout_changed": false,
+    "assertion_relaxed": false,
+    "crash_suppressed": false
+  },
+  "local_fix_validation": {
+    "database": "fresh PostgreSQL 16",
+    "inventory_routes": 165,
+    "migration_head": "a0d1e2f3a4b5",
+    "upgrade_downgrade_upgrade": "OK",
+    "test_scope": "complete Sprint 7 real-browser matrix",
+    "browser_fixture_scope": "module",
+    "tests": 72,
+    "passed": 72,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "duration_seconds": 1311.993,
+    "affected_node_passed": true,
+    "coverage_gate_claimed": false,
+    "retry_performed": false,
+    "evidence": {
+      "fix-validation/matrix-junit.xml": "6012ee401d81bf2056506e79c13d1bbc242b397fc810214430cc9a2c49008f64",
+      "fix-validation/matrix.txt": "e7fccbba806c272194fa026ab667db90760af5a048e1e7cdd061d1ec336ea1cc",
+      "fix-validation/red-shm.txt": "17780b4bc70aafdf8a8d2f468a76a370ce9040c30b3f70e7806910b6f97550cb",
+      "fix-validation/green-shm.txt": "07119ac59d48687c11027fe7f49e91630de7a7e1491c9c4a29005f3d8cf3a17c",
+      "fix-validation/compose-config.json": "21b8af352ee05b0d8fcf33c2f4a39056b8db3675e5e4f7e1ebb693eab0f4e298",
+      "fix-validation/workflow-validation-final.json": "f01788eb9227c723543aa22c82fff69e10c06b5a9d325f570ade829697c02bef",
+      "fix-validation/npm-ci.txt": "a28ea50b6dfa93d93516bd2a46fd7c438ec4274a5374b7f8fdcc132d8cb920c3"
+    }
+  },
+  "rebuilt_release_artifact": {
+    "name": "oceanblue-2.1.0-rc.1.tar.gz",
+    "size": 5418396,
+    "sha256": "3ab6290add697e893f9cbf9629f284ab8362d95ed60fdd6650fb142c7943b38b",
+    "manifest_sources": 812,
+    "external_evidence_entries": 459,
+    "deterministic_generations": 3,
+    "byte_identical": true,
+    "integrity_verification": "OK",
+    "image_build": "OK",
+    "network_none_wsgi_health_version_smoke": "OK",
+    "remote_status": "PENDING_FULL_868_GATE",
+    "evidence_directory": "package-validation"
+  }
+}

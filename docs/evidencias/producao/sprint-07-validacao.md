@@ -2,23 +2,52 @@
 
 Data: 2026-09-08, America/Sao_Paulo. Versão avaliada: `2.1.0-rc.1`.
 
+## Reabertura pelo gate remoto
+
+O workflow remoto `34249332707`, job `102139451180`, executado no commit
+`7a88e3b8779b3886d5694b5504a50d12952dca0f`, invalidou o GO local abaixo. O JUnit remoto
+registrou 868 casos, 867 aprovados, uma falha e um erro de teardown no mesmo node ID:
+`tests/test_sprint07_browser.py::test_all_screens_navigation_accessibility_responsive[webkit-stock-sales-768]`.
+O processo de página do WebKit 26 caiu durante `wait_for_load_state("networkidle")`; a captura
+de tela posterior também falhou com `Target crashed`. As evidências não registram violação
+Axe, erro HTTP, JavaScript, externo ou de regra de negócio antes da queda.
+
+O contrato de execução deixava `/dev/shm` no padrão de 64 MiB do container durante uma matriz
+longa que reutiliza um processo de navegador por motor. A correção local reserva 1 GiB
+explicitamente para o serviço de teste. O lifecycle module-scoped do navegador permanece
+inalterado. Não há retry, aumento de timeout, relaxamento de asserção nem supressão da queda;
+uma nova queda continua falhando no teste e no teardown.
+
+O diagnóstico comprova a queda do processo e corrige o risco estrutural de orçamento de
+memória compartilhada. Sem dump do processo ou evento OOM do runner remoto, não se afirma
+qual alocador ou limite interno causou a queda. Uma nova execução única da matriz completa,
+com o lifecycle original e o novo orçamento, passou 72/72 em 1.311,993 s, incluindo o node ID
+remotamente afetado. `pip check`, o inventário de 165 rotas e o ciclo completo de migrations
+também passaram. O novo commit ainda depende da reexecução remota integral para obter GO.
+
+As evidências estão preservadas no [RED remoto](sprint-07-validacao/remote-ci-rejected/run-34249332707/junit.xml)
+e na [validação da correção](sprint-07-validacao/remote-ci-rejected/fix-validation/matrix-junit.xml),
+com hashes e proveniência consolidados no
+[resumo da reabertura](sprint-07-validacao/remote-ci-rejected/summary.json).
+
 ## Decisão
 
-**GO técnico para o candidato local da Sprint 7.** O código e o pacote selado estão prontos
-para entrega/revisão no escopo validado: duas suítes integrais consecutivas, PostgreSQL 16,
-navegadores reais, segurança, carga, recuperação, rollback e assemble terminaram sem falhas,
-erros ou skips. Não foi encontrado bloqueador P0/P1 dentro desse escopo.
+**NO-GO para o candidato `7a88e3b`.** A falha remota prevalece sobre as duas suítes locais
+descritas neste documento. A correção desta reabertura fica apta apenas para nova validação
+remota; um novo GO exige commit integrado, suíte integral de 868 casos sem falhas, erros ou
+skips e artefatos de release reconstruídos e íntegros. O pacote corrigido foi reconstruído
+antes da selagem deste commit e permanece pendente do gate remoto.
 
 **NO-GO para instalar ou publicar em produção.** Essa decisão exige o aceite do ambiente real,
 incluindo scan de CVEs do sistema operacional/imagem, certificados e domínio definitivos,
 segredos no cofre, durabilidade dos volumes, alertas, política de backup e capacidade. Nenhum
 deploy, push ou contato com provedor externo foi realizado.
 
-O checkout de validação começou exatamente em
-`2163ed9d72babf5020118094ec50691f4400f3f9`. O único commit desta validação é o commit
-que contém este relatório; seu pai deve resolver para esse SHA. O campo `base_commit` do
-manifesto de release conserva a base histórica da Sprint 6 usada pelo ensaio de rollback e
-não substitui essa prova de filiação Git.
+A validação original começou em `2163ed9d72babf5020118094ec50691f4400f3f9`; o candidato
+integrado e rejeitado remotamente é `7a88e3b8779b3886d5694b5504a50d12952dca0f`. O commit
+desta reabertura deve ter esse candidato como pai. O campo `base_commit` do manifesto
+histórico conserva a base da Sprint 6 usada pelo ensaio de rollback e não substitui essa
+prova de filiação Git.
 
 ## Método independente
 
@@ -161,11 +190,13 @@ mantêm a cadeia de decisão.
 
 ## Artefato e reprodução
 
-O artefato final é `dist/oceanblue-2.1.0-rc.1.tar.gz`, com 5.418.303 bytes e SHA-256
-`3aafe423cb3aafae30c1a72660a87fe033cb2b1b8d895fd495dde2b971ce00f4`. O
+O artefato do candidato corrigido é `dist/oceanblue-2.1.0-rc.1.tar.gz`, com 5.418.396 bytes e
+SHA-256 `3ab6290add697e893f9cbf9629f284ab8362d95ed60fdd6650fb142c7943b38b`. O
 [manifesto](sprint-07-validacao/final-candidate/release-manifest.json) inventaria 812 membros;
 o [inventário de evidências](sprint-07-validacao/final-candidate/evidence-sha256.json) valida
-459 arquivos externos.
+459 arquivos externos. O pacote anterior, de 5.418.303 bytes e SHA-256
+`3aafe423cb3aafae30c1a72660a87fe033cb2b1b8d895fd495dde2b971ce00f4`, permanece apenas
+como referência histórica do candidato rejeitado.
 
 Após fechar as evidências, três regenerações consecutivas do arquivo foram idênticas byte a
 byte. Cada membro e cada hash externo foram reverificados. O arquivo selado foi extraído em
@@ -173,6 +204,10 @@ diretório novo, reconstruído e executado sem rede e sem banco; o WSGI importou
 retornou 200 com a versão correta. A [prova de reprodutibilidade](sprint-07-validacao/package-reproducibility.json)
 registra hashes, tamanho, contagens e identidade da imagem de smoke. Não se afirma build
 Docker byte a byte por causa de camadas e metadados externos.
+
+As provas específicas da reconstrução após a correção — três hashes idênticos, verificação de
+integridade, build da imagem e smoke sem rede — estão em
+[package-validation](sprint-07-validacao/remote-ci-rejected/package-validation/).
 
 Reprodução integral, em projeto e diretório de evidência novos:
 
@@ -196,5 +231,6 @@ Fases focais servem somente para diagnóstico e não substituem o gate.
 | P3 — acessibilidade | Complementar Axe/teclado/geometria com leitores de tela e dispositivos físicos. |
 | P3 — capacidade | Executar teste de capacidade e RPO/RTO no hardware, volume e concorrência produtivos. |
 
-Nenhum item P0/P1 permanece no escopo técnico validado. Os P2 de ambiente impedem somente
-a autorização de instalação/deploy e não invalidam o candidato local selado.
+Além dos P2 de ambiente, permanece bloqueante a revalidação remota integral da correção desta
+reabertura. Existe candidato local reconstruído e selado, mas o GO técnico somente pode ser
+restabelecido pelo gate remoto integral no commit final.

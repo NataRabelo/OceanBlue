@@ -1,0 +1,64 @@
+{
+  "name": "oceanblue-sprint01",
+  "networks": {
+    "test": {
+      "name": "oceanblue-sprint01_test",
+      "ipam": {},
+      "internal": true
+    }
+  },
+  "services": {
+    "db-test": {
+      "command": null,
+      "entrypoint": null,
+      "environment": {
+        "POSTGRES_DB": "oceanblue_test",
+        "POSTGRES_PASSWORD": "isolated-test-only",
+        "POSTGRES_USER": "oceanblue_test"
+      },
+      "healthcheck": {
+        "test": [
+          "CMD-SHELL",
+          "pg_isready -U oceanblue_test -d oceanblue_test"
+        ],
+        "timeout": "5s",
+        "interval": "2s",
+        "retries": 30
+      },
+      "image": "postgres:16@sha256:23af655ba1ddf74eaa002e3deaf5fce022ab8791672336a7c1fb0ef2d57efb7f",
+      "networks": {
+        "test": null
+      },
+      "tmpfs": [
+        "/var/lib/postgresql/data"
+      ]
+    },
+    "test": {
+      "build": {
+        "context": "C:\\Users\\Rabel\\.codex\\worktrees\\4b57\\OceanBlue",
+        "dockerfile": "Dockerfile.test"
+      },
+      "command": [
+        "sh",
+        "-c",
+        "python -m pip check \u0026\u0026 python -m scripts.inventory --check \u0026\u0026 python -m scripts.validate_migrations \u0026\u0026 python -m pytest --junitxml=/tmp/junit.xml"
+      ],
+      "depends_on": {
+        "db-test": {
+          "condition": "service_healthy",
+          "required": true
+        }
+      },
+      "entrypoint": null,
+      "environment": {
+        "FLASK_SKIP_DOTENV": "1",
+        "TEST_DATABASE_URL": "postgresql+psycopg2://oceanblue_test:isolated-test-only@db-test:5432/oceanblue_test"
+      },
+      "init": true,
+      "networks": {
+        "test": null
+      },
+      "shm_size": "1073741824"
+    }
+  }
+}

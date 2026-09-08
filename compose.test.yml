@@ -16,6 +16,7 @@ services:
     networks: [test]
   test:
     init: true
+    shm_size: 1gb
     build:
       context: .
       dockerfile: Dockerfile.test

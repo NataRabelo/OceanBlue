@@ -1,0 +1,13 @@
+ Container oceanblue-s07-ci-fix-matrix-test-run Stopping 
+ Container oceanblue-s07-ci-fix-matrix-test-run Stopped 
+ Container oceanblue-s07-ci-fix-matrix-test-run Removing 
+ Container oceanblue-s07-ci-fix-matrix-test-run Removed 
+ Container oceanblue-s07-ci-fix-matrix-db-test-1 Stopping 
+ Container oceanblue-s07-ci-fix-matrix-db-test-1 Stopped 
+ Container oceanblue-s07-ci-fix-matrix-db-test-1 Removing 
+ Container oceanblue-s07-ci-fix-matrix-db-test-1 Removed 
+ Container oceanblue-s07-ci-fix-matrix-test-run Stopping 
+ Container oceanblue-s07-ci-fix-matrix-test-run Error Error while Stopping
+ Container oceanblue-s07-ci-fix-matrix-test-run Removed 
+ Network oceanblue-s07-ci-fix-matrix_test Removing 
+ Network oceanblue-s07-ci-fix-matrix_test Removed 

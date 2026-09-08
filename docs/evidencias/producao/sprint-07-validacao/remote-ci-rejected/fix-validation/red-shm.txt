@@ -1,0 +1,5 @@
+RED_DEFAULT_SHM
+Filesystem      Size  Used Avail Use% Mounted on
+shm              64M     0   64M   0% /dev/shm
+Filesystem     1B-blocks  Used Available Use% Mounted on
+shm             67108864     0  67108864   0% /dev/shm

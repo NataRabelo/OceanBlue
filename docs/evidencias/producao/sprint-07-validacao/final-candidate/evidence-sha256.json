@@ -232,7 +232,7 @@
   "regression/user.txt": "3b7b041d37d1d693c3afe25d2af7d56ad2ee7b98eddb2cc1a055c1117e55542e",
   "regression/workflow.json": "b9d5f318646f0aaa7deef3856e512241147d6c81f84368acd33c66cbbbcb0647",
   "regression-summary.json": "55f9d4fa99e31dd230ec9d1f1ed21e2ad246a1beb63c5fd607869b22bda409c3",
-  "release-manifest.json": "5e2951334657a6de9a1992c80d4e7c0c83933762caa73d750791f65a81ac29b5",
+  "release-manifest.json": "58c6a05f846247c573bda58c52e3bd029d63dd042de5f7d53aa756170a198bf7",
   "retest/benchmark.json": "4157edfcc4a0f21b3523d4e0275e1b00e224763cf45b4558bf7438695bcd5394",
   "retest/build.txt": "689829f385421b9d2e84b334022c53fce27846436cb68987e87db1b437f3ed66",
   "retest/cleanup-check.txt": "31f20710fae5ba2c56ebbcbb5b0aef432e8475523b44245361cb3aecf1f45dd4",

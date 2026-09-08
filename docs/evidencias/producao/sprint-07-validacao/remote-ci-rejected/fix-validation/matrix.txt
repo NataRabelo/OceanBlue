@@ -1,0 +1,242 @@
+ Container oceanblue-s07-ci-fix-matrix-db-test-1 Running 
+ Container oceanblue-s07-ci-fix-matrix-db-test-1 Waiting 
+ Container oceanblue-s07-ci-fix-matrix-db-test-1 Healthy 
+ Container oceanblue-s07-ci-fix-matrix-test-run Creating 
+ Container oceanblue-s07-ci-fix-matrix-test-run Created 
+No broken requirements found.
+Inventario OK: 165 rotas
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade  -> 1150177c20ca, initial
+UPGRADE OK 1150177c20ca
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade 1150177c20ca -> 7f3c1a2b9d4e, add roles and permissions
+UPGRADE OK 7f3c1a2b9d4e
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade 7f3c1a2b9d4e -> 9d1dca4d2bc5, v2
+UPGRADE OK 9d1dca4d2bc5
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade 9d1dca4d2bc5 -> c3a1f9d4e8b2, convert quantities to integer
+UPGRADE OK c3a1f9d4e8b2
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade c3a1f9d4e8b2 -> 4b2d8b0f6c11, add platform owners
+UPGRADE OK 4b2d8b0f6c11
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade 4b2d8b0f6c11 -> 8f6e4c2a1b9d, add pdv financeiro permissions and defaults
+UPGRADE OK 8f6e4c2a1b9d
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade 8f6e4c2a1b9d -> b7c9d1e2f3a4, add cupons adiantamentos validade salario
+UPGRADE OK b7c9d1e2f3a4
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade b7c9d1e2f3a4 -> d4e5f6a7b8c9, add empresa visual mode
+UPGRADE OK d4e5f6a7b8c9
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade d4e5f6a7b8c9 -> e6f7a8b9c0d1, add stock alert settings
+UPGRADE OK e6f7a8b9c0d1
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade e6f7a8b9c0d1 -> f2b4c6d8e9f1, add client wallet messaging and reversal controls
+UPGRADE OK f2b4c6d8e9f1
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade 8f6e4c2a1b9d -> f9d0e1a2b3c4, add boleto financeiro models
+UPGRADE OK f9d0e1a2b3c4
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade f2b4c6d8e9f1 -> a1b2c3d4e5f6, add stock alert dispatch tracking
+UPGRADE OK a1b2c3d4e5f6
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade a1b2c3d4e5f6 -> b3c4d5e6f7a8, add cashback sale controls
+UPGRADE OK b3c4d5e6f7a8
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade f2b4c6d8e9f1 -> a4f1c8d2e7b9, add wholesale pricing and fiscal foundation
+UPGRADE OK a4f1c8d2e7b9
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade a4f1c8d2e7b9, b3c4d5e6f7a8 -> c9d8e7f6a5b4, merge cashback and fiscal heads
+UPGRADE OK c9d8e7f6a5b4
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade c9d8e7f6a5b4 -> 0f6a8c2d4e9b, add audit and saas limits
+UPGRADE OK 0f6a8c2d4e9b
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade 0f6a8c2d4e9b, f9d0e1a2b3c4 -> ea3d60221646, merge migration heads
+UPGRADE OK ea3d60221646
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade ea3d60221646 -> 1a2b3c4d5e6f, add sprint3 boleto and fiscal external status
+UPGRADE OK 1a2b3c4d5e6f
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade 1a2b3c4d5e6f -> 2b3c4d5e6f7a, add sprint4 asaas and focus real configs
+UPGRADE OK 2b3c4d5e6f7a
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade 2b3c4d5e6f7a -> 3c4d5e6f7a8b, Align migrated types, tenant indexes and installment foreign key with models.
+UPGRADE OK 3c4d5e6f7a8b
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade 3c4d5e6f7a8b -> 4d5e6f7a8b9c, Shared authentication state, tenant integrity, SaaS quotas and access audit.
+UPGRADE OK 4d5e6f7a8b9c
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade 4d5e6f7a8b9c -> 5e6f7a8b9c0d
+UPGRADE OK 5e6f7a8b9c0d
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade 5e6f7a8b9c0d -> 6f7a8b9c0d1e
+UPGRADE OK 6f7a8b9c0d1e
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade 6f7a8b9c0d1e -> 7a8b9c0d1e2f
+UPGRADE OK 7a8b9c0d1e2f
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade 7a8b9c0d1e2f -> 8b9c0d1e2f3a
+UPGRADE OK 8b9c0d1e2f3a
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade 8b9c0d1e2f3a -> 9c0d1e2f3a4b
+UPGRADE OK 9c0d1e2f3a4b
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade 9c0d1e2f3a4b -> a0d1e2f3a4b5
+UPGRADE OK a0d1e2f3a4b5
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running downgrade a0d1e2f3a4b5 -> 9c0d1e2f3a4b
+INFO  [alembic.runtime.migration] Running downgrade 9c0d1e2f3a4b -> 8b9c0d1e2f3a
+INFO  [alembic.runtime.migration] Running downgrade 8b9c0d1e2f3a -> 7a8b9c0d1e2f
+INFO  [alembic.runtime.migration] Running downgrade 7a8b9c0d1e2f -> 6f7a8b9c0d1e
+INFO  [alembic.runtime.migration] Running downgrade 6f7a8b9c0d1e -> 5e6f7a8b9c0d
+INFO  [alembic.runtime.migration] Running downgrade 5e6f7a8b9c0d -> 4d5e6f7a8b9c
+INFO  [alembic.runtime.migration] Running downgrade 4d5e6f7a8b9c -> 3c4d5e6f7a8b, Shared authentication state, tenant integrity, SaaS quotas and access audit.
+INFO  [alembic.runtime.migration] Running downgrade 3c4d5e6f7a8b -> 2b3c4d5e6f7a, Align migrated types, tenant indexes and installment foreign key with models.
+INFO  [alembic.runtime.migration] Running downgrade 2b3c4d5e6f7a -> 1a2b3c4d5e6f, add sprint4 asaas and focus real configs
+INFO  [alembic.runtime.migration] Running downgrade 1a2b3c4d5e6f -> ea3d60221646, add sprint3 boleto and fiscal external status
+INFO  [alembic.runtime.migration] Running downgrade ea3d60221646 -> 0f6a8c2d4e9b, f9d0e1a2b3c4, merge migration heads
+INFO  [alembic.runtime.migration] Running downgrade 0f6a8c2d4e9b -> c9d8e7f6a5b4, add audit and saas limits
+INFO  [alembic.runtime.migration] Running downgrade c9d8e7f6a5b4 -> a4f1c8d2e7b9, b3c4d5e6f7a8, merge cashback and fiscal heads
+INFO  [alembic.runtime.migration] Running downgrade a4f1c8d2e7b9 -> f2b4c6d8e9f1, add wholesale pricing and fiscal foundation
+INFO  [alembic.runtime.migration] Running downgrade b3c4d5e6f7a8 -> a1b2c3d4e5f6, add cashback sale controls
+INFO  [alembic.runtime.migration] Running downgrade a1b2c3d4e5f6 -> f2b4c6d8e9f1, add stock alert dispatch tracking
+INFO  [alembic.runtime.migration] Running downgrade f9d0e1a2b3c4 -> 8f6e4c2a1b9d, add boleto financeiro models
+INFO  [alembic.runtime.migration] Running downgrade f2b4c6d8e9f1 -> e6f7a8b9c0d1, add client wallet messaging and reversal controls
+INFO  [alembic.runtime.migration] Running downgrade e6f7a8b9c0d1 -> d4e5f6a7b8c9, add stock alert settings
+INFO  [alembic.runtime.migration] Running downgrade d4e5f6a7b8c9 -> b7c9d1e2f3a4, add empresa visual mode
+INFO  [alembic.runtime.migration] Running downgrade b7c9d1e2f3a4 -> 8f6e4c2a1b9d, add cupons adiantamentos validade salario
+INFO  [alembic.runtime.migration] Running downgrade 8f6e4c2a1b9d -> 4b2d8b0f6c11, add pdv financeiro permissions and defaults
+INFO  [alembic.runtime.migration] Running downgrade 4b2d8b0f6c11 -> c3a1f9d4e8b2, add platform owners
+INFO  [alembic.runtime.migration] Running downgrade c3a1f9d4e8b2 -> 9d1dca4d2bc5, convert quantities to integer
+INFO  [alembic.runtime.migration] Running downgrade 9d1dca4d2bc5 -> 7f3c1a2b9d4e, v2
+INFO  [alembic.runtime.migration] Running downgrade 7f3c1a2b9d4e -> 1150177c20ca, add roles and permissions
+INFO  [alembic.runtime.migration] Running downgrade 1150177c20ca -> , initial
+DOWNGRADE BASE OK
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade  -> 1150177c20ca, initial
+INFO  [alembic.runtime.migration] Running upgrade 1150177c20ca -> 7f3c1a2b9d4e, add roles and permissions
+INFO  [alembic.runtime.migration] Running upgrade 7f3c1a2b9d4e -> 9d1dca4d2bc5, v2
+INFO  [alembic.runtime.migration] Running upgrade 9d1dca4d2bc5 -> c3a1f9d4e8b2, convert quantities to integer
+INFO  [alembic.runtime.migration] Running upgrade c3a1f9d4e8b2 -> 4b2d8b0f6c11, add platform owners
+INFO  [alembic.runtime.migration] Running upgrade 4b2d8b0f6c11 -> 8f6e4c2a1b9d, add pdv financeiro permissions and defaults
+INFO  [alembic.runtime.migration] Running upgrade 8f6e4c2a1b9d -> b7c9d1e2f3a4, add cupons adiantamentos validade salario
+INFO  [alembic.runtime.migration] Running upgrade b7c9d1e2f3a4 -> d4e5f6a7b8c9, add empresa visual mode
+INFO  [alembic.runtime.migration] Running upgrade d4e5f6a7b8c9 -> e6f7a8b9c0d1, add stock alert settings
+INFO  [alembic.runtime.migration] Running upgrade e6f7a8b9c0d1 -> f2b4c6d8e9f1, add client wallet messaging and reversal controls
+INFO  [alembic.runtime.migration] Running upgrade 8f6e4c2a1b9d -> f9d0e1a2b3c4, add boleto financeiro models
+INFO  [alembic.runtime.migration] Running upgrade f2b4c6d8e9f1 -> a1b2c3d4e5f6, add stock alert dispatch tracking
+INFO  [alembic.runtime.migration] Running upgrade a1b2c3d4e5f6 -> b3c4d5e6f7a8, add cashback sale controls
+INFO  [alembic.runtime.migration] Running upgrade f2b4c6d8e9f1 -> a4f1c8d2e7b9, add wholesale pricing and fiscal foundation
+INFO  [alembic.runtime.migration] Running upgrade a4f1c8d2e7b9, b3c4d5e6f7a8 -> c9d8e7f6a5b4, merge cashback and fiscal heads
+INFO  [alembic.runtime.migration] Running upgrade c9d8e7f6a5b4 -> 0f6a8c2d4e9b, add audit and saas limits
+INFO  [alembic.runtime.migration] Running upgrade 0f6a8c2d4e9b, f9d0e1a2b3c4 -> ea3d60221646, merge migration heads
+INFO  [alembic.runtime.migration] Running upgrade ea3d60221646 -> 1a2b3c4d5e6f, add sprint3 boleto and fiscal external status
+INFO  [alembic.runtime.migration] Running upgrade 1a2b3c4d5e6f -> 2b3c4d5e6f7a, add sprint4 asaas and focus real configs
+INFO  [alembic.runtime.migration] Running upgrade 2b3c4d5e6f7a -> 3c4d5e6f7a8b, Align migrated types, tenant indexes and installment foreign key with models.
+INFO  [alembic.runtime.migration] Running upgrade 3c4d5e6f7a8b -> 4d5e6f7a8b9c, Shared authentication state, tenant integrity, SaaS quotas and access audit.
+INFO  [alembic.runtime.migration] Running upgrade 4d5e6f7a8b9c -> 5e6f7a8b9c0d
+INFO  [alembic.runtime.migration] Running upgrade 5e6f7a8b9c0d -> 6f7a8b9c0d1e
+INFO  [alembic.runtime.migration] Running upgrade 6f7a8b9c0d1e -> 7a8b9c0d1e2f
+INFO  [alembic.runtime.migration] Running upgrade 7a8b9c0d1e2f -> 8b9c0d1e2f3a
+INFO  [alembic.runtime.migration] Running upgrade 8b9c0d1e2f3a -> 9c0d1e2f3a4b
+INFO  [alembic.runtime.migration] Running upgrade 9c0d1e2f3a4b -> a0d1e2f3a4b5
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.plugins] setting up autogenerate plugin alembic.autogenerate.schemas
+INFO  [alembic.runtime.plugins] setting up autogenerate plugin alembic.autogenerate.tables
+INFO  [alembic.runtime.plugins] setting up autogenerate plugin alembic.autogenerate.types
+INFO  [alembic.runtime.plugins] setting up autogenerate plugin alembic.autogenerate.constraints
+INFO  [alembic.runtime.plugins] setting up autogenerate plugin alembic.autogenerate.defaults
+INFO  [alembic.runtime.plugins] setting up autogenerate plugin alembic.autogenerate.comments
+INFO  [alembic.ddl.postgresql] Detected sequence named 'adiantamentos_funcionario_id_seq' as owned by integer column 'adiantamentos_funcionario(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'eventos_fiscais_nota_id_seq' as owned by integer column 'eventos_fiscais_nota(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'funcionarios_empresa_id_seq' as owned by integer column 'funcionarios_empresa(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'funcionarios_id_seq' as owned by integer column 'funcionarios(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'configuracoes_parcelamento_id_seq' as owned by integer column 'configuracoes_parcelamento(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'cupons_id_seq' as owned by integer column 'cupons(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'permissions_id_seq' as owned by integer column 'permissions(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'carteiras_cliente_id_seq' as owned by integer column 'carteiras_cliente(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'notas_fiscais_venda_id_seq' as owned by integer column 'notas_fiscais_venda(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'entregas_alerta_id_seq' as owned by integer column 'entregas_alerta(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'role_permission_id_seq' as owned by integer column 'role_permission(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'empresas_id_seq' as owned by integer column 'empresas(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'audit_logs_id_seq' as owned by integer column 'audit_logs(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'produtos_empresa_id_seq' as owned by integer column 'produtos_empresa(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'movimentos_estoque_id_seq' as owned by integer column 'movimentos_estoque(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'movimentos_carteira_cliente_id_seq' as owned by integer column 'movimentos_carteira_cliente(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'parcelas_boleto_id_seq' as owned by integer column 'parcelas_boleto(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'configuracoes_notificacao_estoque_id_seq' as owned by integer column 'configuracoes_notificacao_estoque(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'categorias_financeiras_id_seq' as owned by integer column 'categorias_financeiras(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'categorias_produto_id_seq' as owned by integer column 'categorias_produto(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'creditos_cashback_cliente_id_seq' as owned by integer column 'creditos_cashback_cliente(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'eventos_boleto_id_seq' as owned by integer column 'eventos_boleto(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'produtos_id_seq' as owned by integer column 'produtos(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'tenants_id_seq' as owned by integer column 'tenants(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'regras_juros_multa_id_seq' as owned by integer column 'regras_juros_multa(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'boletos_id_seq' as owned by integer column 'boletos(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'fechamentos_caixa_id_seq' as owned by integer column 'fechamentos_caixa(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'arquivos_boleto_id_seq' as owned by integer column 'arquivos_boleto(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'configuracoes_asaas_empresa_id_seq' as owned by integer column 'configuracoes_asaas_empresa(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'role_id_seq' as owned by integer column 'role(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'retornos_bancarios_boleto_id_seq' as owned by integer column 'retornos_bancarios_boleto(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'itens_venda_id_seq' as owned by integer column 'itens_venda(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'clientes_id_seq' as owned by integer column 'clientes(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'mensagens_cliente_id_seq' as owned by integer column 'mensagens_cliente(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'lancamentos_financeiros_id_seq' as owned by integer column 'lancamentos_financeiros(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'bancos_emissores_id_seq' as owned by integer column 'bancos_emissores(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'tipos_operacao_id_seq' as owned by integer column 'tipos_operacao(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'platform_owners_id_seq' as owned by integer column 'platform_owners(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'pagamentos_venda_id_seq' as owned by integer column 'pagamentos_venda(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'formas_pagamento_id_seq' as owned by integer column 'formas_pagamento(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'configuracoes_fiscais_empresa_id_seq' as owned by integer column 'configuracoes_fiscais_empresa(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'vendas_id_seq' as owned by integer column 'vendas(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'operacoes_idempotentes_id_seq' as owned by integer column 'operacoes_idempotentes(id)', assuming SERIAL and omitting
+INFO  [alembic.ddl.postgresql] Detected sequence named 'configuracoes_cliente_empresa_id_seq' as owned by integer column 'configuracoes_cliente_empresa(id)', assuming SERIAL and omitting
+MODEL TYPES INDEXES FOREIGN KEYS OK
+{"head": "a0d1e2f3a4b5", "revisions": ["1150177c20ca", "7f3c1a2b9d4e", "9d1dca4d2bc5", "c3a1f9d4e8b2", "4b2d8b0f6c11", "8f6e4c2a1b9d", "b7c9d1e2f3a4", "d4e5f6a7b8c9", "e6f7a8b9c0d1", "f2b4c6d8e9f1", "f9d0e1a2b3c4", "a1b2c3d4e5f6", "b3c4d5e6f7a8", "a4f1c8d2e7b9", "c9d8e7f6a5b4", "0f6a8c2d4e9b", "ea3d60221646", "1a2b3c4d5e6f", "2b3c4d5e6f7a", "3c4d5e6f7a8b", "4d5e6f7a8b9c", "5e6f7a8b9c0d", "6f7a8b9c0d1e", "7a8b9c0d1e2f", "8b9c0d1e2f3a", "9c0d1e2f3a4b", "a0d1e2f3a4b5"], "tables": 47, "upgrade_downgrade_upgrade": "OK"}
+============================= test session starts ==============================
+platform linux -- Python 3.12.12, pytest-9.0.3, pluggy-1.6.0
+rootdir: /app
+configfile: pytest.ini
+plugins: cov-6.1.1
+collected 72 items
+
+tests/test_sprint07_browser.py ......................................... [ 56%]
+...............................                                          [100%]
+
+----------------- generated xml file: /tmp/sprint07-junit.xml ------------------
+======================= 72 passed in 1312.01s (0:21:52) ========================
